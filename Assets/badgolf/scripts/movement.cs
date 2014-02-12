@@ -3,14 +3,9 @@ using System.Collections;
 
 public class movement : MonoBehaviour {
 	float forceMultiplyer = 10000;
-	GameObject cameraGameObject;
+	public GameObject cameraGameObject;
 	Vector3 cameraPos = new Vector3(0,2,-4);
 
-	// Use this for initialization
-	void Start () {
-		cameraGameObject = GameObject.FindGameObjectWithTag("MainCamera");
-	}
-	
 	// Update is called once per frame
 	void Update () {
 		Vector3 forceFromFront = new Vector3();	// force from front tires
