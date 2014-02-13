@@ -8,4 +8,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/badgolf/scenes/main.unity
   - enabled: 1
-    path: Assets/badgolf/scenes/level_01.unity
+    path: Assets/badgolf/scenes/level_lasdy.unity
