@@ -3,7 +3,6 @@ using System.Collections;
 
 public class movement : MonoBehaviour {
 	float forceMultiplyer = 10000;
-	public GameObject cameraGameObject;
 	Vector3 cameraPos = new Vector3(0,2,-4);
 
 	// Update is called once per frame
@@ -34,11 +33,5 @@ public class movement : MonoBehaviour {
 			rigidbody.AddForceAtPosition(forceMultiplyer*forceFromBack.normalized,transform.position+transform.localRotation*Vector3.back);
 			rigidbody.AddForceAtPosition(forceMultiplyer*forceFromBack.normalized,transform.position+transform.localRotation*Vector3.back);
 		}
-
-		// camera movement
-		Vector3 newPos = transform.position + transform.localRotation * cameraPos;
-		float lerper = Mathf.Min((cameraGameObject.transform.position - newPos).sqrMagnitude / 100, 1);
-		cameraGameObject.transform.position = (1-lerper)*cameraGameObject.transform.position + lerper*newPos;
-		cameraGameObject.transform.rotation = Quaternion.Lerp(cameraGameObject.transform.rotation, Quaternion.LookRotation(transform.position-cameraGameObject.transform.position), lerper);
 	}
 }
