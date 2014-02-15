@@ -9,3 +9,7 @@ EditorBuildSettings:
     path: Assets/badgolf/scenes/main.unity
   - enabled: 1
     path: Assets/badgolf/scenes/level_01.unity
+  - enabled: 1
+    path: Assets/badgolf/scenes/test/cart_test_01.unity
+  - enabled: 1
+    path: Assets/badgolf/scenes/multi_lobby.unity
