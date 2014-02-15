@@ -47,6 +47,10 @@ public class controlClient : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.R)) {
 			networkView.RPC("SpawnBall", RPCMode.All, myViewID);
 		}
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            networkView.RPC("SpawnPlayer", RPCMode.All, myViewID);
+        }
 	}
 
 	// local interpolation - add all other intetpolation here aswell
@@ -118,4 +122,7 @@ public class controlClient : MonoBehaviour {
 	// blank for server use only
 	[RPC]
 	void SpawnBall(NetworkViewID viewId) {}
+
+    [RPC]
+    void SpawnPlayer() { }
 }

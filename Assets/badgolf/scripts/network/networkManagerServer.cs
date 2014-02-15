@@ -7,8 +7,8 @@ public class networkManagerServer : MonoBehaviour {
 	Dictionary<float,string> screenMessages = new Dictionary<float,string>();
 	public GameObject myCart;
 	Dictionary<NetworkPlayer,NetworkViewID> playersCartViewID = new Dictionary<NetworkPlayer,NetworkViewID>();
-	List<NetworkViewID> randomBalls = new List<NetworkViewID>();
-
+	Dictionary<NetworkPlayer,NetworkViewID> randomBalls = new Dictionary<NetworkPlayer, NetworkViewID>();
+    Dictionary<NetworkPlayer, NetworkViewID> spawnedPlayers = new Dictionary<NetworkPlayer, NetworkViewID>();
 	// Use this for initialization
 	void Start () {
 		// Use NAT punchthrough if no public IP present
@@ -43,10 +43,10 @@ public class networkManagerServer : MonoBehaviour {
 			networkView.RPC("SpawnPrefab", player, playerGameObject.networkView.viewID, playerGameObject.transform.position, new Vector3(0,0,0), "buggy1");
 		}
 		// send all balls
-		foreach (NetworkViewID randomBallViewID in randomBalls)
+        foreach (KeyValuePair<NetworkPlayer, NetworkViewID> pair in randomBalls)
 		{
-			GameObject randomBall = NetworkView.Find(randomBallViewID).gameObject;
-			networkView.RPC("SpawnPrefab", player, randomBallViewID, randomBall.transform.position, randomBall.rigidbody.velocity, "ball");
+			GameObject randomBall = NetworkView.Find(pair.Value).gameObject;
+			networkView.RPC("SpawnPrefab", player, pair.Value, randomBall.transform.position, randomBall.rigidbody.velocity, "ball");
 		}
 	}
 	void OnPlayerDisconnected(NetworkPlayer player) {
@@ -89,6 +89,8 @@ public class networkManagerServer : MonoBehaviour {
 	// spawns a golf ball
 	[RPC]
 	void SpawnBall(NetworkViewID playerViewID, NetworkMessageInfo info) {
+        if (randomBalls.ContainsKey(info.sender))
+            return;
 		// get the players location
 		GameObject playerGameObject = NetworkView.Find(playerViewID).gameObject;
 		Vector3 position = playerGameObject.transform.position + playerGameObject.transform.rotation * Vector3.forward * 3 + Vector3.up;
@@ -103,8 +105,29 @@ public class networkManagerServer : MonoBehaviour {
 		// tell everyone else about it
 		networkView.RPC("SpawnPrefab", RPCMode.Others, viewID, position, velocity, "ball");
 		// add it to the list
-		randomBalls.Add(viewID);
+		randomBalls.Add(info.sender, viewID);
 	}
+
+    [RPC]
+    void SpawnPlayer(NetworkMessageInfo info)
+    {
+        if (randomBalls.ContainsKey(info.sender))
+        {
+            NetworkViewID viewID = randomBalls[info.sender];
+            GameObject playerGameObject = NetworkView.Find(viewID).gameObject;
+            Vector3 position = playerGameObject.transform.position + playerGameObject.transform.rotation * Vector3.forward * 3 + Vector3.up;
+            
+            // instantiate the prefab
+            GameObject clone = Instantiate(Resources.Load("lil_patrick"), position, Quaternion.identity) as GameObject;
+            clone.networkView.viewID = viewID;
+            networkView.RPC("SpawnPrefab", RPCMode.Others, viewID, position, Vector3.zero, "lil_patrick");
+            spawnedPlayers.Add(info.sender, viewID);
+        }
+        else
+        {
+            return;
+        }
+    }
 
 	[RPC]
 	void GiveMeACart(NetworkMessageInfo info) {

@@ -17,6 +17,10 @@ public class controlServer : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.R)) {
 			networkView.RPC("SpawnBall", RPCMode.All, myViewID);
 		}
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            networkView.RPC("SpawnPlayer", RPCMode.All);
+        }
 	}
 
 	// UPDATE ALL THE FIZIKS!
