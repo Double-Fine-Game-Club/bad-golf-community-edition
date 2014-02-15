@@ -111,20 +111,27 @@ public class networkManagerServer : MonoBehaviour {
     [RPC]
     void SpawnPlayer(NetworkMessageInfo info)
     {
-        if (randomBalls.ContainsKey(info.sender))
+        if (randomBalls.ContainsKey(info.sender) && !spawnedPlayers.ContainsKey(info.sender))
         {
-            NetworkViewID viewID = randomBalls[info.sender];
-            GameObject playerGameObject = NetworkView.Find(viewID).gameObject;
-            Vector3 position = playerGameObject.transform.position + playerGameObject.transform.rotation * Vector3.forward * 3 + Vector3.up;
+            GameObject playerGameObject = NetworkView.Find(randomBalls[info.sender]).gameObject;
+            Vector3 position = playerGameObject.transform.position + new Vector3(2.5f,0);
             
             // instantiate the prefab
             GameObject clone = Instantiate(Resources.Load("lil_patrick"), position, Quaternion.identity) as GameObject;
+            NetworkViewID viewID = Network.AllocateViewID();
             clone.networkView.viewID = viewID;
             networkView.RPC("SpawnPrefab", RPCMode.Others, viewID, position, Vector3.zero, "lil_patrick");
             spawnedPlayers.Add(info.sender, viewID);
         }
         else
         {
+            if (spawnedPlayers.ContainsKey(info.sender))
+            {
+                NetworkViewID viewID = spawnedPlayers[info.sender];
+                Destroy(NetworkView.Find(viewID).gameObject);
+                networkView.RPC("RemoveViewID", RPCMode.Others, viewID);
+                spawnedPlayers.Remove(info.sender);
+            }
             return;
         }
     }
