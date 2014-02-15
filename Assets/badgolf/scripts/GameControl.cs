@@ -8,8 +8,7 @@ public class GameControl : MonoBehaviour
 	public GameObject ed_roomScreen;
 	public GameObject ed_creditsScreen;
 
-	private GameObject loadedLevel;
-	private bool levelLoaded = false;
+	//private bool levelLoaded = false;
 
 	void Start()
 	{
@@ -50,7 +49,9 @@ public class GameControl : MonoBehaviour
 	public void onStartClicked()
 	{
 		//TODO: get value from selection thing in menu
-		Application.LoadLevelAdditive( "level_01");
+		GameObject gObj = GameObject.Find ("levelID");
+		LevelSelect levelSel = gObj.GetComponent(typeof(LevelSelect)) as LevelSelect;
+		Application.LoadLevelAdditive(levelSel.levelSelected);
 		hideAllScreens();
 	}
 
@@ -64,10 +65,13 @@ public class GameControl : MonoBehaviour
 
 	void Update()
 	{
-		if ( levelLoaded )
+		/*if ( levelLoaded )
 		{
-			loadedLevel = transform.root.FindChild( "level_01").gameObject;
+			GameObject loadedLevel;
+			GameObject gObj = GameObject.Find ("levelID");
+			LevelSelect levelSel = gObj.GetComponent(typeof(LevelSelect)) as LevelSelect;
+			loadedLevel = transform.root.FindChild(levelSel.levelSelected).gameObject;
 			levelLoaded = false;
-		}
+		}*/
 	}
 }
