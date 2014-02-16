@@ -371,7 +371,7 @@ Transform:
   m_Children:
   - {fileID: 291800417}
   - {fileID: 807339676}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 713194907}
 --- !u!1001 &244190036
 Prefab:
   m_ObjectHideFlags: 0
@@ -440,9 +440,10 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 291800417}
-  - 114: {fileID: 291800419}
   - 54: {fileID: 291800418}
   - 114: {fileID: 291800420}
+  - 82: {fileID: 291800421}
+  - 114: {fileID: 291800419}
   m_Layer: 0
   m_Name: buggy
   m_TagString: Untagged
@@ -481,13 +482,12 @@ Rigidbody:
 --- !u!114 &291800419
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400002, guid: 7a33917f60adcd04c98ca10599517255,
-    type: 2}
-  m_PrefabInternal: {fileID: 909212568}
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 291800416}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2df1b0bf1e61854fb712105d7a49a7e, type: 3}
+  m_Script: {fileID: 11500000, guid: 8968aa74b307d434785b51628c5970b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ball: {fileID: 1358106066}
@@ -505,6 +505,64 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   script: {fileID: 291800419}
   camera: {fileID: 807339675}
+--- !u!82 &291800421
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 291800416}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 8300000, guid: d0d36cf65ec2537458d72390dc539a3a, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!1 &611167351
 GameObject:
   m_ObjectHideFlags: 0
@@ -860,6 +918,7 @@ Transform:
   - {fileID: 1176309798}
   - {fileID: 1358106073}
   - {fileID: 193031973}
+  - {fileID: 231686402}
   - {fileID: 1147419957}
   - {fileID: 209564118}
   - {fileID: 1664808751}
@@ -1027,7 +1086,7 @@ Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 713194907}
     m_Modifications:
     - target: {fileID: 400004, guid: 7a33917f60adcd04c98ca10599517255, type: 2}
       propertyPath: m_LocalPosition.x
@@ -1075,9 +1134,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 7a33917f60adcd04c98ca10599517255, type: 2}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 11400002, guid: 7a33917f60adcd04c98ca10599517255, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 7a33917f60adcd04c98ca10599517255, type: 2}
   m_RootGameObject: {fileID: 231686401}
   m_IsPrefabParent: 0
