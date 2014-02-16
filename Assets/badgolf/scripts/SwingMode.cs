@@ -28,12 +28,12 @@ public class SwingMode : MonoBehaviour
 		{
 				Debug.Log ("Flying: " + flying);
 				if (Input.GetKey (KeyCode.LeftArrow)) {
-						rigidbody.freezeRotation = false;
+						//rigidbody.freezeRotation = false;
 						gameObject.transform.Rotate (0f, 1f, 0f);
 						rigidbody.freezeRotation = true;
 				}
 				if (Input.GetKey (KeyCode.RightArrow)) {
-						rigidbody.freezeRotation = false;
+						//rigidbody.freezeRotation = false;
 						gameObject.transform.Rotate (0f, -1f, 0f);
 						rigidbody.freezeRotation = true;
 				}
@@ -44,6 +44,7 @@ public class SwingMode : MonoBehaviour
 				camera.transform.position = (1 - lerper) * camera.transform.position + lerper * newPos;
 				camera.transform.rotation = Quaternion.Lerp (camera.transform.rotation, Quaternion.LookRotation (transform.position - camera.transform.position), lerper);
 
+				// if we are in the air, we don't want player to hit again.
 				if (flying) {
 						return;
 				}
@@ -59,6 +60,9 @@ public class SwingMode : MonoBehaviour
 						Debug.Log ("BOOM: " + shotPower);
 						flying = true;
 						Vector3 arc = Vector3.forward;
+						if (shotPower < 100) {
+								shotPower = 100;
+						}		
 						arc.y = arc.y + shotPower / 200;
 						rigidbody.AddForce (transform.localRotation * arc * shotPower);
 						shotPower = 0;
