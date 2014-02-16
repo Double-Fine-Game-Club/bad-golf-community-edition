@@ -4,8 +4,6 @@ using System.Collections.Generic;
 
 public class networkManager : MonoBehaviour {
 	bool connectingToServer = false;
-	NetworkViewID myViewID;
-	GameObject myCart;
 	
 	// Use this for initialization
 	void Start () {

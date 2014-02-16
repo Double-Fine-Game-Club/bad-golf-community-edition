@@ -53,6 +53,13 @@ public class GameControl : MonoBehaviour
 		Application.LoadLevelAdditive( "level_01");
 		hideAllScreens();
 	}
+	
+	public void onMultiClicked()
+	{
+		//TODO: get value from selection thing in menu
+		Application.LoadLevelAdditive("multi_lobby");
+		hideAllScreens();
+	}
 
 	public void hideAllScreens()
 	{

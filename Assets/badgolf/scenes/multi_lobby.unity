@@ -84,6 +84,7 @@ GameObject:
   - 4: {fileID: 349291802}
   - 148: {fileID: 349291801}
   - 114: {fileID: 349291800}
+  - 114: {fileID: 349291803}
   m_Layer: 0
   m_Name: networkObject
   m_TagString: Untagged
@@ -125,6 +126,18 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1130623658}
+--- !u!114 &349291803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 349291799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1316b11755235c4296b41f6c3d29a88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myCart: {fileID: 0}
 --- !u!1 &627864018
 GameObject:
   m_ObjectHideFlags: 0

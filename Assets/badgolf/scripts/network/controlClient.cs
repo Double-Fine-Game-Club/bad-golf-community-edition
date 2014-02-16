@@ -3,15 +3,15 @@ using System.Collections;
 
 public class controlClient : MonoBehaviour {
 	float timer = 0;
-	public NetworkViewID myViewID;
-	public controlServer ms;
-	bool chatVisible = false;
-	string chatBuffer = "";
+	NetworkViewID myViewID;
 	float forceMultiplyer = 10000;
 	GameObject myCart;
 
 	void Start() {
-		myCart = NetworkView.Find(myViewID).gameObject;
+		// get variables we need
+		networkVariables nvs = GetComponent("networkVariables") as networkVariables;
+		myViewID = nvs.myViewID;
+		myCart = nvs.myCart;
 	}
 
 	void Update () {
@@ -47,10 +47,9 @@ public class controlClient : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.R)) {
 			networkView.RPC("SpawnBall", RPCMode.All, myViewID);
 		}
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            networkView.RPC("SpawnPlayer", RPCMode.All, myViewID);
-        }
+        if (Input.GetKeyDown(KeyCode.G)) {
+			networkView.RPC("SpawnPlayer", RPCMode.All);
+		}
 	}
 
 	// local interpolation - add all other intetpolation here aswell
@@ -81,29 +80,6 @@ public class controlClient : MonoBehaviour {
 			myCart.rigidbody.AddForceAtPosition(forceMultiplyer*forceFromFront,myCart.transform.position+myCart.transform.localRotation*Vector3.forward);
 			myCart.rigidbody.AddForceAtPosition(forceMultiplyer*forceFromBack,myCart.transform.position+myCart.transform.localRotation*Vector3.back);
 			myCart.rigidbody.AddForceAtPosition(forceMultiplyer*forceFromBack,myCart.transform.position+myCart.transform.localRotation*Vector3.back);
-		}
-	}
-
-	// chat box
-	void OnGUI() {
-		if ((Event.current.type == EventType.KeyDown) && (Event.current.keyCode == KeyCode.Escape)) {
-			chatVisible = false;
-			chatBuffer = "";
-		}
-		if ((Event.current.type == EventType.KeyDown) && (Event.current.keyCode == KeyCode.Return)) {
-			chatVisible = false;
-			if (chatBuffer!="") {
-				networkView.RPC("PrintText", RPCMode.All, myViewID.ToString().Substring(13) + ": " + chatBuffer);
-				chatBuffer = "";
-			}
-		}
-		if (chatVisible) {
-			GUI.SetNextControlName("ChatBox");
-			chatBuffer = GUI.TextField(new Rect(10,Screen.height/2,200,20), chatBuffer, 25);
-			GUI.FocusControl("ChatBox");
-		}
-		if ((Event.current.type == EventType.KeyUp) && (Event.current.keyCode == KeyCode.T)) {
-			chatVisible = true;
 		}
 	}
 

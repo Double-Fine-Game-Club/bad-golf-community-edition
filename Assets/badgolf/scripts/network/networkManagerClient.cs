@@ -5,7 +5,6 @@ using System.Collections.Generic;
 public class networkManagerClient : MonoBehaviour {
 	Dictionary<float,string> screenMessages = new Dictionary<float,string>();
 	NetworkViewID myViewID;
-	GameObject myCart;
 
 	// Use this for initialization
 	void Start () {
@@ -14,10 +13,12 @@ public class networkManagerClient : MonoBehaviour {
 	}
 	
 	// CLIENT SIDE SCRIPTS GO HERE
+	// all scripts are called afterwe have a reference to the buggy and a NetworkViewID
 	void AddScripts() {
 		// updates network-sunk fiziks
-		controlClient mc = gameObject.AddComponent("controlClient") as controlClient;
-		mc.myViewID = myViewID;
+		gameObject.AddComponent("controlClient");
+		// chat
+		gameObject.AddComponent("netChat");
 	}
 	
 	void OnGUI() {
@@ -66,8 +67,13 @@ public class networkManagerClient : MonoBehaviour {
 	// tells the player that this viewID is theirs
 	[RPC]
 	void ThisOnesYours(NetworkViewID viewID) {
+		// add the references to networkVariables
+		networkVariables nvs = GetComponent("networkVariables") as networkVariables;
+		nvs.myViewID = viewID;
+		nvs.myCart = NetworkView.Find(viewID).gameObject;
+		// and let us have them aswell
 		myViewID = viewID;
-		myCart = NetworkView.Find(viewID).gameObject;
+		// call the functions that need them
 		AddScripts();
 	}
 	
