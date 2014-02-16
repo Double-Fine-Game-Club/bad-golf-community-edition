@@ -9,12 +9,13 @@ public class SwingMode : MonoBehaviour
 		private float shotPower = 0f;
 		public int hitMultiplier = 5;
 		private bool flying = false;
+		public GameObject cart;
 
 	
 		// Use this for initialization
 		void Start ()
 		{
-		
+			
 		}
 
 		void OnGUI ()
@@ -27,12 +28,12 @@ public class SwingMode : MonoBehaviour
 		void Update ()
 		{
 				Debug.Log ("Flying: " + flying);
-				if (Input.GetKey (KeyCode.LeftArrow)) {
+				if (Input.GetKey (KeyCode.D)) {
 						//rigidbody.freezeRotation = false;
 						gameObject.transform.Rotate (0f, 1f, 0f);
 						rigidbody.freezeRotation = true;
 				}
-				if (Input.GetKey (KeyCode.RightArrow)) {
+				if (Input.GetKey (KeyCode.A)) {
 						//rigidbody.freezeRotation = false;
 						gameObject.transform.Rotate (0f, -1f, 0f);
 						rigidbody.freezeRotation = true;
@@ -59,6 +60,7 @@ public class SwingMode : MonoBehaviour
 				if (Input.GetKeyDown (KeyCode.Space)) {
 						Debug.Log ("BOOM: " + shotPower);
 						flying = true;
+						
 						Vector3 arc = Vector3.forward;
 						if (shotPower < 100) {
 								shotPower = 100;
@@ -66,6 +68,9 @@ public class SwingMode : MonoBehaviour
 						arc.y = arc.y + shotPower / 200;
 						rigidbody.AddForce (transform.localRotation * arc * shotPower);
 						shotPower = 0;
+						camera.SetActive(false);
+						cart.SendMessage("toggleScript");
+						this.enabled = false;
 				}
 		}
 
