@@ -57,14 +57,14 @@ public class Wheel : MonoBehaviour
     {
 		car = transform.parent.GetComponent<CarController>();
 		wheelCollider = collider as WheelCollider;
-	
+
 		if (wheelModel != null)
 		{
 			originalWheelModelPosition = wheelModel.localPosition;
-			transform.position = wheelModel.position;// - wheelCollider.suspensionDistance*0.5f*transform.up;
+			//transform.position = wheelModel.position;// - wheelCollider.suspensionDistance*0.5f*transform.up;
 		}
 
-        // store initial starting values of wheelCollider
+		// store initial starting values of wheelCollider
         sidewaysFriction = wheelCollider.sidewaysFriction;
         forwardFriction = wheelCollider.forwardFriction;
         sidewaysStiffness = wheelCollider.sidewaysFriction.stiffness;
@@ -87,7 +87,6 @@ public class Wheel : MonoBehaviour
     // called in sync with the physics system
     void FixedUpdate()
     {
-
         // calculate if the wheel is sliding sideways
         relativeVelocity = transform.InverseTransformDirection(rb.velocity);
         
