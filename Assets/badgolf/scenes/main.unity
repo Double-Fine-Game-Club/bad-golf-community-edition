@@ -644,6 +644,8 @@ GameObject:
   - 4: {fileID: 496395805}
   - 23: {fileID: 496395807}
   - 102: {fileID: 496395806}
+  - 65: {fileID: 496395809}
+  - 114: {fileID: 496395808}
   m_Layer: 8
   m_Name: onlineMultiplayer
   m_TagString: Untagged
@@ -704,6 +706,32 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
+--- !u!114 &496395808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 496395804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4098d23184bdada4d9ea10a6557a67f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  theCam: {fileID: 1269009164}
+  target: {fileID: 977792247}
+  messageName: onMultiClicked
+--- !u!65 &496395809
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 496395804}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 28.8000011, y: 4.13964844, z: 0}
+  m_Center: {x: 14.4000006, y: -2.06982422, z: 0}
 --- !u!1 &580855525
 GameObject:
   m_ObjectHideFlags: 0

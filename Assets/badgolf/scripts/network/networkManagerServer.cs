@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class networkManagerServer : MonoBehaviour {
 	ArrayList playerGameObjects = new ArrayList();
 	Dictionary<float,string> screenMessages = new Dictionary<float,string>();
-	public GameObject myCart;
+	GameObject myCart;
 	Dictionary<NetworkPlayer,NetworkViewID> playersCartViewID = new Dictionary<NetworkPlayer,NetworkViewID>();
 	Dictionary<NetworkPlayer,NetworkViewID> randomBalls = new Dictionary<NetworkPlayer, NetworkViewID>();
     Dictionary<NetworkPlayer, NetworkViewID> spawnedPlayers = new Dictionary<NetworkPlayer, NetworkViewID>();
@@ -24,12 +24,20 @@ public class networkManagerServer : MonoBehaviour {
 		// add it to the list
 		playerGameObjects.Add(myCart);
 
+		// add variables to networkVariables
+		networkVariables nvs = gameObject.GetComponent("networkVariables") as networkVariables;
+		nvs.myCart = myCart;
+		nvs.myViewID = viewID;
+		nvs.playersCartViewID = playersCartViewID;
+		nvs.randomBalls = randomBalls;
+		nvs.spawnedPlayers = spawnedPlayers;
+
 		// ANY SERVER SIDE SCRIPTS GO HERE
 		//********************************************
 		// receives all players inputs and handles fiziks
-		controlServer ms = gameObject.AddComponent("controlServer") as controlServer;
-		ms.myCart = myCart;
-		ms.myViewID = viewID;
+		gameObject.AddComponent("controlServer");
+		// chat
+		gameObject.AddComponent("netChat");
 		//********************************************
 	}
 
