@@ -3,15 +3,14 @@ using System.Collections;
 
 public class controlClient : MonoBehaviour {
 	float timer = 0;
-	NetworkViewID myViewID;
 	float forceMultiplyer = 10000;
-	GameObject myCart;
+	PlayerInfo myInfo;
+	networkVariables nvs;
 
 	void Start() {
 		// get variables we need
-		networkVariables nvs = GetComponent("networkVariables") as networkVariables;
-		myViewID = nvs.myViewID;
-		myCart = nvs.myCart;
+		nvs = GetComponent("networkVariables") as networkVariables;
+		myInfo = nvs.myInfo;
 	}
 
 	void Update () {
@@ -35,25 +34,19 @@ public class controlClient : MonoBehaviour {
 			if (Input.GetKey(KeyCode.D)) {
 				toSend += 1;
 			}
-			//if (Network.isServer) {
-			//	ms.KartMovement(myViewID, toSend);
-			//} else {
-				networkView.RPC("KartMovement", RPCMode.Server, myViewID, toSend);
-			//}
+			networkView.RPC("KartMovement", RPCMode.Server, toSend);
 		}
 		if (Input.GetKeyDown(KeyCode.Q)) {
-			networkView.RPC("IHonked", RPCMode.All, myViewID);
-		}
-		if (Input.GetKeyDown(KeyCode.R)) {
-			networkView.RPC("SpawnBall", RPCMode.All, myViewID);
+			networkView.RPC("IHonked", RPCMode.All, myInfo.cartViewID);
 		}
         if (Input.GetKeyDown(KeyCode.G)) {
-			networkView.RPC("SpawnPlayer", RPCMode.All);
+			networkView.RPC("PlayerSwap", RPCMode.Server);
 		}
 	}
 
-	// local interpolation - add all other intetpolation here aswell
+	// local interpolation - add all other interpolation here aswell
 	void FixedUpdate() {
+		GameObject myCart = myInfo.cartGameObject;
 		Vector3 forceFromFront = new Vector3();	// force from front tires
 		Vector3 forceFromBack = new Vector3();	// force from back tires
 		if (Input.GetKey(KeyCode.W)) {
@@ -93,12 +86,13 @@ public class controlClient : MonoBehaviour {
 
 	// blank for server use only
 	[RPC]
-	void KartMovement(NetworkViewID viewId, int currentKBStatus) {}
+	void KartMovement(int currentKBStatus) {}
 
 	// blank for server use only
 	[RPC]
 	void SpawnBall(NetworkViewID viewId) {}
 
+	// blank for server use only
     [RPC]
-    void SpawnPlayer() { }
+	void PlayerSwap() {}
 }

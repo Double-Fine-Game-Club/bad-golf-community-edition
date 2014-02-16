@@ -3,7 +3,6 @@ using System.Collections;
 
 public class movement : MonoBehaviour {
 	float forceMultiplyer = 10000;
-	Vector3 cameraPos = new Vector3(0,2,-4);
 
 	// Update is called once per frame
 	void Update () {

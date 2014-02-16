@@ -4,12 +4,13 @@ using System.Collections.Generic;
 
 public class networkManagerClient : MonoBehaviour {
 	Dictionary<float,string> screenMessages = new Dictionary<float,string>();
-	NetworkViewID myViewID;
+	PlayerInfo myInfo;
+	bool connected = false;
 
 	// Use this for initialization
 	void Start () {
 		// spawn in a cart
-		networkView.RPC("GiveMeACart", RPCMode.Server);
+		networkView.RPC("GiveMeACart", RPCMode.Server, "buggy1", "ball", "lil_patrick");
 	}
 	
 	// CLIENT SIDE SCRIPTS GO HERE
@@ -19,12 +20,17 @@ public class networkManagerClient : MonoBehaviour {
 		gameObject.AddComponent("controlClient");
 		// chat
 		gameObject.AddComponent("netChat");
+		// get self
+		myInfo.player = Network.player;
+		// show that we connected
+		connected = true;
 	}
 	
 	void OnGUI() {
+		if (!connected) return;
 		// ping list
 		GUILayout.BeginHorizontal();
-		GUILayout.Label("Ping: " + Network.GetAveragePing(myViewID.owner) + "ms");
+		GUILayout.Label("Ping: " + Network.GetAveragePing(myInfo.player) + "ms");
 		GUILayout.EndHorizontal();
 		
 		// show any debug messages
@@ -69,10 +75,10 @@ public class networkManagerClient : MonoBehaviour {
 	void ThisOnesYours(NetworkViewID viewID) {
 		// add the references to networkVariables
 		networkVariables nvs = GetComponent("networkVariables") as networkVariables;
-		nvs.myViewID = viewID;
-		nvs.myCart = NetworkView.Find(viewID).gameObject;
+		nvs.myInfo.cartViewID = viewID;
+		nvs.myInfo.cartGameObject = NetworkView.Find(viewID).gameObject;
 		// and let us have them aswell
-		myViewID = viewID;
+		myInfo = nvs.myInfo;
 		// call the functions that need them
 		AddScripts();
 	}
@@ -87,5 +93,5 @@ public class networkManagerClient : MonoBehaviour {
 
 	// blank for server use only
 	[RPC]
-	void GiveMeACart() {}
+	void GiveMeACart(string a, string b, string c) {}
 }
