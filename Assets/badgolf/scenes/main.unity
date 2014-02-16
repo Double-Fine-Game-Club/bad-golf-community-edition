@@ -1381,6 +1381,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 977792248}
   - 114: {fileID: 977792249}
+  - 114: {fileID: 977792250}
   m_Layer: 8
   m_Name: main
   m_TagString: Untagged
@@ -1418,6 +1419,18 @@ MonoBehaviour:
   ed_menuScreen: {fileID: 1556452142}
   ed_roomScreen: {fileID: 1770295354}
   ed_creditsScreen: {fileID: 1241405399}
+--- !u!114 &977792250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 977792247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94f31e9acddaef34fa4c13139190b8d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LinuxFont: {fileID: 12800000, guid: 63ceaca538b9be64d948e6c3fe29802a, type: 3}
 --- !u!1 &981552888
 GameObject:
   m_ObjectHideFlags: 0
