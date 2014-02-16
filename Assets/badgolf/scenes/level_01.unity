@@ -359,7 +359,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2df1b0bf1e61854fb712105d7a49a7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraGameObject: {fileID: 505633467}
 --- !u!1 &87788719
 GameObject:
   m_ObjectHideFlags: 0
@@ -417,7 +416,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2df1b0bf1e61854fb712105d7a49a7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraGameObject: {fileID: 70642351}
 --- !u!1001 &90352833
 Prefab:
   m_ObjectHideFlags: 0
@@ -590,7 +588,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2df1b0bf1e61854fb712105d7a49a7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraGameObject: {fileID: 1823540532}
 --- !u!1 &236841265
 GameObject:
   m_ObjectHideFlags: 0
@@ -851,10 +848,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1787391473}
   - {fileID: 1911609847}
-  - {fileID: 151448199}
+  - {fileID: 1787391473}
   - {fileID: 1433121076}
+  - {fileID: 151448199}
   m_Father: {fileID: 1078787392}
 --- !u!1 &502024275
 GameObject:
@@ -1576,7 +1573,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2df1b0bf1e61854fb712105d7a49a7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraGameObject: {fileID: 1008491982}
 --- !u!1 &1008491982
 GameObject:
   m_ObjectHideFlags: 0
@@ -2360,7 +2356,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2df1b0bf1e61854fb712105d7a49a7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraGameObject: {fileID: 502024275}
 --- !u!1 &1433121075
 GameObject:
   m_ObjectHideFlags: 0
@@ -2518,7 +2513,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2df1b0bf1e61854fb712105d7a49a7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraGameObject: {fileID: 825665793}
 --- !u!1 &1662227873
 GameObject:
   m_ObjectHideFlags: 0
@@ -2716,7 +2710,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2df1b0bf1e61854fb712105d7a49a7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraGameObject: {fileID: 236841265}
 --- !u!1 &1721220705
 GameObject:
   m_ObjectHideFlags: 0
