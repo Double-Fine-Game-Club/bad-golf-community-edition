@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2dc6d94097fac4e4b9c76cf51ded2be4
+guid: 92eb415e734bdf644a6fc7375598a58b
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
@@ -17,8 +17,8 @@ ModelImporter:
     3300000: body
     3300002: hair
     3300004: shirtNeck
-    4300000: body
-    4300002: shirtNeck
+    4300000: shirtNeck
+    4300002: body
     4300004: hair
     9500000: //RootNode
     11100000: //RootNode
