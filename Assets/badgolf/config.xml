@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Config>
-  <Levels LevelsPath="Assets//badgolf//scenes">
-    <Map>cart_test_01</Map>
+  <Levels LevelsPath="Assets/badgolf/scenes/">
     <Map>level_01</Map>
     <Map>main</Map>
   </Levels>

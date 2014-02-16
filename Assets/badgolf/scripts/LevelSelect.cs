@@ -3,9 +3,9 @@ using System.Collections;
 
 public class LevelSelect : MonoBehaviour {
 
-	public string levelSelected;
+	public int levelSelected;
 	public string[] levels;
-	public int id = 0;
+	public string pathToLevels;
 	private TextMesh lvlSel;
 
 	void Start(){
@@ -19,14 +19,12 @@ public class LevelSelect : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (this.gameObject.name == "levelID") {
-
-			if (Input.GetKeyDown (KeyCode.LeftArrow) && id > 0) {
-				id--;
-			} else if (Input.GetKeyDown (KeyCode.RightArrow) && id < levels.Length - 1) {
-				id++;
+			if (Input.GetKeyDown (KeyCode.LeftArrow) && levelSelected > 0) {
+				levelSelected--;
+			} else if (Input.GetKeyDown (KeyCode.RightArrow) && levelSelected < levels.Length - 1) {
+				levelSelected++;
 			}
-			levelSelected = levels [id];
-			lvlSel.text = levelSelected;
+			lvlSel.text = levels [levelSelected];
 		}
 	}
 }

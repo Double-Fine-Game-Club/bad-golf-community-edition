@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+using UnityEngine;
+using UnityEditor;
 using System.Collections;
 
 public class GameControl : MonoBehaviour 
@@ -50,8 +51,8 @@ public class GameControl : MonoBehaviour
 	{
 		//TODO: get value from selection thing in menu
 		GameObject gObj = GameObject.Find ("levelID");
-		LevelSelect levelSel = gObj.GetComponent(typeof(LevelSelect)) as LevelSelect;
-		Application.LoadLevelAdditive(levelSel.levelSelected);
+		LevelSelect levelSel = gObj.GetComponent(typeof(LevelSelect)) as LevelSelect;		
+		Application.LoadLevelAdditive(levelSel.levels[levelSel.levelSelected]);
 		hideAllScreens();
 	}
 

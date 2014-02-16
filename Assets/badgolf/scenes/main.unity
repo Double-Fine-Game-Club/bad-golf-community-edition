@@ -1473,9 +1473,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74da16b59275fdc46a30bec1b9623215, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelSelected: 
+  levelSelected: 0
   levels: []
-  id: 0
+  pathToLevels: 
 --- !u!114 &981552893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2643,7 +2643,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1968385774}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cdf449e72ee46bb4ea009d28f4f24762, type: 3}
   m_Name: 
