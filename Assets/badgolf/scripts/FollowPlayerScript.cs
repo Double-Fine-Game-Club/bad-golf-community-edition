@@ -16,6 +16,9 @@ public class FollowPlayerScript : MonoBehaviour
 
 		// To adjust camera angle, in order to see ahead while driving.
 		public float cameraTilt = 1.5f;
+		public float minDistance = 3.0f;
+
+		public bool zoom = true;
 	
 		// Use this for initialization
 		void Start () {
@@ -57,6 +60,56 @@ public class FollowPlayerScript : MonoBehaviour
 				transform.position = new Vector3 (transform.position.x, currentHeight, transform.position.z);
 
 				// Always look a bit (value of cameraTilt) over the target.
-				gameObject.transform.LookAt (new Vector3(target.transform.position.x, target.transform.position.y + cameraTilt, target.transform.position.z));
+				Vector3 lookAtPt = new Vector3(target.transform.position.x, target.transform.position.y + cameraTilt, target.transform.position.z);
+				transform.LookAt(lookAtPt);
+
+		        if( zoom ) {
+					Ray[] frustumRays = new Ray[4];
+
+					frustumRays[0] = transform.camera.ScreenPointToRay(new Vector3(0,0,0));
+					frustumRays[1] = transform.camera.ScreenPointToRay(new Vector3(transform.camera.pixelWidth,0,0));
+					frustumRays[2] = transform.camera.ScreenPointToRay(new Vector3(0,transform.camera.pixelHeight,0));
+					frustumRays[3] = transform.camera.ScreenPointToRay(new Vector3(transform.camera.pixelWidth,transform.camera.pixelHeight,0));
+
+					transform.position = HandleCollisionZoom(transform.position, lookAtPt, minDistance, ref frustumRays);
+				}
+		}
+	
+		// returns a new camera position
+		Vector3 HandleCollisionZoom(Vector3 camPos, Vector3 targetPos, 
+		                            float minOffsetDist, ref Ray[] frustumRays) {
+			float offsetDist = Vector3.Magnitude(targetPos - camPos); 
+			float raycastLength = offsetDist - minOffsetDist;
+			RaycastHit hit;
+			if (raycastLength < 0.0f) {
+				// camera is already too near the lookat target
+				return camPos;
+			}
+			
+			Vector3 camOut = Vector3.Normalize(targetPos - camPos);
+			Vector3 nearestCamPos = targetPos - camOut * minOffsetDist;
+			float minHitFraction = 1.0f;
+			
+			for (int i = 0; i < 4; ++i) {
+				Vector3 corner = frustumRays[i].origin;
+				Vector3 offsetToCorner = corner - camPos;
+				Vector3 rayStart = nearestCamPos + offsetToCorner;
+				Vector3 rayEnd = corner;
+	
+				Debug.DrawRay(rayStart, rayEnd-rayStart);
+			
+				// a result between 0 and 1 indicates a hit along the ray segment
+				Physics.Raycast(new Ray(rayStart,rayEnd), out hit);
+				float hitFraction = hit.distance;
+				minHitFraction = Mathf.Min(hitFraction, minHitFraction);
+			}        
+			
+			if (minHitFraction < 1.0f) {
+				return nearestCamPos - camOut * (raycastLength * minHitFraction);
+			}
+			else {
+				return camPos;
+			}
 		}
 }
+	

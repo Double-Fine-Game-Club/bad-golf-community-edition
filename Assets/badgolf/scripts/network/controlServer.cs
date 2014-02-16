@@ -4,11 +4,16 @@ using System.Collections.Generic;
 
 public class controlServer : MonoBehaviour {
 	float forceMultiplyer = 10000;
-	public NetworkViewID myViewID;
+	NetworkViewID myViewID;
 	Dictionary<NetworkViewID,int> KBinfos = new Dictionary<NetworkViewID,int>();
-	public GameObject myCart;
-	bool chatVisible = false;
-	string chatBuffer = "";
+	GameObject myCart;
+
+	void Start() {
+		// get variables we need
+		networkVariables nvs = GetComponent("networkVariables") as networkVariables;
+		myViewID = nvs.myViewID;
+		myCart = nvs.myCart;
+	}
 
 	void Update() {
 		if (Input.GetKeyDown(KeyCode.Q)) {
@@ -16,6 +21,9 @@ public class controlServer : MonoBehaviour {
 		}
 		if (Input.GetKeyDown(KeyCode.R)) {
 			networkView.RPC("SpawnBall", RPCMode.All, myViewID);
+		}
+        if (Input.GetKeyDown(KeyCode.G)) {
+			networkView.RPC("SpawnPlayer", RPCMode.All);
 		}
 	}
 
@@ -92,29 +100,6 @@ public class controlServer : MonoBehaviour {
 		}
 	}
 	
-	// chat box
-	void OnGUI() {
-		if ((Event.current.type == EventType.KeyDown) && (Event.current.keyCode == KeyCode.Escape)) {
-			chatVisible = false;
-			chatBuffer = "";
-		}
-		if ((Event.current.type == EventType.KeyDown) && (Event.current.keyCode == KeyCode.Return)) {
-			chatVisible = false;
-			if (chatBuffer!="") {
-				networkView.RPC("PrintText", RPCMode.All, myViewID.ToString().Substring(13) + ": " + chatBuffer);
-				chatBuffer = "";
-			}
-		}
-		if (chatVisible) {
-			GUI.SetNextControlName("ChatBox");
-			chatBuffer = GUI.TextField(new Rect(10,Screen.height/2,200,20), chatBuffer, 25);
-			GUI.FocusControl("ChatBox");
-		}
-		if ((Event.current.type == EventType.KeyUp) && (Event.current.keyCode == KeyCode.T)) {
-			chatVisible = true;
-		}
-	}
-	
 	// remove them from the list
 	void OnPlayerDisconnected(NetworkPlayer player) {
 		Debug.LogError("Ignore this next error, it's actually fine");
@@ -122,7 +107,7 @@ public class controlServer : MonoBehaviour {
 
 
 
-	// update what they are currenly doing - this also adds new updates
+	// update what they are currenly doing - this also adds new players automatically
 	[RPC]
 	public void KartMovement(NetworkViewID viewId, int currentKBStatus) {
 		KBinfos[viewId] = currentKBStatus;
