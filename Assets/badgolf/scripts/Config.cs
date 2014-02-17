@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 using Xml = System.Xml;
@@ -8,7 +9,7 @@ using ConfigReader = System.Xml.XmlDocument;
 
 public class Config : MonoBehaviour {
 	
-	private string configPath = "Assets\\badgolf\\config.xml";
+	private string configPath = "Assets/badgolf/config.xml";
 	
 	// Use this for initialization
 	void Start () {
@@ -16,7 +17,7 @@ public class Config : MonoBehaviour {
 			Xml.XmlWriterSettings settings = new Xml.XmlWriterSettings();
 			settings.Indent = true;
 			
-			string levelsPath = "Assets//badgolf//scenes";
+			string levelsPath = "Assets/badgolf/scenes/";
 			string[] loaderPath = System.IO.Directory.GetFiles (levelsPath);
 			ConfigWriter cfgFile = ConfigWriter.Create(configPath,settings);
 			cfgFile.WriteStartDocument();
@@ -28,7 +29,7 @@ public class Config : MonoBehaviour {
 				
 				if (file.EndsWith(".meta") == false)
 				{
-					cfgFile.WriteElementString("Map",file.Remove(0,levelsPath.Length+1).Remove(file.Length-(levelsPath.Length+7)).ToString());
+					cfgFile.WriteElementString("Map",file.Remove(0,levelsPath.Length).Remove(file.Length-(levelsPath.Length+6)).ToString());
 				}
 				
 			}
@@ -47,16 +48,32 @@ public class Config : MonoBehaviour {
 		
 		GameObject gObj = GameObject.FindGameObjectWithTag ("LevelID");
 		LevelSelect levelSel = gObj.GetComponent (typeof(LevelSelect)) as LevelSelect;
-		Xml.XmlNodeList node = cfgFile.GetElementsByTagName ("Map");
-		int mapCount = node.Count;
+		Xml.XmlNodeList mapNode = cfgFile.GetElementsByTagName ("Map");
+		levelSel.pathToLevels = cfgFile.DocumentElement.FirstChild.Attributes[0].Value;
+		
+		
+		int mapCount = mapNode.Count;
 		
 		levelSel.levels = new string[mapCount];
 		int itn = 0;
 		
-		foreach (Xml.XmlElement nodes in node){
+		foreach (Xml.XmlElement nodes in mapNode){
 			levelSel.levels[itn] = nodes.InnerText;
 			itn = itn+1;
 		}
+		
+		
+		string[] levelsPath = new string[levelSel.levels.Length];
+		EditorBuildSettingsScene[] newSettings = new EditorBuildSettingsScene[levelSel.levels.Length];
+		
+		for (int i = 0; i < levelsPath.Length; i++) {
+			levelsPath[i] = levelSel.pathToLevels+"/"+levelSel.levels[i]+".unity";	
+			EditorBuildSettingsScene sceneL = new EditorBuildSettingsScene(levelsPath[i],true);
+			newSettings[i]=sceneL;
+		}
+		
+		EditorBuildSettings.scenes = newSettings;
+		AssetDatabase.Refresh (ImportAssetOptions.ForceUpdate);
 	}
 	
 }

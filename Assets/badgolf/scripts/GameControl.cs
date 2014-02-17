@@ -68,8 +68,8 @@ public class GameControl : MonoBehaviour
 	public void onStartClicked()
 	{
 		GameObject gObj = GameObject.Find ("levelID");
-		LevelSelect levelSel = gObj.GetComponent(typeof(LevelSelect)) as LevelSelect;
-		Application.LoadLevelAdditive(levelSel.levelSelected);
+		LevelSelect levelSel = gObj.GetComponent(typeof(LevelSelect)) as LevelSelect;	
+		Application.LoadLevelAdditive(levelSel.levels[levelSel.levelSelected]);
 		hideAllScreens();
 	}
 
