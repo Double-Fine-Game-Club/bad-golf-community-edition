@@ -9,7 +9,6 @@ public class LevelSelect : MonoBehaviour {
 	private TextMesh lvlSel;
 	
 	void Start(){
-		UnityEditor.PrefabUtility.ResetToPrefabState (gameObject);
 		lvlSel = gameObject.GetComponent ("TextMesh") as TextMesh;
 		GameObject gObj = gameObject;
 		Config cfg = (Config)gObj.GetComponent(typeof(Config));
