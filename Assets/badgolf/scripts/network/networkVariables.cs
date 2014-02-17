@@ -10,12 +10,13 @@ public class networkVariables : MonoBehaviour {
 	// client only variables
 
 	// server only variables
-	public ArrayList players;
+	public ArrayList players = new ArrayList();	// maybe include this in client for extrapolation of other players buggys - done
 }
 
 
 public class PlayerInfo {
 	public NetworkPlayer player;			// player
+	public NetworkPlayer server;			// server
 	public NetworkViewID cartViewID;		// NetworkViewID of the cart
 	public GameObject cartGameObject;		// GameObject of the cart
 	public string cartModel;				// model of the cart
