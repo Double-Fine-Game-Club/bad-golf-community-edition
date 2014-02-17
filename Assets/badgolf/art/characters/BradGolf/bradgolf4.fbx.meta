@@ -1,31 +1,36 @@
 fileFormatVersion: 2
-guid: 73201b0a22de55845b8e44f2f96c6b75
+guid: f524f4aec33f8ba4f85b08aa5b502b2f
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
-    100000: //RootNode
-    100002: Camera
-    100004: Cube
-    100006: Glasses
-    100008: Lamp
-    100010: Teeth
-    400000: //RootNode
-    400002: Camera
-    400004: Cube
-    400006: Glasses
-    400008: Lamp
-    400010: Teeth
-    2300000: Cube
-    2300002: Glasses
-    2300004: Teeth
-    3300000: Cube
-    3300002: Glasses
-    3300004: Teeth
-    4300000: Teeth
-    4300002: Glasses
-    4300004: Cube
+    100000: Armature
+    100002: Bone
+    100004: //RootNode
+    100006: Camera
+    100008: Glasses
+    100010: Hair
+    100012: Head
+    100014: Lamp
+    100016: Teeth
+    400000: Armature
+    400002: Bone
+    400004: //RootNode
+    400006: Camera
+    400008: Glasses
+    400010: Hair
+    400012: Head
+    400014: Lamp
+    400016: Teeth
+    4300000: Hair
+    4300002: Teeth
+    4300004: Glasses
+    4300006: Head
     7400000: Default Take
     9500000: //RootNode
+    13700000: Glasses
+    13700002: Hair
+    13700004: Head
+    13700006: Teeth
   materials:
     importMaterials: 1
     materialName: 0
