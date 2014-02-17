@@ -1,9 +1,5 @@
 ﻿using UnityEngine;
-
-#if UNITY_EDITOR
-	using UnityEditor;
-#endif
-
+using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 using Xml = System.Xml;
@@ -68,8 +64,6 @@ public class Config : MonoBehaviour {
 		
 		
 		string[] levelsPath = new string[levelSel.levels.Length];
-
-#if UNITY_EDITOR
 		EditorBuildSettingsScene[] newSettings = new EditorBuildSettingsScene[levelSel.levels.Length];
 		
 		for (int i = 0; i < levelsPath.Length; i++) {
@@ -79,9 +73,7 @@ public class Config : MonoBehaviour {
 		}
 		
 		EditorBuildSettings.scenes = newSettings;
-#endif
-		for (int i = 0; i < levelsPath.Length; i++) {
-			levelsPath[i] = levelSel.pathToLevels+"/"+levelSel.levels[i]+".unity";	
-		}
+		AssetDatabase.Refresh (ImportAssetOptions.ForceUpdate);
 	}
+	
 }
