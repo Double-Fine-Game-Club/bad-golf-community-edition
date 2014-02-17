@@ -9,7 +9,7 @@ public class netChat : MonoBehaviour {
 	void Start () {
 		// get variables we need
 		networkVariables nvs = GetComponent("networkVariables") as networkVariables;
-		myViewID = nvs.myViewID;
+		myViewID = nvs.myInfo.cartViewID;
 	}
 	
 	// chat box
@@ -31,7 +31,7 @@ public class netChat : MonoBehaviour {
 		// show chat box if needed
 		if (chatVisible) {
 			GUI.SetNextControlName("ChatBox");
-			chatBuffer = GUI.TextField(new Rect(10,Screen.height/2,200,20), chatBuffer, 25);
+			chatBuffer = GUI.TextField(new Rect(10,Screen.height/2,200,20), chatBuffer, 64);
 			GUI.FocusControl("ChatBox");
 		}
 		// look for T event
