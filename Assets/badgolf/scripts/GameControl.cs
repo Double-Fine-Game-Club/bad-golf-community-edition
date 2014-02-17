@@ -67,9 +67,9 @@ public class GameControl : MonoBehaviour
 
 	public void onStartClicked()
 	{
-		//TODO: get value from selection thing in menu
-		nameOfLevel = "level_01";
-		Application.LoadLevelAdditive( nameOfLevel);
+		GameObject gObj = GameObject.Find ("levelID");
+		LevelSelect levelSel = gObj.GetComponent(typeof(LevelSelect)) as LevelSelect;
+		Application.LoadLevelAdditive(levelSel.levelSelected);
 		hideAllScreens();
 	}
 

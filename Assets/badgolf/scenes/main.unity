@@ -545,8 +545,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4098d23184bdada4d9ea10a6557a67f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  theCam: {fileID: 580855530}
-  target: {fileID: 977792247}
   messageName: onMenu
 --- !u!65 &169269546
 BoxCollider:
@@ -1105,8 +1103,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4098d23184bdada4d9ea10a6557a67f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  theCam: {fileID: 1269009164}
-  target: {fileID: 977792247}
   messageName: onMultiClicked
 --- !u!65 &496395809
 BoxCollider:
@@ -1423,8 +1419,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4098d23184bdada4d9ea10a6557a67f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  theCam: {fileID: 1269009164}
-  target: {fileID: 977792247}
   messageName: onOptions
 --- !u!65 &677999004
 BoxCollider:
@@ -1689,8 +1683,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4098d23184bdada4d9ea10a6557a67f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  theCam: {fileID: 580855530}
-  target: {fileID: 977792247}
   messageName: onMenu
 --- !u!65 &724076260
 BoxCollider:
@@ -1869,8 +1861,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4098d23184bdada4d9ea10a6557a67f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  theCam: {fileID: 1848461267}
-  target: {fileID: 977792247}
   messageName: onLocalMultiplayer
 --- !u!102 &760502984
 TextMesh:
@@ -2177,8 +2167,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4098d23184bdada4d9ea10a6557a67f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  theCam: {fileID: 121255583}
-  target: {fileID: 977792247}
   messageName: onLocalMultiplayer
 --- !u!102 &955593324
 TextMesh:
@@ -2327,9 +2315,11 @@ GameObject:
   - 4: {fileID: 981552889}
   - 23: {fileID: 981552891}
   - 102: {fileID: 981552890}
+  - 114: {fileID: 981552893}
+  - 114: {fileID: 981552892}
   m_Layer: 8
-  m_Name: player4
-  m_TagString: Untagged
+  m_Name: levelID
+  m_TagString: LevelID
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2387,6 +2377,31 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
+--- !u!114 &981552892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 981552888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f2707abcad668640b3f60257ee4ec28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelSelected: 
+  levels: []
+  id: 0
+--- !u!114 &981552893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 981552888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c724092a2948d2b48865a95eb48e5c0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &988246792
 GameObject:
   m_ObjectHideFlags: 0
@@ -3086,8 +3101,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4098d23184bdada4d9ea10a6557a67f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  theCam: {fileID: 1848461267}
-  target: {fileID: 977792247}
   messageName: onMultiSkip
 --- !u!102 &1373753721
 TextMesh:
@@ -3242,8 +3255,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4098d23184bdada4d9ea10a6557a67f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  theCam: {fileID: 121255583}
-  target: {fileID: 977792247}
   messageName: onMultiClicked
 --- !u!65 &1432482610
 BoxCollider:
@@ -3374,8 +3385,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4098d23184bdada4d9ea10a6557a67f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  theCam: {fileID: 1848461267}
-  target: {fileID: 977792247}
   messageName: onMultiClicked
 --- !u!65 &1613245876
 BoxCollider:
@@ -3543,8 +3552,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4098d23184bdada4d9ea10a6557a67f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  theCam: {fileID: 1339847187}
-  target: {fileID: 977792247}
   messageName: onMenu
 --- !u!102 &1675500113
 TextMesh:
@@ -3694,8 +3701,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4098d23184bdada4d9ea10a6557a67f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  theCam: {fileID: 1269009164}
-  target: {fileID: 977792247}
   messageName: onCredits
 --- !u!1 &1705748261
 GameObject:
@@ -3934,8 +3939,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4098d23184bdada4d9ea10a6557a67f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  theCam: {fileID: 580855530}
-  target: {fileID: 977792247}
   messageName: onMenu
 --- !u!65 &1926973864
 BoxCollider:
@@ -4069,6 +4072,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1968385775}
+  - 114: {fileID: 1968385776}
   m_Layer: 8
   m_Name: intro
   m_TagString: Untagged
@@ -4092,6 +4096,17 @@ Transform:
   - {fileID: 54244279}
   - {fileID: 2114996721}
   m_Father: {fileID: 977792248}
+--- !u!114 &1968385776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1968385774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c724092a2948d2b48865a95eb48e5c0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1976647979
 GameObject:
   m_ObjectHideFlags: 0
@@ -4273,8 +4288,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4098d23184bdada4d9ea10a6557a67f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  theCam: {fileID: 1269009164}
-  target: {fileID: 977792247}
   messageName: onLocalMultiplayer
 --- !u!102 &2074639288
 TextMesh:
@@ -4493,8 +4506,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4098d23184bdada4d9ea10a6557a67f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  theCam: {fileID: 1339847187}
-  target: {fileID: 977792247}
   messageName: onStartClicked
 --- !u!65 &2132262712
 BoxCollider:
