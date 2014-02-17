@@ -1,9 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Config>
-  <Levels LevelsPath="Assets//badgolf//scenes">
+  <Levels LevelsPath="c:/scenes">
     <Map>level_01</Map>
-    <Map>level_01_lightsoda</Map>
+    <Map>cart_test_01</Map>
     <Map>main</Map>
-    <Map>multi_lobby</Map>
   </Levels>
 </Config>
