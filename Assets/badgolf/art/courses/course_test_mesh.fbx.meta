@@ -1,30 +1,13 @@
 fileFormatVersion: 2
-guid: 73201b0a22de55845b8e44f2f96c6b75
+guid: d35af56e1c5e7f447a352e664a1b93a7
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
     100000: //RootNode
-    100002: Camera
-    100004: Cube
-    100006: Glasses
-    100008: Lamp
-    100010: Teeth
     400000: //RootNode
-    400002: Camera
-    400004: Cube
-    400006: Glasses
-    400008: Lamp
-    400010: Teeth
-    2300000: Cube
-    2300002: Glasses
-    2300004: Teeth
-    3300000: Cube
-    3300002: Glasses
-    3300004: Teeth
-    4300000: Teeth
-    4300002: Glasses
-    4300004: Cube
-    7400000: Default Take
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: course_mesh
     9500000: //RootNode
   materials:
     importMaterials: 1

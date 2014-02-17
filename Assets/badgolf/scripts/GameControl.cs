@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameControl : MonoBehaviour 
 {
@@ -7,9 +8,14 @@ public class GameControl : MonoBehaviour
 	public GameObject ed_menuScreen;
 	public GameObject ed_roomScreen;
 	public GameObject ed_creditsScreen;
+	public GameObject ed_onlineLobbyScreen;
+	public GameObject ed_optionsScreen;
 
+	private string nameOfLevel;
 	private GameObject loadedLevel;
 	private bool levelLoaded = false;
+
+	private Dictionary<string,GameObject> loadedLevelMap = new Dictionary<string,GameObject>();
 
 	void Start()
 	{
@@ -46,18 +52,31 @@ public class GameControl : MonoBehaviour
 		hideAllScreens();
 		ed_creditsScreen.SetActive(true);
 	}
-	
-	public void onStartClicked()
+
+	public void onOptions()
 	{
-		//TODO: get value from selection thing in menu
-		Application.LoadLevelAdditive( "level_01");
 		hideAllScreens();
+		ed_optionsScreen.SetActive(true);
 	}
-	
+
 	public void onMultiClicked()
 	{
-		//TODO: get value from selection thing in menu
-		Application.LoadLevelAdditive("multi_lobby");
+		hideAllScreens();
+		ed_onlineLobbyScreen.SetActive(true);
+	}
+
+	public void onStartClicked()
+	{
+		GameObject gObj = GameObject.Find ("levelID");
+		LevelSelect levelSel = gObj.GetComponent(typeof(LevelSelect)) as LevelSelect;	
+		Application.LoadLevelAdditive(levelSel.levels[levelSel.levelSelected]);
+		hideAllScreens();
+	}
+
+	public void onMultiSkip()
+	{
+		nameOfLevel = "multi_lobby";
+		Application.LoadLevelAdditive( nameOfLevel );
 		hideAllScreens();
 	}
 
@@ -67,13 +86,15 @@ public class GameControl : MonoBehaviour
 		ed_menuScreen.SetActive(false);
 		ed_roomScreen.SetActive(false);	
 		ed_creditsScreen.SetActive(false);
+		ed_onlineLobbyScreen.SetActive(false);
+		ed_optionsScreen.SetActive(false);
 	}
 
 	void Update()
 	{
 		if ( levelLoaded )
 		{
-			loadedLevel = transform.root.FindChild( "level_01").gameObject;
+			loadedLevelMap.Add(nameOfLevel, transform.root.FindChild( nameOfLevel ).gameObject);
 			levelLoaded = false;
 		}
 	}
