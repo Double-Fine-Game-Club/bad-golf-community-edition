@@ -2342,7 +2342,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 981552888}
-  m_Text: default_test_01
+  m_Text: level_01
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
@@ -2388,9 +2388,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f2707abcad668640b3f60257ee4ec28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelSelected: 
+  levelSelected: 0
   levels: []
-  id: 0
+  pathToLevels: 
 --- !u!114 &981552893
 MonoBehaviour:
   m_ObjectHideFlags: 0
