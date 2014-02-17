@@ -137,7 +137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1316b11755235c4296b41f6c3d29a88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myCart: {fileID: 0}
+  serverVersion: HL5
 --- !u!1 &627864018
 GameObject:
   m_ObjectHideFlags: 0

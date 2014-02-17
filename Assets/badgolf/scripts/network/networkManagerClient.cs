@@ -4,12 +4,13 @@ using System.Collections.Generic;
 
 public class networkManagerClient : MonoBehaviour {
 	Dictionary<float,string> screenMessages = new Dictionary<float,string>();
-	NetworkViewID myViewID;
+	PlayerInfo myInfo;
+	bool connected = false;
 
 	// Use this for initialization
 	void Start () {
 		// spawn in a cart
-		networkView.RPC("GiveMeACart", RPCMode.Server);
+		networkView.RPC("GiveMeACart", RPCMode.Server, "buggy1", "ball", "lil_patrick");
 	}
 	
 	// CLIENT SIDE SCRIPTS GO HERE
@@ -19,12 +20,19 @@ public class networkManagerClient : MonoBehaviour {
 		gameObject.AddComponent("controlClient");
 		// chat
 		gameObject.AddComponent("netChat");
+		// get self
+		myInfo.player = Network.player;
+		// get server
+		myInfo.server = myInfo.cartViewID.owner;
+		// show that we connected
+		connected = true;
 	}
 	
 	void OnGUI() {
+		if (!connected) return;
 		// ping list
 		GUILayout.BeginHorizontal();
-		GUILayout.Label("Ping: " + Network.GetAveragePing(myViewID.owner) + "ms");
+		GUILayout.Label("Ping: " + Network.GetAveragePing(myInfo.server) + "ms");
 		GUILayout.EndHorizontal();
 		
 		// show any debug messages
@@ -63,29 +71,78 @@ public class networkManagerClient : MonoBehaviour {
 		// set velocity if we can
 		if (clone.rigidbody) clone.rigidbody.velocity = velocity;
 	}
-
+	
 	// tells the player that this viewID is theirs
 	[RPC]
-	void ThisOnesYours(NetworkViewID viewID) {
-		// add the references to networkVariables
+	void ThisOnesYours(NetworkViewID cartViewID, NetworkViewID ballViewID, NetworkViewID characterViewID) {
 		networkVariables nvs = GetComponent("networkVariables") as networkVariables;
-		nvs.myViewID = viewID;
-		nvs.myCart = NetworkView.Find(viewID).gameObject;
-		// and let us have them aswell
-		myViewID = viewID;
+		foreach(PlayerInfo p in nvs.players) {
+			if (p.cartViewID==cartViewID) {
+				myInfo = p;
+				nvs.myInfo = myInfo;
+			}
+		}
 		// call the functions that need them
 		AddScripts();
+	}
+	
+	// tells the player that this set of viewIDs are a player
+	[RPC]
+	void SpawnPlayer(NetworkViewID cartViewID, NetworkViewID ballViewID, NetworkViewID characterViewID, int mode, NetworkPlayer p) {
+		PlayerInfo newGuy = new PlayerInfo();
+
+		newGuy.cartViewID = cartViewID;
+		newGuy.cartGameObject = NetworkView.Find(cartViewID).gameObject;
+		newGuy.characterViewID = characterViewID;
+		newGuy.characterGameObject = NetworkView.Find(characterViewID).gameObject;
+		newGuy.ballViewID = ballViewID;
+		newGuy.ballGameObject = NetworkView.Find(ballViewID).gameObject;
+		newGuy.currentMode = mode;
+		newGuy.player = p;
+
+		// ADD MORE SHIT HERE
+		if (newGuy.currentMode==0){
+			// set them inside the buggy
+			newGuy.characterGameObject.transform.parent = newGuy.cartGameObject.transform;
+			newGuy.characterGameObject.transform.localRotation = Quaternion.identity;
+		} else if (newGuy.currentMode==1) {
+			// set them inside the buggy
+			newGuy.characterGameObject.transform.parent = newGuy.ballGameObject.transform;
+			newGuy.characterGameObject.transform.localRotation = Quaternion.identity;
+		}
+		
+		// and let us have them aswell
+		networkVariables nvs = GetComponent("networkVariables") as networkVariables;
+		nvs.players.Add(newGuy);
+	}
+
+	// tells the player that someone left
+	[RPC]
+	void RemovePlayer(NetworkPlayer player) {
+		PrintText("Someone left");
+
+		// remove from array
+		networkVariables nvs = GetComponent("networkVariables") as networkVariables;
+		PlayerInfo toDelete = new PlayerInfo();
+		foreach (PlayerInfo p in nvs.players)
+		{
+			if (p.player==player) {
+				// remove from array
+				toDelete = p;
+			}
+		}
+		if (nvs.players.Contains(toDelete)) nvs.players.Remove(toDelete);
 	}
 	
 	// remove stuff
 	[RPC]
 	void RemoveViewID(NetworkViewID viewID) {
 		// remove the object
-		Destroy(NetworkView.Find(viewID).gameObject);
+		if (NetworkView.Find(viewID)) Destroy(NetworkView.Find(viewID).gameObject);
 	}
 
 
 	// blank for server use only
 	[RPC]
-	void GiveMeACart() {}
+	void GiveMeACart(string a, string b, string c) {}
 }
