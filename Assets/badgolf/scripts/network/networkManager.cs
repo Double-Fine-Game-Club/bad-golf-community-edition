@@ -4,15 +4,18 @@ using System.Collections.Generic;
 
 public class networkManager : MonoBehaviour {
 	bool connectingToServer = false;
+	string serverVersion;
 	
 	// Use this for initialization
 	void Start () {
 		// change to custom master server
 		MasterServer.ipAddress = "37.157.247.37";
 		MasterServer.port = 23466;
+		// get server version
+		serverVersion = (GetComponent("networkVariables") as networkVariables).serverVersion;
 		// get them servers
 		MasterServer.ClearHostList();
-		MasterServer.RequestHostList("HL4");
+		MasterServer.RequestHostList(serverVersion);
 	}
 	
 	void OnGUI() {
@@ -31,7 +34,7 @@ public class networkManager : MonoBehaviour {
 			{
 				// get them servers
 				MasterServer.ClearHostList();
-				MasterServer.RequestHostList("HL4");
+				MasterServer.RequestHostList(serverVersion);
 			}
 			
 			HostData[] data = MasterServer.PollHostList();
