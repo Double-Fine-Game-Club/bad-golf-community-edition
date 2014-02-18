@@ -5,6 +5,7 @@ TagManager:
   tags:
   - Ground
   - LevelID
+  - Cart
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX
