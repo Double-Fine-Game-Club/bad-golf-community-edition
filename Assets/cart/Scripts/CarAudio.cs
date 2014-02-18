@@ -25,6 +25,7 @@ public class CarAudio : MonoBehaviour {
 		FourChannel                                                                     // four Channel audio
 	}
 
+	public Camera followCamera;																// reference to the follow camera
 	public EngineAudioOptions engineSoundStyle = EngineAudioOptions.FourChannel;        // Set the default audio options to be four channel
 	public AudioClip lowAccelClip;                                                      // Audio clip for low acceleration
     public AudioClip lowDecelClip;                                                      // Audio clip for low deceleration
@@ -46,7 +47,7 @@ public class CarAudio : MonoBehaviour {
     AudioSource skidSource;                                                             // Source for the low acceleration sounds
 	bool startedSound;                                                                  // flag for knowing if we have started sounds
     CarController carController;                                                        // Reference to car we are controlling
-	
+
 	void StartSound () {
 
         // get the carcontroller ( this will not be null as we have require component)
@@ -82,12 +83,11 @@ public class CarAudio : MonoBehaviour {
 		startedSound = false;
 	}
 	
-
 	// Update is called once per frame
 	void Update () {
 
         // get the distance to main camera
-		float camDist = (Camera.main.transform.position-transform.position).sqrMagnitude;
+		float camDist = (followCamera.transform.position-transform.position).sqrMagnitude;
 
         // stop sound if the object is beyond the maximum roll off distance
 		if (startedSound && camDist > maxRolloffDistance*maxRolloffDistance)
