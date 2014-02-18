@@ -21,7 +21,6 @@ public class Wheel : MonoBehaviour
     [SerializeField]
     private float slideThreshold = 10f;
   
-	
 	public float suspensionSpringPos { get; private set; }
 
     private float spinAngle;
@@ -53,9 +52,12 @@ public class Wheel : MonoBehaviour
     private bool ignore;
 	private Vector3 originalWheelModelPosition;
 
+	private Camera followCamera;
+
     void Start()
     {
 		car = transform.parent.GetComponent<CarController>();
+		followCamera = transform.parent.GetComponent<CarAudio> ().followCamera;
 		wheelCollider = collider as WheelCollider;
 
 		if (wheelModel != null)
@@ -180,7 +182,7 @@ public class Wheel : MonoBehaviour
         spinAngle += Rpm * 6 * Time.deltaTime;
 
 
-        var distToCamSq = (Camera.main.transform.position - transform.position).sqrMagnitude;
+        var distToCamSq = (followCamera.transform.position - transform.position).sqrMagnitude;
 
         var checkThisFrame = true;
 
