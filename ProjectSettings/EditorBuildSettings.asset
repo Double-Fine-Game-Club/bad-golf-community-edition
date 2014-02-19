@@ -6,10 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets//badgolf//scenes/main.unity
+    path: assets/scenes/main.unity
   - enabled: 1
-    path: Assets//badgolf//scenes/multi_lobby.unity
+    path: assets/scenes/multi_lobby.unity
   - enabled: 1
-    path: Assets//badgolf//scenes/level_01.unity
+    path: assets/scenes/level_01.unity
   - enabled: 1
-    path: Assets//badgolf//scenes/level_01_lightsoda.unity
+    path: assets/scenes/level_01_lightsoda.unity
