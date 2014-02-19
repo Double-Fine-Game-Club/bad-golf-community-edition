@@ -29,8 +29,16 @@ public class networkManagerServer : MonoBehaviour {
 		characterGameObject.transform.parent = cartGameObject.transform;
 
 		// networkview that shit
-		NetworkViewID cartViewID = Network.AllocateViewID();
-		cartGameObject.networkView.viewID = cartViewID;
+		NetworkViewID cartViewIDTransform = Network.AllocateViewID();
+		NetworkView cgt = cartGameObject.AddComponent("NetworkView") as NetworkView;
+		cgt.observed = cartGameObject.transform;
+		cgt.viewID = cartViewIDTransform;
+		cgt.stateSynchronization = NetworkStateSynchronization.Unreliable;
+		NetworkViewID cartViewIDRigidbody = Network.AllocateViewID();
+		NetworkView cgr = cartGameObject.AddComponent("NetworkView") as NetworkView;
+		cgr.observed = cartGameObject.rigidbody;
+		cgr.viewID = cartViewIDRigidbody;
+		cgr.stateSynchronization = NetworkStateSynchronization.Unreliable;
 		NetworkViewID ballViewID = Network.AllocateViewID();
 		ballGameObject.networkView.viewID = ballViewID;
 		NetworkViewID characterViewID = Network.AllocateViewID();
@@ -39,7 +47,8 @@ public class networkManagerServer : MonoBehaviour {
 		// turn it into a PlayerInfo
 		nvs.myInfo.cartGameObject = cartGameObject;
 		nvs.myInfo.cartModel = "buggy1";
-		nvs.myInfo.cartViewID = cartViewID;
+		nvs.myInfo.cartViewIDTransform = cartViewIDTransform;
+		nvs.myInfo.cartViewIDRigidbody = cartViewIDRigidbody;
 		nvs.myInfo.ballGameObject = ballGameObject;
 		nvs.myInfo.ballModel = "ball";
 		nvs.myInfo.ballViewID = ballViewID;
@@ -75,11 +84,11 @@ public class networkManagerServer : MonoBehaviour {
 		// send all current players to new guy
 		foreach (PlayerInfo p in nvs.players)
 		{
-			networkView.RPC("SpawnPrefab", player, p.cartViewID, p.cartGameObject.transform.position, new Vector3(0,0,0), p.cartModel);
+			networkView.RPC("SpawnPrefab", player, p.cartViewIDTransform, p.cartGameObject.transform.position, new Vector3(0,0,0), p.cartModel);
 			networkView.RPC("SpawnPrefab", player, p.ballViewID, p.ballGameObject.transform.position, new Vector3(0,0,0), p.ballModel);
 			networkView.RPC("SpawnPrefab", player, p.characterViewID, p.characterGameObject.transform.position, new Vector3(0,0,0), p.characterModel);
 			// tell the player this is a player and not some random objects
-			networkView.RPC("SpawnPlayer", player, p.cartViewID, p.ballViewID, p.characterViewID, p.currentMode, p.player);
+			networkView.RPC("SpawnPlayer", player, p.cartViewIDTransform, p.cartViewIDRigidbody, p.ballViewID, p.characterViewID, p.currentMode, p.player);
 		}
 	}
 	void OnPlayerDisconnected(NetworkPlayer player) {
@@ -100,7 +109,7 @@ public class networkManagerServer : MonoBehaviour {
 				Destroy(p.characterGameObject);
 				// tell everyone else to aswell
 				networkView.RPC("RemoveViewID", RPCMode.All, p.characterViewID);
-				networkView.RPC("RemoveViewID", RPCMode.All, p.cartViewID);
+				networkView.RPC("RemoveViewID", RPCMode.All, p.cartViewIDTransform);
 				networkView.RPC("RemoveViewID", RPCMode.All, p.ballViewID);
 				// remove from array
 				toDelete = p;
@@ -218,29 +227,38 @@ public class networkManagerServer : MonoBehaviour {
 		characterGameObject.transform.parent = cartGameObject.transform;
 
 		// create and set viewIDs
-		NetworkViewID cartViewID = Network.AllocateViewID();
-		cartGameObject.networkView.viewID = cartViewID;
+		NetworkViewID cartViewIDTransform = Network.AllocateViewID();
+		NetworkView cgt = cartGameObject.AddComponent("NetworkView") as NetworkView;
+		cgt.observed = cartGameObject.transform;
+		cgt.viewID = cartViewIDTransform;
+		cgt.stateSynchronization = NetworkStateSynchronization.Unreliable;
+		NetworkViewID cartViewIDRigidbody = Network.AllocateViewID();
+		NetworkView cgr = cartGameObject.AddComponent("NetworkView") as NetworkView;
+		cgr.observed = cartGameObject.rigidbody;
+		cgr.viewID = cartViewIDRigidbody;
+		cgr.stateSynchronization = NetworkStateSynchronization.Unreliable;
 		NetworkViewID ballViewID = Network.AllocateViewID();
 		ballGameObject.networkView.viewID = ballViewID;
 		NetworkViewID characterViewID = Network.AllocateViewID();
 		characterGameObject.networkView.viewID = characterViewID;
 
 		// tell everyone else about it
-		networkView.RPC("SpawnPrefab", RPCMode.Others, cartViewID, spawnLocation, velocity, cartModel);
+		networkView.RPC("SpawnPrefab", RPCMode.Others, cartViewIDTransform, spawnLocation, velocity, cartModel);
 		networkView.RPC("SpawnPrefab", RPCMode.Others, ballViewID, spawnLocation, velocity, ballModel);
 		networkView.RPC("SpawnPrefab", RPCMode.Others, characterViewID, spawnLocation, velocity, characterModel);
 
 		// tell all players this is a player and not some random objects
-		networkView.RPC("SpawnPlayer", RPCMode.Others, cartViewID, ballViewID, characterViewID, 0, info.sender);
+		networkView.RPC("SpawnPlayer", RPCMode.Others, cartViewIDTransform, cartViewIDRigidbody, ballViewID, characterViewID, 0, info.sender);
 
 		// tell the player it's theirs
-		networkView.RPC("ThisOnesYours", info.sender, cartViewID, ballViewID, characterViewID);
+		networkView.RPC("ThisOnesYours", info.sender, cartViewIDTransform, ballViewID, characterViewID);
 
 		// create a PlayerInfo for it
 		PlayerInfo newGuy = new PlayerInfo();
 		newGuy.cartModel = cartModel;
 		newGuy.cartGameObject = cartGameObject;
-		newGuy.cartViewID = cartViewID;
+		newGuy.cartViewIDTransform = cartViewIDTransform;
+		newGuy.cartViewIDRigidbody = cartViewIDRigidbody;
 		newGuy.ballModel = ballModel;
 		newGuy.ballGameObject = ballGameObject;
 		newGuy.ballViewID = ballViewID;
@@ -261,7 +279,7 @@ public class networkManagerServer : MonoBehaviour {
 	[RPC]
 	void SpawnPrefab(NetworkViewID viewID, Vector3 spawnLocation, Vector3 velocity, string prefabName) {}
 	[RPC]
-	void SpawnPlayer(NetworkViewID viewID, NetworkViewID b, NetworkViewID c, int mode, NetworkPlayer p) {}
+	void SpawnPlayer(NetworkViewID viewID, NetworkViewID b, NetworkViewID c, NetworkViewID d, int mode, NetworkPlayer p) {}
 	[RPC]
 	void RemoveViewID(NetworkViewID viewID) {}
 	[RPC]
