@@ -23,7 +23,7 @@ public class networkManagerClient : MonoBehaviour {
 		// get self
 		myInfo.player = Network.player;
 		// get server
-		myInfo.server = myInfo.cartViewID.owner;
+		myInfo.server = myInfo.cartViewIDTransform.owner;
 		// show that we connected
 		connected = true;
 	}
@@ -77,9 +77,10 @@ public class networkManagerClient : MonoBehaviour {
 	void ThisOnesYours(NetworkViewID cartViewID, NetworkViewID ballViewID, NetworkViewID characterViewID) {
 		networkVariables nvs = GetComponent("networkVariables") as networkVariables;
 		foreach(PlayerInfo p in nvs.players) {
-			if (p.cartViewID==cartViewID) {
-				myInfo = p;
-				nvs.myInfo = myInfo;
+			if (p.cartViewIDTransform==cartViewID) {
+				p.name = nvs.myInfo.name;
+				nvs.myInfo = p;
+				myInfo = nvs.myInfo;
 			}
 		}
 		// call the functions that need them
@@ -88,11 +89,17 @@ public class networkManagerClient : MonoBehaviour {
 	
 	// tells the player that this set of viewIDs are a player
 	[RPC]
-	void SpawnPlayer(NetworkViewID cartViewID, NetworkViewID ballViewID, NetworkViewID characterViewID, int mode, NetworkPlayer p) {
+	void SpawnPlayer(NetworkViewID cartViewIDTransform, NetworkViewID cartViewIDRigidbody, NetworkViewID ballViewID, NetworkViewID characterViewID, int mode, NetworkPlayer p) {
 		PlayerInfo newGuy = new PlayerInfo();
 
-		newGuy.cartViewID = cartViewID;
-		newGuy.cartGameObject = NetworkView.Find(cartViewID).gameObject;
+		newGuy.cartViewIDTransform = cartViewIDTransform;
+		newGuy.cartGameObject = NetworkView.Find(cartViewIDTransform).gameObject;
+		newGuy.cartViewIDRigidbody = cartViewIDRigidbody;
+		// add another NetworkView for the rigidbody
+		NetworkView cgr = newGuy.cartGameObject.AddComponent("NetworkView") as NetworkView;
+		cgr.observed = newGuy.cartGameObject.rigidbody;
+		cgr.viewID = cartViewIDRigidbody;
+		cgr.stateSynchronization = NetworkStateSynchronization.Unreliable;
 		newGuy.characterViewID = characterViewID;
 		newGuy.characterGameObject = NetworkView.Find(characterViewID).gameObject;
 		newGuy.ballViewID = ballViewID;

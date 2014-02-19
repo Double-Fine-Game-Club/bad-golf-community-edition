@@ -8,7 +8,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400000}
-  - 148: {fileID: 14800000}
   - 54: {fileID: 5400000}
   - 65: {fileID: 6500000}
   - 65: {fileID: 6500002}
@@ -16,6 +15,7 @@ GameObject:
   - 65: {fileID: 6500006}
   - 65: {fileID: 6500008}
   - 82: {fileID: 8200000}
+  - 148: {fileID: 14800000}
   m_Layer: 0
   m_Name: buggy1
   m_TagString: Untagged
@@ -357,7 +357,7 @@ NetworkView:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
-  m_StateSynchronization: 1
+  m_StateSynchronization: 0
   m_Observed: {fileID: 400000}
   m_ViewID:
     m_ID: 0

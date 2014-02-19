@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class networkManager : MonoBehaviour {
 	bool connectingToServer = false;
 	string serverVersion;
+	string nameBuffer;
 	
 	// Use this for initialization
 	void Start () {
@@ -16,6 +17,8 @@ public class networkManager : MonoBehaviour {
 		// get them servers
 		MasterServer.ClearHostList();
 		MasterServer.RequestHostList(serverVersion);
+		// set default name
+		nameBuffer = SystemInfo.deviceName;
 	}
 	
 	void OnGUI() {
@@ -24,9 +27,10 @@ public class networkManager : MonoBehaviour {
 		} else {
 			if (GUILayout.Button ("Host a server"))
 			{
+				// set name
+				(GetComponent("networkVariables") as networkVariables).myInfo.name = nameBuffer;
 				// add the server script to us
 				gameObject.AddComponent("networkManagerServer");
-				// set anything that needs to be set
 				// remove this script
 				(gameObject.GetComponent("networkManager") as networkManager).enabled = false;
 			}
@@ -36,6 +40,9 @@ public class networkManager : MonoBehaviour {
 				MasterServer.ClearHostList();
 				MasterServer.RequestHostList(serverVersion);
 			}
+
+			GUI.Label(new Rect(Screen.width-250,20,50,20), "Name:");
+			nameBuffer = GUI.TextField(new Rect(Screen.width-200,20,150,20), nameBuffer, 32);
 			
 			HostData[] data = MasterServer.PollHostList();
 			// Go through all the hosts in the host list
@@ -65,6 +72,8 @@ public class networkManager : MonoBehaviour {
 	}
 
 	void OnConnectedToServer() {
+		// set name
+		(GetComponent("networkVariables") as networkVariables).myInfo.name = nameBuffer;
 		// add the client script to us
 		gameObject.AddComponent("networkManagerClient");
 		// remove this script
