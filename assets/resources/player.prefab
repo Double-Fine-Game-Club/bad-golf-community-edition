@@ -215,6 +215,8 @@ MonoBehaviour:
   heightDamping: 2
   rotationDamping: 3
   cameraTilt: 1.5
+  minDistance: 3
+  zoom: 1
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -226,7 +228,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2df1b0bf1e61854fb712105d7a49a7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraGameObject: {fileID: 100000}
+  ball: {fileID: 0}
+  camera: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
