@@ -13,7 +13,7 @@ using ConfigReader = System.Xml.XmlDocument;
 
 public class Config : MonoBehaviour {
 	
-	private string configPath = "Assets/badgolf/config.xml";
+	private string configPath = "assets/config.xml";
 	
 	// Use this for initialization
 	void Start () {
@@ -21,7 +21,7 @@ public class Config : MonoBehaviour {
 			Xml.XmlWriterSettings settings = new Xml.XmlWriterSettings();
 			settings.Indent = true;
 			
-			string levelsPath = "Assets/badgolf/scenes/";
+			string levelsPath = "assets/scenes/";
 			string[] loaderPath = System.IO.Directory.GetFiles (levelsPath);
 			ConfigWriter cfgFile = ConfigWriter.Create(configPath,settings);
 			cfgFile.WriteStartDocument();
