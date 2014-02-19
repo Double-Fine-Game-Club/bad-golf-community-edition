@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 14e7943065a6a0849b140569b64a9364
+guid: 0ed9e2b56149f564c9084cb84ba75963
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
@@ -34,7 +34,7 @@ ModelImporter:
     addColliders: 1
     importBlendShapes: 1
     swapUVChannels: 0
-    generateSecondaryUV: 0
+    generateSecondaryUV: 1
     useFileUnits: 1
     optimizeMeshForGPU: 1
     weldVertices: 1
@@ -45,9 +45,9 @@ ModelImporter:
   tangentSpace:
     normalSmoothAngle: 60
     splitTangentsAcrossUV: 1
-    normalImportMode: 0
+    normalImportMode: 1
     tangentImportMode: 1
-  importAnimation: 1
+  importAnimation: 0
   copyAvatar: 0
   humanDescription:
     human: []
