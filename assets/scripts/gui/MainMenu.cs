@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class guiMainMenuSkinned : MonoBehaviour {
+public class MainMenu : MonoBehaviour {
 
 	public Texture Logo;
+	public GUISkin GuiSkin;
 
 	private Vector2 scrollPosition;
 	private bool musicToggle;
@@ -14,6 +15,9 @@ public class guiMainMenuSkinned : MonoBehaviour {
 	private float soundVolume;
 	private float soundVolumeMin = 0;
 	private float soundVolumeMax = 1;
+	private int screenMargin = 20;
+	private int leftPanelWidth = 200;
+	private int leftMargin = 0;
 
 	private enum GUI_STATE {
 		UI_STATE_DEFAULT = 0,
@@ -27,7 +31,7 @@ public class guiMainMenuSkinned : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+		leftMargin = leftPanelWidth + screenMargin * 2;
 	}
 	
 	// Update is called once per frame
@@ -36,10 +40,10 @@ public class guiMainMenuSkinned : MonoBehaviour {
 	}
 
 	private void DrawBaseGUI() {
-		GUILayout.BeginArea(new Rect(0,0,200, Screen.height));
+		GUILayout.BeginArea(new Rect(screenMargin, screenMargin, leftPanelWidth, Screen.height - screenMargin));
 
 		GUILayout.BeginVertical();
-		GUILayout.Box(Logo);
+		GUILayout.Box(Logo, GUIStyle.none);
 
 		if(GUILayout.Button("Online")) {
 			GuiState = GUI_STATE.UI_STATE_ONLINE;
@@ -67,7 +71,8 @@ public class guiMainMenuSkinned : MonoBehaviour {
 	}
 
 	private void DrawOnlineGUI() {
-		GUILayout.BeginArea(new Rect(200, 0, Screen.width - 200, Screen.height));
+
+		GUILayout.BeginArea(new Rect(leftMargin, screenMargin, Screen.width - leftMargin - screenMargin, Screen.height - screenMargin));
 		GUILayout.BeginHorizontal();
 		GUILayout.Button("Host Game");
 		GUILayout.Button("Join Game");
@@ -76,7 +81,7 @@ public class guiMainMenuSkinned : MonoBehaviour {
 	}
 	
 	private void DrawOfflineGUI() {
-		GUILayout.BeginArea(new Rect(200, 0, Screen.width - 200, Screen.height));
+		GUILayout.BeginArea(new Rect(leftMargin, screenMargin, Screen.width - leftMargin - screenMargin, Screen.height - screenMargin));
 		GUILayout.BeginHorizontal();
 		GUILayout.Label("Offline GUI");
 		GUILayout.EndHorizontal();
@@ -84,18 +89,18 @@ public class guiMainMenuSkinned : MonoBehaviour {
 	}
 	
 	private void DrawOptionsGUI() {
-		GUILayout.BeginArea(new Rect(200, 0, Screen.width - 220, Screen.height - 20));
+		GUILayout.BeginArea(new Rect(leftMargin, screenMargin, Screen.width - leftMargin - screenMargin, Screen.height - screenMargin));
 
 		GUILayout.BeginVertical();
 
 		GUILayout.Label("Options GUI");
 
-		GUILayout.BeginHorizontal();
+		GUILayout.BeginHorizontal("box");
 		musicToggle = GUILayout.Toggle(musicToggle, "Music");
 		musicVolume = GUILayout.HorizontalSlider(musicVolume, musicVolumeMin, musicVolumeMax);
 		GUILayout.EndHorizontal();
 
-		GUILayout.BeginHorizontal();
+		GUILayout.BeginHorizontal("box");
 		soundToggle = GUILayout.Toggle(soundToggle, "Sound");
 		soundVolume = GUILayout.HorizontalSlider(soundVolume, soundVolumeMin, soundVolumeMax);
 		GUILayout.EndHorizontal();
@@ -106,8 +111,8 @@ public class guiMainMenuSkinned : MonoBehaviour {
 	}
 
 	private void DrawCreditsGUI() {
-		GUILayout.BeginArea(new Rect(200, 0, Screen.width - 200, Screen.height));
-		scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Width(Screen.width - 220), GUILayout.Height(Screen.height - 20));
+		GUILayout.BeginArea(new Rect(leftMargin, screenMargin, Screen.width - leftMargin - screenMargin, Screen.height - screenMargin * 2));
+		scrollPosition = GUILayout.BeginScrollView(scrollPosition, "box", GUILayout.Width(Screen.width - leftMargin - screenMargin), GUILayout.Height(Screen.height - screenMargin));
 		GUILayout.Label("Lorem ipsum");
 		GUILayout.Label("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam tempus mauris et convallis hendrerit. Nam eget lacus non nibh lobortis vehicula et vel sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tincidunt luctus neque ut blandit. Quisque ac ante at lorem pulvinar euismod. Quisque imperdiet sagittis massa. Ut vel est velit. In hac habitasse platea dictumst. Pellentesque sed mauris eu nibh mattis tincidunt. Maecenas eu dolor id erat gravida mollis. Proin est dui, eleifend cursus suscipit sit amet, tincidunt at massa. Phasellus purus purus, gravida ut fermentum nec, ornare in lacus. Mauris ac commodo neque. Aliquam at dignissim lacus. Donec vitae erat sed massa iaculis congue.");
 		GUILayout.Label("Curabitur lorem mi, ullamcorper non felis at, suscipit sollicitudin est. Integer non lobortis justo, rutrum facilisis nibh. Proin feugiat in dui eu sollicitudin. Etiam tristique tempus luctus. Donec porta elementum aliquam. Sed consequat dolor mi, sit amet tincidunt tortor pellentesque sit amet. Nam purus metus, lobortis sed lacinia vel, vestibulum ut mi. Fusce hendrerit et quam quis lobortis. Nullam vitae feugiat ligula, vel pellentesque augue. Curabitur quis mattis leo. Quisque pharetra nibh et dui feugiat adipiscing id et mauris. Sed suscipit magna quis nibh lacinia fringilla. Vestibulum porttitor, nunc quis congue hendrerit, est purus condimentum purus, vel venenatis sapien sapien quis sapien. Ut ante ipsum, vehicula eget varius nec, lobortis sed ligula. Suspendisse placerat, ante a tincidunt dapibus, ligula nulla bibendum lacus, eu dignissim elit massa non mauris.");
@@ -140,6 +145,8 @@ public class guiMainMenuSkinned : MonoBehaviour {
 	}
 
 	void OnGUI () {
+		GUI.skin = GuiSkin;
+
 		switch(GuiState) {
 		case GUI_STATE.UI_STATE_DEFAULT:
 			DrawBaseGUI();
