@@ -67,7 +67,7 @@ public class SwingMode : MonoBehaviour
 						Vector3 arc = Vector3.forward;
 						if (shotPower < 100) {
 								shotPower = 100;
-						}		F
+						}
 						arc.y = arc.y + shotPower / 200;
 						rigidbody.AddForce (transform.localRotation * arc * shotPower);
 						shotPower = 0;
