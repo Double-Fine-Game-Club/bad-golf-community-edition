@@ -27,7 +27,6 @@ public class SwingMode : MonoBehaviour
 		// Update is called once per frame
 		void Update ()
 		{
-				Debug.Log ("Flying: " + flying);
 				if (Input.GetKey (KeyCode.D)) {
 						//rigidbody.freezeRotation = false;
 						gameObject.transform.Rotate (0f, 1f, 0f);
@@ -58,7 +57,6 @@ public class SwingMode : MonoBehaviour
 				}
 		
 				if (Input.GetKeyDown (KeyCode.Space)) {
-						Debug.Log ("BOOM: " + shotPower);
 						flying = true;
 						
 						Vector3 arc = Vector3.forward;
@@ -68,9 +66,8 @@ public class SwingMode : MonoBehaviour
 						arc.y = arc.y + shotPower / 200;
 						rigidbody.AddForce (transform.localRotation * arc * shotPower);
 						shotPower = 0;
-						camera.SetActive(false);
-						cart.SendMessage("toggleScript");
-						this.enabled = false;
+						cart.SendMessage("turnOnScripts");
+						this.gameObject.SendMessage("turnOffScripts");
 				}
 		}
 
