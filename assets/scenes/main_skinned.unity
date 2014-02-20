@@ -291,7 +291,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Logo: {fileID: 2800000, guid: 32c44991a9908024da92ca29f4f00329, type: 3}
-  GuiSkin: {fileID: 11400000, guid: c81238cab4cfa1c41946d478c787a68f, type: 2}
+  GuiSkin: {fileID: 11400000, guid: f5502fcb19048454dbd3d0211441f894, type: 2}
 --- !u!1 &1645918556
 GameObject:
   m_ObjectHideFlags: 0
