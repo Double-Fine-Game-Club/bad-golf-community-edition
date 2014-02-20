@@ -1,23 +1,37 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public class ScriptToggler : MonoBehaviour {
+public class ScriptToggler : MonoBehaviour
+{
 
-	public MonoBehaviour script;
-	public GameObject camera;
+		public List<MonoBehaviour> scripts;
+		public GameObject camera;
 
-	// Use this for initialization
-	void Start () {
+		// Use this for initialization
+		void Start ()
+		{
+		}
 	
-	}
-	
-	// Update is called once per frame
-	void Update () {
+		// Update is called once per frame
+		void Update ()
+		{
 
-	}
+		}
 
-	void toggleScript(){
-		camera.SetActive (true);
-		script.enabled = true;
-	}
+		void turnOnScripts ()
+		{
+				foreach (MonoBehaviour script in scripts) {
+						script.enabled = true;
+				}
+				camera.SetActive (true);
+		}
+
+		void turnOffScripts ()
+		{
+				foreach (MonoBehaviour script in scripts) {
+						script.enabled = false;
+				}
+				camera.SetActive (false);
+		}
 }
