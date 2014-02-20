@@ -73,6 +73,8 @@ public class networkManagerServer : MonoBehaviour {
 		gameObject.AddComponent("controlServer");
 		// chat
 		gameObject.AddComponent("netChat");
+		//pause
+		gameObject.AddComponent ("netPause");
 		//********************************************
 	}
 

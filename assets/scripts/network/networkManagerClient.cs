@@ -20,6 +20,8 @@ public class networkManagerClient : MonoBehaviour {
 		gameObject.AddComponent("controlClient");
 		// chat
 		gameObject.AddComponent("netChat");
+		//pause
+		gameObject.AddComponent ("netPause");
 		// get self
 		myInfo.player = Network.player;
 		// get server
