@@ -4,7 +4,16 @@ using System.Collections;
 public class guiMainMenuSkinned : MonoBehaviour {
 
 	public Texture Logo;
-	public Vector2 ScrollPosition;
+
+	private Vector2 scrollPosition;
+	private bool musicToggle;
+	private bool soundToggle;
+	private float musicVolume;
+	private float musicVolumeMin = 0;
+	private float musicVolumeMax = 1;
+	private float soundVolume;
+	private float soundVolumeMin = 0;
+	private float soundVolumeMax = 1;
 
 	private enum GUI_STATE {
 		UI_STATE_DEFAULT = 0,
@@ -75,16 +84,30 @@ public class guiMainMenuSkinned : MonoBehaviour {
 	}
 	
 	private void DrawOptionsGUI() {
-		GUILayout.BeginArea(new Rect(200, 0, Screen.width - 200, Screen.height));
+		GUILayout.BeginArea(new Rect(200, 0, Screen.width - 220, Screen.height - 20));
+
 		GUILayout.BeginVertical();
+
 		GUILayout.Label("Options GUI");
+
+		GUILayout.BeginHorizontal();
+		musicToggle = GUILayout.Toggle(musicToggle, "Music");
+		musicVolume = GUILayout.HorizontalSlider(musicVolume, musicVolumeMin, musicVolumeMax);
 		GUILayout.EndHorizontal();
+
+		GUILayout.BeginHorizontal();
+		soundToggle = GUILayout.Toggle(soundToggle, "Sound");
+		soundVolume = GUILayout.HorizontalSlider(soundVolume, soundVolumeMin, soundVolumeMax);
+		GUILayout.EndHorizontal();
+
+		GUILayout.EndVertical();
+
 		GUILayout.EndArea();
 	}
 
 	private void DrawCreditsGUI() {
 		GUILayout.BeginArea(new Rect(200, 0, Screen.width - 200, Screen.height));
-		ScrollPosition = GUILayout.BeginScrollView(ScrollPosition, GUILayout.Width(Screen.width - 220), GUILayout.Height(Screen.height - 20));
+		scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Width(Screen.width - 220), GUILayout.Height(Screen.height - 20));
 		GUILayout.Label("Lorem ipsum");
 		GUILayout.Label("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam tempus mauris et convallis hendrerit. Nam eget lacus non nibh lobortis vehicula et vel sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tincidunt luctus neque ut blandit. Quisque ac ante at lorem pulvinar euismod. Quisque imperdiet sagittis massa. Ut vel est velit. In hac habitasse platea dictumst. Pellentesque sed mauris eu nibh mattis tincidunt. Maecenas eu dolor id erat gravida mollis. Proin est dui, eleifend cursus suscipit sit amet, tincidunt at massa. Phasellus purus purus, gravida ut fermentum nec, ornare in lacus. Mauris ac commodo neque. Aliquam at dignissim lacus. Donec vitae erat sed massa iaculis congue.");
 		GUILayout.Label("Curabitur lorem mi, ullamcorper non felis at, suscipit sollicitudin est. Integer non lobortis justo, rutrum facilisis nibh. Proin feugiat in dui eu sollicitudin. Etiam tristique tempus luctus. Donec porta elementum aliquam. Sed consequat dolor mi, sit amet tincidunt tortor pellentesque sit amet. Nam purus metus, lobortis sed lacinia vel, vestibulum ut mi. Fusce hendrerit et quam quis lobortis. Nullam vitae feugiat ligula, vel pellentesque augue. Curabitur quis mattis leo. Quisque pharetra nibh et dui feugiat adipiscing id et mauris. Sed suscipit magna quis nibh lacinia fringilla. Vestibulum porttitor, nunc quis congue hendrerit, est purus condimentum purus, vel venenatis sapien sapien quis sapien. Ut ante ipsum, vehicula eget varius nec, lobortis sed ligula. Suspendisse placerat, ante a tincidunt dapibus, ligula nulla bibendum lacus, eu dignissim elit massa non mauris.");
@@ -94,24 +117,51 @@ public class guiMainMenuSkinned : MonoBehaviour {
 		GUILayout.EndScrollView();
 		GUILayout.EndArea();
 	}
-	
-	void OnGUI () {
-		DrawBaseGUI();
 
+	private void DrawQuitGameConfirationGUI() {
+		int boxWidth = 400;
+		int boxHeight = 200;
+		GUILayout.BeginArea(new Rect(Screen.width / 2 - boxWidth / 2, Screen.height / 2 - boxHeight / 2, boxWidth, boxHeight));
+
+		GUILayout.Label("Really quit?");
+
+		GUILayout.BeginHorizontal();
+
+		if(GUILayout.Button("Yes")) {
+			Application.Quit();
+		}
+
+		if(GUILayout.Button("No")) {
+			GuiState = GUI_STATE.UI_STATE_DEFAULT;
+		}
+
+		GUILayout.EndHorizontal();
+		GUILayout.EndArea();
+	}
+
+	void OnGUI () {
 		switch(GuiState) {
+		case GUI_STATE.UI_STATE_DEFAULT:
+			DrawBaseGUI();
+			break;
 		case GUI_STATE.UI_STATE_ONLINE:
+			DrawBaseGUI();
 			DrawOnlineGUI();
 			break;
 		case GUI_STATE.UI_STATE_OFFLINE:
+			DrawBaseGUI();
 			DrawOfflineGUI();
 			break;
 		case GUI_STATE.UI_STATE_OPTIONS:
+			DrawBaseGUI();
 			DrawOptionsGUI();
 			break;
 		case GUI_STATE.UI_STATE_CREDITS:
+			DrawBaseGUI();
 			DrawCreditsGUI();
 			break;
 		case GUI_STATE.UI_STATE_QUIT:
+			DrawQuitGameConfirationGUI();
 			break;
 		default:
 			break;
