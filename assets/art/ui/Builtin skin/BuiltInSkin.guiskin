@@ -78,10 +78,10 @@ MonoBehaviour:
       m_TextColor: {r: .102941155, g: .102184236, b: .102184236, a: 1}
     m_Hover:
       m_Background: {fileID: 2800000, guid: 11d15aea3dd244c3087d246bfe3a10e6, type: 3}
-      m_TextColor: {r: 1, g: 1, b: 1, a: 1}
+      m_TextColor: {r: .625, g: .376521319, b: .110294111, a: 1}
     m_Active:
       m_Background: {fileID: 2800000, guid: 63fe16ea91039422ebabc98522d7ee51, type: 3}
-      m_TextColor: {r: 1, g: 1, b: 1, a: 1}
+      m_TextColor: {r: .375, g: .207352951, b: .0551470667, a: 1}
     m_Focused:
       m_Background: {fileID: 0}
       m_TextColor: {r: 0, g: 0, b: 0, a: 1}
@@ -193,7 +193,7 @@ MonoBehaviour:
     m_Name: label
     m_Normal:
       m_Background: {fileID: 0}
-      m_TextColor: {r: 1, g: 1, b: 1, a: 1}
+      m_TextColor: {r: .25, g: .155147061, b: .0128676444, a: 1}
     m_Hover:
       m_Background: {fileID: 0}
       m_TextColor: {r: 0, g: 0, b: 0, a: 1}
@@ -226,17 +226,17 @@ MonoBehaviour:
       m_Top: 4
       m_Bottom: 4
     m_Padding:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
+      m_Left: 10
+      m_Right: 10
+      m_Top: 10
+      m_Bottom: 10
     m_Overflow:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
     m_Font: {fileID: 0}
-    m_FontSize: 0
+    m_FontSize: 18
     m_FontStyle: 0
     m_Alignment: 0
     m_WordWrap: 0
@@ -311,7 +311,7 @@ MonoBehaviour:
     m_Name: textarea
     m_Normal:
       m_Background: {fileID: 2800000, guid: a949ee3701fea451db245e9311816472, type: 3}
-      m_TextColor: {r: .800000012, g: .800000012, b: .800000012, a: 1}
+      m_TextColor: {r: 1, g: 1, b: 1, a: 1}
     m_Hover:
       m_Background: {fileID: 2800000, guid: 539fce7db59cd47aebc17c3b7d5a4650, type: 3}
       m_TextColor: {r: .799999952, g: .799999952, b: .799999952, a: 1}
