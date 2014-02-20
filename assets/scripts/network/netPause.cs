@@ -6,11 +6,9 @@ public class netPause : MonoBehaviour {
 	public GameObject ed_pauseScreen;
 
 	private string nameOfLevel;
-	private bool isPaused=false;
 
 	// Use this for initialization
 	void Start () {
-		isPaused = false;
 		ed_pauseScreen = GameObject.Find ("pauseScreen");
 		hideAllScreens ();
 	}
@@ -27,13 +25,11 @@ public class netPause : MonoBehaviour {
 	void onPause(){
 		hideAllScreens ();
 		ed_pauseScreen.SetActive (true);
-		isPaused = true;
 		this.SendMessageUpwards ("onPauseScreen");
 	}
 
 	void onResume(){
 		hideAllScreens ();
-		isPaused = false;
 		this.SendMessageUpwards ("onResumeScreen");
 	}
 
