@@ -69,14 +69,14 @@ public class GameControl : MonoBehaviour
 	{
 		GameObject gObj = GameObject.Find ("levelID");
 		LevelSelect levelSel = gObj.GetComponent(typeof(LevelSelect)) as LevelSelect;	
-		Application.LoadLevelAdditive(levelSel.levels[levelSel.levelSelected]);
+		Application.LoadLevel(levelSel.levels[levelSel.levelSelected]);
 		hideAllScreens();
 	}
 
 	public void onMultiSkip()
 	{
 		nameOfLevel = "multi_lobby";
-		Application.LoadLevelAdditive( nameOfLevel );
+		Application.LoadLevel( nameOfLevel );
 		hideAllScreens();
 	}
 
