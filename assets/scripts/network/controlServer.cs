@@ -15,7 +15,7 @@ public class controlServer : MonoBehaviour {
 
 	void Update() {
 		if (Input.GetKeyDown(KeyCode.Q)) {
-			networkView.RPC("IHonked", RPCMode.All, myInfo.cartViewID);
+			networkView.RPC("IHonked", RPCMode.All, myInfo.player);
 		}
 		if (Input.GetKeyDown(KeyCode.G)) {
 			// if in buggy
@@ -112,11 +112,16 @@ public class controlServer : MonoBehaviour {
 			}
 		}
 	}
-
+	
 	// honks
 	[RPC]
-	void IHonked(NetworkViewID viewId) {
-		NetworkView.Find(viewId).gameObject.audio.Play();
+	void IHonked(NetworkPlayer player) {
+		// find the player
+		foreach (PlayerInfo p in nvs.players) {
+			if (p.player==player) {
+				p.cartGameObject.audio.Play();
+			}
+		}
 	}
 
 	// change player mode
