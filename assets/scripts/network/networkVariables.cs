@@ -8,6 +8,8 @@ public class networkVariables : MonoBehaviour {
 	public string serverVersion = "HL5";			// server version
 
 	// client only variables
+	public bool playerIsBusy   = false;
+	public bool playerIsPaused = false;
 
 	// server only variables
 	public ArrayList players = new ArrayList();	// maybe include this in client for extrapolation of other players buggys - done
