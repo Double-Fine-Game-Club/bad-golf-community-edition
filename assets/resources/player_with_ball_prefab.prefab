@@ -324,7 +324,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 400038}
   m_Layer: 0
-  m_Name: playerswingdriveball
+  m_Name: player_with_ball_prefab
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1412,8 +1412,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scripts:
-  - {fileID: 11400006}
   - {fileID: 11400004}
+  - {fileID: 11400006}
   - {fileID: 11400000}
   camera: {fileID: 100042}
 --- !u!114 &11400026
