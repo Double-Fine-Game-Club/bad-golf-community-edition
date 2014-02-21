@@ -157,18 +157,9 @@ public class controlClient : MonoBehaviour {
 		}
 	}
 
-	void onPauseScreen(){
-		myInfo.playerIsPaused = true;
-	}
-	
-	void onResumeScreen(){
-		myInfo.playerIsPaused = false;
-	}
-	
-	[RPC]
 	void onDisconnect(){
 		//TODO: disconnect player
-		
+
 		//Go back to main menu
 		string nameOfLevel = "main";
 		Application.LoadLevel( nameOfLevel );

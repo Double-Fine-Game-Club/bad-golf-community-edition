@@ -164,14 +164,6 @@ public class controlServer : MonoBehaviour {
 		}
 	}
 
-	void onPauseScreen(){
-		myInfo.playerIsPaused = true;
-	}
-	
-	void onResumeScreen(){
-		myInfo.playerIsPaused = false;
-	}
-
 	[RPC]
 	void onDisconnect(){
 		//TODO: disconnect players, shutdown server
