@@ -12,7 +12,7 @@ public class SwingMode : MonoBehaviour
 		public int hitMultiplier = 5;
 		private bool flying = false;
 		public GameObject cart;
-
+		public const int k_maxShotPower = 500;
 	
 		// Use this for initialization
 		void Start ()
@@ -20,7 +20,7 @@ public class SwingMode : MonoBehaviour
 			
 		}
 
-	// Draws the ugly GUI Box that tells you how hard you are about to hit.
+		// Draws the ugly GUI Box that tells you how hard you are about to hit.
 		void OnGUI ()
 		{
 				GUI.Box (new Rect (200, 200, 100, 100), "power: " + (int)shotPower);
@@ -54,8 +54,8 @@ public class SwingMode : MonoBehaviour
 				// You can only add power. Automatically decrementing it is not implemented.
 				if (Input.GetAxis ("Vertical") > 0) {
 						shotPower += Input.GetAxis ("Vertical") * hitMultiplier;
-						if (shotPower > 500) {
-								shotPower = 500;
+						if (shotPower > k_maxShotPower) {
+								shotPower = k_maxShotPower;
 						}
 				}
 
@@ -73,9 +73,9 @@ public class SwingMode : MonoBehaviour
 						shotPower = 0;
 
 						// Turn on control scripts and camera on the cart.
-						cart.SendMessage("turnOnScripts");
+						cart.SendMessage ("turnOnScripts");
 						// Turn off control scripts (including this one) and camera on the ball.
-						this.gameObject.SendMessage("turnOffScripts");
+						this.gameObject.SendMessage ("turnOffScripts");
 				}
 		}
 
@@ -85,5 +85,10 @@ public class SwingMode : MonoBehaviour
 				if (col.gameObject.tag == "Ground") {
 						flying = false;
 				}
+		}
+
+		public float GetShowPower ()
+		{
+				return shotPower;
 		}
 }
