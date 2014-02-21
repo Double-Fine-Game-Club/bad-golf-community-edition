@@ -13,6 +13,7 @@ public class netPause : MonoBehaviour {
 		// get variables we need
 		myInfo = (GetComponent("networkVariables") as networkVariables).myInfo;
 		ed_pauseScreen = GameObject.Find ("pauseScreen");
+		
 		//Hide the screen while it is inactive
 		hideAllScreens ();
 	}
