@@ -28,12 +28,14 @@ public class PauseMenu : MonoBehaviour {
 	void onPauseScreen(){
 		hideAllScreens ();
 		ed_pauseScreen.SetActive (true);
+		Time.timeScale = 0;
 		isPaused = true;
 	}
 
 	void onResume(){
 		hideAllScreens ();
 		ed_singleView.SetActive (true);
+		Time.timeScale = 1;
 		isPaused = false;
 
 	}
@@ -43,6 +45,7 @@ public class PauseMenu : MonoBehaviour {
 		//Go back to main menu
 		nameOfLevel = "main";
 		Application.LoadLevel( nameOfLevel );
+		Time.timeScale = 1;
 		hideAllScreens();
 	}
 }
