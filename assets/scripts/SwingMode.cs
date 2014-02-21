@@ -11,6 +11,8 @@ public class SwingMode : MonoBehaviour
 		private bool flying = false;
 		public GameObject cart;
 
+        public const int k_maxShotPower = 500;
+
 	
 		// Use this for initialization
 		void Start ()
@@ -27,7 +29,7 @@ public class SwingMode : MonoBehaviour
 		// Update is called once per frame
 		void Update ()
 		{
-				Debug.Log ("Flying: " + flying);
+				//Debug.Log ("Flying: " + flying);
 				if (Input.GetKey (KeyCode.D)) {
 						//rigidbody.freezeRotation = false;
 						gameObject.transform.Rotate (0f, 1f, 0f);
@@ -52,8 +54,8 @@ public class SwingMode : MonoBehaviour
 
 				if (Input.GetAxis ("Vertical") > 0) {
 						shotPower += Input.GetAxis ("Vertical") * hitMultiplier;
-						if (shotPower > 500) {
-								shotPower = 500;
+						if (shotPower > k_maxShotPower) {
+								shotPower = k_maxShotPower;
 						}
 				}
 		
@@ -80,4 +82,9 @@ public class SwingMode : MonoBehaviour
 						flying = false;
 				}
 		}
+
+        public float GetShowPower()
+        {
+            return shotPower;
+        }
 }
