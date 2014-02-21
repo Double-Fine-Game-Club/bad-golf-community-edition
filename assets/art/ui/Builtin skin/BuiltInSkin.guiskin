@@ -310,11 +310,11 @@ MonoBehaviour:
   m_textArea:
     m_Name: textarea
     m_Normal:
-      m_Background: {fileID: 2800000, guid: a949ee3701fea451db245e9311816472, type: 3}
-      m_TextColor: {r: 1, g: 1, b: 1, a: 1}
+      m_Background: {fileID: 0}
+      m_TextColor: {r: .154411793, g: .0596662201, b: .0170307104, a: 1}
     m_Hover:
-      m_Background: {fileID: 2800000, guid: 539fce7db59cd47aebc17c3b7d5a4650, type: 3}
-      m_TextColor: {r: .799999952, g: .799999952, b: .799999952, a: 1}
+      m_Background: {fileID: 0}
+      m_TextColor: {r: .110294104, g: .103806213, b: .103806213, a: 1}
     m_Active:
       m_Background: {fileID: 0}
       m_TextColor: {r: 0, g: 0, b: 0, a: 1}
@@ -322,7 +322,7 @@ MonoBehaviour:
       m_Background: {fileID: 0}
       m_TextColor: {r: 0, g: 0, b: 0, a: 1}
     m_OnNormal:
-      m_Background: {fileID: 2800000, guid: 379b2f8d619c240ea88a5d884722a864, type: 3}
+      m_Background: {fileID: 0}
       m_TextColor: {r: 1, g: 1, b: 1, a: 1}
     m_OnHover:
       m_Background: {fileID: 0}
