@@ -68,6 +68,30 @@ ModelImporter:
     100124: spine1_loResSpine2
     100126: spine1_loResSpine3
     100128: TSMGWorldJoint
+    100130: head1_AttributesConnectToUpperBody
+    100132: leftArm1_AttributesConnectToUpperBody
+    100134: leftArm1_stretchValues
+    100136: leftFinger1_AttributesConnectToUpperBody
+    100138: leftFinger2_AttributesConnectToUpperBody
+    100140: leftFinger3_AttributesConnectToUpperBody
+    100142: leftFinger4_AttributesConnectToUpperBody
+    100144: leftLeg1_AttributesConnectToUpperBody
+    100146: leftLeg1_stretchValues
+    100148: leftThumb1_AttributesConnectToUpperBody
+    100150: rightArm1_AttributesConnectToUpperBody
+    100152: rightArm1_stretchValues
+    100154: rightFinger1_AttributesConnectToUpperBody
+    100156: rightFinger2_AttributesConnectToUpperBody
+    100158: rightFinger3_AttributesConnectToUpperBody
+    100160: rightFinger4_AttributesConnectToUpperBody
+    100162: rightLeg1_AttributesConnectToUpperBody
+    100164: rightLeg1_stretchValues
+    100166: rightThumb1_AttributesConnectToUpperBody
+    100168: spine1_AttributesConnectToUpperBody
+    100170: spine1_widgetAngles
+    100172: TSMG_Cruft
+    100174: TSMG_Rig
+    100176: TSMGSceneData
     400000: body
     400002: club
     400004: hair
@@ -133,6 +157,30 @@ ModelImporter:
     400124: spine1_loResSpine2
     400126: spine1_loResSpine3
     400128: TSMGWorldJoint
+    400130: head1_AttributesConnectToUpperBody
+    400132: leftArm1_AttributesConnectToUpperBody
+    400134: leftArm1_stretchValues
+    400136: leftFinger1_AttributesConnectToUpperBody
+    400138: leftFinger2_AttributesConnectToUpperBody
+    400140: leftFinger3_AttributesConnectToUpperBody
+    400142: leftFinger4_AttributesConnectToUpperBody
+    400144: leftLeg1_AttributesConnectToUpperBody
+    400146: leftLeg1_stretchValues
+    400148: leftThumb1_AttributesConnectToUpperBody
+    400150: rightArm1_AttributesConnectToUpperBody
+    400152: rightArm1_stretchValues
+    400154: rightFinger1_AttributesConnectToUpperBody
+    400156: rightFinger2_AttributesConnectToUpperBody
+    400158: rightFinger3_AttributesConnectToUpperBody
+    400160: rightFinger4_AttributesConnectToUpperBody
+    400162: rightLeg1_AttributesConnectToUpperBody
+    400164: rightLeg1_stretchValues
+    400166: rightThumb1_AttributesConnectToUpperBody
+    400168: spine1_AttributesConnectToUpperBody
+    400170: spine1_widgetAngles
+    400172: TSMG_Cruft
+    400174: TSMG_Rig
+    400176: TSMGSceneData
     2300000: club
     3300000: club
     4300000: body
