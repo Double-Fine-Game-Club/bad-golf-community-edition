@@ -1,0 +1,21 @@
+Initialize engine version: 4.3.4f1 (e444f76e01cd)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 9.0c [nvd3dum.dll 9.18.13.3489]
+    Renderer: NVIDIA GeForce GTX 560 Ti  
+    Vendor:   NVIDIA
+    VRAM:     1998 MB (via DXGI)
+    Caps:     Shader=30 DepthRT=1 NativeDepth=1 NativeShadow=1 DF16=0 INTZ=1 RAWZ=0 NULL=1 RESZ=0 SlowINTZ=0
+Begin MonoManager ReloadAssembly
+Platform assembly: D:\Users\Brian\Documents\GitHub\bad-golf-community-edition\BadGolfCE_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading D:\Users\Brian\Documents\GitHub\bad-golf-community-edition\BadGolfCE_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: D:\Users\Brian\Documents\GitHub\bad-golf-community-edition\BadGolfCE_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading D:\Users\Brian\Documents\GitHub\bad-golf-community-edition\BadGolfCE_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: D:\Users\Brian\Documents\GitHub\bad-golf-community-edition\BadGolfCE_Data\Managed\Assembly-UnityScript.dll (this message is harmless)
+Loading D:\Users\Brian\Documents\GitHub\bad-golf-community-edition\BadGolfCE_Data\Managed\Assembly-UnityScript.dll into Unity Child Domain
+- Completed reload, in  0.057 seconds
+desktop: 1920x1080 60Hz; virtual: 3840x1080 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+Platform assembly: D:\Users\Brian\Documents\GitHub\bad-golf-community-edition\BadGolfCE_Data\Managed\System.Xml.dll (this message is harmless)
+Platform assembly: D:\Users\Brian\Documents\GitHub\bad-golf-community-edition\BadGolfCE_Data\Managed\System.dll (this message is harmless)
