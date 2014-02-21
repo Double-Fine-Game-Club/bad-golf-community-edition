@@ -4,6 +4,7 @@ using System.Collections;
 public class netPause : MonoBehaviour {
 
 	public GameObject ed_pauseScreen;
+
 	PlayerInfo myInfo;
 
 	private string nameOfLevel;
@@ -12,8 +13,8 @@ public class netPause : MonoBehaviour {
 	void Start () {
 		// get variables we need
 		myInfo = (GetComponent("networkVariables") as networkVariables).myInfo;
-		ed_pauseScreen = GameObject.Find ("pauseScreen");
-		
+		ed_pauseScreen = Instantiate (Resources.Load ("pauseScreen")) as GameObject;
+		ed_pauseScreen.transform.parent = this.transform;
 		//Hide the screen while it is inactive
 		hideAllScreens ();
 	}
@@ -42,5 +43,6 @@ public class netPause : MonoBehaviour {
 		this.SendMessageUpwards ("onDisconnect");
 		hideAllScreens();
 		myInfo.playerIsPaused = false;	//reset pause status
+		Destroy (ed_pauseScreen);		//undo changes to object hierarchy
 	}
 }
