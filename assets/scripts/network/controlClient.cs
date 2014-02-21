@@ -18,7 +18,7 @@ public class controlClient : MonoBehaviour {
 
 	void Update () {
 		// if in buggy
-		if (!nvs.playerIsPaused && myInfo.currentMode==0) {
+		if (!myInfo.playerIsPaused && myInfo.currentMode==0) {
 			// send packets about keyboard every 0.015s
 			timer += Time.deltaTime;
 			if (timer > 0.015) {
@@ -45,7 +45,7 @@ public class controlClient : MonoBehaviour {
 				networkView.RPC("IHonked", RPCMode.All, myInfo.player);
 			}
 		}
-		if (!nvs.playerIsPaused && Input.GetKeyDown(KeyCode.G)) {
+		if (!myInfo.playerIsPaused && Input.GetKeyDown(KeyCode.G)) {
 			// if in buggy
 			if (myInfo.currentMode==0) {
 				myInfo.currentMode = 1;
@@ -69,9 +69,9 @@ public class controlClient : MonoBehaviour {
 			}
 			networkView.RPC("PlayerSwap", RPCMode.Others, myInfo.currentMode, myInfo.player);
 		}
-		if(!nvs.playerIsBusy && !nvs.playerIsPaused && Input.GetKey(KeyCode.Escape)){
+		if(!myInfo.playerIsBusy && !myInfo.playerIsPaused && Input.GetKey(KeyCode.Escape)){
 			pause.SendMessage("onPause");
-		}else if(nvs.playerIsPaused && Input.GetKey(KeyCode.Escape)){
+		}else if(myInfo.playerIsPaused && Input.GetKey(KeyCode.Escape)){
 			pause.SendMessage("onResume");
 		}
 
@@ -158,11 +158,11 @@ public class controlClient : MonoBehaviour {
 	}
 
 	void onPauseScreen(){
-		nvs.playerIsPaused = true;
+		myInfo.playerIsPaused = true;
 	}
 	
 	void onResumeScreen(){
-		nvs.playerIsPaused = false;
+		myInfo.playerIsPaused = false;
 	}
 	
 	[RPC]

@@ -8,8 +8,6 @@ public class networkVariables : MonoBehaviour {
 	public string serverVersion = "HL5";			// server version
 
 	// client only variables
-	public bool playerIsBusy   = false;
-	public bool playerIsPaused = false;
 
 	// server only variables
 	public ArrayList players = new ArrayList();	// maybe include this in client for extrapolation of other players buggys - done
@@ -31,6 +29,8 @@ public class PlayerInfo {
 	public string characterModel;				// model of the character
 	public int currentMode;						// current mode of the player (0=in buggy, 1=on foot)
 	public string name;							// name
+	public bool playerIsBusy   = false;			// player is engaged in an uninteruptable action
+	public bool playerIsPaused = false;			// player is paused
 
 	public int KBState;						// KB state for server only
 }

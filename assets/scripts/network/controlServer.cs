@@ -17,10 +17,10 @@ public class controlServer : MonoBehaviour {
 	}
 
 	void Update() {
-		if (!nvs.playerIsPaused && Input.GetKeyDown(KeyCode.Q)) {
+		if (!myInfo.playerIsPaused && Input.GetKeyDown(KeyCode.Q)) {
 			networkView.RPC("IHonked", RPCMode.All, myInfo.player);
 		}
-		if (!nvs.playerIsPaused && Input.GetKeyDown(KeyCode.G)) {
+		if (!myInfo.playerIsPaused && Input.GetKeyDown(KeyCode.G)) {
 			// if in buggy
 			if (myInfo.currentMode==0) {
 				myInfo.currentMode = 1;
@@ -44,9 +44,9 @@ public class controlServer : MonoBehaviour {
 			}
 			networkView.RPC("PlayerSwap", RPCMode.Server, myInfo.currentMode, myInfo.player);
 		}
-		if(!nvs.playerIsBusy && !nvs.playerIsPaused && Input.GetKey(KeyCode.Escape)){
+		if(!myInfo.playerIsBusy && !myInfo.playerIsPaused && Input.GetKey(KeyCode.Escape)){
 			pause.SendMessage("onPause");
-		}else if(nvs.playerIsPaused && Input.GetKey(KeyCode.Escape)){
+		}else if(myInfo.playerIsPaused && Input.GetKey(KeyCode.Escape)){
 			pause.SendMessage("onResume");
 		}
 	}
@@ -89,7 +89,7 @@ public class controlServer : MonoBehaviour {
 		}
 		
 		// if in buggy
-		if (!nvs.playerIsPaused && myInfo.currentMode==0) {
+		if (!myInfo.playerIsPaused && myInfo.currentMode==0) {
 			// add own fiziks
 			int toSend = 0;
 			if (Input.GetKey(KeyCode.W)) {
@@ -165,11 +165,11 @@ public class controlServer : MonoBehaviour {
 	}
 
 	void onPauseScreen(){
-		nvs.playerIsPaused = true;
+		myInfo.playerIsPaused = true;
 	}
 	
 	void onResumeScreen(){
-		nvs.playerIsPaused = false;
+		myInfo.playerIsPaused = false;
 	}
 
 	[RPC]
