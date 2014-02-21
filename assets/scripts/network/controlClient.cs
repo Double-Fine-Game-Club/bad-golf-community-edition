@@ -71,7 +71,7 @@ public class controlClient : MonoBehaviour {
 		}
 		if(!myInfo.playerIsBusy && !myInfo.playerIsPaused && Input.GetKey(KeyCode.Escape)){
 			pause.SendMessage("onPause");
-		}else if(myInfo.playerIsPaused && Input.GetKey(KeyCode.Escape)){
+		}else if(myInfo.playerIsPaused && Input.GetKey(KeyCode.Return)){
 			pause.SendMessage("onResume");
 		}
 
