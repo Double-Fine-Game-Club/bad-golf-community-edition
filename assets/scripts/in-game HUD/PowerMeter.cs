@@ -1,45 +1,49 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class PowerMeter : MonoBehaviour {
+public class PowerMeter : MonoBehaviour
+{
 
+    // the player that the arc will be drawn around
     public GameObject m_objectToCircle;
+    // what the pieces of the arc will look like
     public GameObject m_markerPrefab;
 
-    [HideInInspector] //expose this later for tweaking
+    [HideInInspector] //expose these later for tweaking?
     public float m_meterRadius = 1.0f;
+    [HideInInspector]
     public int m_meterPoints = 100;
 
-    private int m_meterIndex;
-    private GameObject m_marker;
     private SwingMode m_swingScript;
     private float m_percentMaxShotPower = 0.25f;
 
-    private List<GameObject> m_markerList = new List<GameObject>();
+    private List<GameObject> m_arcChunks = new List<GameObject>();
 
-	void Start () {
-        DrawCirclePoints(m_meterPoints, m_meterRadius, m_objectToCircle.transform.position);
-        m_meterIndex = m_meterPoints / 4;
-        m_marker = GameObject.Instantiate(m_markerPrefab) as GameObject;
+    void Start()
+    {
+        CreateArc(m_meterPoints, m_meterRadius, m_objectToCircle.transform.position);
         m_swingScript = FindObjectOfType<SwingMode>();
-	}
-	
-	void Update () {
+    }
+
+    void Update()
+    {
+        //proper behavior relies on swingScript being in the scene
         if (m_swingScript != null) {
             m_percentMaxShotPower = m_swingScript.GetShowPower() / SwingMode.k_maxShotPower;
-            DrawPowerMarker(m_meterPoints, m_percentMaxShotPower);
+            DrawArc(m_meterPoints, m_percentMaxShotPower);
         }
-	}
+    }
 
-    void DrawCirclePoints(int points, float radius, Vector3 center)
+    // instantiates the pieces of the arc on start
+    void CreateArc(int points, float radius, Vector3 center)
     {
         float slice = 2 * Mathf.PI / points;
 
 
-        for (int i = 0; i < points / 2; i++) {
+        for (int i = 0; i < points / 2; i++) { //points / 2 is used here, because we are drawing *HALF* a circle!
             float angle = slice * 0;
-            
+
             if (i != points - 1) {
                 angle = slice * i;
             }
@@ -49,27 +53,28 @@ public class PowerMeter : MonoBehaviour {
 
             Vector3 pos = new Vector3(x, m_objectToCircle.transform.position.y, y);
 
-            GameObject tmpMarker = GameObject.Instantiate(m_markerPrefab) as GameObject;
+            GameObject chunk = GameObject.Instantiate(m_markerPrefab) as GameObject;
             pos.y += 0.1f;
-            tmpMarker.transform.position = pos;
-            tmpMarker.transform.LookAt(m_objectToCircle.transform.position);
+            chunk.transform.position = pos;
+            chunk.transform.LookAt(m_objectToCircle.transform.position);
             Color markerColor = Color.Lerp(Color.green, Color.red, (float)i / (points / 2));
-            tmpMarker.renderer.material.SetColor("_Color", markerColor);
+            chunk.renderer.material.SetColor("_Color", markerColor);
 
-            m_markerList.Add(tmpMarker);
-            tmpMarker.transform.parent = this.gameObject.transform;
+            m_arcChunks.Add(chunk);
+            chunk.transform.parent = this.gameObject.transform;
         }
     }
 
-    void DrawPowerMarker(int points, float percentToDraw)
+    // draws part of the arc that should be visible according to power of swing
+    void DrawArc(int points, float percentToDraw)
     {
         int currIndex = 0;
 
-        foreach (GameObject marker in m_markerList) {
-            if (((float)currIndex / (float)m_markerList.Count) < percentToDraw) {
-                marker.SetActive(true);
+        foreach (GameObject chunk in m_arcChunks) {
+            if (((float)currIndex / (float)m_arcChunks.Count) < percentToDraw) {
+                chunk.SetActive(true);
             } else {
-                marker.SetActive(false);
+                chunk.SetActive(false);
             }
             currIndex++;
         }
