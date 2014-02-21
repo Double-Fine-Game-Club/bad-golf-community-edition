@@ -12,15 +12,15 @@ using ConfigReader = System.Xml.XmlDocument;
 
 
 public class Config : MonoBehaviour {
-	
+
 	private string configPath = "Assets/config.xml";
-	
+
 	// Use this for initialization
 	void Start () {
 		if (System.IO.File.Exists (configPath) == false){
 			Xml.XmlWriterSettings settings = new Xml.XmlWriterSettings();
 			settings.Indent = true;
-			
+
 			string levelsPath = "Assets/scenes/";
 			string[] loaderPath = System.IO.Directory.GetFiles (levelsPath);
 			ConfigWriter cfgFile = ConfigWriter.Create(configPath,settings);

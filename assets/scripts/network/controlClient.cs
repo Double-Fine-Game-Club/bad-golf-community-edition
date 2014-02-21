@@ -6,16 +6,19 @@ public class controlClient : MonoBehaviour {
 	float forceMultiplyer = 10000;
 	PlayerInfo myInfo;
 	networkVariables nvs;
+	netPause pause;
 
 	void Start() {
 		// get variables we need
 		nvs = GetComponent("networkVariables") as networkVariables;
 		myInfo = nvs.myInfo;
+		pause = GetComponent ("netPause") as netPause;
+
 	}
 
 	void Update () {
 		// if in buggy
-		if (myInfo.currentMode==0) {
+		if (!myInfo.playerIsPaused && myInfo.currentMode==0) {
 			// send packets about keyboard every 0.015s
 			timer += Time.deltaTime;
 			if (timer > 0.015) {
@@ -42,7 +45,7 @@ public class controlClient : MonoBehaviour {
 				networkView.RPC("IHonked", RPCMode.All, myInfo.player);
 			}
 		}
-		if (Input.GetKeyDown(KeyCode.G)) {
+		if (!myInfo.playerIsPaused && Input.GetKeyDown(KeyCode.G)) {
 			// if in buggy
 			if (myInfo.currentMode==0) {
 				myInfo.currentMode = 1;
@@ -66,6 +69,12 @@ public class controlClient : MonoBehaviour {
 			}
 			networkView.RPC("PlayerSwap", RPCMode.Others, myInfo.currentMode, myInfo.player);
 		}
+		if(!myInfo.playerIsBusy && !myInfo.playerIsPaused && Input.GetKey(KeyCode.Escape)){
+			pause.SendMessage("onPause");
+		}else if(myInfo.playerIsPaused && Input.GetKey(KeyCode.Return)){
+			pause.SendMessage("onResume");
+		}
+
 	}
 
 	// local interpolation - add all other interpolation here aswell
@@ -101,10 +110,9 @@ public class controlClient : MonoBehaviour {
 				myCart.rigidbody.AddForceAtPosition(forceMultiplyer*forceFromBack,myCart.transform.position+myCart.transform.localRotation*Vector3.back);
 			}
 		} else if (myInfo.currentMode==1) {		// if in ball mode
-			// do ball stuff
+
 		}
 	}
-
 	
 	// honks
 	[RPC]
@@ -149,6 +157,13 @@ public class controlClient : MonoBehaviour {
 		}
 	}
 
+	void onDisconnect(){
+		//TODO: disconnect player
+
+		//Go back to main menu
+		string nameOfLevel = "main";
+		Application.LoadLevel( nameOfLevel );
+	}
 
 	// blank for server use only
 	[RPC]

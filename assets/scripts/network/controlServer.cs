@@ -6,18 +6,21 @@ public class controlServer : MonoBehaviour {
 	float forceMultiplyer = 10000;
 	networkVariables nvs;
 	PlayerInfo myInfo;
+	netPause pause;
 
 	void Start() {
 		// get variables we need
 		nvs = GetComponent("networkVariables") as networkVariables;
 		myInfo = nvs.myInfo;
+		pause = GetComponent ("netPause") as netPause;
+
 	}
 
 	void Update() {
-		if (Input.GetKeyDown(KeyCode.Q)) {
+		if (!myInfo.playerIsPaused && Input.GetKeyDown(KeyCode.Q)) {
 			networkView.RPC("IHonked", RPCMode.All, myInfo.player);
 		}
-		if (Input.GetKeyDown(KeyCode.G)) {
+		if (!myInfo.playerIsPaused && Input.GetKeyDown(KeyCode.G)) {
 			// if in buggy
 			if (myInfo.currentMode==0) {
 				myInfo.currentMode = 1;
@@ -40,6 +43,11 @@ public class controlServer : MonoBehaviour {
 				myInfo.ballGameObject.rigidbody.constraints = RigidbodyConstraints.None;
 			}
 			networkView.RPC("PlayerSwap", RPCMode.Server, myInfo.currentMode, myInfo.player);
+		}
+		if(!myInfo.playerIsBusy && !myInfo.playerIsPaused && Input.GetKey(KeyCode.Escape)){
+			pause.SendMessage("onPause");
+		}else if(myInfo.playerIsPaused && Input.GetKey(KeyCode.Return)){
+			pause.SendMessage("onResume");
 		}
 	}
 
@@ -81,7 +89,7 @@ public class controlServer : MonoBehaviour {
 		}
 		
 		// if in buggy
-		if (myInfo.currentMode==0) {
+		if (!myInfo.playerIsPaused && myInfo.currentMode==0) {
 			// add own fiziks
 			int toSend = 0;
 			if (Input.GetKey(KeyCode.W)) {
@@ -154,5 +162,15 @@ public class controlServer : MonoBehaviour {
 				p.KBState = 0;
 			}
 		}
+	}
+
+	[RPC]
+	void onDisconnect(){
+		//TODO: disconnect players, shutdown server
+
+
+		//Go back to main menu
+		string nameOfLevel = "main";
+		Application.LoadLevel( nameOfLevel );
 	}
 }

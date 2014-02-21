@@ -115,7 +115,10 @@ PlayerSettings:
     m_Icons:
     - m_Icon: {fileID: 2800000, guid: 32c44991a9908024da92ca29f4f00329, type: 3}
       m_Size: 128
-  m_BuildTargetBatching: []
+  m_BuildTargetBatching:
+  - m_BuildTarget: Standalone
+    m_StaticBatching: 1
+    m_DynamicBatching: 1
   webPlayerTemplate: APPLICATION:Default
   m_TemplateCustomTags: {}
   wiiRegion: 1

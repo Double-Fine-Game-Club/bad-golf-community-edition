@@ -41,6 +41,12 @@ public class networkManager : MonoBehaviour {
 				MasterServer.RequestHostList(serverVersion);
 			}
 
+			if(GUILayout.Button ("Back")){
+				//Go back to main menu
+				string nameOfLevel = "main";
+				Application.LoadLevel( nameOfLevel );
+			}
+
 			GUI.Label(new Rect(Screen.width-250,20,50,20), "Name:");
 			nameBuffer = GUI.TextField(new Rect(Screen.width-200,20,150,20), nameBuffer, 32);
 			

@@ -3324,7 +3324,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1556452143
 Transform:
   m_ObjectHideFlags: 0
@@ -4079,7 +4079,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1968385775
 Transform:
   m_ObjectHideFlags: 0
@@ -4436,7 +4436,7 @@ GameObject:
   - 114: {fileID: 2132262711}
   - 65: {fileID: 2132262712}
   m_Layer: 8
-  m_Name: player1
+  m_Name: start
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
