@@ -6,6 +6,7 @@ TagManager:
   - Ground
   - LevelID
   - Cart
+  - SecondaryCamera
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX
@@ -15,9 +16,9 @@ TagManager:
   Builtin Layer 5: 
   Builtin Layer 6: 
   Builtin Layer 7: 
-  User Layer 8: UI_ONLY
-  User Layer 9: 
-  User Layer 10: 
+  User Layer 8: CAM1Only
+  User Layer 9: CAM2Only
+  User Layer 10: UI_ONLY
   User Layer 11: 
   User Layer 12: 
   User Layer 13: 
