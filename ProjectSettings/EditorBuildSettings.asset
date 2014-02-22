@@ -6,10 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/scenes//main.unity
-  - enabled: 1
-    path: Assets/scenes//multi_lobby.unity
-  - enabled: 1
-    path: Assets/scenes//level_01.unity
-  - enabled: 1
-    path: Assets/scenes//level_01_lightsoda.unity
+    path: Assets/scenes/test/level_testing.unity
+
+
