@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using System.IO;
+using System.Xml;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -13,7 +15,7 @@ using ConfigReader = System.Xml.XmlDocument;
 
 public class Config : MonoBehaviour {
 	
-	private string configPath = "Assets/config.xml";
+	private string configPath = "assets/config.xml";
 	
 	// Use this for initialization
 	void Start () {
@@ -21,7 +23,7 @@ public class Config : MonoBehaviour {
 			Xml.XmlWriterSettings settings = new Xml.XmlWriterSettings();
 			settings.Indent = true;
 			
-			string levelsPath = "Assets/scenes/";
+			string levelsPath = "assets/scenes/";
 			string[] loaderPath = System.IO.Directory.GetFiles (levelsPath);
 			ConfigWriter cfgFile = ConfigWriter.Create(configPath,settings);
 			cfgFile.WriteStartDocument();
@@ -33,7 +35,7 @@ public class Config : MonoBehaviour {
 				
 				if (file.EndsWith(".meta") == false)
 				{
-					cfgFile.WriteElementString("Map",file.Remove(0,levelsPath.Length).Remove(file.Length-(levelsPath.Length+6)).ToString());
+					cfgFile.WriteElementString("Map",Path.GetFileNameWithoutExtension(file));
 				}
 				
 			}
@@ -48,43 +50,46 @@ public class Config : MonoBehaviour {
 	
 	public void cfgLoadLevels(){
 		ConfigReader cfgFile = new ConfigReader ();
-		cfgFile.Load (configPath);
+		cfgFile.Load(configPath);
 		
 		GameObject gObj = GameObject.FindGameObjectWithTag ("LevelID");
 		LevelSelect levelSel = gObj.GetComponent (typeof(LevelSelect)) as LevelSelect;
-		Xml.XmlNodeList mapNode = cfgFile.GetElementsByTagName ("Map");
-		levelSel.pathToLevels = cfgFile.DocumentElement.FirstChild.Attributes[0].Value;
-		
-		
+		XmlNode node = cfgFile.DocumentElement.SelectSingleNode ("Levels");
+		XmlNodeList mapNode = node.SelectNodes ("Map");
+		string pathToLevels = node.Attributes.GetNamedItem("LevelsPath").Value;
+
 		int mapCount = mapNode.Count;
 		
 		levelSel.levels = new string[mapCount];
 		int itn = 0;
+		string[] levelsPath = new string[mapCount];
 		
 		foreach (Xml.XmlElement nodes in mapNode){
+			string path = pathToLevels;
+
+			XmlNode relativePathNode = nodes.Attributes.GetNamedItem("RelativePath");
+			if (relativePathNode != null)
+			{
+				path = Path.Combine(pathToLevels, relativePathNode.Value);
+			}
+
+			path = Path.Combine(path, nodes.InnerText + ".unity");
+			levelsPath[itn] = path;
 			levelSel.levels[itn] = nodes.InnerText;
-			itn = itn+1;
+			itn++;
 		}
-		
-		
-		string[] levelsPath = new string[levelSel.levels.Length];
 
 #if UNITY_EDITOR
 
 		EditorBuildSettingsScene[] newSettings = new EditorBuildSettingsScene[levelSel.levels.Length];
 		
 		for (int i = 0; i < levelsPath.Length; i++) {
-			levelsPath[i] = levelSel.pathToLevels+"/"+levelSel.levels[i]+".unity";	
 			EditorBuildSettingsScene sceneL = new EditorBuildSettingsScene(levelsPath[i],true);
 			newSettings[i]=sceneL;
 		}
 		
 		EditorBuildSettings.scenes = newSettings;
 #endif
-
-		for (int i = 0; i < levelsPath.Length; i++) {
-			levelsPath[i] = levelSel.pathToLevels+"/"+levelSel.levels[i]+".unity";
-		}
 	}
 	
 }
