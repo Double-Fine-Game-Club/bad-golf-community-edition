@@ -50,7 +50,8 @@ public class MainMenu : MonoBehaviour {
 		}
 
 		if(GUILayout.Button("Offline")) {
-			GuiState = GUI_STATE.UI_STATE_OFFLINE;
+			//GuiState = GUI_STATE.UI_STATE_OFFLINE;
+			Application.LoadLevel("level_testing");
 		}
 
 		if(GUILayout.Button("Options")) {
