@@ -10,6 +10,8 @@ public class GameControl : MonoBehaviour
 	public GameObject ed_creditsScreen;
 	public GameObject ed_onlineLobbyScreen;
 	public GameObject ed_optionsScreen;
+	public GameObject ed_quitDialogScreen;
+	public GameObject ed_levelPreviewScreen;
 
 	private string nameOfLevel;
 	private GameObject loadedLevel;
@@ -19,6 +21,8 @@ public class GameControl : MonoBehaviour
 
 	void Start()
 	{
+		Input.simulateMouseWithTouches = true;
+
 		hideAllScreens();
 		ed_introScreen.SetActive(true);
 		StartCoroutine( waitForIntro() );
@@ -59,6 +63,12 @@ public class GameControl : MonoBehaviour
 		ed_optionsScreen.SetActive(true);
 	}
 
+	public void onQuit()
+	{
+		hideAllScreens();
+		ed_quitDialogScreen.SetActive(true);
+	}
+
 	public void onMultiClicked()
 	{
 		hideAllScreens();
@@ -70,14 +80,23 @@ public class GameControl : MonoBehaviour
 		GameObject gObj = GameObject.Find ("levelID");
 		LevelSelect levelSel = gObj.GetComponent(typeof(LevelSelect)) as LevelSelect;	
 		Application.LoadLevelAdditive(levelSel.levels[levelSel.levelSelected]);
+		
 		hideAllScreens();
+		ed_levelPreviewScreen.SetActive(false);
 	}
 
 	public void onMultiSkip()
 	{
 		nameOfLevel = "multi_lobby";
 		Application.LoadLevelAdditive( nameOfLevel );
+		
 		hideAllScreens();
+		ed_levelPreviewScreen.SetActive(false);
+	}
+
+	public void onQuitClicked()
+	{
+		Application.Quit();
 	}
 
 	public void hideAllScreens()
@@ -88,6 +107,7 @@ public class GameControl : MonoBehaviour
 		ed_creditsScreen.SetActive(false);
 		ed_onlineLobbyScreen.SetActive(false);
 		ed_optionsScreen.SetActive(false);
+		ed_quitDialogScreen.SetActive(false);
 	}
 
 	void Update()
