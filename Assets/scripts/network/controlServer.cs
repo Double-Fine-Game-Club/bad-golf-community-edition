@@ -163,14 +163,4 @@ public class controlServer : MonoBehaviour {
 			}
 		}
 	}
-
-	[RPC]
-	void onDisconnect(){
-		//TODO: disconnect players, shutdown server
-
-
-		//Go back to main menu
-		string nameOfLevel = "main";
-		Application.LoadLevel( nameOfLevel );
-	}
 }
