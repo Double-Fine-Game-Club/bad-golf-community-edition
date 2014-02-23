@@ -13,6 +13,8 @@ public class SwingMode : MonoBehaviour
 		private bool flying = false;
 		public GameObject cart;
 
+        public const int k_maxShotPower = 500;
+
 	
 		// Use this for initialization
 		void Start ()
@@ -54,8 +56,8 @@ public class SwingMode : MonoBehaviour
 				// You can only add power. Automatically decrementing it is not implemented.
 				if (Input.GetAxis ("Vertical") > 0) {
 						shotPower += Input.GetAxis ("Vertical") * hitMultiplier;
-						if (shotPower > 500) {
-								shotPower = 500;
+						if (shotPower > k_maxShotPower) {
+								shotPower = k_maxShotPower;
 						}
 				}
 
@@ -86,4 +88,9 @@ public class SwingMode : MonoBehaviour
 						flying = false;
 				}
 		}
+
+        public float GetShowPower()
+        {
+            return shotPower;
+        }
 }
