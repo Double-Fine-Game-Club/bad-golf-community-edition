@@ -8,6 +8,9 @@ public class HoverableTextMesh : MonoBehaviour
 	public Color colorNormal = Color.white;
 	public Color colorDisabled = Color.gray;
 
+	public AudioClip hoverAudio;
+
+
 	public bool disabled = false;
 
 	void Start()
@@ -26,7 +29,15 @@ public class HoverableTextMesh : MonoBehaviour
 		if ( !disabled)
 			targetTextMesh.color = colorHover;
 	}
-	
+
+	void OnMouseEnter()
+	{
+		if ( !disabled && hoverAudio != null )
+		{
+			SoundManager.Get().playSfx( hoverAudio);
+		}
+	}
+
 	void OnMouseExit()
 	{
 		if ( !disabled)

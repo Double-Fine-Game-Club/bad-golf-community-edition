@@ -5,6 +5,8 @@ public class HoverableTexture : MonoBehaviour
 {
 	public GameObject normal;
 	public GameObject hover;
+
+	public AudioClip hoverAudio;
 	
 	void OnEnable()
 	{
@@ -16,6 +18,14 @@ public class HoverableTexture : MonoBehaviour
 	{
 		normal.SetActive(false);
 		hover.SetActive(true);
+	}
+
+	void OnMouseEnter()
+	{
+		if ( hoverAudio != null )
+		{
+			SoundManager.Get().playSfx( hoverAudio);
+		}
 	}
 	
 	void OnMouseExit()
