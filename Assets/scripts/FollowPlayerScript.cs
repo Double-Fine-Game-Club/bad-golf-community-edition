@@ -26,7 +26,6 @@ public class FollowPlayerScript : MonoBehaviour
 	    // lean camera toward zenth if sphere collides with geometry
 		public bool camLean = true;
 		public float camCollideRadius = 2.0f;
-		public float smoothLeanTime = 0.2f;
 
 	    // current distance on the x-z plane of the camera from the target
 		private float currentDistance = 0f;
