@@ -58,6 +58,8 @@ public class networkManagerClient : MonoBehaviour {
 		} else {
 			Debug.Log ("successfully disconnected from the server");
 		}
+
+		//Go back to main menu
 		string nextLevel = "main";
 		Application.LoadLevel( nextLevel );
 	}

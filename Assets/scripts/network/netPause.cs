@@ -40,13 +40,10 @@ public class netPause : MonoBehaviour {
 	}
 
 	void onExit(){
+		myInfo.playerIsPaused = false;	//reset pause status
 		Network.Disconnect ();
 		hideAllScreens();
-		myInfo.playerIsPaused = false;	//reset pause status
 		Destroy (ed_pauseScreen);		//undo changes to object hierarchy
-
-		//Go back to main menu
-		string nameOfLevel = "main";
-		Application.LoadLevel( nameOfLevel );
+		
 	}
 }
