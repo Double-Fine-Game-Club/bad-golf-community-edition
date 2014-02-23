@@ -584,6 +584,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   messageTarget: {fileID: 977792247}
   messageName: onMenu
+  clickAudio: {fileID: 0}
 --- !u!102 &106151773
 TextMesh:
   serializedVersion: 3
@@ -641,6 +642,7 @@ MonoBehaviour:
   colorHover: {r: 1, g: 0, b: 0, a: 1}
   colorNormal: {r: 1, g: 1, b: 1, a: 1}
   colorDisabled: {r: .5, g: .5, b: .5, a: 1}
+  hoverAudio: {fileID: 0}
   disabled: 0
 --- !u!1 &121255578
 GameObject:
@@ -964,6 +966,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   messageTarget: {fileID: 977792247}
   messageName: onMenu
+  clickAudio: {fileID: 0}
 --- !u!65 &169269546
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1033,6 +1036,7 @@ MonoBehaviour:
   colorHover: {r: 1, g: 0, b: 0, a: 1}
   colorNormal: {r: 1, g: 1, b: 1, a: 1}
   colorDisabled: {r: .463235319, g: .463235319, b: .463235319, a: 1}
+  hoverAudio: {fileID: 0}
   disabled: 0
 --- !u!1 &191471582
 GameObject:
@@ -1984,6 +1988,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   normal: {fileID: 496395804}
   hover: {fileID: 431893718}
+  hoverAudio: {fileID: 8300000, guid: d443c7900e7e5da478402b367a06d58a, type: 3}
 --- !u!65 &653714886
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2009,6 +2014,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   messageTarget: {fileID: 977792247}
   messageName: onMultiClicked
+  clickAudio: {fileID: 8300000, guid: d2fee02bd0ce9e94d907f5452654eb91, type: 3}
 --- !u!114 &653714888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2230,6 +2236,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   messageTarget: {fileID: 977792247}
   messageName: onMenu
+  clickAudio: {fileID: 0}
 --- !u!65 &724076260
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2299,6 +2306,7 @@ MonoBehaviour:
   colorHover: {r: 1, g: 0, b: 0, a: 1}
   colorNormal: {r: 1, g: 1, b: 1, a: 1}
   colorDisabled: {r: .492647052, g: .492647052, b: .492647052, a: 1}
+  hoverAudio: {fileID: 0}
   disabled: 0
 --- !u!1 &760502980
 GameObject:
@@ -2355,6 +2363,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   messageTarget: {fileID: 0}
   messageName: onLocalMultiplayer
+  clickAudio: {fileID: 0}
 --- !u!102 &760502984
 TextMesh:
   serializedVersion: 3
@@ -2727,6 +2736,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   messageTarget: {fileID: 0}
   messageName: onLocalMultiplayer
+  clickAudio: {fileID: 0}
 --- !u!102 &955593324
 TextMesh:
   serializedVersion: 3
@@ -2881,6 +2891,8 @@ GameObject:
   - 4: {fileID: 977792248}
   - 114: {fileID: 977792249}
   - 114: {fileID: 977792250}
+  - 114: {fileID: 977792252}
+  - 114: {fileID: 977792251}
   m_Layer: 8
   m_Name: main
   m_TagString: Untagged
@@ -2938,6 +2950,52 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LinuxFont: {fileID: 12800000, guid: 63ceaca538b9be64d948e6c3fe29802a, type: 3}
+--- !u!114 &977792251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 977792247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc0f894fe079633479040a5c96aaa692, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onStartClipName: 
+  onEnableClipName: 
+  onDisableClipName: 
+  onStartClip: {fileID: 0}
+  onEnableClip: {fileID: 8300000, guid: 9871749184ee6d745a1e9fc938cc871f, type: 3}
+  onDisableClip: {fileID: 0}
+  volume: .5
+  overrideVolume: 0
+  onDisableStopMusic: 0
+--- !u!114 &977792252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 977792247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fed32e75e5fb36408594d8de246ebfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  edx_defaultClip: {fileID: 0}
+  defaultClip: {fileID: 0}
+  sfxClips:
+  - {fileID: 8300000, guid: d443c7900e7e5da478402b367a06d58a, type: 3}
+  - {fileID: 8300000, guid: d2fee02bd0ce9e94d907f5452654eb91, type: 3}
+  musicClips:
+  - {fileID: 8300000, guid: 9871749184ee6d745a1e9fc938cc871f, type: 3}
+  - {fileID: 8300000, guid: e70eff42f95b96042975f1b3a6e689eb, type: 3}
+  musicVolume: 1
+  fadeTime: 2
+  sfxVolume: 1
+  muteAllSound: 0
+  muteMusic: 0
+  muteSfx: 0
+  audioPoolSize: 8
 --- !u!1 &981552888
 GameObject:
   m_ObjectHideFlags: 0
@@ -3591,6 +3649,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   normal: {fileID: 8067166}
   hover: {fileID: 1793933976}
+  hoverAudio: {fileID: 8300000, guid: d443c7900e7e5da478402b367a06d58a, type: 3}
 --- !u!65 &1202448413
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3616,6 +3675,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   messageTarget: {fileID: 977792247}
   messageName: onOptions
+  clickAudio: {fileID: 8300000, guid: d2fee02bd0ce9e94d907f5452654eb91, type: 3}
 --- !u!114 &1202448415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3969,6 +4029,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   messageTarget: {fileID: 977792247}
   messageName: onMultiSkip
+  clickAudio: {fileID: 0}
 --- !u!102 &1373753721
 TextMesh:
   serializedVersion: 3
@@ -4026,6 +4087,7 @@ MonoBehaviour:
   colorHover: {r: 1, g: 1, b: 1, a: 1}
   colorNormal: {r: 0, g: .0896549225, b: 1, a: 1}
   colorDisabled: {r: .441176474, g: .441176474, b: .441176474, a: 1}
+  hoverAudio: {fileID: 0}
   disabled: 0
 --- !u!1 &1375085981
 GameObject:
@@ -4202,6 +4264,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   messageTarget: {fileID: 0}
   messageName: onMultiClicked
+  clickAudio: {fileID: 0}
 --- !u!65 &1432482610
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4328,6 +4391,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   messageTarget: {fileID: 977792247}
   messageName: onQuitClicked
+  clickAudio: {fileID: 0}
 --- !u!65 &1517796217
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4397,6 +4461,7 @@ MonoBehaviour:
   colorHover: {r: 1, g: 0, b: 0, a: 1}
   colorNormal: {r: 1, g: 1, b: 1, a: 1}
   colorDisabled: {r: .5, g: .5, b: .5, a: 1}
+  hoverAudio: {fileID: 0}
   disabled: 0
 --- !u!1 &1556452142
 GameObject:
@@ -4521,6 +4586,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   messageTarget: {fileID: 0}
   messageName: onMultiClicked
+  clickAudio: {fileID: 0}
 --- !u!65 &1613245876
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4621,6 +4687,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   normal: {fileID: 971686058}
   hover: {fileID: 191471582}
+  hoverAudio: {fileID: 8300000, guid: d443c7900e7e5da478402b367a06d58a, type: 3}
 --- !u!65 &1617460755
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4646,6 +4713,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   messageTarget: {fileID: 977792247}
   messageName: onCredits
+  clickAudio: {fileID: 8300000, guid: d2fee02bd0ce9e94d907f5452654eb91, type: 3}
 --- !u!114 &1617460757
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4866,6 +4934,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   messageTarget: {fileID: 977792247}
   messageName: onMenu
+  clickAudio: {fileID: 0}
 --- !u!102 &1675500113
 TextMesh:
   serializedVersion: 3
@@ -4934,6 +5003,7 @@ MonoBehaviour:
   colorHover: {r: 1, g: 0, b: 0, a: 1}
   colorNormal: {r: 1, g: 1, b: 1, a: 1}
   colorDisabled: {r: .536764741, g: .536764741, b: .536764741, a: 1}
+  hoverAudio: {fileID: 0}
   disabled: 0
 --- !u!1 &1684660617
 GameObject:
@@ -4981,6 +5051,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   normal: {fileID: 63718702}
   hover: {fileID: 1196596202}
+  hoverAudio: {fileID: 8300000, guid: d443c7900e7e5da478402b367a06d58a, type: 3}
 --- !u!65 &1684660620
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5006,6 +5077,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   messageTarget: {fileID: 977792247}
   messageName: onQuit
+  clickAudio: {fileID: 8300000, guid: d2fee02bd0ce9e94d907f5452654eb91, type: 3}
 --- !u!114 &1684660622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5090,6 +5162,7 @@ MonoBehaviour:
   colorHover: {r: 1, g: 0, b: 0, a: 1}
   colorNormal: {r: 1, g: 1, b: 1, a: 1}
   colorDisabled: {r: .75, g: .75, b: .75, a: 1}
+  hoverAudio: {fileID: 0}
   disabled: 0
 --- !u!114 &1769259806
 MonoBehaviour:
@@ -5104,6 +5177,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   messageTarget: {fileID: 977792247}
   messageName: onMenu
+  clickAudio: {fileID: 0}
 --- !u!114 &1769259807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5483,6 +5557,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   normal: {fileID: 265338997}
   hover: {fileID: 802156524}
+  hoverAudio: {fileID: 8300000, guid: d443c7900e7e5da478402b367a06d58a, type: 3}
 --- !u!65 &1872308179
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5508,6 +5583,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   messageTarget: {fileID: 977792247}
   messageName: onLocalMultiplayer
+  clickAudio: {fileID: 8300000, guid: d2fee02bd0ce9e94d907f5452654eb91, type: 3}
 --- !u!114 &1872308181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6032,6 +6108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   messageTarget: {fileID: 977792247}
   messageName: onStartClicked
+  clickAudio: {fileID: 0}
 --- !u!65 &2132262712
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6059,4 +6136,5 @@ MonoBehaviour:
   colorHover: {r: 1, g: 0, b: 0, a: 1}
   colorNormal: {r: 1, g: 1, b: 1, a: 1}
   colorDisabled: {r: .536764741, g: .536764741, b: .536764741, a: 1}
+  hoverAudio: {fileID: 0}
   disabled: 0
