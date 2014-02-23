@@ -9,7 +9,10 @@ public class Clickable : MonoBehaviour
 	
 	void OnMouseDown()
 	{
-		messageTarget.SendMessage(messageName);
+		if ( messageTarget != null)
+			messageTarget.SendMessage(messageName);
+		else
+			SendMessageUpwards( messageName);
 
 		if( clickAudio != null )
 		{
