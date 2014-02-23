@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[AddComponentMenu("Camera-Control/Follow Player")]
 public class FollowPlayerScript : MonoBehaviour
 {
 
