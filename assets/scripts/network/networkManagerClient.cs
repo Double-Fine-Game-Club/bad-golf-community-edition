@@ -51,7 +51,7 @@ public class networkManagerClient : MonoBehaviour {
 		if (screenMessages.ContainsKey(keyToRemove)) screenMessages.Remove(keyToRemove);
 	}
 
-	void onDisconnectedFromServer(NetworkDisconnection info){
+	void OnDisconnectedFromServer(NetworkDisconnection info){
 		//Disconnected from the server for some reason
 		if (info == NetworkDisconnection.LostConnection) {
 			Debug.Log ("Lost connection to the server");
@@ -142,6 +142,10 @@ public class networkManagerClient : MonoBehaviour {
 		// remove from array
 		networkVariables nvs = GetComponent("networkVariables") as networkVariables;
 		PlayerInfo toDelete = new PlayerInfo();
+		if (myInfo.player == player) {
+			Network.Disconnect();
+		}
+
 		foreach (PlayerInfo p in nvs.players)
 		{
 			if (p.player==player) {
