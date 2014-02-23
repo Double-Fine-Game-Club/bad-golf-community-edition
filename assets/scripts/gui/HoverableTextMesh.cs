@@ -10,7 +10,6 @@ public class HoverableTextMesh : MonoBehaviour
 
 	public AudioClip hoverAudio;
 
-
 	public bool disabled = false;
 
 	void Start()
