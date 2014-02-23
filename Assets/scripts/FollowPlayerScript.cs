@@ -53,18 +53,17 @@ public class FollowPlayerScript : MonoBehaviour
 				float currentRotationAngle = transform.eulerAngles.y;
 				float currentHeight = transform.position.y;
 
-		        // calculate the length of the vector from the camera to the target
-				float wantedCamDistanceSquared = (wantedHeight-cameraTilt);
-				wantedCamDistanceSquared *= wantedCamDistanceSquared;
-				wantedCamDistanceSquared = wantedCamDistanceSquared + distance*distance;
-
 		        if( camLean ) {
+
+					// calculate the length of the vector from the camera to the target
+					float wantedCamDistanceSquared = (wantedHeight-cameraTilt);
+					wantedCamDistanceSquared *= wantedCamDistanceSquared;
+					wantedCamDistanceSquared = wantedCamDistanceSquared + distance*distance;		        	
 
 					if( Physics.CheckSphere( transform.position, camCollideRadius) )
 					{
 						// move toward zero distance on x-y from target
 						currentDistance = Mathf.Lerp(currentDistance, 0, leanDamping * Time.deltaTime);
-
 					}
 					else
 					{
