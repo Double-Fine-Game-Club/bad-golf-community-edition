@@ -274,7 +274,7 @@ public class networkManagerServer : MonoBehaviour {
 		nvs.players.Add(newGuy);
 	}
 
-	void onDisconnectedFromServer(NetworkDisconnection info){
+	void OnDisconnectedFromServer(NetworkDisconnection info){
 		MasterServer.UnregisterHost ();
 
 		//Go back to main menu
