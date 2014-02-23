@@ -274,6 +274,30 @@ public class networkManagerServer : MonoBehaviour {
 		nvs.players.Add(newGuy);
 	}
 
+	//Host is disconnecting
+	void onDisconnect(){
+		PrintText ("Server shutting down");
+		
+		networkVariables nvs = GetComponent("networkVariables") as networkVariables;
+		//nvs.players[0] is self (the host)
+		for(int i=nvs.players.Count-1; i>1; i++){
+			PlayerInfo pInfo = (nvs.players[nvs.players.Count-1] as PlayerInfo);
+
+			Network.CloseConnection(pInfo.player, true);
+			//OnPlayerDisconnected(p);
+		}
+
+		Network.Disconnect ();
+		onDisconnectedFromServer (NetworkDisconnection.Disconnected);
+	}
+
+	void onDisconnectedFromServer(NetworkDisconnection info){
+		MasterServer.UnregisterHost ();
+
+		//Go back to main menu
+		string nameOfLevel = "main";
+		Application.LoadLevel( nameOfLevel );
+	}
 	
 	// blank for client use only
 	[RPC]
