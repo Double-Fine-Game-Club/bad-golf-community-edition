@@ -2965,7 +2965,7 @@ MonoBehaviour:
   onEnableClipName: 
   onDisableClipName: 
   onStartClip: {fileID: 0}
-  onEnableClip: {fileID: 8300000, guid: 9871749184ee6d745a1e9fc938cc871f, type: 3}
+  onEnableClip: {fileID: 8300000, guid: 37d334d704c6a854fb0658ba5a03327d, type: 3}
   onDisableClip: {fileID: 0}
   volume: .5
   overrideVolume: 0
@@ -2987,8 +2987,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d443c7900e7e5da478402b367a06d58a, type: 3}
   - {fileID: 8300000, guid: d2fee02bd0ce9e94d907f5452654eb91, type: 3}
   musicClips:
-  - {fileID: 8300000, guid: 9871749184ee6d745a1e9fc938cc871f, type: 3}
-  - {fileID: 8300000, guid: e70eff42f95b96042975f1b3a6e689eb, type: 3}
+  - {fileID: 8300000, guid: 37d334d704c6a854fb0658ba5a03327d, type: 3}
+  - {fileID: 8300000, guid: 4dbcfafd903b9f649ba3caa337003243, type: 3}
   musicVolume: 1
   fadeTime: 2
   sfxVolume: 1
