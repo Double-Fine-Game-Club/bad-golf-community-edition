@@ -158,7 +158,7 @@ public class controlClient : MonoBehaviour {
 	}
 
 	void onDisconnect(){
-		//TODO: disconnect player
+		Network.CloseConnection (myInfo.player, true);
 
 		//Go back to main menu
 		string nameOfLevel = "main";

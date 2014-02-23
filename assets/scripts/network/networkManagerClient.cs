@@ -51,7 +51,16 @@ public class networkManagerClient : MonoBehaviour {
 		if (screenMessages.ContainsKey(keyToRemove)) screenMessages.Remove(keyToRemove);
 	}
 
-
+	void onDisconnectedFromServer(NetworkDisconnection info){
+		//Disconnected from the server for some reason
+		if (info == NetworkDisconnection.LostConnection) {
+			Debug.Log ("Lost connection to the server");
+		} else {
+			Debug.Log ("successfully disconnected from the server");
+		}
+		string nextLevel = "main";
+		Application.LoadLevel( nextLevel );
+	}
 
 
 	// things that can be run over the network
@@ -140,6 +149,7 @@ public class networkManagerClient : MonoBehaviour {
 				toDelete = p;
 			}
 		}
+
 		if (nvs.players.Contains(toDelete)) nvs.players.Remove(toDelete);
 	}
 	
@@ -149,6 +159,7 @@ public class networkManagerClient : MonoBehaviour {
 		// remove the object
 		if (NetworkView.Find(viewID)) Destroy(NetworkView.Find(viewID).gameObject);
 	}
+
 
 
 	// blank for server use only
