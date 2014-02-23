@@ -7,8 +7,6 @@ public class MainMenu : MonoBehaviour {
 	public GUISkin GuiSkin;
 
 	private Vector2 scrollPosition;
-	private bool musicToggle;
-	private bool soundToggle;
 	private float musicVolume;
 	private float musicVolumeMin = 0;
 	private float musicVolumeMax = 1;
@@ -97,13 +95,15 @@ public class MainMenu : MonoBehaviour {
 		GUILayout.Label("Options GUI");
 
 		GUILayout.BeginHorizontal("box");
-		musicToggle = GUILayout.Toggle(musicToggle, "Music");
+		GUILayout.Label ("Music");
 		musicVolume = GUILayout.HorizontalSlider(musicVolume, musicVolumeMin, musicVolumeMax);
 		GUILayout.EndHorizontal();
 
 		GUILayout.BeginHorizontal("box");
-		soundToggle = GUILayout.Toggle(soundToggle, "Sound");
+		GUILayout.Label ("Sound");
 		soundVolume = GUILayout.HorizontalSlider(soundVolume, soundVolumeMin, soundVolumeMax);
+		AudioListener.volume = soundVolume;
+
 		GUILayout.EndHorizontal();
 
 		GUILayout.EndVertical();
