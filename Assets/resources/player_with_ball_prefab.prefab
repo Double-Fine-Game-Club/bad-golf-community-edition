@@ -411,6 +411,7 @@ GameObject:
   - 54: {fileID: 5400002}
   - 114: {fileID: 11400026}
   - 114: {fileID: 11400028}
+  - 114: {fileID: 11400038}
   m_Layer: 0
   m_Name: hit_mode_ball
   m_TagString: Untagged
@@ -849,7 +850,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100038}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: -4.37113883e-08}
-  m_LocalPosition: {x: -44.6355858, y: -74.3481979, z: 232.037048}
+  m_LocalPosition: {x: 202.420319, y: -75.6960068, z: 286.662079}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400056}
@@ -2395,6 +2396,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d07c3cad733e2b34fa5dd3b63c32f47f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11400038
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6f2b3c2ce176f44087fa23683febcc2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_objectToCircle: {fileID: 100046}
+  m_markerPrefab: {fileID: 100000, guid: 106aba1f0ace6184ab747ea60caff5f2, type: 2}
+  m_meterRadius: 1
+  m_meterPoints: 100
 --- !u!124 &12400000
 Behaviour:
   m_ObjectHideFlags: 1
