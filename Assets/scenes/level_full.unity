@@ -564,6 +564,10 @@ Prefab:
       propertyPath: m_LightmapTilingOffset.w
       value: -.00390625
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 0ed9e2b56149f564c9084cb84ba75963, type: 3}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0ed9e2b56149f564c9084cb84ba75963, type: 3}
   m_RootGameObject: {fileID: 2065120406}
@@ -1634,7 +1638,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4098d23184bdada4d9ea10a6557a67f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  messageTarget: {fileID: 0}
   messageName: onResume
+  clickAudio: {fileID: 0}
 --- !u!65 &474499757
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1720,7 +1726,7 @@ Transform:
   m_PrefabParentObject: {fileID: 400046, guid: fcef4560af670864ba96f4861e9a1e9f, type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 489195829}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: .999860644, z: 0, w: .0166972242}
   m_LocalPosition: {x: -4.12722015, y: .432826042, z: -.367828727}
   m_LocalScale: {x: .685857892, y: .685857892, z: .685857892}
   m_Children:
@@ -3014,7 +3020,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4098d23184bdada4d9ea10a6557a67f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  messageTarget: {fileID: 0}
   messageName: onExit
+  clickAudio: {fileID: 0}
 --- !u!65 &1409273880
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3081,8 +3089,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 1436162094}
   - 20: {fileID: 1436162097}
-  - 114: {fileID: 1436162096}
   - 81: {fileID: 1436162095}
+  - 114: {fileID: 1436162096}
   m_Layer: 0
   m_Name: player_camera
   m_TagString: Untagged
@@ -3112,20 +3120,25 @@ AudioListener:
 --- !u!114 &1436162096
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400018, guid: a1dee1f88cf0ad54394e5b11a2e578db,
-    type: 2}
+  m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1436162093}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7512d254edcfd2a46ae81b57009ff278, type: 3}
+  m_Script: {fileID: 11500000, guid: c14520cc82be9a2419f1d8ec75176b32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 388057045}
-  distance: 10
-  height: 3
+  distance: 6
+  height: 8
   heightDamping: 2
   rotationDamping: 3
+  leanDamping: 2
+  cameraTilt: 3
+  minDistance: 6
+  camZoom: 0
+  camLean: 1
+  camCollideRadius: 2
 --- !u!20 &1436162097
 Camera:
   m_ObjectHideFlags: 0
@@ -6747,7 +6760,7 @@ GameObject:
   - 95: {fileID: 2065120407}
   m_Layer: 0
   m_Name: fatmandu_course1_tweaks
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -7061,14 +7074,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c14520cc82be9a2419f1d8ec75176b32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  car: {fileID: 1741447815}
+  target: {fileID: 0}
   distance: 5
   height: 4
   heightDamping: 2
   rotationDamping: 3
+  leanDamping: 2
   cameraTilt: 1.5
   minDistance: 5
-  zoom: 1
+  camZoom: 0
+  camLean: 1
+  camCollideRadius: 2
 --- !u!81 &2101953008
 AudioListener:
   m_ObjectHideFlags: 0
