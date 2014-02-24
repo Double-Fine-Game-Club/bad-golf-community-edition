@@ -15,6 +15,8 @@ public class Config : MonoBehaviour {
 
 	private string configPath = "Assets/config.xml";
 
+	static public Dictionary<string, string[]> colorsDictionary = new Dictionary<string, string[]>();
+
 	// Use this for initialization
 	void Start () {
 		if (System.IO.File.Exists (configPath) == false){
@@ -43,14 +45,34 @@ public class Config : MonoBehaviour {
 			cfgFile.Flush ();
 			cfgFile.Close ();
 		}
+		else
+		{
+			if ( colorsDictionary.Count > 0 )
+				return;
+
+			//load colors 
+			ConfigReader cfgFile = new ConfigReader ();
+			cfgFile.Load (configPath);
+
+			Xml.XmlNodeList colorNodes = cfgFile.GetElementsByTagName ("Color");
+			foreach (Xml.XmlElement nodes in colorNodes)
+			{
+				colorsDictionary.Add( nodes.GetAttribute("colorName"), new string[]{
+																  nodes.GetAttribute("one"),
+																  nodes.GetAttribute("two"), 
+																  nodes.GetAttribute("three"), 
+																  nodes.GetAttribute("four")  });
+			}
+		}
+
+		//Debug.Log ( "config says hello");
 	}
 	
 	public void cfgLoadLevels(){
 		ConfigReader cfgFile = new ConfigReader ();
 		cfgFile.Load (configPath);
 		
-		GameObject gObj = GameObject.FindGameObjectWithTag ("LevelID");
-		LevelSelect levelSel = gObj.GetComponent (typeof(LevelSelect)) as LevelSelect;
+		LevelSelect levelSel = GetComponent<LevelSelect>();
 		Xml.XmlNodeList mapNode = cfgFile.GetElementsByTagName ("Map");
 		
 		int mapCount = mapNode.Count;
