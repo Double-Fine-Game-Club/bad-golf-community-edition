@@ -247,7 +247,6 @@ GameObject:
   - 114: {fileID: 11400014}
   - 114: {fileID: 11400012}
   - 114: {fileID: 11400010}
-  - 148: {fileID: 14800000}
   m_Layer: 8
   m_Name: buggy
   m_TagString: Cart
@@ -333,6 +332,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400038}
+  - 148: {fileID: 14800000}
   m_Layer: 0
   m_Name: multi_buggy
   m_TagString: Player
@@ -1431,10 +1431,10 @@ NetworkView:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100028}
+  m_GameObject: {fileID: 100038}
   m_Enabled: 1
   m_StateSynchronization: 0
-  m_Observed: {fileID: 400028}
+  m_Observed: {fileID: 400038}
   m_ViewID:
     m_ID: 0
     m_Type: 0

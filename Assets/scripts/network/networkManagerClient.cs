@@ -81,13 +81,12 @@ public class networkManagerClient : MonoBehaviour {
 		Object prefab = Resources.Load(prefabName);
 		// instantiate the prefab
 		GameObject clone = Instantiate(prefab, spawnLocation, Quaternion.identity) as GameObject;
-
-		if (prefabName == "multi_buggy") {
-			clone = clone.transform.FindChild("buggy").gameObject;
-
-		} 
 		// set viewID
 		clone.networkView.viewID = viewID;
+		if (prefabName == "multi_buggy") {
+			clone = clone.transform.FindChild("buggy").gameObject;
+		} 
+
 		// set velocity if we can
 		if (clone.rigidbody)
 			clone.rigidbody.velocity = velocity;
@@ -117,8 +116,9 @@ public class networkManagerClient : MonoBehaviour {
 		newGuy.cartGameObject = NetworkView.Find(cartViewIDTransform).gameObject;
 		newGuy.cartViewIDRigidbody = cartViewIDRigidbody;
 		// add another NetworkView for the rigidbody
-		NetworkView cgr = newGuy.cartGameObject.AddComponent("NetworkView") as NetworkView;
-		cgr.observed = newGuy.cartGameObject.rigidbody;
+		GameObject buggyObject = newGuy.cartGameObject.transform.FindChild ("buggy").gameObject;
+		NetworkView cgr = buggyObject.AddComponent("NetworkView") as NetworkView;
+		cgr.observed = buggyObject.rigidbody;
 		cgr.viewID = cartViewIDRigidbody;
 		cgr.stateSynchronization = NetworkStateSynchronization.Unreliable;
 		newGuy.characterViewID = characterViewID;

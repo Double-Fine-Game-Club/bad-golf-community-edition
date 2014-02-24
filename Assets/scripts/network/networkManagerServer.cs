@@ -21,12 +21,12 @@ public class networkManagerServer : MonoBehaviour {
 		MasterServer.RegisterHost(serverVersion, SystemInfo.deviceName, "Test server");
 		
 		// create server owners buggy
-		GameObject cartGameObject = (Instantiate(Resources.Load("multi_buggy"), new Vector3(0,5,0), Quaternion.identity) as GameObject).transform.FindChild("buggy").gameObject;
+		GameObject cartGameObject = (Instantiate(Resources.Load("multi_buggy"), new Vector3(0,5,0), Quaternion.identity) as GameObject);
 		GameObject ballGameObject = Instantiate(Resources.Load("ball"), new Vector3(3,5,0), Quaternion.identity) as GameObject;
 		GameObject characterGameObject = Instantiate(Resources.Load("lil_patrick"), new Vector3(0,5,0), Quaternion.identity) as GameObject;
-		
+		GameObject buggyObject = cartGameObject.transform.FindChild ("buggy").gameObject;
 		// set buggy as characters parent
-		characterGameObject.transform.parent = cartGameObject.transform;
+		characterGameObject.transform.parent = buggyObject.transform;
 
 		// networkview that shit
 		NetworkViewID cartViewIDTransform = Network.AllocateViewID();
@@ -35,8 +35,8 @@ public class networkManagerServer : MonoBehaviour {
 		cgt.viewID = cartViewIDTransform;
 		cgt.stateSynchronization = NetworkStateSynchronization.Unreliable;
 		NetworkViewID cartViewIDRigidbody = Network.AllocateViewID();
-		NetworkView cgr = cartGameObject.AddComponent("NetworkView") as NetworkView;
-		cgr.observed = cartGameObject.rigidbody;
+		NetworkView cgr = buggyObject.AddComponent("NetworkView") as NetworkView;
+		cgr.observed = buggyObject.rigidbody;
 		cgr.viewID = cartViewIDRigidbody;
 		cgr.stateSynchronization = NetworkStateSynchronization.Unreliable;
 		NetworkViewID ballViewID = Network.AllocateViewID();
@@ -236,10 +236,10 @@ public class networkManagerServer : MonoBehaviour {
 		Vector3 velocity = new Vector3(0,0,0);
 
 		// instantiate the prefabs
-		GameObject cartGameObject = (Instantiate(Resources.Load(cartModel), spawnLocation, Quaternion.identity) as GameObject).transform.FindChild("buggy").gameObject;
+		GameObject cartGameObject = (Instantiate(Resources.Load(cartModel), spawnLocation, Quaternion.identity) as GameObject);
 		GameObject ballGameObject = Instantiate(Resources.Load(ballModel), spawnLocation + new Vector3(3,0,0), Quaternion.identity) as GameObject;
 		GameObject characterGameObject = Instantiate(Resources.Load(characterModel), spawnLocation, Quaternion.identity) as GameObject;
-
+		GameObject buggyObject = cartGameObject.transform.FindChild ("buggy").gameObject;
 		// set buggy as characters parent
 		characterGameObject.transform.parent = cartGameObject.transform;
 
@@ -250,8 +250,8 @@ public class networkManagerServer : MonoBehaviour {
 		cgt.viewID = cartViewIDTransform;
 		cgt.stateSynchronization = NetworkStateSynchronization.Unreliable;
 		NetworkViewID cartViewIDRigidbody = Network.AllocateViewID();
-		NetworkView cgr = cartGameObject.AddComponent("NetworkView") as NetworkView;
-		cgr.observed = cartGameObject.rigidbody;
+		NetworkView cgr = buggyObject.AddComponent("NetworkView") as NetworkView;
+		cgr.observed = buggyObject.rigidbody;
 		cgr.viewID = cartViewIDRigidbody;
 		cgr.stateSynchronization = NetworkStateSynchronization.Unreliable;
 		NetworkViewID ballViewID = Network.AllocateViewID();

@@ -84,7 +84,7 @@ public class controlClient : MonoBehaviour {
 	void FixedUpdate() {
 		// if in buggy
 		if (myInfo.currentMode==0) {
-			CarController car = myInfo.cartGameObject.GetComponent("CarController") as CarController;
+			CarController car = myInfo.cartGameObject.transform.FindChild("buggy").gameObject.GetComponent("CarController") as CarController;
 			car.Move(myInfo.h,myInfo.v);
 			/*GameObject myCart = myInfo.cartGameObject;
 			Vector3 forceFromFront = new Vector3();	// force from front tires

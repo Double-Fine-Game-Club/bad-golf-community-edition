@@ -94,7 +94,7 @@ public class controlServer : MonoBehaviour {
 					playerGameObject.rigidbody.AddForceAtPosition(forceMultiplyer*forceFromBack,playerGameObject.transform.position+playerGameObject.transform.localRotation*Vector3.back);
 					playerGameObject.rigidbody.AddForceAtPosition(forceMultiplyer*forceFromBack,playerGameObject.transform.position+playerGameObject.transform.localRotation*Vector3.back);
 				}*/
-				CarController car = p.cartGameObject.GetComponent("CarController") as CarController;
+				CarController car = p.cartGameObject.transform.FindChild("buggy").gameObject.GetComponent("CarController") as CarController;
 				car.Move(p.h,p.v);
 			}
 		}

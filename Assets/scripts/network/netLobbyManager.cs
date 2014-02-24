@@ -34,7 +34,7 @@ public class netLobbyManager : MonoBehaviour {
 
 		string levelName = "multi_level_01";
 		ArrayList spawnPoints = new ArrayList ();
-		spawnPoints.Add (new Vector3 (-18.07f, 8.30f, 140f));
+		spawnPoints.Add (new Vector3 (-18.07f, 12.30f, 140f));
 		spawnPoints.Add (new Vector3 (-18.07f, 12.30f, 115f));
 		spawnPoints.Add (new Vector3 (-18.07f, 12.30f, 120f));
 		spawnPoints.Add (new Vector3 (-18.07f, 12.30f, 125f));
@@ -65,7 +65,7 @@ public class netLobbyManager : MonoBehaviour {
 		Application.LoadLevelAdditive (levelName);
 		lobbyView.SetActive (false);
 		GameObject obj = GameObject.Find (levelName);
-		myInfo.cartGameObject.transform.parent.FindChild ("multi_buggy_cam").gameObject.SetActive (true);
+		myInfo.cartGameObject.transform.FindChild ("multi_buggy_cam").gameObject.SetActive (true);
 	}
 }
 
