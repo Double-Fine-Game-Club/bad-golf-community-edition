@@ -6,9 +6,12 @@ public class MainMenu : MonoBehaviour {
 	public Texture Logo;
 	public GUISkin GuiSkin;
 
+	public AudioClip SoundMouseOver;
+	public AudioClip SoundMousePress;
+
 	private Vector2 scrollPosition;
-	private bool musicToggle;
-	private bool soundToggle;
+	private bool musicToggle = true;
+	private bool soundToggle = true;
 	private float musicVolume;
 	private float musicVolumeMin = 0;
 	private float musicVolumeMax = 1;
@@ -16,7 +19,7 @@ public class MainMenu : MonoBehaviour {
 	private float soundVolumeMin = 0;
 	private float soundVolumeMax = 1;
 	private int screenMargin = 20;
-	private int leftPanelWidth = 200;
+	private int leftPanelWidth = 300;
 	private int leftMargin = 0;
 
 	private enum GUI_STATE {
@@ -32,6 +35,10 @@ public class MainMenu : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		leftMargin = leftPanelWidth + screenMargin * 2;
+
+		if(musicToggle) {
+			audio.Play();
+		}
 	}
 	
 	// Update is called once per frame
@@ -43,27 +50,32 @@ public class MainMenu : MonoBehaviour {
 		GUILayout.BeginArea(new Rect(screenMargin, screenMargin, leftPanelWidth, Screen.height - screenMargin));
 
 		GUILayout.BeginVertical();
-		GUILayout.Box(Logo, GUIStyle.none, GUILayout.Width(200), GUILayout.Height(200));
+		GUILayout.Box(Logo, GUIStyle.none, GUILayout.Width(300), GUILayout.Height(300));
 
-		if(GUILayout.Button("Online")) {
+		if(GUILayout.Button(new GUIContent("Online", "b"))) {
 			GuiState = GUI_STATE.UI_STATE_ONLINE;
+			PlayMousePress();
 		}
 
-		if(GUILayout.Button("Offline")) {
+		if(GUILayout.Button(new GUIContent("Offline", "b"))) {
+			PlayMousePress();
 			//GuiState = GUI_STATE.UI_STATE_OFFLINE;
 			Application.LoadLevel("level_testing");
 		}
 
-		if(GUILayout.Button("Options")) {
+		if(GUILayout.Button(new GUIContent("Options", "b"))) {
 			GuiState = GUI_STATE.UI_STATE_OPTIONS;
+			PlayMousePress();
 		}
 
-		if(GUILayout.Button("Credits")) {
+		if(GUILayout.Button(new GUIContent("Credits", "b"))) {
 			GuiState = GUI_STATE.UI_STATE_CREDITS;
+			PlayMousePress();
 		}
 
-		if(GUILayout.Button("Quit to desktop")) {
+		if(GUILayout.Button(new GUIContent("Quit to desktop", "b"))) {
 			GuiState = GUI_STATE.UI_STATE_QUIT;
+			PlayMousePress();
 		}
 
 		GUILayout.EndVertical();
@@ -75,8 +87,12 @@ public class MainMenu : MonoBehaviour {
 
 		GUILayout.BeginArea(new Rect(leftMargin, screenMargin, Screen.width - leftMargin - screenMargin, Screen.height - screenMargin));
 		GUILayout.BeginHorizontal();
-		GUILayout.Button("Host Game");
-		GUILayout.Button("Join Game");
+		if(GUILayout.Button(new GUIContent("Host Game", "b"))) {
+			PlayMousePress();
+		}
+		if(GUILayout.Button(new GUIContent("Join Game", "b"))) {
+			PlayMousePress();
+		}
 		GUILayout.EndHorizontal();
 		GUILayout.EndArea();
 	}
@@ -109,6 +125,8 @@ public class MainMenu : MonoBehaviour {
 		GUILayout.EndVertical();
 
 		GUILayout.EndArea();
+
+		CheckMusic();
 	}
 
 	private void DrawCreditsGUI() {
@@ -145,6 +163,32 @@ public class MainMenu : MonoBehaviour {
 		GUILayout.EndArea();
 	}
 
+	void OnMouseOver() {
+		if(soundToggle) {
+			audio.PlayOneShot(SoundMouseOver);
+		}
+	}
+	
+	void OnMouseOut() {
+	}
+
+	private void PlayMousePress() {
+		if(soundToggle) {
+			audio.PlayOneShot(SoundMousePress);
+		}
+	}
+
+	private void CheckMusic() {
+		if(musicToggle) {
+			if(!audio.isPlaying) {
+				audio.Play();
+			}
+		} else {
+			audio.Stop();
+		}
+	}
+
+	string lastTooltip = " ";
 	void OnGUI () {
 		GUI.skin = GuiSkin;
 
@@ -173,6 +217,18 @@ public class MainMenu : MonoBehaviour {
 			break;
 		default:
 			break;
+		}
+
+		if (Event.current.type == EventType.Repaint && GUI.tooltip != lastTooltip) {        
+			if (lastTooltip != "") {
+				SendMessage ("OnMouseOut", SendMessageOptions.DontRequireReceiver);      
+			} 
+			
+			if (GUI.tooltip != "") {
+				SendMessage ("OnMouseOver", SendMessageOptions.DontRequireReceiver);
+			}
+			
+			lastTooltip = GUI.tooltip; 
 		}
 	}
 }
