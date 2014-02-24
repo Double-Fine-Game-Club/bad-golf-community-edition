@@ -17,7 +17,7 @@ https://www.youtube.com/watch?v=icbujpbe5mk
 * [Wiki](https://github.com/Double-Fine-Game-Club/bad-golf-community-edition/wiki)
 * [Contribution Guidelines](https://github.com/Double-Fine-Game-Club/bad-golf-community-edition/wiki/contribution-guidelines)
 * [Folder Structure & Naming Conventions](https://github.com/Double-Fine-Game-Club/bad-golf-community-edition/wiki/folder-structure-and-naming-conventions)
-* [How To Git](https://github.com/Double-Fine-Game-Club/bad-golf-community-edition/wiki/how-to-git) (Unfinished)
+* [How To Git](https://github.com/Double-Fine-Game-Club/bad-golf-community-edition/wiki/how-to-git)
 * [Press Materials](https://github.com/Double-Fine-Game-Club/bad-golf-community-edition/wiki/Press-materials)
 
 **Important note regarding 23rd Feb repository changes for all existing contributors:**
