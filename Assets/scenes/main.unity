@@ -10246,6 +10246,7 @@ GameObject:
   - 114: {fileID: 977792252}
   - 114: {fileID: 977792251}
   - 114: {fileID: 977792253}
+  - 114: {fileID: 977792254}
   m_Layer: 8
   m_Name: main
   m_TagString: Untagged
@@ -10358,6 +10359,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c724092a2948d2b48865a95eb48e5c0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &977792254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 977792247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a95af25b354e4c4183eb19c107e5195, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &977992583
@@ -15808,7 +15820,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1510378074
 Transform:
   m_ObjectHideFlags: 0
@@ -15880,6 +15892,7 @@ MonoBehaviour:
   - {fileID: 1287380188}
   colorKeys: []
   colorPerPlayer: 
+  startMessageTarget: {fileID: 977792247}
 --- !u!1 &1510775080
 GameObject:
   m_ObjectHideFlags: 0
@@ -18804,7 +18817,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4098d23184bdada4d9ea10a6557a67f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  messageTarget: {fileID: 1510378073}
+  messageTarget: {fileID: 2086163835}
   messageName: onStartClicked
   clickAudio: {fileID: 8300000, guid: d2fee02bd0ce9e94d907f5452654eb91, type: 3}
   messageValue: 
@@ -21165,6 +21178,7 @@ MonoBehaviour:
   levelSelected: 0
   levels: []
   pathToLevels: 
+  messageTarget: {fileID: 1510378073}
 --- !u!114 &2086163839
 MonoBehaviour:
   m_ObjectHideFlags: 0

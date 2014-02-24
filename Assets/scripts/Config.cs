@@ -73,8 +73,7 @@ public class Config : MonoBehaviour {
 		ConfigReader cfgFile = new ConfigReader ();
 		cfgFile.Load (configPath);
 		
-		GameObject gObj = GameObject.FindGameObjectWithTag ("LevelID");
-		LevelSelect levelSel = gObj.GetComponent (typeof(LevelSelect)) as LevelSelect;
+		LevelSelect levelSel = GetComponent<LevelSelect>();
 		Xml.XmlNodeList mapNode = cfgFile.GetElementsByTagName ("Map");
 		levelSel.pathToLevels = cfgFile.DocumentElement.FirstChild.Attributes[0].Value;
 		

@@ -5,6 +5,7 @@
 		<Map>level_01_lightsoda</Map>
 		<Map>main</Map>
 		<Map>multi_lobby</Map>
+		<Map>level_01_local_multi</Map>
 	</Levels>
 	<PlayerColors>
 		<Color colorName="red" one="243,172,151" two="255,122,82" three="140,12,18" four="228,60,42" />

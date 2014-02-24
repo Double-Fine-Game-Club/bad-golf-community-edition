@@ -7,6 +7,9 @@ public class LevelSelect : MonoBehaviour {
 	public string[] levels;
 	public string pathToLevels;
 	private TextMesh lvlSel;
+
+	public GameObject messageTarget;
+
 	
 	void Start()
 	{
@@ -33,5 +36,10 @@ public class LevelSelect : MonoBehaviour {
 	public void onNextLevel()
 	{
 		levelSelected = (levelSelected + 1)% levels.Length;
+	}
+
+	public void onStartClicked( )
+	{
+		messageTarget.SendMessage( "onStartClicked", levels[levelSelected]);
 	}
 }

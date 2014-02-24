@@ -13,6 +13,8 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 	public string[] colorKeys;
 	public int[] colorPerPlayer;
 
+	public GameObject startMessageTarget;
+
 	void Start()
 	{
 		colorPerPlayer = new int[] { 0,1,2,3 };
@@ -109,7 +111,7 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 		setColorOn( playerIndex);
 	}
 
-	public void onStartClicked( )
+	public void onStartClicked( string nameOfLevel )
 	{
 		int players = 0;
 		foreach ( SwitchableTexture switchable in ed_controlSelectors)
@@ -120,7 +122,7 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 			
 		if (players > 0 )
 		{
-			SendMessageUpwards ( "onStartClicked");
+			startMessageTarget.SendMessage ( "onStartClicked", nameOfLevel);
 		}
 	}
 

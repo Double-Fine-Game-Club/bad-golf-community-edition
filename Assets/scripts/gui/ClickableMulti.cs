@@ -8,7 +8,7 @@ public class ClickableMulti : MonoBehaviour
 	public AudioClip clickAudio;
 	public string[] messageValue;
 	
-	void OnMouseDown()
+	void OnMouseUp()
 	{
 		if ( messageTarget != null)
 		{
