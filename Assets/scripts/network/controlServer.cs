@@ -66,9 +66,8 @@ public class controlServer : MonoBehaviour {
 		foreach (PlayerInfo p in nvs.players) {
 			// if in buggy
 			if (p.currentMode==0) {
-				int KBState = p.KBState;
 				GameObject playerGameObject = p.cartGameObject;
-				Vector3 forceFromFront = new Vector3();	// force from front tires
+				/*Vector3 forceFromFront = new Vector3();	// force from front tires
 				Vector3 forceFromBack = new Vector3();	// force from back tires
 				if ((KBState & 8)==8) {
 					// make sure it's facing the direction of the vehicle
@@ -94,14 +93,16 @@ public class controlServer : MonoBehaviour {
 					playerGameObject.rigidbody.AddForceAtPosition(forceMultiplyer*forceFromFront,playerGameObject.transform.position+playerGameObject.transform.localRotation*Vector3.forward);
 					playerGameObject.rigidbody.AddForceAtPosition(forceMultiplyer*forceFromBack,playerGameObject.transform.position+playerGameObject.transform.localRotation*Vector3.back);
 					playerGameObject.rigidbody.AddForceAtPosition(forceMultiplyer*forceFromBack,playerGameObject.transform.position+playerGameObject.transform.localRotation*Vector3.back);
-				}
+				}*/
+				CarController car = p.cartGameObject.GetComponent("CarController") as CarController;
+				car.Move(p.h,p.v);
 			}
 		}
 		
 		// if in buggy
 		if (!myInfo.playerIsPaused && myInfo.currentMode==0) {
 			// add own fiziks
-			int toSend = 0;
+			/*int toSend = 0;
 			if (Input.GetKey(KeyCode.W)) {
 				toSend += 1;
 			}
@@ -117,16 +118,20 @@ public class controlServer : MonoBehaviour {
 			if (Input.GetKey(KeyCode.D)) {
 				toSend += 1;
 			}
-			myInfo.KBState = toSend;
+			myInfo.KBState = toSend;*/
+			myInfo.h = Input.GetAxis("Horizontal");
+			myInfo.v = Input.GetAxis("Vertical");
 		}
 	}
 
 	// update what they are currenly doing - this also adds new players automatically
 	[RPC]
-	public void KartMovement(int currentKBStatus, NetworkMessageInfo info) {
+	public void KartMovement(float h, float v, NetworkMessageInfo info) {
 		foreach (PlayerInfo p in nvs.players) {
 			if (p.player==info.sender) {
-				p.KBState = currentKBStatus;
+				//p.KBState = currentKBStatus;
+				p.v = v;
+				p.h =h;
 			}
 		}
 	}
@@ -169,7 +174,7 @@ public class controlServer : MonoBehaviour {
 				}
 
 				// reset keyboard buffer
-				p.KBState = 0;
+				//p.KBState = 0;
 			}
 		}
 	}

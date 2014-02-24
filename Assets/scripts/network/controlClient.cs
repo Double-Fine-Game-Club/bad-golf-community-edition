@@ -23,7 +23,7 @@ public class controlClient : MonoBehaviour {
 			timer += Time.deltaTime;
 			if (timer > 0.015) {
 				timer = 0;
-				int toSend = 0;
+				/*int toSend = 0;
 				if (Input.GetKey(KeyCode.W)) {
 					toSend += 1;
 				}
@@ -38,8 +38,11 @@ public class controlClient : MonoBehaviour {
 				toSend = toSend << 1;
 				if (Input.GetKey(KeyCode.D)) {
 					toSend += 1;
-				}
-				networkView.RPC("KartMovement", RPCMode.Server, toSend);
+				}*/
+				float h = Input.GetAxis("Horizontal");
+				float v = Input.GetAxis("Vertical");
+				//networkView.RPC("KartMovement", RPCMode.Server, toSend);
+				networkView.RPC("KartMovement", RPCMode.Server, h,v);
 			}
 			if (Input.GetKeyDown(KeyCode.Q)) {
 				networkView.RPC("IHonked", RPCMode.All, myInfo.player);
@@ -81,7 +84,9 @@ public class controlClient : MonoBehaviour {
 	void FixedUpdate() {
 		// if in buggy
 		if (myInfo.currentMode==0) {
-			GameObject myCart = myInfo.cartGameObject;
+			CarController car = myInfo.cartGameObject.GetComponent("CarController") as CarController;
+			car.Move(myInfo.h,myInfo.v);
+			/*GameObject myCart = myInfo.cartGameObject;
 			Vector3 forceFromFront = new Vector3();	// force from front tires
 			Vector3 forceFromBack = new Vector3();	// force from back tires
 			if (Input.GetKey(KeyCode.W)) {
@@ -108,7 +113,7 @@ public class controlClient : MonoBehaviour {
 				myCart.rigidbody.AddForceAtPosition(forceMultiplyer*forceFromFront,myCart.transform.position+myCart.transform.localRotation*Vector3.forward);
 				myCart.rigidbody.AddForceAtPosition(forceMultiplyer*forceFromBack,myCart.transform.position+myCart.transform.localRotation*Vector3.back);
 				myCart.rigidbody.AddForceAtPosition(forceMultiplyer*forceFromBack,myCart.transform.position+myCart.transform.localRotation*Vector3.back);
-			}
+			}*/
 		} else if (myInfo.currentMode==1) {		// if in ball mode
 
 		}
@@ -152,14 +157,14 @@ public class controlClient : MonoBehaviour {
 				}
 				
 				// reset keyboard buffer
-				p.KBState = 0;
+				//p.KBState = 0;
 			}
 		}
 	}
 
 	// blank for server use only
 	[RPC]
-	void KartMovement(int currentKBStatus) {}
+	void KartMovement(float v, float h) {}
 	[RPC]
 	void SpawnBall(NetworkViewID viewId) {}
 }

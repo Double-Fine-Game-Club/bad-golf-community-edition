@@ -1701,8 +1701,8 @@ Transform:
   - {fileID: 2042471945}
   - {fileID: 1579541437}
   - {fileID: 1346775745}
-  - {fileID: 1375897704}
   - {fileID: 494588120}
+  - {fileID: 1375897704}
   m_Father: {fileID: 0}
 --- !u!1 &474499754
 GameObject:
@@ -3334,8 +3334,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 388057045}
-  distance: 6
-  height: 8
+  distance: 8
+  height: 5
   heightDamping: 2
   rotationDamping: 3
   leanDamping: 2
@@ -6702,6 +6702,14 @@ Prefab:
     - target: {fileID: 2000004, guid: fcef4560af670864ba96f4861e9a1e9f, type: 2}
       propertyPath: near clip plane
       value: .400000006
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: fcef4560af670864ba96f4861e9a1e9f, type: 2}
+      propertyPath: distance
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: fcef4560af670864ba96f4861e9a1e9f, type: 2}
+      propertyPath: height
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fcef4560af670864ba96f4861e9a1e9f, type: 2}

@@ -21,7 +21,7 @@ public class networkManagerServer : MonoBehaviour {
 		MasterServer.RegisterHost(serverVersion, SystemInfo.deviceName, "Test server");
 		
 		// create server owners buggy
-		GameObject cartGameObject = Instantiate(Resources.Load("buggy1"), new Vector3(0,5,0), Quaternion.identity) as GameObject;
+		GameObject cartGameObject = (Instantiate(Resources.Load("multi_buggy"), new Vector3(0,5,0), Quaternion.identity) as GameObject).transform.FindChild("buggy").gameObject;
 		GameObject ballGameObject = Instantiate(Resources.Load("ball"), new Vector3(3,5,0), Quaternion.identity) as GameObject;
 		GameObject characterGameObject = Instantiate(Resources.Load("lil_patrick"), new Vector3(0,5,0), Quaternion.identity) as GameObject;
 		
@@ -46,7 +46,7 @@ public class networkManagerServer : MonoBehaviour {
 
 		// turn it into a PlayerInfo
 		nvs.myInfo.cartGameObject = cartGameObject;
-		nvs.myInfo.cartModel = "buggy1";
+		nvs.myInfo.cartModel = "multi_buggy";
 		nvs.myInfo.cartViewIDTransform = cartViewIDTransform;
 		nvs.myInfo.cartViewIDRigidbody = cartViewIDRigidbody;
 		nvs.myInfo.ballGameObject = ballGameObject;
@@ -94,6 +94,8 @@ public class networkManagerServer : MonoBehaviour {
 			// tell the player this is a player and not some random objects
 			networkView.RPC("SpawnPlayer", player, p.cartViewIDTransform, p.cartViewIDRigidbody, p.ballViewID, p.characterViewID, p.currentMode, p.player);
 		}
+
+
 	}
 	void OnPlayerDisconnected(NetworkPlayer player) {
 		// tell all players to remove them
@@ -123,6 +125,17 @@ public class networkManagerServer : MonoBehaviour {
 	}
 	
 	void OnGUI() {
+		if(GUILayout.Button("Start")){
+			this.SendMessage("onStart");
+		}
+		GUILayout.BeginHorizontal();
+		GUILayout.Label ("Active Players: ");
+		GUILayout.Label (nvs.players.Count.ToString());
+		GUILayout.EndHorizontal();
+		GUILayout.BeginHorizontal();
+		GUILayout.Label ("3 players are required for a game");
+		GUILayout.EndHorizontal();
+
 		float keyToRemove = 0;
 		// show any debug messages
 		foreach (KeyValuePair<float,string> msgs in screenMessages) {
@@ -223,7 +236,7 @@ public class networkManagerServer : MonoBehaviour {
 		Vector3 velocity = new Vector3(0,0,0);
 
 		// instantiate the prefabs
-		GameObject cartGameObject = Instantiate(Resources.Load(cartModel), spawnLocation, Quaternion.identity) as GameObject;
+		GameObject cartGameObject = (Instantiate(Resources.Load(cartModel), spawnLocation, Quaternion.identity) as GameObject).transform.FindChild("buggy").gameObject;
 		GameObject ballGameObject = Instantiate(Resources.Load(ballModel), spawnLocation + new Vector3(3,0,0), Quaternion.identity) as GameObject;
 		GameObject characterGameObject = Instantiate(Resources.Load(characterModel), spawnLocation, Quaternion.identity) as GameObject;
 

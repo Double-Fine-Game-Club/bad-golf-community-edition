@@ -32,5 +32,7 @@ public class PlayerInfo {
 	public bool playerIsBusy   = false;			// player is engaged in an uninteruptable action
 	public bool playerIsPaused = false;			// player is paused
 
-	public int KBState;						// KB state for server only
+	//public int KBState;						// KB state for server only
+	public float v;
+	public float h;
 }

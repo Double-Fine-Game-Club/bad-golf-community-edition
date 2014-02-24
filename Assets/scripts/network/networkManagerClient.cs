@@ -10,7 +10,7 @@ public class networkManagerClient : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		// spawn in a cart
-		networkView.RPC("GiveMeACart", RPCMode.Server, "buggy1", "ball", "lil_patrick");
+		networkView.RPC("GiveMeACart", RPCMode.Server, "multi_buggy", "ball", "lil_patrick");
 	}
 	
 	// CLIENT SIDE SCRIPTS GO HERE
@@ -81,10 +81,16 @@ public class networkManagerClient : MonoBehaviour {
 		Object prefab = Resources.Load(prefabName);
 		// instantiate the prefab
 		GameObject clone = Instantiate(prefab, spawnLocation, Quaternion.identity) as GameObject;
+
+		if (prefabName == "multi_buggy") {
+			clone = clone.transform.FindChild("buggy").gameObject;
+
+		} 
 		// set viewID
 		clone.networkView.viewID = viewID;
 		// set velocity if we can
-		if (clone.rigidbody) clone.rigidbody.velocity = velocity;
+		if (clone.rigidbody)
+			clone.rigidbody.velocity = velocity;
 	}
 	
 	// tells the player that this viewID is theirs
