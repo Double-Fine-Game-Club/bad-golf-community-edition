@@ -23,7 +23,7 @@ public class networkManagerServer : MonoBehaviour {
 		// create server owners buggy
 		GameObject cartGameObject = (Instantiate(Resources.Load("multi_buggy"), new Vector3(0,5,0), Quaternion.identity) as GameObject);
 		GameObject ballGameObject = Instantiate(Resources.Load("ball"), new Vector3(3,5,0), Quaternion.identity) as GameObject;
-		GameObject characterGameObject = Instantiate(Resources.Load("lil_patrick"), new Vector3(0,5,0), Quaternion.identity) as GameObject;
+		GameObject characterGameObject = Instantiate(Resources.Load("lil_patrick"), new Vector3(0,4,0), Quaternion.identity) as GameObject;
 		GameObject buggyObject = cartGameObject.transform.FindChild ("buggy").gameObject;
 		// set buggy as characters parent
 		characterGameObject.transform.parent = buggyObject.transform;
@@ -133,7 +133,7 @@ public class networkManagerServer : MonoBehaviour {
 		GUILayout.Label (nvs.players.Count.ToString());
 		GUILayout.EndHorizontal();
 		GUILayout.BeginHorizontal();
-		GUILayout.Label ("3 players are required for a game");
+		GUILayout.Label ("4 players are required for a game");
 		GUILayout.EndHorizontal();
 
 		float keyToRemove = 0;

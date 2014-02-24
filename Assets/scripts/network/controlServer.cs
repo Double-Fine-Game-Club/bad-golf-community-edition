@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class controlServer : MonoBehaviour {
 	float forceMultiplyer = 10000;
-	int maxPlayers = 3;
+	int maxPlayers = 4;
 	bool limitReached=false;
 
 	networkVariables nvs;
@@ -46,7 +46,7 @@ public class controlServer : MonoBehaviour {
 			} else if (myInfo.currentMode==1) {
 				myInfo.currentMode = 0;
 				// set them in buggy
-				myInfo.characterGameObject.transform.parent = myInfo.cartGameObject.transform;
+				myInfo.characterGameObject.transform.parent = myInfo.cartGameObject.transform.FindChild("buggy");
 				myInfo.characterGameObject.transform.localPosition = new Vector3(0,0,0);
 				myInfo.characterGameObject.transform.rotation = myInfo.cartGameObject.transform.rotation;
 				// unlock golf ball
@@ -122,6 +122,13 @@ public class controlServer : MonoBehaviour {
 			myInfo.h = Input.GetAxis("Horizontal");
 			myInfo.v = Input.GetAxis("Vertical");
 		}
+	}
+
+	void OnPlayerConnected(NetworkPlayer player) {
+		/*if (!limitReached && nvs.players.Count == maxPlayers) {
+			lobbyManager.SendMessage("onLobbyFull");
+			limitReached=true;
+		}*/
 	}
 
 	// update what they are currenly doing - this also adds new players automatically

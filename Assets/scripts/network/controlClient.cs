@@ -140,7 +140,7 @@ public class controlClient : MonoBehaviour {
 				p.currentMode = newMode;
 				if (p.currentMode==0) {			// if they're now in a buggy
 					// set them in buggy
-					p.characterGameObject.transform.parent = p.cartGameObject.transform;
+					p.characterGameObject.transform.parent = p.cartGameObject.transform.FindChild("buggy");
 					p.characterGameObject.transform.localPosition = new Vector3(0,0,0);
 					p.characterGameObject.transform.rotation = p.cartGameObject.transform.rotation;
 					// unlock golf ball
