@@ -157,14 +157,6 @@ public class controlClient : MonoBehaviour {
 		}
 	}
 
-	void onDisconnect(){
-		//TODO: disconnect player
-
-		//Go back to main menu
-		string nameOfLevel = "main";
-		Application.LoadLevel( nameOfLevel );
-	}
-
 	// blank for server use only
 	[RPC]
 	void KartMovement(int currentKBStatus) {}

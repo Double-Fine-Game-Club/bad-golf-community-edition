@@ -40,9 +40,10 @@ public class netPause : MonoBehaviour {
 	}
 
 	void onExit(){
-		this.SendMessageUpwards ("onDisconnect");
-		hideAllScreens();
 		myInfo.playerIsPaused = false;	//reset pause status
+		Network.Disconnect ();
+		hideAllScreens();
 		Destroy (ed_pauseScreen);		//undo changes to object hierarchy
+		
 	}
 }

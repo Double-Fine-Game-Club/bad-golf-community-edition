@@ -274,6 +274,13 @@ public class networkManagerServer : MonoBehaviour {
 		nvs.players.Add(newGuy);
 	}
 
+	void OnDisconnectedFromServer(NetworkDisconnection info){
+		MasterServer.UnregisterHost ();
+
+		//Go back to main menu
+		string nameOfLevel = "main";
+		Application.LoadLevel( nameOfLevel );
+	}
 	
 	// blank for client use only
 	[RPC]
