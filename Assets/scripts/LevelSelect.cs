@@ -5,7 +5,6 @@ public class LevelSelect : MonoBehaviour {
 	
 	public int levelSelected;
 	public string[] levels;
-	public string pathToLevels;
 	private TextMesh lvlSel;
 	
 	void Start(){
