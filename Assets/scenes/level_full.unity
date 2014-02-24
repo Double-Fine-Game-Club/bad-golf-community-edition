@@ -3235,8 +3235,8 @@ Transform:
   m_PrefabParentObject: {fileID: 400064, guid: fcef4560af670864ba96f4861e9a1e9f, type: 2}
   m_PrefabInternal: {fileID: 1904388773}
   m_GameObject: {fileID: 1491978673}
-  m_LocalRotation: {x: -.00156668865, y: -.969999254, z: .243084982, w: -.00294488878}
-  m_LocalPosition: {x: -.19806011, y: 3.99205494, z: 7.28809214}
+  m_LocalRotation: {x: -.00117664458, y: -.993143022, z: .116858363, w: -.00312127755}
+  m_LocalPosition: {x: -.221257389, y: 4.9010396, z: 11.0970783}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 489195830}
@@ -3281,9 +3281,9 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: .300000012
+  near clip plane: .400000006
   far clip plane: 1000
-  field of view: 60
+  field of view: 80.9000015
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -6436,6 +6436,46 @@ Prefab:
     - target: {fileID: 100062, guid: fcef4560af670864ba96f4861e9a1e9f, type: 2}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8100000, guid: fcef4560af670864ba96f4861e9a1e9f, type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400064, guid: fcef4560af670864ba96f4861e9a1e9f, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -.00117664458
+      objectReference: {fileID: 0}
+    - target: {fileID: 400064, guid: fcef4560af670864ba96f4861e9a1e9f, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -.993143022
+      objectReference: {fileID: 0}
+    - target: {fileID: 400064, guid: fcef4560af670864ba96f4861e9a1e9f, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: .116858363
+      objectReference: {fileID: 0}
+    - target: {fileID: 400064, guid: fcef4560af670864ba96f4861e9a1e9f, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: -.00312127755
+      objectReference: {fileID: 0}
+    - target: {fileID: 400064, guid: fcef4560af670864ba96f4861e9a1e9f, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -.221257389
+      objectReference: {fileID: 0}
+    - target: {fileID: 400064, guid: fcef4560af670864ba96f4861e9a1e9f, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 4.9010396
+      objectReference: {fileID: 0}
+    - target: {fileID: 400064, guid: fcef4560af670864ba96f4861e9a1e9f, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 11.0970783
+      objectReference: {fileID: 0}
+    - target: {fileID: 2000004, guid: fcef4560af670864ba96f4861e9a1e9f, type: 2}
+      propertyPath: field of view
+      value: 80.9000015
+      objectReference: {fileID: 0}
+    - target: {fileID: 2000004, guid: fcef4560af670864ba96f4861e9a1e9f, type: 2}
+      propertyPath: near clip plane
+      value: .400000006
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fcef4560af670864ba96f4861e9a1e9f, type: 2}
