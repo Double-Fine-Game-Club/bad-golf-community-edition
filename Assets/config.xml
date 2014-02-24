@@ -1,9 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Config>
-  <Levels LevelsPath="Assets/scenes/">
-    <Map>level_01</Map>
-    <Map>level_01_lightsoda</Map>
-    <Map>main</Map>
-    <Map>multi_lobby</Map>
-  </Levels>
+	<Levels LevelsPath="Assets/scenes/">
+		<Map>level_01</Map>
+		<Map>level_01_lightsoda</Map>
+		<Map>main</Map>
+		<Map>multi_lobby</Map>
+	</Levels>
+	<PlayerColors>
+		<Color colorName="red" one="243,172,151" two="255,122,82" three="140,12,18" four="228,60,42" />
+		<Color colorName="blue" one="165,201,255" two="82,137,255" three="0,65,140" four="0,136,255"/>
+		<Color colorName="yellow" one="255,254,179" two="255,250,32" three="239,167,8" four="255,212,13"/>
+		<Color colorName="green" one="190,255,199" two="82,255,150" three="0,137,96 " four="44,216,111"/>
+	</PlayerColors>
 </Config>

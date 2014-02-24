@@ -25,6 +25,7 @@ public class GameControl : MonoBehaviour
 
 		hideAllScreens();
 		ed_introScreen.SetActive(true);
+		ed_levelPreviewScreen.SetActive(false);
 		StartCoroutine( waitForIntro() );
 	}
 
@@ -37,6 +38,7 @@ public class GameControl : MonoBehaviour
 	public void onIntroIsDone()
 	{
 		onMenu();
+		ed_levelPreviewScreen.SetActive(true);
 	}
 
 	public void onLocalMultiplayer()

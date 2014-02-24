@@ -20,11 +20,33 @@ public class UIAnchorToScreen : MonoBehaviour
 	private int viewportCoordX;
 	private int viewportCoordY;
 
+	private float oldTransformX;
+	private float oldTransformY;
+
 	void Update () 
 	{
 		int w = Screen.width;
 		int h = Screen.height;
 		
+		//if you are in editor try to calculate the percentages directly from your transform, faster than sliding values around = ]
+		#if UNITY_EDITOR
+		{
+			if ( !Application.isPlaying && uiCamera != null)
+			{
+				if ( oldTransformX != transform.position.x || oldTransformY != transform.position.y )
+				{
+					oldTransformX = transform.position.x;
+					oldTransformY = transform.position.y;
+					
+					Vector3 pos = uiCamera.WorldToViewportPoint( transform.position );
+					widthPercent = pos.x;
+					heightPercent = pos.y;
+				}  
+			}
+		}
+		#endif
+
+		//update if user has tweaked the percent value directly or if the screen size is changed
 		if (w != screenWidth || h != screenHeight || widthPercent != old_widthPercent || heightPercent != old_heightPercent)
 		{
 			old_widthPercent = widthPercent;
@@ -32,6 +54,7 @@ public class UIAnchorToScreen : MonoBehaviour
 
 			screenWidth = w;
 			screenHeight = h;
+
 			if ( uiCamera != null )
 				onScreenResize();
 		}
@@ -42,7 +65,7 @@ public class UIAnchorToScreen : MonoBehaviour
 		viewportCoordX = (int) (widthPercent * screenWidth);
 		viewportCoordY = (int) (heightPercent * screenHeight);
 
-		Ray ray = uiCamera.ScreenPointToRay( new Vector2(viewportCoordX, viewportCoordY) );
-		transform.position = new Vector3( ray.origin.x, ray.origin.y, transform.position.z );
+		Vector3 pos	= uiCamera.ScreenToWorldPoint( new Vector3( viewportCoordX, viewportCoordY, transform.position.z));
+		transform.position = new Vector3( pos.x, pos.y, transform.position.z );
 	}
 }
