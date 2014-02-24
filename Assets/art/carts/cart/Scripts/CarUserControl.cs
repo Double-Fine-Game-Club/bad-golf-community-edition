@@ -32,7 +32,7 @@ public class CarUserControl : MonoBehaviour
 	
 	public void directionUpdate( Vector2 direction)
 	{
-		Debug.Log ( direction.x + " , " + direction.y );
+//		Debug.Log ( direction.x + " , " + direction.y );
 
 		car.Move ( direction.x, direction.y);
 	}
