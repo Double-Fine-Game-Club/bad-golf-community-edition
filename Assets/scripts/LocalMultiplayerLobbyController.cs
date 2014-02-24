@@ -8,6 +8,7 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 	public SwitchableTexture[] ed_controlSelectors;
 	public Renderer[] ed_playerRenderer;
 	public GameObject[] ed_joinButtonTexts;
+	public GameObject[] ed_detailControls;
 
 	public string[] colorKeys;
 	public int[] colorPerPlayer;
@@ -71,13 +72,14 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 			ed_playerViewCameras[playerIndex].farClipPlane = 2;
 			ed_playerViewCameras[playerIndex].clearFlags = CameraClearFlags.SolidColor;
 			ed_joinButtonTexts[playerIndex].SetActive(true);
-			
+			ed_detailControls[playerIndex].SetActive(false);
 		}
 		else if ( type == 1 ) //joystick
 		{
 			ed_playerViewCameras[playerIndex].farClipPlane = 1000;
 			ed_playerViewCameras[playerIndex].clearFlags = CameraClearFlags.Skybox;
 			ed_joinButtonTexts[playerIndex].SetActive(false);
+			ed_detailControls[playerIndex].SetActive(true);
 			//bind to not already used joystick
 		}
 		else if ( type == 2) //keyboard
@@ -85,6 +87,7 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 			ed_playerViewCameras[playerIndex].farClipPlane = 1000;
 			ed_playerViewCameras[playerIndex].clearFlags = CameraClearFlags.Skybox;
 			ed_joinButtonTexts[playerIndex].SetActive(false);
+			ed_detailControls[playerIndex].SetActive(true);
 
 			foreach( SwitchableTexture switchable in ed_controlSelectors)
 			{
@@ -119,5 +122,11 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 		{
 			SendMessageUpwards ( "onStartClicked");
 		}
+	}
+
+	public void onJoin( string val)
+	{
+		int index = int.Parse(val);
+		ed_controlSelectors[index].setIndex(1);
 	}
 }

@@ -20,31 +20,19 @@ public class UIAnchorToScreen : MonoBehaviour
 	private int viewportCoordX;
 	private int viewportCoordY;
 
-	private float oldTransformX;
-	private float oldTransformY;
-
+	public bool setPercentsFromCurrentTransforms = false;
 	void Update () 
 	{
 		int w = Screen.width;
 		int h = Screen.height;
 		
-		//if you are in editor try to calculate the percentages directly from your transform, faster than sliding values around = ]
-		#if UNITY_EDITOR
+		if ( setPercentsFromCurrentTransforms == true )
 		{
-			if ( !Application.isPlaying && uiCamera != null)
-			{
-				if ( oldTransformX != transform.position.x || oldTransformY != transform.position.y )
-				{
-					oldTransformX = transform.position.x;
-					oldTransformY = transform.position.y;
-					
-					Vector3 pos = uiCamera.WorldToViewportPoint( transform.position );
-					widthPercent = pos.x;
-					heightPercent = pos.y;
-				}  
-			}
-		}
-		#endif
+			Vector3 pos = uiCamera.WorldToViewportPoint( transform.position );
+			widthPercent = pos.x;
+			heightPercent = pos.y;
+			setPercentsFromCurrentTransforms = false;
+		}	
 
 		//update if user has tweaked the percent value directly or if the screen size is changed
 		if (w != screenWidth || h != screenHeight || widthPercent != old_widthPercent || heightPercent != old_heightPercent)
