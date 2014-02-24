@@ -75,7 +75,7 @@ MonoBehaviour:
     m_Name: button
     m_Normal:
       m_Background: {fileID: 2800000, guid: 26b2b568881754006a518d2635cb05e1, type: 3}
-      m_TextColor: {r: .102941155, g: .102184236, b: .102184236, a: 1}
+      m_TextColor: {r: .213235319, g: .132958502, b: .0313581377, a: 1}
     m_Hover:
       m_Background: {fileID: 2800000, guid: 11d15aea3dd244c3087d246bfe3a10e6, type: 3}
       m_TextColor: {r: .625, g: .376521319, b: .110294111, a: 1}
@@ -98,19 +98,19 @@ MonoBehaviour:
       m_Background: {fileID: 0}
       m_TextColor: {r: 0, g: 0, b: 0, a: 1}
     m_Border:
-      m_Left: 6
-      m_Right: 6
-      m_Top: 6
-      m_Bottom: 4
+      m_Left: 0
+      m_Right: 0
+      m_Top: 74
+      m_Bottom: 0
     m_Margin:
-      m_Left: 4
+      m_Left: 6
       m_Right: 4
       m_Top: 4
-      m_Bottom: 4
+      m_Bottom: 26
     m_Padding:
       m_Left: 8
       m_Right: 8
-      m_Top: 8
+      m_Top: 15
       m_Bottom: 8
     m_Overflow:
       m_Left: 0
@@ -118,7 +118,7 @@ MonoBehaviour:
       m_Top: 0
       m_Bottom: 0
     m_Font: {fileID: 0}
-    m_FontSize: 0
+    m_FontSize: 20
     m_FontStyle: 1
     m_Alignment: 4
     m_WordWrap: 0
@@ -157,8 +157,8 @@ MonoBehaviour:
       m_Background: {fileID: 0}
       m_TextColor: {r: 0, g: 0, b: 0, a: 1}
     m_Border:
-      m_Left: 21
-      m_Right: 0
+      m_Left: 17
+      m_Right: 2
       m_Top: 6
       m_Bottom: 6
     m_Margin:
