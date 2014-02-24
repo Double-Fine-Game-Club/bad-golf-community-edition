@@ -4,19 +4,29 @@ using System.Collections.Generic;
 
 public class controlServer : MonoBehaviour {
 	float forceMultiplyer = 10000;
+	int maxPlayers = 3;
+	bool limitReached=false;
+
 	networkVariables nvs;
 	PlayerInfo myInfo;
 	netPause pause;
+	netLobbyManager lobbyManager;
 
 	void Start() {
 		// get variables we need
 		nvs = GetComponent("networkVariables") as networkVariables;
 		myInfo = nvs.myInfo;
 		pause = GetComponent ("netPause") as netPause;
-
+		lobbyManager = GetComponent ("netLobbyManager") as netLobbyManager;
 	}
 
 	void Update() {
+		if (!limitReached && nvs.players.Count == maxPlayers) {
+			lobbyManager.SendMessage("onLobbyFull");
+			limitReached=true;
+		}
+
+
 		if (!myInfo.playerIsPaused && Input.GetKeyDown(KeyCode.Q)) {
 			networkView.RPC("IHonked", RPCMode.All, myInfo.player);
 		}

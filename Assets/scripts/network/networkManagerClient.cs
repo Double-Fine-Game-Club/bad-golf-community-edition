@@ -22,6 +22,8 @@ public class networkManagerClient : MonoBehaviour {
 		gameObject.AddComponent("netChat");
 		//pause
 		gameObject.AddComponent ("netPause");
+		//levelManager
+		gameObject.AddComponent ("netLobbyManager");
 		// get self
 		myInfo.player = Network.player;
 		// get server
