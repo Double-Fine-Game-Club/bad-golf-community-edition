@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(CarController))]
 public class CarAudio : MonoBehaviour {
@@ -25,7 +26,8 @@ public class CarAudio : MonoBehaviour {
 		FourChannel                                                                     // four Channel audio
 	}
 
-	public Camera followCamera;																// reference to the follow camera
+	public Camera followCamera;															// reference to the follow camera
+	public AudioListener audioListener;													// Where the actual audio listener is located
 	public EngineAudioOptions engineSoundStyle = EngineAudioOptions.FourChannel;        // Set the default audio options to be four channel
 	public AudioClip lowAccelClip;                                                      // Audio clip for low acceleration
     public AudioClip lowDecelClip;                                                      // Audio clip for low deceleration
@@ -40,6 +42,8 @@ public class CarAudio : MonoBehaviour {
 	public float dopplerLevel = 1;                                                      // The mount of doppler effect used in the audio
 	public bool useDoppler = true;                                                      // Toggle for using doppler
 
+	LinkedList<AudioSource> audioSources;
+
 	AudioSource lowAccel;                                                               // Source for the low acceleration sounds
     AudioSource lowDecel;                                                               // Source for the low deceleration sounds
     AudioSource highAccel;                                                              // Source for the high acceleration sounds
@@ -49,6 +53,8 @@ public class CarAudio : MonoBehaviour {
     CarController carController;                                                        // Reference to car we are controlling
 
 	void StartSound () {
+
+		audioSources = new LinkedList<AudioSource> ();
 
         // get the carcontroller ( this will not be null as we have require component)
 		carController = GetComponent<CarController>();
@@ -76,9 +82,10 @@ public class CarAudio : MonoBehaviour {
 	void StopSound()
 	{
         //Destroy all audio sources on this object:
-		foreach (var source in GetComponents<AudioSource>()) {
+		foreach (var source in audioSources) {
 			Destroy (source);
 		}
+		audioSources = null;
 
 		startedSound = false;
 	}
@@ -165,7 +172,7 @@ public class CarAudio : MonoBehaviour {
 	{
 
         // create the new audio source component on the game object and set up its properties
-		AudioSource source = gameObject.AddComponent<AudioSource>();
+		AudioSource source = audioListener.gameObject.AddComponent<AudioSource>();
 		source.clip = clip;
 		source.volume = 0;
 		source.loop = true;
@@ -176,6 +183,12 @@ public class CarAudio : MonoBehaviour {
 		source.minDistance = 5;
 		source.maxDistance = maxRolloffDistance;
 		source.dopplerLevel = 0;
+
+		source.transform.localPosition = new Vector3 (followCamera.rect.center.x - 0.5f,
+		                                              followCamera.rect.center.y - 0.5f,
+		                                              0f);
+
+		audioSources.AddLast(source);
 		return source;
 	}
 	
