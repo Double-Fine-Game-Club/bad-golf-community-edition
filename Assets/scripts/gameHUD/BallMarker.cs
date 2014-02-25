@@ -94,6 +94,8 @@ public class BallMarker : MonoBehaviour {
 
         m_myBallMarker.transform.rotation = m_myCamera.transform.rotation; //billboard ball marker towards the camera
 
+        UpdateColor(m_myBallMarker);
+
         foreach (PlayerInfo player in m_nvs.players) {
             if (m_enemyBallMarkers.ContainsKey(player)) {
                 if (player != m_myPlayerInfo) {
@@ -103,9 +105,22 @@ public class BallMarker : MonoBehaviour {
                     playerBall.transform.position = thisBallMarkerPos;
 
                     playerBall.transform.rotation = m_myCamera.transform.rotation; //billboard ball marker towards the camera
+                    UpdateColor(playerBall);
                 }
             }
         }
+    }
+
+    void UpdateColor(GameObject objectToColorize)
+    {
+        Renderer objRenderer = objectToColorize.GetComponentInChildren<Renderer>();
+
+        //if renderer is not obtained, bail out
+        if (objRenderer == null) return;
+        Color objColor = objRenderer.material.GetColor("_Color");
+        objColor.a = Mathf.Abs((Vector3.Distance(objectToColorize.transform.position, m_myPlayerInfo.cartGameObject.transform.position)) / 30.0f);
+
+        objRenderer.material.SetColor("_Color", objColor);
     }
 
     void AttemptInitialize()
