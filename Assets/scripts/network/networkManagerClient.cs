@@ -14,7 +14,7 @@ public class networkManagerClient : MonoBehaviour {
 	}
 	
 	// CLIENT SIDE SCRIPTS GO HERE
-	// all scripts are called afterwe have a reference to the buggy and a NetworkViewID
+	// all scripts are called after we have a reference to the buggy and a NetworkViewID
 	void AddScripts() {
 		// updates network-sunk fiziks
 		gameObject.AddComponent("controlClient");
@@ -83,13 +83,10 @@ public class networkManagerClient : MonoBehaviour {
 		GameObject clone = Instantiate(prefab, spawnLocation, Quaternion.identity) as GameObject;
 		// set viewID
 		clone.networkView.viewID = viewID;
-		if (prefabName == "multi_buggy") {
-			clone = clone.transform.FindChild("buggy").gameObject;
-		} 
 
 		// set velocity if we can
-		if (clone.rigidbody)
-			clone.rigidbody.velocity = velocity;
+		//if (clone.rigidbody)
+		//	clone.rigidbody.velocity = velocity;
 	}
 	
 	// tells the player that this viewID is theirs
@@ -113,12 +110,12 @@ public class networkManagerClient : MonoBehaviour {
 		PlayerInfo newGuy = new PlayerInfo();
 
 		newGuy.cartViewIDTransform = cartViewIDTransform;
-		newGuy.cartGameObject = NetworkView.Find(cartViewIDTransform).gameObject;
+		newGuy.cartContainerObject = NetworkView.Find(cartViewIDTransform).gameObject;
 		newGuy.cartViewIDRigidbody = cartViewIDRigidbody;
 		// add another NetworkView for the rigidbody
-		GameObject buggyObject = newGuy.cartGameObject.transform.FindChild ("buggy").gameObject;
-		NetworkView cgr = buggyObject.AddComponent("NetworkView") as NetworkView;
-		cgr.observed = buggyObject.rigidbody;
+		newGuy.cartGameObject = newGuy.cartContainerObject.transform.FindChild ("buggy").gameObject;
+		NetworkView cgr = newGuy.cartGameObject.AddComponent("NetworkView") as NetworkView;
+		cgr.observed = newGuy.cartGameObject.rigidbody;
 		cgr.viewID = cartViewIDRigidbody;
 		cgr.stateSynchronization = NetworkStateSynchronization.Unreliable;
 		newGuy.characterViewID = characterViewID;
@@ -131,7 +128,7 @@ public class networkManagerClient : MonoBehaviour {
 		// ADD MORE SHIT HERE
 		if (newGuy.currentMode==0){
 			// set them inside the buggy
-			newGuy.characterGameObject.transform.parent = newGuy.cartGameObject.transform.FindChild("buggy");
+			newGuy.characterGameObject.transform.parent = newGuy.cartGameObject.transform;
 			newGuy.characterGameObject.transform.localPosition = new Vector3(0,0,0);
 			newGuy.characterGameObject.transform.localRotation = Quaternion.identity;
 		} else if (newGuy.currentMode==1) {
@@ -154,9 +151,6 @@ public class networkManagerClient : MonoBehaviour {
 		// remove from array
 		networkVariables nvs = GetComponent("networkVariables") as networkVariables;
 		PlayerInfo toDelete = new PlayerInfo();
-		if (myInfo.player == player) {
-			Network.Disconnect();
-		}
 
 		foreach (PlayerInfo p in nvs.players)
 		{

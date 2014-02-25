@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class controlServer : MonoBehaviour {
-	float forceMultiplyer = 10000;
 	int maxPlayers = 4;
 	bool limitReached=false;
 
@@ -26,7 +25,6 @@ public class controlServer : MonoBehaviour {
 			limitReached=true;
 		}
 
-
 		if (!myInfo.playerIsPaused && Input.GetKeyDown(KeyCode.Q)) {
 			networkView.RPC("IHonked", RPCMode.All, myInfo.player);
 		}
@@ -46,9 +44,9 @@ public class controlServer : MonoBehaviour {
 			} else if (myInfo.currentMode==1) {
 				myInfo.currentMode = 0;
 				// set them in buggy
-				myInfo.characterGameObject.transform.parent = myInfo.cartGameObject.transform.FindChild("buggy");
+				myInfo.characterGameObject.transform.parent = myInfo.cartGameObject.transform;
 				myInfo.characterGameObject.transform.localPosition = new Vector3(0,0,0);
-				myInfo.characterGameObject.transform.rotation = myInfo.cartGameObject.transform.FindChild("buggy").rotation;
+				myInfo.characterGameObject.transform.rotation = myInfo.cartGameObject.transform.rotation;
 				// unlock golf ball
 				myInfo.ballGameObject.rigidbody.constraints = RigidbodyConstraints.None;
 			}
@@ -66,69 +64,16 @@ public class controlServer : MonoBehaviour {
 		foreach (PlayerInfo p in nvs.players) {
 			// if in buggy
 			if (p.currentMode==0) {
-				GameObject playerGameObject = p.cartGameObject;
-				/*Vector3 forceFromFront = new Vector3();	// force from front tires
-				Vector3 forceFromBack = new Vector3();	// force from back tires
-				if ((KBState & 8)==8) {
-					// make sure it's facing the direction of the vehicle
-					forceFromFront += playerGameObject.transform.localRotation * Vector3.forward;
-					forceFromBack += playerGameObject.transform.localRotation * Vector3.forward;
-				}
-				if ((KBState & 4)==4) {
-					// make sure it's facing the direction of the vehicle
-					forceFromFront += playerGameObject.transform.localRotation * Vector3.back;
-					forceFromBack += playerGameObject.transform.localRotation * Vector3.back;
-				}
-				if ((KBState & 2)==2) {
-					// rotate the front forces if they are turning
-					forceFromFront = Quaternion.AngleAxis(-60,Vector3.up) * forceFromFront;
-				}
-				if ((KBState & 1)==1) {
-					// rotate the front forces if they are turning
-					forceFromFront = Quaternion.AngleAxis(60,Vector3.up) * forceFromFront;
-				}
-				if (forceFromFront.sqrMagnitude!=0) {
-					// one at each tyre
-					playerGameObject.rigidbody.AddForceAtPosition(forceMultiplyer*forceFromFront,playerGameObject.transform.position+playerGameObject.transform.localRotation*Vector3.forward);
-					playerGameObject.rigidbody.AddForceAtPosition(forceMultiplyer*forceFromFront,playerGameObject.transform.position+playerGameObject.transform.localRotation*Vector3.forward);
-					playerGameObject.rigidbody.AddForceAtPosition(forceMultiplyer*forceFromBack,playerGameObject.transform.position+playerGameObject.transform.localRotation*Vector3.back);
-					playerGameObject.rigidbody.AddForceAtPosition(forceMultiplyer*forceFromBack,playerGameObject.transform.position+playerGameObject.transform.localRotation*Vector3.back);
-				}*/
-				CarController car = p.cartGameObject.transform.FindChild("buggy").gameObject.GetComponent("CarController") as CarController;
+				CarController car = p.cartGameObject.transform.GetComponent("CarController") as CarController;
 				car.Move(p.h,p.v);
 			}
 		}
-		
 		// if in buggy
 		if (!myInfo.playerIsPaused && myInfo.currentMode==0) {
 			// add own fiziks
-			/*int toSend = 0;
-			if (Input.GetKey(KeyCode.W)) {
-				toSend += 1;
-			}
-			toSend = toSend << 1;
-			if (Input.GetKey(KeyCode.S)) {
-				toSend += 1;
-			}
-			toSend = toSend << 1;
-			if (Input.GetKey(KeyCode.A)) {
-				toSend += 1;
-			}
-			toSend = toSend << 1;
-			if (Input.GetKey(KeyCode.D)) {
-				toSend += 1;
-			}
-			myInfo.KBState = toSend;*/
 			myInfo.h = Input.GetAxis("Horizontal");
 			myInfo.v = Input.GetAxis("Vertical");
 		}
-	}
-
-	void OnPlayerConnected(NetworkPlayer player) {
-		/*if (!limitReached && nvs.players.Count == maxPlayers) {
-			lobbyManager.SendMessage("onLobbyFull");
-			limitReached=true;
-		}*/
 	}
 
 	// update what they are currenly doing - this also adds new players automatically
@@ -136,9 +81,8 @@ public class controlServer : MonoBehaviour {
 	public void KartMovement(float h, float v, NetworkMessageInfo info) {
 		foreach (PlayerInfo p in nvs.players) {
 			if (p.player==info.sender) {
-				//p.KBState = currentKBStatus;
 				p.v = v;
-				p.h =h;
+				p.h = h;
 			}
 		}
 	}
@@ -149,7 +93,8 @@ public class controlServer : MonoBehaviour {
 		// find the player
 		foreach (PlayerInfo p in nvs.players) {
 			if (p.player==player) {
-				p.cartGameObject.audio.Play();
+				//TODO: add horn to buggy
+				//p.cartGameObject.audio.Play();
 			}
 		}
 	}
@@ -164,9 +109,9 @@ public class controlServer : MonoBehaviour {
 				p.currentMode = newMode;
 				if (p.currentMode==0) {			// if they're now in a buggy
 					// set them in buggy
-					p.characterGameObject.transform.parent = p.cartGameObject.transform.FindChild("buggy");
+					p.characterGameObject.transform.parent = p.cartGameObject.transform;
 					p.characterGameObject.transform.localPosition = new Vector3(0,0,0);
-					p.characterGameObject.transform.rotation = p.cartGameObject.transform.FindChild("buggy").rotation;
+					p.characterGameObject.transform.rotation = p.cartGameObject.transform.rotation;
 					// unlock golf ball
 					p.ballGameObject.rigidbody.constraints = RigidbodyConstraints.None;
 					
@@ -181,7 +126,8 @@ public class controlServer : MonoBehaviour {
 				}
 
 				// reset keyboard buffer
-				//p.KBState = 0;
+				p.h = 0f;
+				p.v = 0f;
 			}
 		}
 	}

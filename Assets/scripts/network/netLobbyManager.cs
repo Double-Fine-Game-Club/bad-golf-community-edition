@@ -7,7 +7,7 @@ public class netLobbyManager : MonoBehaviour {
 	PlayerInfo myInfo;
 	ArrayList scenes = new ArrayList();
 	GameObject lobbyView;
-	bool isStartActive = true;		//Set to true for testing
+	bool isStartActive = false, alreadyLoaded=false;		
 
 	// Use this for initialization
 	void Start () {
@@ -28,9 +28,10 @@ public class netLobbyManager : MonoBehaviour {
 	}
 
 	void onStart(){
-		if (!isStartActive) {
-						return;
-				}
+		if (!isStartActive || alreadyLoaded) {
+				return;
+		}
+		alreadyLoaded = true;
 
 		string levelName = "multi_level_01";
 		ArrayList spawnPoints = new ArrayList ();
@@ -49,8 +50,8 @@ public class netLobbyManager : MonoBehaviour {
 		
 		for(int i=0; i<nvs.players.Count; i++){
 			PlayerInfo player = nvs.players[i] as PlayerInfo;
-			//player.KBState = 0;	//Not moving
-			player.cartGameObject.transform.position = (Vector3)spawnPoints[i];
+			//player.cartGameObject.transform.position = (Vector3)spawnPoints[i];
+			player.cartContainerObject.transform.position = (Vector3)spawnPoints[i];
 			player.ballGameObject.transform.position = (Vector3)ballPoints[i];
 		}
 	}
@@ -61,11 +62,10 @@ public class netLobbyManager : MonoBehaviour {
 
 	[RPC]
 	void loadLevel(string levelName){
-		lobbyView = GameObject.Find ("lobby_view");
 		Application.LoadLevelAdditive (levelName);
+		lobbyView = GameObject.Find ("lobby_view");
 		lobbyView.SetActive (false);
-		GameObject obj = GameObject.Find (levelName);
-		myInfo.cartGameObject.transform.FindChild ("multi_buggy_cam").gameObject.SetActive (true);
+		myInfo.cartContainerObject.transform.FindChild ("multi_buggy_cam").gameObject.SetActive (true);
 	}
 }
 
