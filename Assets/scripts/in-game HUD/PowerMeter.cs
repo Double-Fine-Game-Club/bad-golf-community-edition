@@ -15,7 +15,7 @@ public class PowerMeter : MonoBehaviour
     [HideInInspector]
     public int m_meterPoints = 100;
 
-    private SwingMode m_swingScript;
+    public SwingBehaviour m_swingScript;
     private float m_percentMaxShotPower = 0.25f;
 
     private List<GameObject> m_arcChunks = new List<GameObject>();
@@ -23,14 +23,13 @@ public class PowerMeter : MonoBehaviour
     void Start()
     {
         CreateArc(m_meterPoints, m_meterRadius, m_objectToCircle.transform.position);
-        m_swingScript = FindObjectOfType<SwingMode>();
     }
 
     void Update()
     {
         //proper behavior relies on swingScript being in the scene
-        if (m_swingScript != null) {
-            m_percentMaxShotPower = m_swingScript.GetShowPower() / SwingMode.k_maxShotPower;
+		if (m_swingScript != null) {
+			m_percentMaxShotPower = m_swingScript.GetShowPower() / SwingBehaviour.k_maxShotPower;
             DrawArc(m_meterPoints, m_percentMaxShotPower);
         }
     }
