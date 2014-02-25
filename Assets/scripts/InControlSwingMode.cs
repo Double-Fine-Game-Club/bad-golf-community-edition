@@ -1,5 +1,6 @@
 using UnityEngine;
 using InControl;
+using System;
 using System.Collections;
 
 public abstract class SwingBehaviour : MonoBehaviour
@@ -7,7 +8,10 @@ public abstract class SwingBehaviour : MonoBehaviour
 		public GameObject camera, cart;
 		public int hitMultiplier = 10;
 		public const int k_maxShotPower = 500;
-
+		public const int k_maxArcAngle = 80;
+		public const int k_minArcAngle = 35;
+		public const int k_shotBoost = 3;
+		
 		public abstract float GetShowPower ();
 }
 
@@ -15,7 +19,8 @@ public class InControlSwingMode : SwingBehaviour
 {		
 		private Vector3 cameraPos = new Vector3 (0, 2, -4);
 		private bool flying = false;
-		private float shotPower = 0.0f;		
+		private float shotPower = 0.0f;
+		private float shotAngle = 0.0f;
 	
 		// Use this for initialization
 		void Start ()
@@ -31,7 +36,7 @@ public class InControlSwingMode : SwingBehaviour
 		// Draws the ugly GUI Box that tells you how hard you are about to hit.
 		void OnGUI ()
 		{
-				GUI.Box (new Rect (200, 200, 100, 100), "power: " + (int)shotPower);
+				GUI.Box (new Rect (200, 200, 100, 100), "power: " + (int)shotPower + "\nangle: " + (int)shotAngle);
 		}
 
 		// Update is called once per frame
@@ -75,18 +80,25 @@ public class InControlSwingMode : SwingBehaviour
 				else if (shotPower < 0)
 						shotPower = 0;
 
+				// flies slow in a high arc. Needs tuning.
+				// elneilios: Tuned this so that harder shots fly straighter (like real golf!)
+				var angleModifier = (shotPower / k_maxShotPower);
+				var angleRange = k_maxArcAngle - k_minArcAngle;
+				shotAngle = k_maxArcAngle - (angleRange * angleModifier);	
+		
 				// This is where the swing happens.
 				if (inputDevice.Action1 || inputDevice.Action2) {
 						flying = true;
-			
-						// flies slow in a high arc. Needs tuning.
-						Vector3 arc = Vector3.forward;
-						if (shotPower < 100) {
+						if (shotPower < 100)
 								shotPower = 100;
-						}
-						arc.y = arc.y + shotPower / 200;
-						rigidbody.AddForce (transform.localRotation * arc * shotPower);
-						shotPower = 0;			
+
+						Vector3 arc = Vector3.forward;
+						arc.y = 0;
+						arc.Normalize ();
+						arc.y = Mathf.Sin (shotAngle * Mathf.Deg2Rad);
+						;
+						rigidbody.AddForce (transform.localRotation * arc * shotPower * k_shotBoost);
+						shotPower = 0;
 						
 				}
 
