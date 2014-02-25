@@ -20,31 +20,32 @@ public class UIAnchorToScreen : MonoBehaviour
 	private int viewportCoordX;
 	private int viewportCoordY;
 
+#if UNITY_EDITOR
 	public bool setPercentsFromCurrentTransforms = false;
+#endif
+
 	void Update () 
 	{
-		int w = Screen.width;
-		int h = Screen.height;
-		
-		if ( setPercentsFromCurrentTransforms == true )
+		#if UNITY_EDITOR	
+		if ( setPercentsFromCurrentTransforms == true  && uiCamera != null)
 		{
 			Vector3 pos = uiCamera.WorldToViewportPoint( transform.position );
 			widthPercent = pos.x;
 			heightPercent = pos.y;
 			setPercentsFromCurrentTransforms = false;
 		}	
+		#endif
 
 		//update if user has tweaked the percent value directly or if the screen size is changed
-		if (w != screenWidth || h != screenHeight || widthPercent != old_widthPercent || heightPercent != old_heightPercent)
+		if (uiCamera != null && (Screen.width != screenWidth || Screen.height != screenHeight || widthPercent != old_widthPercent || heightPercent != old_heightPercent))
 		{
 			old_widthPercent = widthPercent;
 			old_heightPercent = heightPercent;			
 
-			screenWidth = w;
-			screenHeight = h;
+			screenWidth = Screen.width;
+			screenHeight = Screen.height;
 
-			if ( uiCamera != null )
-				onScreenResize();
+			onScreenResize();
 		}
 	}
 

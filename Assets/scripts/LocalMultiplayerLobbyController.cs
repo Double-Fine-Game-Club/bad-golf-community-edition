@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using InControl;
+using System.Collections.Generic;
 
 public class LocalMultiplayerLobbyController : MonoBehaviour 
 {
@@ -14,6 +16,10 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 	public int[] colorPerPlayer;
 
 	public GameObject startMessageTarget;
+
+	Dictionary<int,int> controllerDeviceIndexToPlayerIndexMap = new Dictionary<int,int>();
+
+	public GameObject[] controllerHighlights;
 
 	void Start()
 	{
@@ -29,6 +35,8 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 			ed_playerViewCameras[i].clearFlags = CameraClearFlags.SolidColor;
 
 			ed_controlSelectors[i].setIndex(0);
+
+			controllerHighlights[i].SetActive(false);
 		}
 		
 		//make sure all players have their colors according to colorPerPlayer
@@ -129,6 +137,70 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 	public void onJoin( string val)
 	{
 		int index = int.Parse(val);
-		ed_controlSelectors[index].setIndex(1);
+		ed_controlSelectors[index].setIndex(2);
+	}
+
+	public void onControlDirection ( int targetDevice)
+	{
+		if (  controllerDeviceIndexToPlayerIndexMap.ContainsKey( targetDevice ) )
+		{
+			int playerIndex = controllerDeviceIndexToPlayerIndexMap[targetDevice];
+
+			//handle controller highlight or action here
+			if ( LobbyControllerSupport.inputDeviceList[targetDevice].Direction.x > 0)
+			{
+				//right
+				controllerHighlights[playerIndex].SendMessage("doRight");
+			}
+			else if (LobbyControllerSupport.inputDeviceList[targetDevice].Direction.x < 0 )
+			{
+				//left
+				controllerHighlights[playerIndex].SendMessage("doLeft");
+			}
+			
+			if ( LobbyControllerSupport.inputDeviceList[targetDevice].Direction.y < 0 )
+			{
+				//down
+				controllerHighlights[playerIndex].SendMessage("doDown");
+			}
+			else if ( LobbyControllerSupport.inputDeviceList[targetDevice].Direction.y > 0 )
+			{
+				//up
+				controllerHighlights[playerIndex].SendMessage("doUp");
+			}
+		}
+	}
+
+	public void onControlAnyButtonPress( int targetDevice)
+	{
+		if (  controllerDeviceIndexToPlayerIndexMap.ContainsKey( targetDevice ) )
+		{
+			int playerIndex = controllerDeviceIndexToPlayerIndexMap[targetDevice];
+			controllerHighlights[playerIndex].SendMessage("doButtonPress");
+		}
+		else
+		{
+			//add a new controller player if any spots left 
+			int openIndex = -1;
+			for (int i = 0; i < ed_controlSelectors.Length; i++) 
+			{
+				if ( ed_controlSelectors[i].index == 0 )
+				{
+					openIndex = i;
+					break;
+				}
+			}
+				
+			if ( openIndex > -1)
+			{
+				controllerDeviceIndexToPlayerIndexMap[targetDevice] = openIndex;
+				ed_controlSelectors[openIndex].setIndex(1);
+				controllerHighlights[openIndex].SetActive(true);
+			}	
+			else
+			{
+				Debug.Log ( "Controller doesnt fit. All positions are full!");
+			}	
+		}
 	}
 }
