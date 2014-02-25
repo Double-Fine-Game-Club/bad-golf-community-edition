@@ -55,4 +55,22 @@ public class FaceState : MonoBehaviour {
 		if(angryIndex > -1)
 			meshRenderer.SetBlendShapeWeight (angryIndex, angryCurrentVal);
 	}
+
+	void SetFaceExpression(string expression)
+	{
+		switch (expression) {
+		case "Happy":
+			if (happyIndex > -1) {
+				happyTargetVal = 100;
+				angryTargetVal = 0;
+			}
+			break;
+		case "Angry":
+			if(angryIndex > -1) {
+				happyTargetVal = 0;
+				angryTargetVal = 100;
+			}
+			break;
+		}
+	}
 }
