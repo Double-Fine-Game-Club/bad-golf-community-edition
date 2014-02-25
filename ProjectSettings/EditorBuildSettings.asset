@@ -15,5 +15,5 @@ EditorBuildSettings:
     path: Assets/scenes/multi_lobby.unity
   - enabled: 1
     path: Assets/scenes/multi_level_01.unity
-    - enabled: 1
+  - enabled: 1
     path: Assets/scenes/level_01_local_multi.unity
