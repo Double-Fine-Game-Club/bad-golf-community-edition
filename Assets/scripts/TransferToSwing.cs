@@ -12,6 +12,7 @@ public class TransferToSwing : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
 	{
+		Debug.Log ("Cart Vel: " + gameObject.rigidbody.velocity);
 		float distance = Vector3.Distance (gameObject.transform.position, ball.transform.position);
 		if (distance < 5) {
 			inHittingRange = true;
@@ -20,8 +21,9 @@ public class TransferToSwing : MonoBehaviour {
 		}
 		if (Input.GetKey (KeyCode.E)) {
 			if (inHittingRange) {
+				// Stop the cart's forward motion (still might roll away though)
+				gameObject.rigidbody.velocity = Vector3.zero;
 				ball.SendMessage ("turnOnScripts");
-
 				this.gameObject.SendMessage("turnOffScripts");
 			}
 		}
