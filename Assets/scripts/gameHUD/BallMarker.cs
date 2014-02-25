@@ -1,4 +1,4 @@
-﻿//////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 //IMPORTANT NOTE:
 //this script must be attached to an object created once in a player's instance, i.e. networkObject
 //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -16,6 +16,7 @@ public class BallMarker : MonoBehaviour {
     private GameObject m_myBall;
     private GameObject m_myBallMarker;
     private Dictionary<PlayerInfo, GameObject> m_enemyBallMarkers;
+    private Camera m_myCamera;
 
     private bool m_initialized = false;
     private bool m_moveUp = false;
@@ -90,7 +91,8 @@ public class BallMarker : MonoBehaviour {
         startingPos.y += (2.5f + m_positionOffset); //needs to be high enough to prevent weird collision issues with ball
 
         m_myBallMarker.transform.position = startingPos;
-        m_myBallMarker.transform.rotation = Camera.main.transform.rotation; //billboard ball marker towards the camera
+
+        m_myBallMarker.transform.rotation = m_myCamera.transform.rotation; //billboard ball marker towards the camera
 
         foreach (PlayerInfo player in m_nvs.players) {
             if (m_enemyBallMarkers.ContainsKey(player)) {
@@ -99,6 +101,8 @@ public class BallMarker : MonoBehaviour {
                     Vector3 thisBallMarkerPos = player.ballGameObject.transform.position;
                     thisBallMarkerPos.y += 2.5f;
                     playerBall.transform.position = thisBallMarkerPos;
+
+                    playerBall.transform.rotation = m_myCamera.transform.rotation; //billboard ball marker towards the camera
                 }
             }
         }
@@ -114,16 +118,24 @@ public class BallMarker : MonoBehaviour {
             return;
         }
 
+
+
         Initialize();
     }
 
     void Initialize()
     {
         m_myPlayerInfo = m_nvs.myInfo;
+
+        //can't do anything else if we don't have PlayerInfo resources loaded!
+        if (m_myPlayerInfo.cartContainerObject == null) return;
+
+        m_myCamera = m_myPlayerInfo.cartContainerObject.transform.FindChild("multi_buggy_cam").gameObject.camera;
+
         m_myBall = m_myPlayerInfo.ballGameObject;
 
-        //need own ball to be existent to initialize
-        if (m_myBall == null) {
+        //need own ball and camera to be existent to initialize
+        if (m_myBall == null || m_myCamera == null) {
             return;
         }
 
