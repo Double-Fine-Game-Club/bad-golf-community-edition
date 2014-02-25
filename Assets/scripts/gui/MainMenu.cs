@@ -126,7 +126,7 @@ public class MainMenu : MonoBehaviour {
 
 		GUILayout.EndArea();
 
-		CheckMusic();
+		CheckMusicSound();
 	}
 
 	private void DrawCreditsGUI() {
@@ -178,13 +178,20 @@ public class MainMenu : MonoBehaviour {
 		}
 	}
 
-	private void CheckMusic() {
-		if(musicToggle) {
+	private void CheckMusicSound() {
+		if(musicToggle==false) {
+			audio.Stop();
+		} else {
+			audio.volume = musicVolume;
 			if(!audio.isPlaying) {
 				audio.Play();
 			}
+		}
+
+		if (soundToggle == false) {
+			AudioListener.volume = 0;	
 		} else {
-			audio.Stop();
+			AudioListener.volume = soundVolume;
 		}
 	}
 
