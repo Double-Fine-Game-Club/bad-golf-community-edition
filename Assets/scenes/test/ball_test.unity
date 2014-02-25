@@ -87,9 +87,9 @@ GameObject:
   - 23: {fileID: 34809829}
   - 148: {fileID: 34809828}
   - 54: {fileID: 34809827}
-  - 114: {fileID: 34809826}
   - 114: {fileID: 34809825}
   - 114: {fileID: 34809833}
+  - 114: {fileID: 34809834}
   m_Layer: 0
   m_Name: hit_mode_ball
   m_TagString: Untagged
@@ -110,23 +110,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scripts:
-  - {fileID: 34809826}
+  - {fileID: 34809834}
+  - {fileID: 34809833}
   camera: {fileID: 279473113}
---- !u!114 &34809826
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400026, guid: fcef4560af670864ba96f4861e9a1e9f,
-    type: 2}
-  m_PrefabInternal: {fileID: 916713053}
-  m_GameObject: {fileID: 34809824}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8eaef74679af4445b67eb7ab48bd8e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  camera: {fileID: 279473113}
-  hitMultiplier: 10
-  cart: {fileID: 954715192}
 --- !u!54 &34809827
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -185,7 +171,7 @@ SphereCollider:
     type: 2}
   m_PrefabInternal: {fileID: 916713053}
   m_GameObject: {fileID: 34809824}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 84b15423e5a7d1645af6276d59747f10, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -218,7 +204,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 916713053}
   m_GameObject: {fileID: 34809824}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c6f2b3c2ce176f44087fa23683febcc2, type: 3}
   m_Name: 
@@ -227,6 +213,21 @@ MonoBehaviour:
   m_markerPrefab: {fileID: 100000, guid: 106aba1f0ace6184ab747ea60caff5f2, type: 2}
   m_meterRadius: 1
   m_meterPoints: 100
+  m_swingScript: {fileID: 34809834}
+--- !u!114 &34809834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 34809824}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16e60f2f1c6f89740b3624fed1aeba26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camera: {fileID: 279473113}
+  cart: {fileID: 954715192}
+  hitMultiplier: 15
 --- !u!1 &170841260
 GameObject:
   m_ObjectHideFlags: 0
@@ -706,7 +707,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 954715193}
   distance: 6
-  height: 8
+  height: 5
   heightDamping: 2
   rotationDamping: 3
   leanDamping: 2
@@ -1350,6 +1351,7 @@ MonoBehaviour:
   messageTarget: {fileID: 0}
   messageName: onExit
   clickAudio: {fileID: 0}
+  messageValue: 
 --- !u!65 &895814274
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1414,6 +1416,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 713194907}
     m_Modifications:
+    - target: {fileID: 11400028, guid: fcef4560af670864ba96f4861e9a1e9f, type: 2}
+      propertyPath: scripts.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 400038, guid: fcef4560af670864ba96f4861e9a1e9f, type: 2}
       propertyPath: m_LocalPosition.x
       value: 202.420319
@@ -1450,7 +1456,33 @@ Prefab:
       propertyPath: m_ViewID.m_Type
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 13500000, guid: fcef4560af670864ba96f4861e9a1e9f, type: 2}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 84b15423e5a7d1645af6276d59747f10,
+        type: 2}
+    - target: {fileID: 11400028, guid: fcef4560af670864ba96f4861e9a1e9f, type: 2}
+      propertyPath: scripts.Array.data[0]
+      value: 
+      objectReference: {fileID: 34809834}
+    - target: {fileID: 11400038, guid: fcef4560af670864ba96f4861e9a1e9f, type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400028, guid: fcef4560af670864ba96f4861e9a1e9f, type: 2}
+      propertyPath: scripts.Array.data[1]
+      value: 
+      objectReference: {fileID: 34809833}
+    - target: {fileID: 11400038, guid: fcef4560af670864ba96f4861e9a1e9f, type: 2}
+      propertyPath: m_swingScript
+      value: 
+      objectReference: {fileID: 34809834}
+    - target: {fileID: 11400002, guid: fcef4560af670864ba96f4861e9a1e9f, type: 2}
+      propertyPath: height
+      value: 5
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 11400026, guid: fcef4560af670864ba96f4861e9a1e9f, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: fcef4560af670864ba96f4861e9a1e9f, type: 2}
   m_RootGameObject: {fileID: 1070554326}
   m_IsPrefabParent: 0
@@ -1935,6 +1967,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96468c245ae8e0d4f8f1c7a7b8b0542e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSingleView: 1
 --- !u!54 &954715205
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2099,6 +2132,7 @@ MonoBehaviour:
   messageTarget: {fileID: 0}
   messageName: onResume
   clickAudio: {fileID: 0}
+  messageValue: 
 --- !u!65 &1205844243
 BoxCollider:
   m_ObjectHideFlags: 0
