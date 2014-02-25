@@ -1,18 +1,26 @@
-﻿using UnityEngine;
+﻿//////////////////////////////////////////////////////////////////////////////////////////////////////
+//IMPORTANT NOTE:
+//this script must be attached to an object created once in a player's instance, i.e. networkObject
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class BallMarker : MonoBehaviour {
-
     public GameObject m_myBallMarkerPrefab;
+    public GameObject m_enemyBallMarkerPrefab;
 
     private networkVariables m_nvs;
     private PlayerInfo m_myPlayerInfo;
     private GameObject m_myBall;
     private GameObject m_myBallMarker;
+    private Dictionary<PlayerInfo, GameObject> m_enemyBallMarkers;
 
     private bool m_initialized = false;
     private bool m_moveUp = false;
     private float m_positionOffset = 0.0f;
+    private int m_numPlayersExpected;
 
 
 	void Start () 
@@ -25,13 +33,57 @@ public class BallMarker : MonoBehaviour {
         //never do anything if network variables weren't found
         if (!m_initialized) {
             AttemptInitialize();
+            return;
         }
 
-        SetPosition();
+        //first, make sure the players we expect are there, or clean up
+        //appropriate containing structures
+        CheckPlayerListValidity();
+        //then, update marker positions
+        UpdatePositions();
         
 	}
 
-    void SetPosition()
+    void CheckPlayerListValidity()
+    {
+        // -1 is to account for player not being in enemy marker list
+        if (m_numPlayersExpected < m_nvs.players.Count - 1) {
+            RegisterNewPlayers();
+        } else if (m_numPlayersExpected > m_nvs.players.Count - 1) {
+            CleanupPlayerList();
+        }
+    }
+
+    void CleanupPlayerList()
+    {
+        foreach (PlayerInfo player in m_enemyBallMarkers.Keys) {
+            if (!m_nvs.players.Contains(player)) {
+                Destroy(m_enemyBallMarkers[player]);
+                m_enemyBallMarkers.Remove(player);
+                m_numPlayersExpected--;
+            }
+        }
+    }
+
+    void RegisterNewPlayers()
+    {
+        foreach (PlayerInfo player in m_nvs.players) {
+            if (!m_enemyBallMarkers.ContainsKey(player)) {
+                if (player != m_myPlayerInfo) {
+                    GameObject playerBall = player.ballGameObject;
+                    Vector3 thisBallMarkerPos = playerBall.transform.position;
+                    thisBallMarkerPos.y += 2.5f;
+                    GameObject thisBallMarker = GameObject.Instantiate(m_enemyBallMarkerPrefab) as GameObject;
+                    thisBallMarker.transform.position = thisBallMarkerPos;
+
+                    m_enemyBallMarkers.Add(player, thisBallMarker);
+                    m_numPlayersExpected++;
+                }
+            }
+        }
+    }
+
+    void UpdatePositions()
     {
         Vector3 ballPos = m_myBall.transform.position;
         Vector3 startingPos = new Vector3(ballPos.x, ballPos.y, ballPos.z);
@@ -39,6 +91,17 @@ public class BallMarker : MonoBehaviour {
 
         m_myBallMarker.transform.position = startingPos;
         m_myBallMarker.transform.rotation = Camera.main.transform.rotation; //billboard ball marker towards the camera
+
+        foreach (PlayerInfo player in m_nvs.players) {
+            if (m_enemyBallMarkers.ContainsKey(player)) {
+                if (player != m_myPlayerInfo) {
+                    GameObject playerBall = m_enemyBallMarkers[player];
+                    Vector3 thisBallMarkerPos = player.ballGameObject.transform.position;
+                    thisBallMarkerPos.y += 2.5f;
+                    playerBall.transform.position = thisBallMarkerPos;
+                }
+            }
+        }
     }
 
     void AttemptInitialize()
@@ -59,6 +122,11 @@ public class BallMarker : MonoBehaviour {
         m_myPlayerInfo = m_nvs.myInfo;
         m_myBall = m_myPlayerInfo.ballGameObject;
 
+        //need own ball to be existent to initialize
+        if (m_myBall == null) {
+            return;
+        }
+
         m_myBallMarker = GameObject.Instantiate(m_myBallMarkerPrefab) as GameObject;
 
         Vector3 startingPos = m_myBall.transform.position;
@@ -66,10 +134,25 @@ public class BallMarker : MonoBehaviour {
 
         m_myBallMarker.transform.position = startingPos;
 
-        //child ball marker to ball 
-        //m_myBallMarker.transform.parent = m_myBall.transform;
-
         StartCoroutine(MoveObject(0.0f, 1.0f, 0.5f));
+
+        //initialize enemy ball markers
+        m_enemyBallMarkers = new Dictionary<PlayerInfo, GameObject>();
+        foreach (PlayerInfo player in m_nvs.players) {
+            // do NOT want to duplicate own ball marker
+            if (player != m_myPlayerInfo) {
+                GameObject playerBall = player.ballGameObject;
+                Vector3 thisBallMarkerPos = playerBall.transform.position;
+                thisBallMarkerPos.y += 2.5f;
+                GameObject thisBallMarker = GameObject.Instantiate(m_enemyBallMarkerPrefab) as GameObject;
+                thisBallMarker.transform.position = thisBallMarkerPos;
+
+                m_enemyBallMarkers.Add(player, thisBallMarker);
+            }
+        }
+
+        //set how many players were connected at initialization
+        m_numPlayersExpected = m_nvs.players.Count - 1;
         m_initialized = true;
     }
 
