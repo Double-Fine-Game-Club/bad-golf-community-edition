@@ -185,7 +185,7 @@ SphereCollider:
     type: 2}
   m_PrefabInternal: {fileID: 916713053}
   m_GameObject: {fileID: 34809824}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 84b15423e5a7d1645af6276d59747f10, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1350,6 +1350,7 @@ MonoBehaviour:
   messageTarget: {fileID: 0}
   messageName: onExit
   clickAudio: {fileID: 0}
+  messageValue: 
 --- !u!65 &895814274
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1450,6 +1451,11 @@ Prefab:
       propertyPath: m_ViewID.m_Type
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 13500000, guid: fcef4560af670864ba96f4861e9a1e9f, type: 2}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 84b15423e5a7d1645af6276d59747f10,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fcef4560af670864ba96f4861e9a1e9f, type: 2}
   m_RootGameObject: {fileID: 1070554326}
@@ -1935,6 +1941,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96468c245ae8e0d4f8f1c7a7b8b0542e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSingleView: 1
 --- !u!54 &954715205
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2099,6 +2106,7 @@ MonoBehaviour:
   messageTarget: {fileID: 0}
   messageName: onResume
   clickAudio: {fileID: 0}
+  messageValue: 
 --- !u!65 &1205844243
 BoxCollider:
   m_ObjectHideFlags: 0
