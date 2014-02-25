@@ -24,7 +24,7 @@ public class InControlSwingMode : SwingBehaviour
 				InputManager.Setup ();
 
 				// Add a custom device profile.
-				InputManager.AttachDevice (new UnityInputDevice (new FPSProfile ()));
+				InputManager.AttachDevice (new UnityInputDevice (new SwingModeProfile ()));
 				
 		}
 
@@ -57,7 +57,7 @@ public class InControlSwingMode : SwingBehaviour
 
 				// Rotate camera object with both sticks and d-pad.
 				gameObject.transform.Rotate (Vector3.down, 200.0f * Time.deltaTime * inputDevice.Direction.x, Space.World);
-				gameObject.transform.Rotate (Vector3.down, 200.0f * Time.deltaTime * inputDevice.RightStickX, Space.World);
+				gameObject.transform.Rotate (Vector3.down, 200.0f * Time.deltaTime * inputDevice.LeftStickX, Space.World);
 
 				// Crappy camera script taken from the original movement.cs. Makes rotation around the ball possible.
 				Vector3 newPos = transform.position + transform.localRotation * cameraPos;
@@ -67,14 +67,16 @@ public class InControlSwingMode : SwingBehaviour
 
 				
 
+				shotPower += inputDevice.Direction.y * hitMultiplier;
 				shotPower += inputDevice.RightStickY * hitMultiplier;
+
 				if (shotPower > k_maxShotPower)
 						shotPower = k_maxShotPower;
 				else if (shotPower < 0)
 						shotPower = 0;
 
 				// This is where the swing happens.
-				if (inputDevice.Action1) {
+				if (inputDevice.Action1 || inputDevice.Action2) {
 						flying = true;
 			
 						// flies slow in a high arc. Needs tuning.
