@@ -55,7 +55,7 @@ public class FollowPlayerScript : MonoBehaviour
 
 		        if( camLean ) {
 		        	
-			        // calculate the length of the vector from the camera to the target
+			        // calculate the squared length of the vector from the camera to the target
 					float wantedCamDistanceSquared = (wantedHeight-cameraTilt);
 					wantedCamDistanceSquared *= wantedCamDistanceSquared;
 					wantedCamDistanceSquared = wantedCamDistanceSquared + distance*distance;
@@ -64,7 +64,6 @@ public class FollowPlayerScript : MonoBehaviour
 					{
 						// move toward zero distance on x-y from target
 						currentDistance = Mathf.Lerp(currentDistance, 0, leanDamping * Time.deltaTime);
-
 					}
 					else
 					{
@@ -72,7 +71,8 @@ public class FollowPlayerScript : MonoBehaviour
 						currentDistance = Mathf.Lerp(currentDistance, distance, leanDamping * Time.deltaTime);
 					}
 
-					wantedHeight = Mathf.Sqrt(wantedCamDistanceSquared - currentDistance*currentDistance);     
+			        // calculate the required height to retain the retain the same camera distance [b = sqrt(h^2 - a^2)]
+					wantedHeight = Mathf.Sqrt(wantedCamDistanceSquared - currentDistance*currentDistance) + cameraTilt;     
 				}
 
 				// Set the position of the camera on the x-z plane to:
