@@ -13,6 +13,8 @@ public class controlClient : MonoBehaviour {
 		nvs = GetComponent("networkVariables") as networkVariables;
 		myInfo = nvs.myInfo;
 		pause = GetComponent ("netPause") as netPause;
+		GameObject.Find ("lobby_view").transform.FindChild ("camera").gameObject.SetActive (false);
+		myInfo.cartContainerObject.transform.FindChild ("multi_buggy_cam").gameObject.SetActive (true);
 
 	}
 
@@ -23,23 +25,9 @@ public class controlClient : MonoBehaviour {
 			timer += Time.deltaTime;
 			if (timer > 0.015) {
 				timer = 0;
-				int toSend = 0;
-				if (Input.GetKey(KeyCode.W)) {
-					toSend += 1;
-				}
-				toSend = toSend << 1;
-				if (Input.GetKey(KeyCode.S)) {
-					toSend += 1;
-				}
-				toSend = toSend << 1;
-				if (Input.GetKey(KeyCode.A)) {
-					toSend += 1;
-				}
-				toSend = toSend << 1;
-				if (Input.GetKey(KeyCode.D)) {
-					toSend += 1;
-				}
-				networkView.RPC("KartMovement", RPCMode.Server, toSend);
+				float h = Input.GetAxis("Horizontal");
+				float v = Input.GetAxis("Vertical");
+				networkView.RPC("KartMovement", RPCMode.Server, h,v);
 			}
 			if (Input.GetKeyDown(KeyCode.Q)) {
 				networkView.RPC("IHonked", RPCMode.All, myInfo.player);
@@ -81,34 +69,8 @@ public class controlClient : MonoBehaviour {
 	void FixedUpdate() {
 		// if in buggy
 		if (myInfo.currentMode==0) {
-			GameObject myCart = myInfo.cartGameObject;
-			Vector3 forceFromFront = new Vector3();	// force from front tires
-			Vector3 forceFromBack = new Vector3();	// force from back tires
-			if (Input.GetKey(KeyCode.W)) {
-				// make sure it's facing the direction of the vehicle
-				forceFromFront += myCart.transform.localRotation * Vector3.forward;
-				forceFromBack += myCart.transform.localRotation * Vector3.forward;
-			}
-			if (Input.GetKey(KeyCode.S)) {
-				// make sure it's facing the direction of the vehicle
-				forceFromFront += myCart.transform.localRotation * Vector3.back;
-				forceFromBack += myCart.transform.localRotation * Vector3.back;
-			}
-			if (Input.GetKey(KeyCode.A)) {
-				// rotate the front forces if they are turning
-				forceFromFront = Quaternion.AngleAxis(-60,Vector3.up) * forceFromFront;
-			}
-			if (Input.GetKey(KeyCode.D)) {
-				// rotate the front forces if they are turning
-				forceFromFront = Quaternion.AngleAxis(60,Vector3.up) * forceFromFront;
-			}
-			if (forceFromFront.sqrMagnitude!=0) {
-				// one at each tyre
-				myCart.rigidbody.AddForceAtPosition(forceMultiplyer*forceFromFront,myCart.transform.position+myCart.transform.localRotation*Vector3.forward);
-				myCart.rigidbody.AddForceAtPosition(forceMultiplyer*forceFromFront,myCart.transform.position+myCart.transform.localRotation*Vector3.forward);
-				myCart.rigidbody.AddForceAtPosition(forceMultiplyer*forceFromBack,myCart.transform.position+myCart.transform.localRotation*Vector3.back);
-				myCart.rigidbody.AddForceAtPosition(forceMultiplyer*forceFromBack,myCart.transform.position+myCart.transform.localRotation*Vector3.back);
-			}
+			CarController car = myInfo.cartGameObject.transform.GetComponent("CarController") as CarController;
+			car.Move(myInfo.h,myInfo.v);
 		} else if (myInfo.currentMode==1) {		// if in ball mode
 
 		}
@@ -120,7 +82,8 @@ public class controlClient : MonoBehaviour {
 		// find the player
 		foreach (PlayerInfo p in nvs.players) {
 			if (p.player==player) {
-				p.cartGameObject.audio.Play();
+				//TODO: add horn
+				//p.cartGameObject.audio.Play();
 			}
 		}
 	}
@@ -152,14 +115,15 @@ public class controlClient : MonoBehaviour {
 				}
 				
 				// reset keyboard buffer
-				p.KBState = 0;
+				p.h = 0f;
+				p.v = 0f;
 			}
 		}
 	}
 
 	// blank for server use only
 	[RPC]
-	void KartMovement(int currentKBStatus) {}
+	void KartMovement(float h, float v) {}
 	[RPC]
 	void SpawnBall(NetworkViewID viewId) {}
 }
