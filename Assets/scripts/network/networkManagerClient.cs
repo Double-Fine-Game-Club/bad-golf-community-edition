@@ -22,8 +22,6 @@ public class networkManagerClient : MonoBehaviour {
 		gameObject.AddComponent("netChat");
 		//pause
 		gameObject.AddComponent ("netPause");
-		//levelManager
-		gameObject.AddComponent ("netLobbyManager");
 		// get self
 		myInfo.player = Network.player;
 		// get server
@@ -141,6 +139,8 @@ public class networkManagerClient : MonoBehaviour {
 		// and let us have them aswell
 		networkVariables nvs = GetComponent("networkVariables") as networkVariables;
 		nvs.players.Add(newGuy);
+
+
 	}
 
 	// tells the player that someone left

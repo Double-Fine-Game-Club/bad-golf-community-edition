@@ -17,7 +17,7 @@ public class networkManagerServer : MonoBehaviour {
 		serverVersion = nvs.serverVersion;
 
 		// Use NAT punchthrough if no public IP present
-		Network.InitializeServer(3, 11177, !Network.HavePublicAddress());	//3 clients are allowed to connect to this host
+		Network.InitializeServer(32, 11177, !Network.HavePublicAddress());	
 		MasterServer.RegisterHost(serverVersion, SystemInfo.deviceName, "Test server");
 		
 		// create server owners buggy
@@ -76,8 +76,6 @@ public class networkManagerServer : MonoBehaviour {
 		gameObject.AddComponent("netChat");
 		//pause
 		gameObject.AddComponent ("netPause");
-		//level manager
-		gameObject.AddComponent ("netLobbyManager");
 		//********************************************
 	}
 
@@ -126,15 +124,9 @@ public class networkManagerServer : MonoBehaviour {
 	}
 	
 	void OnGUI() {
-		if(GUILayout.Button("Start")){
-			this.SendMessage("onStart");
-		}
 		GUILayout.BeginHorizontal();
 		GUILayout.Label ("Active Players: ");
 		GUILayout.Label (nvs.players.Count.ToString());
-		GUILayout.EndHorizontal();
-		GUILayout.BeginHorizontal();
-		GUILayout.Label ("4 players are required for a game");
 		GUILayout.EndHorizontal();
 
 		float keyToRemove = 0;

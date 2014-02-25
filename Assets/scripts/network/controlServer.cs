@@ -9,22 +9,16 @@ public class controlServer : MonoBehaviour {
 	networkVariables nvs;
 	PlayerInfo myInfo;
 	netPause pause;
-	netLobbyManager lobbyManager;
-
 	void Start() {
 		// get variables we need
 		nvs = GetComponent("networkVariables") as networkVariables;
 		myInfo = nvs.myInfo;
 		pause = GetComponent ("netPause") as netPause;
-		lobbyManager = GetComponent ("netLobbyManager") as netLobbyManager;
+		GameObject.Find ("lobby_view").transform.FindChild ("camera").gameObject.SetActive (false);
+		myInfo.cartContainerObject.transform.FindChild ("multi_buggy_cam").gameObject.SetActive (true);
 	}
 
 	void Update() {
-		if (!limitReached && nvs.players.Count == maxPlayers) {
-			lobbyManager.SendMessage("onLobbyFull");
-			limitReached=true;
-		}
-
 		if (!myInfo.playerIsPaused && Input.GetKeyDown(KeyCode.Q)) {
 			networkView.RPC("IHonked", RPCMode.All, myInfo.player);
 		}
