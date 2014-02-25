@@ -25,8 +25,7 @@ public class InControlSwingMode : SwingBehaviour
 
 				// Add a custom device profile.
 				InputManager.AttachDevice (new UnityInputDevice (new FPSProfile ()));
-
-				Screen.lockCursor = true;
+				
 		}
 
 		// Draws the ugly GUI Box that tells you how hard you are about to hit.
@@ -38,10 +37,23 @@ public class InControlSwingMode : SwingBehaviour
 		// Update is called once per frame
 		void Update ()
 		{
+				// if we are in the air, we don't want player to hit again. Somewhat obsolete now that control returns to car when swung.
+				if (flying) {
+						Screen.lockCursor = false;
+			
+						// Turn on control scripts and camera on the cart.
+						cart.SendMessage ("turnOnScripts");
+						// Turn off control scripts (including this one) and camera on the ball.
+						this.gameObject.SendMessage ("turnOffScripts");
+						return;
+				}
 				InputManager.Update ();
 		
 				// Use last device which provided input.
 				var inputDevice = InputManager.ActiveDevice;
+
+				// Capture mouse while in this mode
+				Screen.lockCursor = true;
 
 				// Rotate camera object with both sticks and d-pad.
 				gameObject.transform.Rotate (Vector3.down, 200.0f * Time.deltaTime * inputDevice.Direction.x, Space.World);
@@ -53,16 +65,7 @@ public class InControlSwingMode : SwingBehaviour
 				camera.transform.position = (1 - lerper) * camera.transform.position + lerper * newPos;
 				camera.transform.rotation = Quaternion.Lerp (camera.transform.rotation, Quaternion.LookRotation (transform.position - camera.transform.position), lerper);
 
-				// if we are in the air, we don't want player to hit again. Somewhat obsolete now that control returns to car when swung.
-				if (flying) {
-						Screen.lockCursor = false;
-			
-						// Turn on control scripts and camera on the cart.
-						cart.SendMessage ("turnOnScripts");
-						// Turn off control scripts (including this one) and camera on the ball.
-						this.gameObject.SendMessage ("turnOffScripts");
-						return;
-				}
+				
 
 				shotPower += inputDevice.RightStickY * hitMultiplier;
 				if (shotPower > k_maxShotPower)
