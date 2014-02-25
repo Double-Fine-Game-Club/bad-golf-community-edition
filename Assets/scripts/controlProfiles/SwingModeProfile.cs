@@ -72,15 +72,15 @@ namespace InControl
 				},
 				new InputControlMapping
 				{
-					Handle = "Rotate Right",
+					Handle = "Rotate Left",
 					Target = InputControlType.DPadLeft,
-					Source = KeyCodeButton(KeyCode.D)
+					Source = KeyCodeButton(KeyCode.A)
 				},
 				new InputControlMapping
 				{
-					Handle = "Rotate Left",
+					Handle = "Rotate Right",
 					Target = InputControlType.DPadRight,
-					Source = KeyCodeButton(KeyCode.A)
+					Source = KeyCodeButton(KeyCode.D)
 				}
 			};
 		}

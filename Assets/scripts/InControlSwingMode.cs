@@ -56,8 +56,8 @@ public class InControlSwingMode : SwingBehaviour
 				Screen.lockCursor = true;
 
 				// Rotate camera object with both sticks and d-pad.
-				gameObject.transform.Rotate (Vector3.down, 200.0f * Time.deltaTime * inputDevice.Direction.x, Space.World);
-				gameObject.transform.Rotate (Vector3.down, 200.0f * Time.deltaTime * inputDevice.LeftStickX, Space.World);
+				gameObject.transform.Rotate (Vector3.up, 200.0f * Time.deltaTime * inputDevice.Direction.x, Space.Self);
+				gameObject.transform.Rotate (Vector3.up, 200.0f * Time.deltaTime * inputDevice.LeftStickX, Space.Self);
 
 				// Crappy camera script taken from the original movement.cs. Makes rotation around the ball possible.
 				Vector3 newPos = transform.position + transform.localRotation * cameraPos;
