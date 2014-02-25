@@ -7,7 +7,7 @@ public class netLobbyManager : MonoBehaviour {
 	PlayerInfo myInfo;
 	ArrayList scenes = new ArrayList();
 	GameObject lobbyView;
-	bool isStartActive = false;
+	bool isStartActive = true;		//Set to true for testing
 
 	// Use this for initialization
 	void Start () {

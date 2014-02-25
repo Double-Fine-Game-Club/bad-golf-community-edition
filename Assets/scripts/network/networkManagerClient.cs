@@ -131,11 +131,13 @@ public class networkManagerClient : MonoBehaviour {
 		// ADD MORE SHIT HERE
 		if (newGuy.currentMode==0){
 			// set them inside the buggy
-			newGuy.characterGameObject.transform.parent = newGuy.cartGameObject.transform;
+			newGuy.characterGameObject.transform.parent = newGuy.cartGameObject.transform.FindChild("buggy");
+			newGuy.characterGameObject.transform.localPosition = new Vector3(0,0,0);
 			newGuy.characterGameObject.transform.localRotation = Quaternion.identity;
 		} else if (newGuy.currentMode==1) {
 			// set them inside the buggy
 			newGuy.characterGameObject.transform.parent = newGuy.ballGameObject.transform;
+			newGuy.characterGameObject.transform.localPosition = new Vector3(0,0,-2);
 			newGuy.characterGameObject.transform.localRotation = Quaternion.identity;
 		}
 		

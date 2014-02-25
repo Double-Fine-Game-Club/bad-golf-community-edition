@@ -64,9 +64,9 @@ public class controlClient : MonoBehaviour {
 			} else if (myInfo.currentMode==1) {
 				myInfo.currentMode = 0;
 				// set them in buggy
-				myInfo.characterGameObject.transform.parent = myInfo.cartGameObject.transform;
+				myInfo.characterGameObject.transform.parent = myInfo.cartGameObject.transform.FindChild("buggy");
 				myInfo.characterGameObject.transform.localPosition = new Vector3(0,0,0);
-				myInfo.characterGameObject.transform.rotation = myInfo.cartGameObject.transform.rotation;
+				myInfo.characterGameObject.transform.rotation = myInfo.cartGameObject.transform.FindChild("buggy").rotation;
 				// unlock golf ball
 				myInfo.ballGameObject.rigidbody.constraints = RigidbodyConstraints.None;
 			}
@@ -142,7 +142,7 @@ public class controlClient : MonoBehaviour {
 					// set them in buggy
 					p.characterGameObject.transform.parent = p.cartGameObject.transform.FindChild("buggy");
 					p.characterGameObject.transform.localPosition = new Vector3(0,0,0);
-					p.characterGameObject.transform.rotation = p.cartGameObject.transform.rotation;
+					p.characterGameObject.transform.rotation = p.cartGameObject.transform.FindChild("buggy").rotation;
 					// unlock golf ball
 					p.ballGameObject.rigidbody.constraints = RigidbodyConstraints.None;
 					

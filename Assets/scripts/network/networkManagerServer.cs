@@ -17,7 +17,7 @@ public class networkManagerServer : MonoBehaviour {
 		serverVersion = nvs.serverVersion;
 
 		// Use NAT punchthrough if no public IP present
-		Network.InitializeServer(32, 11177, !Network.HavePublicAddress());
+		Network.InitializeServer(3, 11177, !Network.HavePublicAddress());
 		MasterServer.RegisterHost(serverVersion, SystemInfo.deviceName, "Test server");
 		
 		// create server owners buggy
@@ -238,10 +238,10 @@ public class networkManagerServer : MonoBehaviour {
 		// instantiate the prefabs
 		GameObject cartGameObject = (Instantiate(Resources.Load(cartModel), spawnLocation, Quaternion.identity) as GameObject);
 		GameObject ballGameObject = Instantiate(Resources.Load(ballModel), spawnLocation + new Vector3(3,0,0), Quaternion.identity) as GameObject;
-		GameObject characterGameObject = Instantiate(Resources.Load(characterModel), spawnLocation, Quaternion.identity) as GameObject;
+		GameObject characterGameObject = Instantiate(Resources.Load(characterModel), spawnLocation + new Vector3(0,-1,0), Quaternion.identity) as GameObject;
 		GameObject buggyObject = cartGameObject.transform.FindChild ("buggy").gameObject;
 		// set buggy as characters parent
-		characterGameObject.transform.parent = cartGameObject.transform;
+		characterGameObject.transform.parent = buggyObject.transform;
 
 		// create and set viewIDs
 		NetworkViewID cartViewIDTransform = Network.AllocateViewID();
