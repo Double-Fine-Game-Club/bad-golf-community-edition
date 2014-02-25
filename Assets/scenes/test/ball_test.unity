@@ -227,7 +227,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camera: {fileID: 279473113}
   cart: {fileID: 954715192}
-  hitMultiplier: 5
+  hitMultiplier: 15
 --- !u!1 &170841260
 GameObject:
   m_ObjectHideFlags: 0
@@ -707,7 +707,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 954715193}
   distance: 6
-  height: 8
+  height: 5
   heightDamping: 2
   rotationDamping: 3
   leanDamping: 2
@@ -1477,6 +1477,10 @@ Prefab:
       propertyPath: m_swingScript
       value: 
       objectReference: {fileID: 34809834}
+    - target: {fileID: 11400002, guid: fcef4560af670864ba96f4861e9a1e9f, type: 2}
+      propertyPath: height
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11400026, guid: fcef4560af670864ba96f4861e9a1e9f, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: fcef4560af670864ba96f4861e9a1e9f, type: 2}

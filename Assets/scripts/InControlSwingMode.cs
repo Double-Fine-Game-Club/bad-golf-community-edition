@@ -4,10 +4,11 @@ using System.Collections;
 
 public abstract class SwingBehaviour : MonoBehaviour
 {
-	public GameObject camera, cart;
-	public int hitMultiplier = 10;
-	public const int k_maxShotPower = 500;
-	public abstract float GetShowPower();
+		public GameObject camera, cart;
+		public int hitMultiplier = 10;
+		public const int k_maxShotPower = 500;
+
+		public abstract float GetShowPower ();
 }
 
 public class InControlSwingMode : SwingBehaviour
@@ -24,6 +25,8 @@ public class InControlSwingMode : SwingBehaviour
 
 				// Add a custom device profile.
 				InputManager.AttachDevice (new UnityInputDevice (new FPSProfile ()));
+
+				Screen.lockCursor = true;
 		}
 
 		// Draws the ugly GUI Box that tells you how hard you are about to hit.
@@ -41,8 +44,8 @@ public class InControlSwingMode : SwingBehaviour
 				var inputDevice = InputManager.ActiveDevice;
 
 				// Rotate camera object with both sticks and d-pad.
-				gameObject.transform.Rotate (Vector3.down, 500.0f * Time.deltaTime * inputDevice.Direction.x, Space.World);
-				gameObject.transform.Rotate (Vector3.down, 500.0f * Time.deltaTime * inputDevice.RightStickX, Space.World);
+				gameObject.transform.Rotate (Vector3.down, 200.0f * Time.deltaTime * inputDevice.Direction.x, Space.World);
+				gameObject.transform.Rotate (Vector3.down, 200.0f * Time.deltaTime * inputDevice.RightStickX, Space.World);
 
 				// Crappy camera script taken from the original movement.cs. Makes rotation around the ball possible.
 				Vector3 newPos = transform.position + transform.localRotation * cameraPos;
@@ -52,6 +55,12 @@ public class InControlSwingMode : SwingBehaviour
 
 				// if we are in the air, we don't want player to hit again. Somewhat obsolete now that control returns to car when swung.
 				if (flying) {
+						Screen.lockCursor = false;
+			
+						// Turn on control scripts and camera on the cart.
+						cart.SendMessage ("turnOnScripts");
+						// Turn off control scripts (including this one) and camera on the ball.
+						this.gameObject.SendMessage ("turnOffScripts");
 						return;
 				}
 
@@ -72,12 +81,8 @@ public class InControlSwingMode : SwingBehaviour
 						}
 						arc.y = arc.y + shotPower / 200;
 						rigidbody.AddForce (transform.localRotation * arc * shotPower);
-						shotPower = 0;
-			
-						// Turn on control scripts and camera on the cart.
-						cart.SendMessage ("turnOnScripts");
-						// Turn off control scripts (including this one) and camera on the ball.
-						this.gameObject.SendMessage ("turnOffScripts");
+						shotPower = 0;			
+						
 				}
 
 		}
