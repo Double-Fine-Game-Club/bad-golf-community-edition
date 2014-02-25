@@ -261,7 +261,8 @@ public class CarController : MonoBehaviour
 				}
 				// modify the actual steer angle of the wheel by these calculated values:
 				CurrentSteerAngle = Mathf.MoveTowards (CurrentSteerAngle, steerInput * currentMaxAngle, Time.deltaTime * currentSteerSpeed);
-				wheelCollider.steerAngle = CurrentSteerAngle;
+				if ( wheelCollider != null)
+					wheelCollider.steerAngle = CurrentSteerAngle;
 			}
 			// acumulate skid amount from this wheel, for averaging later
 			AvgSkid += wheel.SkidFactor;
@@ -275,7 +276,8 @@ public class CarController : MonoBehaviour
 				numPowerWheels++;
 			}
 			// apply curent brake torque to wheel
-			wheelCollider.brakeTorque = BrakeInput * brakePower;
+			if(wheelCollider!= null)
+				wheelCollider.brakeTorque = BrakeInput * brakePower;
 			// if any wheel is on the ground, the car is considered grounded
 			if (wheel.OnGround) {
 				anyOnGround = true;

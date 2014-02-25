@@ -531,6 +531,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96468c245ae8e0d4f8f1c7a7b8b0542e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSingleView: 1
 --- !u!54 &60782536
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -685,14 +686,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c14520cc82be9a2419f1d8ec75176b32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  car: {fileID: 87788719}
+  target: {fileID: 0}
   distance: 5
   height: 4
   heightDamping: 2
   rotationDamping: 3
+  leanDamping: 2
   cameraTilt: 1.5
   minDistance: 3
-  zoom: 1
+  camZoom: 0
+  camLean: 1
+  camCollideRadius: 2
 --- !u!20 &70642354
 Camera:
   m_ObjectHideFlags: 0
@@ -1539,14 +1543,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c14520cc82be9a2419f1d8ec75176b32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  car: {fileID: 1712147201}
+  target: {fileID: 0}
   distance: 5
   height: 4
   heightDamping: 2
   rotationDamping: 3
+  leanDamping: 2
   cameraTilt: 1.5
   minDistance: 3
-  zoom: 1
+  camZoom: 0
+  camLean: 1
+  camCollideRadius: 2
 --- !u!20 &236841268
 Camera:
   m_ObjectHideFlags: 0
@@ -2246,6 +2253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96468c245ae8e0d4f8f1c7a7b8b0542e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSingleView: 0
 --- !u!54 &334838531
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3943,14 +3951,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c14520cc82be9a2419f1d8ec75176b32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  car: {fileID: 1423920327}
+  target: {fileID: 0}
   distance: 5
   height: 4
   heightDamping: 2
   rotationDamping: 3
+  leanDamping: 2
   cameraTilt: 1.5
   minDistance: 3
-  zoom: 1
+  camZoom: 0
+  camLean: 1
+  camCollideRadius: 2
 --- !u!20 &502024278
 Camera:
   m_ObjectHideFlags: 0
@@ -4021,14 +4032,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c14520cc82be9a2419f1d8ec75176b32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  car: {fileID: 85401766}
+  target: {fileID: 0}
   distance: 5
   height: 4
   heightDamping: 2
   rotationDamping: 3
+  leanDamping: 2
   cameraTilt: 1.5
   minDistance: 3
-  zoom: 1
+  camZoom: 0
+  camLean: 1
+  camCollideRadius: 2
 --- !u!20 &505633470
 Camera:
   m_ObjectHideFlags: 0
@@ -5373,6 +5387,10 @@ Prefab:
       propertyPath: m_NormalizedViewPortRect.height
       value: .5
       objectReference: {fileID: 0}
+    - target: {fileID: 11400008, guid: a1dee1f88cf0ad54394e5b11a2e578db, type: 2}
+      propertyPath: isSingleView
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a1dee1f88cf0ad54394e5b11a2e578db, type: 2}
   m_RootGameObject: {fileID: 1578161757}
@@ -6658,6 +6676,7 @@ MonoBehaviour:
   messageTarget: {fileID: 0}
   messageName: onExit
   clickAudio: {fileID: 0}
+  messageValue: 
 --- !u!65 &588000238
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6785,6 +6804,7 @@ MonoBehaviour:
   messageTarget: {fileID: 0}
   messageName: onResume
   clickAudio: {fileID: 0}
+  messageValue: 
 --- !u!65 &615385355
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7858,14 +7878,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c14520cc82be9a2419f1d8ec75176b32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  car: {fileID: 1595029678}
+  target: {fileID: 0}
   distance: 5
   height: 4
   heightDamping: 2
   rotationDamping: 3
+  leanDamping: 2
   cameraTilt: 1.5
   minDistance: 3
-  zoom: 1
+  camZoom: 0
+  camLean: 1
+  camCollideRadius: 2
 --- !u!20 &825665796
 Camera:
   m_ObjectHideFlags: 0
@@ -11238,14 +11261,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c14520cc82be9a2419f1d8ec75176b32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  car: {fileID: 1005453890}
+  target: {fileID: 0}
   distance: 5
   height: 4
   heightDamping: 2
   rotationDamping: 3
+  leanDamping: 2
   cameraTilt: 1.5
   minDistance: 3
-  zoom: 1
+  camZoom: 0
+  camLean: 1
+  camCollideRadius: 2
 --- !u!20 &1008491985
 Camera:
   m_ObjectHideFlags: 0
@@ -11425,7 +11451,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1013179490
 Transform:
   m_ObjectHideFlags: 0
@@ -11509,6 +11535,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1035947510}
+  - 114: {fileID: 1035947511}
   m_Layer: 0
   m_Name: twoSplit_View
   m_TagString: Untagged
@@ -11531,6 +11558,19 @@ Transform:
   - {fileID: 1118903425}
   - {fileID: 1193239617}
   m_Father: {fileID: 1078787392}
+--- !u!114 &1035947511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1035947509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cc6357f1239137408db98561820390b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerObjectList:
+  - {fileID: 334838524}
 --- !u!1 &1040842579
 GameObject:
   m_ObjectHideFlags: 0
@@ -14997,6 +15037,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96468c245ae8e0d4f8f1c7a7b8b0542e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSingleView: 1
 --- !u!54 &1438790281
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -15940,6 +15981,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96468c245ae8e0d4f8f1c7a7b8b0542e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSingleView: 1
 --- !u!114 &1573955598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16460,6 +16502,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96468c245ae8e0d4f8f1c7a7b8b0542e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSingleView: 1
 --- !u!54 &1622325558
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -16779,6 +16822,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96468c245ae8e0d4f8f1c7a7b8b0542e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSingleView: 1
 --- !u!114 &1631366764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18476,14 +18520,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c14520cc82be9a2419f1d8ec75176b32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  car: {fileID: 162174488}
+  target: {fileID: 0}
   distance: 5
   height: 4
   heightDamping: 2
   rotationDamping: 3
+  leanDamping: 2
   cameraTilt: 1.5
   minDistance: 3
-  zoom: 1
+  camZoom: 0
+  camLean: 1
+  camCollideRadius: 2
 --- !u!20 &1823540535
 Camera:
   m_ObjectHideFlags: 0
@@ -20320,6 +20367,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96468c245ae8e0d4f8f1c7a7b8b0542e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSingleView: 1
 --- !u!54 &1992053936
 Rigidbody:
   m_ObjectHideFlags: 0

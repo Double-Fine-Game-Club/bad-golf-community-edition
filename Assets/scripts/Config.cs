@@ -15,6 +15,8 @@ public class Config : MonoBehaviour {
 
 	private string configPath = "Assets/config.xml";
 
+	static public Dictionary<string, string[]> colorsDictionary = new Dictionary<string, string[]>();
+
 	// Use this for initialization
 	void Start () {
 		if (System.IO.File.Exists (configPath) == false){
@@ -24,7 +26,6 @@ public class Config : MonoBehaviour {
 			string levelsPath = "Assets/scenes/";
 			string[] loaderPath = System.IO.Directory.GetFiles (levelsPath);
 			ConfigWriter cfgFile = ConfigWriter.Create(configPath,settings);
-			cfgFile.WriteStartDocument();
 			cfgFile.WriteStartElement("Config");
 			cfgFile.WriteStartElement("Levels");
 			cfgFile.WriteAttributeString ("LevelsPath",levelsPath.ToString());
@@ -44,17 +45,35 @@ public class Config : MonoBehaviour {
 			cfgFile.Flush ();
 			cfgFile.Close ();
 		}
+		else
+		{
+			if ( colorsDictionary.Count > 0 )
+				return;
+
+			//load colors 
+			ConfigReader cfgFile = new ConfigReader ();
+			cfgFile.Load (configPath);
+
+			Xml.XmlNodeList colorNodes = cfgFile.GetElementsByTagName ("Color");
+			foreach (Xml.XmlElement nodes in colorNodes)
+			{
+				colorsDictionary.Add( nodes.GetAttribute("colorName"), new string[]{
+																  nodes.GetAttribute("one"),
+																  nodes.GetAttribute("two"), 
+																  nodes.GetAttribute("three"), 
+																  nodes.GetAttribute("four")  });
+			}
+		}
+
+		//Debug.Log ( "config says hello");
 	}
 	
 	public void cfgLoadLevels(){
 		ConfigReader cfgFile = new ConfigReader ();
 		cfgFile.Load (configPath);
 		
-		GameObject gObj = GameObject.FindGameObjectWithTag ("LevelID");
-		LevelSelect levelSel = gObj.GetComponent (typeof(LevelSelect)) as LevelSelect;
+		LevelSelect levelSel = GetComponent<LevelSelect>();
 		Xml.XmlNodeList mapNode = cfgFile.GetElementsByTagName ("Map");
-		levelSel.pathToLevels = cfgFile.DocumentElement.FirstChild.Attributes[0].Value;
-		
 		
 		int mapCount = mapNode.Count;
 		
@@ -66,11 +85,12 @@ public class Config : MonoBehaviour {
 			itn = itn+1;
 		}
 		
+#if UNITY_EDITOR
+/*
 		
 		string[] levelsPath = new string[levelSel.levels.Length];
 
-#if UNITY_EDITOR
-/*
+
 		EditorBuildSettingsScene[] newSettings = new EditorBuildSettingsScene[levelSel.levels.Length];
 		
 		for (int i = 0; i < levelsPath.Length; i++) {
@@ -83,9 +103,6 @@ public class Config : MonoBehaviour {
 */
 #endif
 
-		for (int i = 0; i < levelsPath.Length; i++) {
-			levelsPath[i] = levelSel.pathToLevels+"/"+levelSel.levels[i]+".unity";
-		}
 	}
 	
 }
