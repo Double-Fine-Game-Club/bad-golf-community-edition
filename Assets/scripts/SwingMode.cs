@@ -3,16 +3,11 @@ using System.Collections;
 
 // Mode for being able to hit the ball and send it flying.
 
-public class SwingMode : MonoBehaviour
+public class SwingMode : SwingBehaviour
 {
-	
-		public GameObject camera;
 		private Vector3 cameraPos = new Vector3 (0, 2, -4);
 		private float shotPower = 0f;
-		public int hitMultiplier = 5;
 		private bool flying = false;
-		public GameObject cart;
-		public const int k_maxShotPower = 500;
 	
 		// Use this for initialization
 		void Start ()
@@ -87,7 +82,7 @@ public class SwingMode : MonoBehaviour
 				}
 		}
 
-		public float GetShowPower ()
+		public override float GetShowPower ()
 		{
 				return shotPower;
 		}
