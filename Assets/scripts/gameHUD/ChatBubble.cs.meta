@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 683c8b0075b5d9846a351a14bc66aed8
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - m_myChatMarkerPrefab: {fileID: 100000, guid: b094445f07e479a47863d0956768ab4a,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
