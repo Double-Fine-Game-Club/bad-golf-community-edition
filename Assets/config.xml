@@ -1,9 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Config>
 	<Levels LevelsPath="Assets/scenes/">
+		<Map>level_full</Map>
 		<Map>level_01</Map>
-		<Map>level_01_lightsoda</Map>
-		<Map>main</Map>
 		<Map>multi_lobby</Map>
 		<Map>level_01_local_multi</Map>
 	</Levels>
