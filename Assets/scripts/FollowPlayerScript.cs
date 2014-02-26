@@ -84,7 +84,7 @@ public class FollowPlayerScript : MonoBehaviour {
 			}
 
 			// If no mouse input detected, check for analog stick input
-			else if (inputDevice.Analogs[(int)analogStick].Value != 0) {
+			else if (inputDevice.Analogs[(int)analogStick].Value != 0 && !Input.anyKey) {
 
 				// Update last cam rotation to stop auto-centering of camera
 				lastCamRotation = Time.time;
