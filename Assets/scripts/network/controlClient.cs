@@ -15,7 +15,6 @@ public class controlClient : MonoBehaviour {
 		pause = GetComponent ("netPause") as netPause;
 		GameObject.Find ("lobby_view").transform.FindChild ("camera").gameObject.SetActive (false);
 		myInfo.cartContainerObject.transform.FindChild ("multi_buggy_cam").gameObject.SetActive (true);
-
 	}
 
 	void Update () {
@@ -33,27 +32,37 @@ public class controlClient : MonoBehaviour {
 				networkView.RPC("IHonked", RPCMode.All, myInfo.player);
 			}
 		}
-		if (!myInfo.playerIsPaused && Input.GetKeyDown(KeyCode.G)) {
+		if (!myInfo.playerIsPaused && Input.GetKeyDown (KeyCode.Space)) {
+			myInfo.currentMode=0;
+			myInfo.cartGameObject.camera.enabled = true;
+		}
+		if (!myInfo.playerIsPaused && Input.GetKeyDown(KeyCode.E)) {
 			// if in buggy
 			if (myInfo.currentMode==0) {
 				myInfo.currentMode = 1;
 				// set them at golf ball
-				myInfo.characterGameObject.transform.parent = myInfo.ballGameObject.transform;
-				myInfo.ballGameObject.transform.rotation = Quaternion.identity;		// reset rotation to make it nice
-				myInfo.characterGameObject.transform.localPosition = new Vector3(0,0,-2);
-				myInfo.characterGameObject.transform.rotation = Quaternion.identity;
+				//myInfo.ballGameObject.transform.rotation = Quaternion.identity;		// reset rotation to make it nice
+				//myInfo.characterGameObject.transform.localPosition = new Vector3(0,0,-2);
+				//myInfo.characterGameObject.transform.rotation = Quaternion.identity;
 				// lock golf ball
-				myInfo.ballGameObject.rigidbody.constraints = RigidbodyConstraints.FreezeAll;
-				
+				//myInfo.ballGameObject.rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+				CarUserControl carCtrl = myInfo.cartGameObject.GetComponent(typeof(CarUserControl)) as CarUserControl;
+				carCtrl.enabled = false;
+				myInfo.ballGameObject.SendMessage ("turnOnScripts");
+				myInfo.cartGameObject.SendMessage("turnOffScripts");
 				// if at ball
 			} else if (myInfo.currentMode==1) {
 				myInfo.currentMode = 0;
 				// set them in buggy
-				myInfo.characterGameObject.transform.parent = myInfo.cartGameObject.transform;
-				myInfo.characterGameObject.transform.localPosition = new Vector3(0,0,0);
-				myInfo.characterGameObject.transform.rotation = myInfo.cartGameObject.transform.rotation;
+				//myInfo.characterGameObject.transform.parent = myInfo.cartGameObject.transform;
+				//myInfo.characterGameObject.transform.localPosition = new Vector3(0,0,0);
+				//myInfo.characterGameObject.transform.rotation = myInfo.cartGameObject.transform.rotation;
 				// unlock golf ball
-				myInfo.ballGameObject.rigidbody.constraints = RigidbodyConstraints.None;
+				//myInfo.ballGameObject.rigidbody.constraints = RigidbodyConstraints.None;
+				myInfo.ballGameObject.SendMessage("turnOffScripts");
+				myInfo.cartGameObject.SendMessage("turnOnScripts");
+				CarUserControl carCtrl = myInfo.cartGameObject.GetComponent(typeof(CarUserControl)) as CarUserControl;
+				carCtrl.enabled = true;
 			}
 			networkView.RPC("PlayerSwap", RPCMode.Others, myInfo.currentMode, myInfo.player);
 		}
