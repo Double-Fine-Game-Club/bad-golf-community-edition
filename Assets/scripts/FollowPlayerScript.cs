@@ -29,16 +29,18 @@ public class FollowPlayerScript : MonoBehaviour {
 
 	public bool mouseRotate = true;
 
+	// Mouse buttons numbers for dropdown
 	public enum MButtons { Left = 0, Middle = 2, Right = 1 }
-
 	public MButtons mouseButton;
 
+	// Analog stick numbers for dropdown
 	public enum ASticks { Left = 3, Right = 2 }
-
 	public ASticks analogStick;
 
+	// What to multiply input movement with
 	public float rotationMultiplier = 300.0f;
 
+	// Time to wait after ended input before centering
 	public float rotationWaitTime = 1.0f;
 
 	// current distance on the x-z plane of the camera from the target
@@ -52,13 +54,9 @@ public class FollowPlayerScript : MonoBehaviour {
 		//target = car.transform;	
 		currentDistance = distance;
 
+		// Set up the InputManager
 		InputManager.Setup();
-
 		InputManager.AttachDevice(new UnityInputDevice(new SwingModeProfile()));
-	}
-
-	// Update is called once per frame
-	void Update() {
 	}
 
 	void LateUpdate() {
@@ -68,13 +66,16 @@ public class FollowPlayerScript : MonoBehaviour {
 			return;
 		}
 
+		// Update input and get the last active device
 		InputManager.Update();
-
 		var inputDevice = InputManager.ActiveDevice;
 
+		// Only check for input if mouseRotate is true
 		if (mouseRotate) {
 
+			// Check for mouse input first
 			if (Input.GetMouseButton((int)mouseButton)) {
+
 				// Update last cam rotation to stop auto-centering of camera
 				lastCamRotation = Time.time;
 
@@ -82,9 +83,13 @@ public class FollowPlayerScript : MonoBehaviour {
 				transform.RotateAround(target.position, Vector3.up, Input.GetAxis("Mouse X") * rotationMultiplier * Time.deltaTime);
 			}
 
+			// If no mouse input detected, check for analog stick input
 			else if (inputDevice.Analogs[(int)analogStick].Value != 0) {
+
+				// Update last cam rotation to stop auto-centering of camera
 				lastCamRotation = Time.time;
 
+				// Rotate around target based on analog movement times the multiplier
 				transform.RotateAround(target.position, Vector3.up, -inputDevice.Analogs[(int)analogStick].Value * rotationMultiplier * Time.deltaTime);
 			}
 
