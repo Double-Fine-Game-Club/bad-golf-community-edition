@@ -16887,6 +16887,7 @@ GameObject:
   - 20: {fileID: 1632105124}
   - 114: {fileID: 1632105123}
   - 81: {fileID: 1632105122}
+  - 45: {fileID: 1632105125}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -16960,6 +16961,14 @@ Camera:
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
   m_OcclusionCulling: 1
+--- !u!45 &1632105125
+Skybox:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1632105120}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 2100000, guid: f3f659c31edf38346992766afc9cd75a, type: 2}
 --- !u!1 &1641296186
 GameObject:
   m_ObjectHideFlags: 0
