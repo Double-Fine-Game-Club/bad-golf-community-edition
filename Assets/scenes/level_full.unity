@@ -1012,6 +1012,7 @@ GameObject:
   - 82: {fileID: 388057054}
   - 82: {fileID: 388057053}
   - 82: {fileID: 388057052}
+  - 114: {fileID: 388057058}
   m_Layer: 0
   m_Name: buggy
   m_TagString: Cart
@@ -1148,6 +1149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96468c245ae8e0d4f8f1c7a7b8b0542e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSingleView: 1
 --- !u!54 &388057051
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1430,6 +1432,18 @@ MonoBehaviour:
   - {fileID: 388057050}
   - {fileID: 388057055}
   camera: {fileID: 1436162093}
+--- !u!114 &388057058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 388057044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d590d7cdf7de04c0197a1f6fb82925b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  respawnThreshold: 0
 --- !u!1 &392334962
 GameObject:
   m_ObjectHideFlags: 0
@@ -1749,6 +1763,7 @@ MonoBehaviour:
   messageTarget: {fileID: 0}
   messageName: onResume
   clickAudio: {fileID: 0}
+  messageValue: 
 --- !u!65 &474499757
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1869,8 +1884,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 1491978673}
-  hitMultiplier: 10
   cart: {fileID: 388057044}
+  hitMultiplier: 10
 --- !u!54 &489195833
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1959,6 +1974,7 @@ MonoBehaviour:
   m_markerPrefab: {fileID: 100000, guid: 106aba1f0ace6184ab747ea60caff5f2, type: 2}
   m_meterRadius: 1
   m_meterPoints: 100
+  m_swingScript: {fileID: 0}
 --- !u!1 &494588119
 GameObject:
   m_ObjectHideFlags: 0
@@ -3227,6 +3243,7 @@ MonoBehaviour:
   messageTarget: {fileID: 0}
   messageName: onExit
   clickAudio: {fileID: 0}
+  messageValue: 
 --- !u!65 &1409273880
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3431,7 +3448,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1465118618}
-  m_LocalRotation: {x: .533146024, y: -.215822756, z: .142856047, w: .805461466}
+  m_LocalRotation: {x: .533145964, y: -.215822726, z: .142856032, w: .805461347}
   m_LocalPosition: {x: 56.0330315, y: 97.2654724, z: -41.5000458}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -4180,6 +4197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96468c245ae8e0d4f8f1c7a7b8b0542e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSingleView: 1
 --- !u!114 &1741447829
 MonoBehaviour:
   m_ObjectHideFlags: 0
