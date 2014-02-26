@@ -9662,7 +9662,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 922747975}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.28513384, y: 3.49024701, z: -1.37936783}
+  m_LocalPosition: {x: -4.02199984, y: 3.49024701, z: -1.37936783}
   m_LocalScale: {x: 3.98240924, y: 3.98240924, z: 3.98240924}
   m_Children: []
   m_Father: {fileID: 1556452143}
@@ -9719,7 +9719,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiCamera: {fileID: 1269009164}
-  widthPercent: .258961231
+  widthPercent: .268999994
   heightPercent: .749085605
   setPercentsFromCurrentTransforms: 0
 --- !u!1 &929930827
@@ -21177,7 +21177,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelSelected: 0
   levels: []
-  pathToLevels: 
   messageTarget: {fileID: 1510378073}
 --- !u!114 &2086163839
 MonoBehaviour:
