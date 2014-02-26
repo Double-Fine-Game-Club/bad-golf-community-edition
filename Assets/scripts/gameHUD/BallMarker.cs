@@ -118,7 +118,18 @@ public class BallMarker : MonoBehaviour {
         //if renderer is not obtained, bail out
         if (objRenderer == null) return;
         Color objColor = objRenderer.material.GetColor("_Color");
-        objColor.a = Mathf.Abs((Vector3.Distance(objectToColorize.transform.position, m_myPlayerInfo.cartGameObject.transform.position)) / 30.0f);
+        float distance = Vector3.Distance(objectToColorize.transform.position, m_myPlayerInfo.cartGameObject.transform.position);
+
+        objColor.a = Mathf.Abs(distance * 0.25f / 10.0f);
+
+        Vector3 scale = objectToColorize.transform.localScale;
+        scale.x = Mathf.Max(distance / 10.0f * 1.5f, 1.5f);
+        scale.y = Mathf.Max(distance / 10.0f * 1.5f, 1.5f);
+
+        objectToColorize.transform.localScale = scale;
+
+
+
 
         objRenderer.material.SetColor("_Color", objColor);
     }
