@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using InControl;
 using System.Collections;
 
 [AddComponentMenu("Camera-Control/Follow Player")]
@@ -32,6 +33,10 @@ public class FollowPlayerScript : MonoBehaviour {
 
 	public MButtons mouseButton;
 
+	public enum ASticks { Left = 3, Right = 2 }
+
+	public ASticks analogStick;
+
 	public float rotationMultiplier = 300.0f;
 
 	public float rotationWaitTime = 1.0f;
@@ -46,6 +51,10 @@ public class FollowPlayerScript : MonoBehaviour {
 	void Start() {
 		//target = car.transform;	
 		currentDistance = distance;
+
+		InputManager.Setup();
+
+		InputManager.AttachDevice(new UnityInputDevice(new SwingModeProfile()));
 	}
 
 	// Update is called once per frame
@@ -59,14 +68,26 @@ public class FollowPlayerScript : MonoBehaviour {
 			return;
 		}
 
-		if (mouseRotate && Input.GetMouseButton((int)mouseButton)) {
+		InputManager.Update();
 
-			// Update last cam rotation to stop auto-centering of camera
-			lastCamRotation = Time.time;
+		var inputDevice = InputManager.ActiveDevice;
 
-			// Rotate around target based on mouse movement times the multiplier
-			transform.RotateAround(target.position, Vector3.up, Input.GetAxis("Mouse X") * rotationMultiplier * Time.deltaTime);
-			transform.RotateAround(target.position, Vector3.left, Input.GetAxis("Mouse Y") * rotationMultiplier * Time.deltaTime);
+		if (mouseRotate) {
+
+			if (Input.GetMouseButton((int)mouseButton)) {
+				// Update last cam rotation to stop auto-centering of camera
+				lastCamRotation = Time.time;
+
+				// Rotate around target based on mouse movement times the multiplier
+				transform.RotateAround(target.position, Vector3.up, Input.GetAxis("Mouse X") * rotationMultiplier * Time.deltaTime);
+			}
+
+			else if (inputDevice.Analogs[(int)analogStick].Value != 0) {
+				lastCamRotation = Time.time;
+
+				transform.RotateAround(target.position, Vector3.up, -inputDevice.Analogs[(int)analogStick].Value * rotationMultiplier * Time.deltaTime);
+			}
+
 		}
 
 		// Calculate the current rotation angles (If cam was rotated by mouse within waitTime, keep position)
