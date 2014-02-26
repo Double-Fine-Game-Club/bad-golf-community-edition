@@ -8,11 +8,17 @@ public class LobbyControllerSupport : MonoBehaviour
 	public GameObject lobbyGameObjectTarget;
 	static public InputDevice[] inputDeviceList;
 
-	Vector2 lastDirection = Vector2.zero;
-	
+	private float[] timeSinceLastMove;
+	private Vector2[] lastDirection;
+	private float minTimeForRepeat = .35f;
+	private float minChangeInDirection = .4f;
+
 	void OnEnable () 
 	{
 		inputDeviceList = InputManager.Devices.ToArray(); 
+		
+		timeSinceLastMove =new float[]{Time.time,Time.time,Time.time,Time.time};
+		lastDirection = new Vector2[]{Vector2.zero,Vector2.zero,Vector2.zero,Vector2.zero};
 	}
 	
 	void Update () 
@@ -21,22 +27,25 @@ public class LobbyControllerSupport : MonoBehaviour
 		{
 			for (int i = 0; i < inputDeviceList.Length; i++) 
 			{
-				if ( inputDeviceList[i].Direction != Vector2.zero ) 
+				if ( roundVector(inputDeviceList[i].Direction) != roundVector(lastDirection[i]) ) //general direction has changed
 				{
-					if ( lastDirection.x != Mathf.Round(inputDeviceList[i].Direction.x) || lastDirection.y != Mathf.Round(inputDeviceList[i].Direction.y) )
+					if ( (inputDeviceList[i].Direction - lastDirection[i]).magnitude > minChangeInDirection ) // enough change from last tiem?
 					{
-						lastDirection.x = Mathf.Round(inputDeviceList[i].Direction.x);
-						lastDirection.y = Mathf.Round(inputDeviceList[i].Direction.y);
+						lastDirection[i] = inputDeviceList[i].Direction;
+						timeSinceLastMove[i] = Time.time;
 						
-						lobbyGameObjectTarget.SendMessage( "onControlDirection", i );
-					}
-				
-					if ( Mathf.Round(inputDeviceList[i].Direction.x) == 0 ||  Mathf.Round(inputDeviceList[i].Direction.y) == 0 )
-					{
-						StartCoroutine( waitThenClearLastDirection());	
+	
+						lobbyGameObjectTarget.SendMessage( "onControlDirection", i );	
 					}
 				}
-					
+				else if ( Time.time - timeSinceLastMove[i] > minTimeForRepeat ) //hasnt changed, enough time to repeat? 
+				{
+					lastDirection[i] = inputDeviceList[i].Direction;
+					timeSinceLastMove[i] = Time.time;
+
+					lobbyGameObjectTarget.SendMessage( "onControlDirection", i );	
+				}
+
 				if ( inputDeviceList[i].Action1.WasReleased ||  inputDeviceList[i].Action2.WasReleased || inputDeviceList[i].Action3.WasReleased || inputDeviceList[i].Action4.WasReleased)
 				{
 					lobbyGameObjectTarget.SendMessage( "onControlAnyButtonPress", i);
@@ -45,9 +54,20 @@ public class LobbyControllerSupport : MonoBehaviour
 		}
 	}
 
-	IEnumerator waitThenClearLastDirection()
-	{	
-		yield return new WaitForSeconds(.5f);
-		lastDirection.x = lastDirection.y = -99; //some garbage number
+	//custom vec2 round  
+	private float minThreshold = .05f;
+	Vector2 roundVector ( Vector2 vec)
+	{
+		if ( vec.x > minThreshold || vec.x < -minThreshold) 
+			vec.x =	Mathf.Sign(vec.x);
+		else
+			vec.x = 0;
+
+		if ( vec.y > minThreshold || vec.y < -minThreshold) 
+			vec.y =	Mathf.Sign(vec.y);
+		else
+			vec.y = 0;
+
+		return vec;
 	}
 }

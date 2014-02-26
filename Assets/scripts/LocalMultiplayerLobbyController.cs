@@ -74,6 +74,7 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 	public void onControl( SwitchableTexture callingSwitch )
 	{
 		int playerIndex = Array.IndexOf( ed_controlSelectors, callingSwitch );
+		
 		int type = ed_controlSelectors[playerIndex].index ;
 
 		if ( type == 0 ) //off
@@ -83,6 +84,20 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 			ed_playerViewCameras[playerIndex].clearFlags = CameraClearFlags.SolidColor;
 			ed_joinButtonTexts[playerIndex].SetActive(true);
 			ed_detailControls[playerIndex].SetActive(false);
+			controllerHighlights[playerIndex].SetActive(false);
+
+			//if this is a controller turning off then remove from map
+			if ( controllerDeviceIndexToPlayerIndexMap.ContainsValue(playerIndex) )
+			{	
+				foreach( KeyValuePair<int,int> kv in controllerDeviceIndexToPlayerIndexMap)
+				{
+					if ( kv.Value == playerIndex)
+					{
+						controllerDeviceIndexToPlayerIndexMap.Remove( kv.Key);
+						break;
+					}
+				}
+			}
 		}
 		else if ( type == 1 ) //joystick
 		{
@@ -90,19 +105,51 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 			ed_playerViewCameras[playerIndex].clearFlags = CameraClearFlags.Skybox;
 			ed_joinButtonTexts[playerIndex].SetActive(false);
 			ed_detailControls[playerIndex].SetActive(true);
-			//bind to not already used joystick
+			
 		}
 		else if ( type == 2) //keyboard
 		{
-			ed_playerViewCameras[playerIndex].farClipPlane = 1000;
-			ed_playerViewCameras[playerIndex].clearFlags = CameraClearFlags.Skybox;
-			ed_joinButtonTexts[playerIndex].SetActive(false);
-			ed_detailControls[playerIndex].SetActive(true);
-
-			foreach( SwitchableTexture switchable in ed_controlSelectors)
+			//if this is a controller skip keyboard
+			if ( controllerDeviceIndexToPlayerIndexMap.ContainsValue(playerIndex) )
+			{	
+				foreach( KeyValuePair<int,int> kv in controllerDeviceIndexToPlayerIndexMap)
+				{
+					if ( kv.Value == playerIndex)
+					{
+						ed_controlSelectors[playerIndex].setIndex(0); 
+						break;
+					}
+				}
+			}
+			else //set keyboard
 			{
-				if ( callingSwitch != switchable && switchable.index == 2) //if keyboard
-					switchable.setIndex(1);//switch to joystick
+				ed_playerViewCameras[playerIndex].farClipPlane = 1000;
+				ed_playerViewCameras[playerIndex].clearFlags = CameraClearFlags.Skybox;
+				ed_joinButtonTexts[playerIndex].SetActive(false);
+				ed_detailControls[playerIndex].SetActive(true);
+		
+				//if this was a controller remove it
+				if ( controllerDeviceIndexToPlayerIndexMap.ContainsValue(playerIndex) )
+				{	
+					foreach( KeyValuePair<int,int> kv in controllerDeviceIndexToPlayerIndexMap)
+					{
+						if ( kv.Value == playerIndex)
+						{
+							controllerDeviceIndexToPlayerIndexMap.Remove( kv.Key );
+							controllerHighlights[playerIndex].SetActive(false);
+							break;
+						}
+					}
+				}
+
+				//check if keyboard was somewhere else, change it to blank
+				foreach( SwitchableTexture switchable in ed_controlSelectors)
+				{
+					if ( callingSwitch != switchable && switchable.index == 2) //if keyboard
+					{
+						switchable.setIndex(0);
+					}
+				}
 			}
 		}
 	}
@@ -150,23 +197,23 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 			if ( LobbyControllerSupport.inputDeviceList[targetDevice].Direction.x > 0)
 			{
 				//right
-				controllerHighlights[playerIndex].SendMessage("doRight");
+				controllerHighlights[playerIndex].SendMessage("doRight", SendMessageOptions.DontRequireReceiver);
 			}
 			else if (LobbyControllerSupport.inputDeviceList[targetDevice].Direction.x < 0 )
 			{
 				//left
-				controllerHighlights[playerIndex].SendMessage("doLeft");
+				controllerHighlights[playerIndex].SendMessage("doLeft", SendMessageOptions.DontRequireReceiver);
 			}
 			
 			if ( LobbyControllerSupport.inputDeviceList[targetDevice].Direction.y < 0 )
 			{
 				//down
-				controllerHighlights[playerIndex].SendMessage("doDown");
+				controllerHighlights[playerIndex].SendMessage("doDown", SendMessageOptions.DontRequireReceiver);
 			}
 			else if ( LobbyControllerSupport.inputDeviceList[targetDevice].Direction.y > 0 )
 			{
 				//up
-				controllerHighlights[playerIndex].SendMessage("doUp");
+				controllerHighlights[playerIndex].SendMessage("doUp", SendMessageOptions.DontRequireReceiver);
 			}
 		}
 	}
