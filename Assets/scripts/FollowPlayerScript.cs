@@ -20,28 +20,28 @@ public class FollowPlayerScript : MonoBehaviour
 		public float cameraTilt = 1.5f;
 		public float minDistance = 3.0f;
 
-	    // zoom camera if near plane corner collide with geometry before reaching target
+		// zoom camera if near plane corner collide with geometry before reaching target
 		public bool camZoom = false;
 
-	    // lean camera toward zenth if sphere collides with geometry
+		// lean camera toward zenth if sphere collides with geometry
 		public bool camLean = true;
 		public float camCollideRadius = 2.0f;
-        
-        public bool mouseRotate = true;
+		
+		public bool mouseRotate = true;
 
-        public enum MButtons {Left = 0, Middle = 2, Right = 1}
+		public enum MButtons {Left = 0, Middle = 2, Right = 1}
 
-        public MButtons mouseButton;
-        
-        public float rotationMultiplier = 300.0f;
+		public MButtons mouseButton;
+		
+		public float rotationMultiplier = 300.0f;
+		
+		public float rotationWaitTime = 1.0f;
 
-        public float rotationWaitTime = 1.0f;
-
-	    // current distance on the x-z plane of the camera from the target
+		// current distance on the x-z plane of the camera from the target
 		private float currentDistance = 0f;
-        
-        // Last time the camera was rotated by mouse
-        private float lastCamRotation = -10f;
+		
+		// Last time the camera was rotated by mouse
+		private float lastCamRotation = -10f;
 	
 		// Use this for initialization
 		void Start () {
@@ -59,27 +59,27 @@ public class FollowPlayerScript : MonoBehaviour
 				if (!target) {
 						return;
 				}
-                
-                if (mouseRotate && Input.GetMouseButton( (int)mouseButton )) {
+				
+				if (mouseRotate && Input.GetMouseButton( (int)mouseButton )) {
 
-                    // Update last cam rotation to stop auto-centering of camera
-                    lastCamRotation = Time.time;
+					// Update last cam rotation to stop auto-centering of camera
+					lastCamRotation = Time.time;
 
-                    // Rotate around target based on mouse movement times the multiplier
-                    transform.RotateAround(target.position, Vector3.up, Input.GetAxis("Mouse X") * rotationMultiplier * Time.deltaTime);
-                    transform.RotateAround(target.position, Vector3.left, Input.GetAxis("Mouse Y") * rotationMultiplier * Time.deltaTime);
-                }
+					// Rotate around target based on mouse movement times the multiplier
+					transform.RotateAround(target.position, Vector3.up, Input.GetAxis("Mouse X") * rotationMultiplier * Time.deltaTime);
+					transform.RotateAround(target.position, Vector3.left, Input.GetAxis("Mouse Y") * rotationMultiplier * Time.deltaTime);
+				}
 
 				// Calculate the current rotation angles (If cam was rotated by mouse within waitTime, keep position)
-                float wantedRotationAngle = (Time.time > lastCamRotation + rotationWaitTime) ? target.eulerAngles.y : transform.eulerAngles.y;
+				float wantedRotationAngle = (Time.time > lastCamRotation + rotationWaitTime) ? target.eulerAngles.y : transform.eulerAngles.y;
 				float wantedHeight = target.position.y + height;
 		
 				float currentRotationAngle = transform.eulerAngles.y;
 				float currentHeight = transform.position.y;
 
-                if ( camLean ) {
-		        	
-			        // calculate the squared length of the vector from the camera to the target
+				if ( camLean ) {
+					
+					// calculate the squared length of the vector from the camera to the target
 					float wantedCamDistanceSquared = (wantedHeight-cameraTilt);
 					wantedCamDistanceSquared *= wantedCamDistanceSquared;
 					wantedCamDistanceSquared = wantedCamDistanceSquared + distance*distance;
@@ -95,7 +95,7 @@ public class FollowPlayerScript : MonoBehaviour
 						currentDistance = Mathf.Lerp(currentDistance, distance, leanDamping * Time.deltaTime);
 					}
 
-			        // calculate the required height to retain the retain the same camera distance [b = sqrt(h^2 - a^2)]
+					// calculate the required height to retain the retain the same camera distance [b = sqrt(h^2 - a^2)]
 					wantedHeight = Mathf.Sqrt(wantedCamDistanceSquared - currentDistance*currentDistance) + cameraTilt;     
 				}
 
@@ -103,15 +103,15 @@ public class FollowPlayerScript : MonoBehaviour
 				// distance meters behind the target
 				transform.position = target.position;
 
-                if( currentDistance > 0 )
-                {
+				if( currentDistance > 0 )
+				{
 					// Damp the rotation around the y-axis
 					currentRotationAngle = Mathf.LerpAngle (currentRotationAngle, wantedRotationAngle, rotationDamping * Time.deltaTime);
 			
 					// Convert the angle into a rotation
 					Quaternion currentRotation = Quaternion.Euler (0f, currentRotationAngle, 0f);
 
-	                // rotate vector from target by angle
+					// rotate vector from target by angle
 					transform.position -= currentRotation * Vector3.forward * currentDistance;
 				}
 
@@ -140,7 +140,7 @@ public class FollowPlayerScript : MonoBehaviour
 	
 		// returns a new camera position
 		Vector3 HandleCollisionZoom(Vector3 camPos, Vector3 targetPos, 
-		                            float minOffsetDist, ref Ray[] frustumRays) {
+									float minOffsetDist, ref Ray[] frustumRays) {
 			float offsetDist = Vector3.Magnitude(targetPos - camPos); 
 			float raycastLength = offsetDist - minOffsetDist;
 			RaycastHit hit;
