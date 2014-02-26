@@ -34,15 +34,15 @@ public class FaceState : MonoBehaviour {
 		if (!meshRenderer) return;
 
 		// Manual face change for testing (or for the lulz?)
-		if (Input.GetKeyDown (KeyCode.F)) {
+		if (Input.GetKeyDown (KeyCode.W)) {
 			happyTargetVal = 100;
-		} else if (Input.GetKeyUp (KeyCode.F)) {
+		} else if (Input.GetKeyUp (KeyCode.W)) {
 			happyTargetVal = 0;
 		}
 
-		if (Input.GetKeyDown (KeyCode.G)) {
+		if (Input.GetKeyDown (KeyCode.S)) {
 			angryTargetVal = 100;
-		} else if (Input.GetKeyUp (KeyCode.G)) {
+		} else if (Input.GetKeyUp (KeyCode.S)) {
 			angryTargetVal = 0;
 		}
 
@@ -60,16 +60,18 @@ public class FaceState : MonoBehaviour {
 	{
 		switch (expression) {
 		case "Happy":
-			if (happyIndex > -1) {
-				happyTargetVal = 100;
-				angryTargetVal = 0;
-			}
+			if (happyIndex > -1) happyTargetVal = 100;
+			if (angryIndex > -1) angryTargetVal = 0;
 			break;
 		case "Angry":
-			if(angryIndex > -1) {
-				happyTargetVal = 0;
-				angryTargetVal = 100;
-			}
+			if (happyIndex > -1) happyTargetVal = 0;
+			if (angryIndex > -1) angryTargetVal = 100;
+			break;
+			break;
+		case "Neutral":
+			if (happyIndex > -1) happyTargetVal = 0;
+			if (angryIndex > -1) angryTargetVal = 0;
+			break;
 			break;
 		}
 	}
