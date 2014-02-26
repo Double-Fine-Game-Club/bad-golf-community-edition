@@ -24,7 +24,6 @@ public class controlServer : MonoBehaviour {
 		}
 		if (!myInfo.playerIsPaused && Input.GetKeyDown (KeyCode.Space)) {
 			myInfo.currentMode=0;
-			myInfo.cartGameObject.camera.enabled = true;
 		}
 		if (!myInfo.playerIsPaused && Input.GetKeyDown(KeyCode.E)) {
 			// if in buggy
