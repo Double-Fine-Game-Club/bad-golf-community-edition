@@ -1148,6 +1148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96468c245ae8e0d4f8f1c7a7b8b0542e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSingleView: 1
 --- !u!54 &388057051
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1749,6 +1750,7 @@ MonoBehaviour:
   messageTarget: {fileID: 0}
   messageName: onResume
   clickAudio: {fileID: 0}
+  messageValue: 
 --- !u!65 &474499757
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1869,8 +1871,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 1491978673}
-  hitMultiplier: 10
   cart: {fileID: 388057044}
+  hitMultiplier: 10
 --- !u!54 &489195833
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1959,6 +1961,7 @@ MonoBehaviour:
   m_markerPrefab: {fileID: 100000, guid: 106aba1f0ace6184ab747ea60caff5f2, type: 2}
   m_meterRadius: 1
   m_meterPoints: 100
+  m_swingScript: {fileID: 489195832}
 --- !u!1 &494588119
 GameObject:
   m_ObjectHideFlags: 0
@@ -3227,6 +3230,7 @@ MonoBehaviour:
   messageTarget: {fileID: 0}
   messageName: onExit
   clickAudio: {fileID: 0}
+  messageValue: 
 --- !u!65 &1409273880
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4180,6 +4184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96468c245ae8e0d4f8f1c7a7b8b0542e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSingleView: 1
 --- !u!114 &1741447829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6711,6 +6716,10 @@ Prefab:
       propertyPath: height
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 11400038, guid: fcef4560af670864ba96f4861e9a1e9f, type: 2}
+      propertyPath: m_swingScript
+      value: 
+      objectReference: {fileID: 489195832}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fcef4560af670864ba96f4861e9a1e9f, type: 2}
   m_RootGameObject: {fileID: 1375897703}
