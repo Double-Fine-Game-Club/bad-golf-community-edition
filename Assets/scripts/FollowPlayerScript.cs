@@ -26,9 +26,22 @@ public class FollowPlayerScript : MonoBehaviour
 	    // lean camera toward zenth if sphere collides with geometry
 		public bool camLean = true;
 		public float camCollideRadius = 2.0f;
+        
+        public bool mouseRotate = true;
+
+        public enum MButtons {Left = 0, Middle = 2, Right = 1}
+
+        public MButtons mouseButton;
+        
+        public float rotationMultiplier = 300.0f;
+
+        public float rotationWaitTime = 1.0f;
 
 	    // current distance on the x-z plane of the camera from the target
 		private float currentDistance = 0f;
+        
+        // Last time the camera was rotated by mouse
+        private float lastCamRotation = -10f;
 	
 		// Use this for initialization
 		void Start () {
@@ -41,19 +54,30 @@ public class FollowPlayerScript : MonoBehaviour
 		}
 
 		void LateUpdate (){
+
 				// Early out if we don't have a target
 				if (!target) {
 						return;
 				}
+                
+                if (mouseRotate && Input.GetMouseButton( (int)mouseButton )) {
 
-				// Calculate the current rotation angles
-				float wantedRotationAngle = target.eulerAngles.y;
+                    // Update last cam rotation to stop auto-centering of camera
+                    lastCamRotation = Time.time;
+
+                    // Rotate around target based on mouse movement times the multiplier
+                    transform.RotateAround(target.position, Vector3.up, Input.GetAxis("Mouse X") * rotationMultiplier * Time.deltaTime);
+                    transform.RotateAround(target.position, Vector3.left, Input.GetAxis("Mouse Y") * rotationMultiplier * Time.deltaTime);
+                }
+
+				// Calculate the current rotation angles (If cam was rotated by mouse within waitTime, keep position)
+                float wantedRotationAngle = (Time.time > lastCamRotation + rotationWaitTime) ? target.eulerAngles.y : transform.eulerAngles.y;
 				float wantedHeight = target.position.y + height;
 		
 				float currentRotationAngle = transform.eulerAngles.y;
 				float currentHeight = transform.position.y;
 
-		        if( camLean ) {
+                if ( camLean ) {
 		        	
 			        // calculate the squared length of the vector from the camera to the target
 					float wantedCamDistanceSquared = (wantedHeight-cameraTilt);
@@ -111,6 +135,7 @@ public class FollowPlayerScript : MonoBehaviour
 		
 					transform.position = HandleCollisionZoom(transform.position, lookAtPt, minDistance, ref frustumRays);
 				}
+
 		}
 	
 		// returns a new camera position
