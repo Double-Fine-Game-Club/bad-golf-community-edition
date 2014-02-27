@@ -73,8 +73,11 @@ public class GameControl : MonoBehaviour
 
 	public void onMultiClicked()
 	{
-		hideAllScreens();
-		ed_onlineLobbyScreen.SetActive(true);
+		hideAllScreens ();
+		Application.LoadLevelAdditive ( "level_full_multi" );
+		networkLevelLoad netLoad = gameObject.AddComponent (typeof(networkLevelLoad)) as networkLevelLoad;
+		netLoad.StartLoad(true);
+		//ed_onlineLobbyScreen.SetActive(true);
 	}
 
 	public void onStartClicked( string name)

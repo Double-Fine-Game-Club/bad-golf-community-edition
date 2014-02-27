@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -10,7 +10,7 @@ public class networkManagerClient : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		// spawn in a cart
-		networkView.RPC("GiveMeACart", RPCMode.Server, "buggy_m", "ball", "lil_patrick");
+		networkView.RPC("GiveMeACart", RPCMode.Server, "buggy_m", "golf_ball", "lil_patrick");
 	}
 	
 	// CLIENT SIDE SCRIPTS GO HERE
@@ -124,22 +124,37 @@ public class networkManagerClient : MonoBehaviour {
 		newGuy.characterGameObject = NetworkView.Find(characterViewID).gameObject;
 		newGuy.ballViewID = ballViewID;
 		newGuy.ballGameObject = NetworkView.Find(ballViewID).gameObject;
+		InControlSwingMode ballSwing = newGuy.ballGameObject.GetComponent (typeof(InControlSwingMode)) as InControlSwingMode;
+		ballSwing.cart = newGuy.cartGameObject;
+		TransferToSwing transfSwing = newGuy.cartGameObject.GetComponent (typeof(TransferToSwing)) as TransferToSwing;
+		transfSwing.ball = newGuy.ballGameObject;
 		newGuy.currentMode = mode;
 		newGuy.player = p;
 
-		// ADD MORE SHIT HERE
+
+		// ADD MORE STUFF HERE
 		if (newGuy.currentMode==0){
 			// set them inside the buggy
 			newGuy.characterGameObject.transform.parent = newGuy.cartGameObject.transform;
 			newGuy.characterGameObject.transform.localPosition = new Vector3(0,0,0);
 			newGuy.characterGameObject.transform.localRotation = Quaternion.identity;
+			myInfo.cartGameObject.rigidbody.velocity = Vector3.zero;
+			myInfo.ballGameObject.SendMessage ("turnOnScripts");
+			myInfo.cartGameObject.SendMessage("turnOffScripts");
+			CarUserControl carCtrl = myInfo.cartGameObject.GetComponent(typeof(CarUserControl)) as CarUserControl;
+			carCtrl.enabled = true;
 		} else if (newGuy.currentMode==1) {
-			// set them inside the buggy
+			// set them outside the buggy
 			newGuy.characterGameObject.transform.parent = newGuy.ballGameObject.transform;
 			newGuy.characterGameObject.transform.localPosition = new Vector3(0,0,-2);
 			newGuy.characterGameObject.transform.localRotation = Quaternion.identity;
+			myInfo.ballGameObject.SendMessage("turnOffScripts");
+			myInfo.cartGameObject.SendMessage("turnOnScripts");
+			CarUserControl carCtrl = myInfo.cartGameObject.GetComponent(typeof(CarUserControl)) as CarUserControl;
+			carCtrl.enabled = false;
 		}
-		
+
+
 		// and let us have them aswell
 		networkVariables nvs = GetComponent("networkVariables") as networkVariables;
 		nvs.players.Add(newGuy);

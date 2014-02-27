@@ -24,9 +24,10 @@ public class networkManagerServer : MonoBehaviour {
 		
 		// create server owners buggy
 		// This line will get changed at some point - no need to have the camera and the marker in the prefab - they should be in their own scripts
+		// IM FIXING IT NOW
 		GameObject cartGameObject = (Instantiate(Resources.Load("buggy_m"), new Vector3(0,5,0), Quaternion.identity) as GameObject);
 		// ****************************
-		GameObject ballGameObject = Instantiate(Resources.Load("ball"), new Vector3(3,5,0), Quaternion.identity) as GameObject;
+		GameObject ballGameObject = Instantiate(Resources.Load("golf_ball"), new Vector3(-18,6,110), Quaternion.identity) as GameObject;
 		GameObject characterGameObject = Instantiate(Resources.Load("lil_patrick"), new Vector3(0,4,0), Quaternion.identity) as GameObject;
 		// set buggy as characters parent
 		characterGameObject.transform.parent = cartGameObject.transform;
@@ -53,8 +54,12 @@ public class networkManagerServer : MonoBehaviour {
 		nvs.myInfo.cartViewIDTransform = cartViewIDTransform;
 		nvs.myInfo.cartViewIDRigidbody = cartViewIDRigidbody;
 		nvs.myInfo.ballGameObject = ballGameObject;
-		nvs.myInfo.ballModel = "ball";
+		nvs.myInfo.ballModel = "golf_ball";
 		nvs.myInfo.ballViewID = ballViewID;
+		InControlSwingMode ballSwing = nvs.myInfo.ballGameObject.GetComponent (typeof(InControlSwingMode)) as InControlSwingMode;
+		ballSwing.cart = nvs.myInfo.cartGameObject;
+		TransferToSwing transfSwing = nvs.myInfo.cartGameObject.GetComponent (typeof(TransferToSwing)) as TransferToSwing;
+		transfSwing.ball = nvs.myInfo.ballGameObject;
 		nvs.myInfo.characterGameObject = characterGameObject;
 		nvs.myInfo.characterModel = "lil_patrick";
 		nvs.myInfo.characterViewID = characterViewID;
@@ -164,7 +169,7 @@ public class networkManagerServer : MonoBehaviour {
 	[RPC]
 	void GiveMeACart(string cartModel, string ballModel, string characterModel, NetworkMessageInfo info) {
 		// create new buggy for the new guy - his must be done on the server otherwise collisions wont work!
-		Vector3 spawnLocation = new Vector3(0,5,0);
+		Vector3 spawnLocation = new Vector3(0,0,0);
 		Vector3 velocity = new Vector3(0,0,0);
 
 		// instantiate the prefabs
@@ -189,7 +194,6 @@ public class networkManagerServer : MonoBehaviour {
 		ballGameObject.networkView.viewID = ballViewID;
 		NetworkViewID characterViewID = Network.AllocateViewID();
 		characterGameObject.networkView.viewID = characterViewID;
-
 		// tell everyone else about it
 		networkView.RPC("SpawnPrefab", RPCMode.Others, cartViewIDTransform, spawnLocation, velocity, cartModel);
 		networkView.RPC("SpawnPrefab", RPCMode.Others, ballViewID, spawnLocation, velocity, ballModel);
@@ -210,6 +214,10 @@ public class networkManagerServer : MonoBehaviour {
 		newGuy.ballModel = ballModel;
 		newGuy.ballGameObject = ballGameObject;
 		newGuy.ballViewID = ballViewID;
+		InControlSwingMode ballSwing = newGuy.ballGameObject.GetComponent (typeof(InControlSwingMode)) as InControlSwingMode;
+		ballSwing.cart = newGuy.cartGameObject;
+		TransferToSwing transfSwing = newGuy.cartGameObject.GetComponent (typeof(TransferToSwing)) as TransferToSwing;
+		transfSwing.ball = newGuy.ballGameObject;
 		newGuy.characterModel = characterModel;
 		newGuy.characterGameObject = characterGameObject;
 		newGuy.characterViewID = characterViewID;

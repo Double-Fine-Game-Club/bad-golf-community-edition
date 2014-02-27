@@ -33,6 +33,9 @@ public class networkManager : MonoBehaviour {
 		} else {
 			if (GUILayout.Button ("Host a server"))
 			{
+				//disable menu level preview
+				GameControl gCtrl = GameObject.Find("main").GetComponent(typeof(GameControl)) as GameControl;
+				gCtrl.ed_levelPreviewScreen.SetActive(false);
 				// set name
 				(GetComponent("networkVariables") as networkVariables).myInfo.name = nameBuffer;
 				// add the server script to us
@@ -88,6 +91,9 @@ public class networkManager : MonoBehaviour {
 	}
 
 	void OnConnectedToServer() {
+		//disable menu level preview
+		GameControl gCtrl = GameObject.Find("main").GetComponent(typeof(GameControl)) as GameControl;
+		gCtrl.ed_levelPreviewScreen.SetActive(false);
 		// set name
 		(GetComponent("networkVariables") as networkVariables).myInfo.name = nameBuffer;
 		// add the client script to us
