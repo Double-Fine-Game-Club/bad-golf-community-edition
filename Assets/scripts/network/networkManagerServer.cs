@@ -8,6 +8,13 @@ public class networkManagerServer : MonoBehaviour {
 	PlayerInfo myInfo;
 	string serverVersion;
 
+	/****************************************************
+	 * 
+	 * DONT EDIT THIS SCRIPT UNLESS ITS TO ADD ANYTHING
+	 * IN THE "ANY SERVER SIDE SCRIPTS GO HERE" SECTION
+	 * 
+	 ****************************************************/
+
 	// Use this for initialization
 	void Start () {
 		// setup reference to networkVariables
@@ -27,7 +34,7 @@ public class networkManagerServer : MonoBehaviour {
 		// IM FIXING IT NOW
 		GameObject cartGameObject = (Instantiate(Resources.Load("buggy_m"), new Vector3(0,5,0), Quaternion.identity) as GameObject);
 		// ****************************
-		GameObject ballGameObject = Instantiate(Resources.Load("golf_ball"), new Vector3(-18,6,110), Quaternion.identity) as GameObject;
+		GameObject ballGameObject = Instantiate(Resources.Load("golf_ball_m"), new Vector3(3,6,0), Quaternion.identity) as GameObject;
 		GameObject characterGameObject = Instantiate(Resources.Load("lil_patrick"), new Vector3(0,4,0), Quaternion.identity) as GameObject;
 		// set buggy as characters parent
 		characterGameObject.transform.parent = cartGameObject.transform;
@@ -54,12 +61,8 @@ public class networkManagerServer : MonoBehaviour {
 		nvs.myInfo.cartViewIDTransform = cartViewIDTransform;
 		nvs.myInfo.cartViewIDRigidbody = cartViewIDRigidbody;
 		nvs.myInfo.ballGameObject = ballGameObject;
-		nvs.myInfo.ballModel = "golf_ball";
+		nvs.myInfo.ballModel = "golf_ball_m";
 		nvs.myInfo.ballViewID = ballViewID;
-		InControlSwingMode ballSwing = nvs.myInfo.ballGameObject.GetComponent (typeof(InControlSwingMode)) as InControlSwingMode;
-		ballSwing.cart = nvs.myInfo.cartGameObject;
-		TransferToSwing transfSwing = nvs.myInfo.cartGameObject.GetComponent (typeof(TransferToSwing)) as TransferToSwing;
-		transfSwing.ball = nvs.myInfo.ballGameObject;
 		nvs.myInfo.characterGameObject = characterGameObject;
 		nvs.myInfo.characterModel = "lil_patrick";
 		nvs.myInfo.characterViewID = characterViewID;
@@ -79,14 +82,20 @@ public class networkManagerServer : MonoBehaviour {
 		//********************************************
 		// receives all players inputs and handles fiziks
 		gameObject.AddComponent("controlServer");
+
 		// chat
 		gameObject.AddComponent("netChat");
+
 		//pause
 		gameObject.AddComponent ("netPause");
+
 		// set the camera in the audio script on the buggy - PUT THIS IN A SCRIPT SOMEONE
 		CarAudio mca = myInfo.cartGameObject.GetComponent("CarAudio") as CarAudio;
 		mca.followCamera = nvs.myCam;	// replace tmpCam with our one - this messes up sound atm
 		(nvs.myCam.gameObject.AddComponent("SmoothFollow") as SmoothFollow).target = myInfo.cartGameObject.transform;	// add smooth follow script
+
+		// add the swing script
+		gameObject.AddComponent("netSwing");
 		//********************************************
 	}
 
@@ -214,10 +223,6 @@ public class networkManagerServer : MonoBehaviour {
 		newGuy.ballModel = ballModel;
 		newGuy.ballGameObject = ballGameObject;
 		newGuy.ballViewID = ballViewID;
-		InControlSwingMode ballSwing = newGuy.ballGameObject.GetComponent (typeof(InControlSwingMode)) as InControlSwingMode;
-		ballSwing.cart = newGuy.cartGameObject;
-		TransferToSwing transfSwing = newGuy.cartGameObject.GetComponent (typeof(TransferToSwing)) as TransferToSwing;
-		transfSwing.ball = newGuy.ballGameObject;
 		newGuy.characterModel = characterModel;
 		newGuy.characterGameObject = characterGameObject;
 		newGuy.characterViewID = characterViewID;

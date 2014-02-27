@@ -29,7 +29,7 @@ public class controlServer : MonoBehaviour {
 			myInfo.currentMode=0;
 		}
 			// (G)et out of buggy (or get in)
-			if (Input.GetKeyDown(KeyCode.E)) {
+			if (Input.GetKeyDown(KeyCode.E) && false) {	// IGNORE
 				// if in buggy
 				if (myInfo.currentMode==0) {
 					myInfo.currentMode = 1;
@@ -44,7 +44,7 @@ public class controlServer : MonoBehaviour {
 					
 				myInfo.cartGameObject.rigidbody.velocity = Vector3.zero;
 				myInfo.ballGameObject.SendMessage ("turnOnScripts");
-				myInfo.cartGameObject.SendMessage("turnOffScripts");
+				//myInfo.cartGameObject.SendMessage("turnOffScripts");
 				CarUserControl carCtrl = myInfo.cartGameObject.GetComponent(typeof(CarUserControl)) as CarUserControl;
 				carCtrl.enabled = false;
 				

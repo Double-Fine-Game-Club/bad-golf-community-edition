@@ -10,6 +10,12 @@ public class networkManager : MonoBehaviour {
 	// random names
 	//string[] randomNames = new string[3] {"Leslie", "Test", "REPLACE ME"};
 	
+	/****************************************************
+	 * 
+	 * DONT EDIT THIS SCRIPT
+	 * 
+	 ****************************************************/
+	
 	// Use this for initialization
 	void Start () {
 		// change to custom master server
@@ -33,9 +39,12 @@ public class networkManager : MonoBehaviour {
 		} else {
 			if (GUILayout.Button ("Host a server"))
 			{
-				//disable menu level preview
-				GameControl gCtrl = GameObject.Find("main").GetComponent(typeof(GameControl)) as GameControl;
-				gCtrl.ed_levelPreviewScreen.SetActive(false);
+				//disable menu level preview - "main" doesn't exist if debugin
+				if(GameObject.Find("main"))
+				{
+					GameControl gCtrl = GameObject.Find("main").GetComponent(typeof(GameControl)) as GameControl;
+					gCtrl.ed_levelPreviewScreen.SetActive(false);
+				}
 				// set name
 				(GetComponent("networkVariables") as networkVariables).myInfo.name = nameBuffer;
 				// add the server script to us

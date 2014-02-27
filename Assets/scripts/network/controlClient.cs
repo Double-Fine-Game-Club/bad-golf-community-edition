@@ -48,6 +48,8 @@ public class controlClient : MonoBehaviour {
 					myInfo.characterGameObject.transform.rotation = Quaternion.identity;
 					// lock golf ball
 					myInfo.ballGameObject.rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+					//*/ change animation
+					myInfo.characterGameObject.transform.FindChild("lil_patrick").animation.Play("golfIdle",PlayMode.StopAll);
 					//*/ move camera - HACKY
 					GameObject buggyCam = nvs.myCam.gameObject;
 					buggyCam.transform.parent = myInfo.ballGameObject.transform;
@@ -59,8 +61,6 @@ public class controlClient : MonoBehaviour {
 					bco.Axis = Vector3.up;
 					bco.Point = myInfo.ballGameObject.transform.position;
 					bco.Speed = 0.8f;
-					//*/ change animation
-					myInfo.characterGameObject.transform.FindChild("lil_patrick").animation.Play("golfIdle",PlayMode.StopAll);
 					
 					// if at ball
 				} else if (myInfo.currentMode==1) {
@@ -71,14 +71,14 @@ public class controlClient : MonoBehaviour {
 					myInfo.characterGameObject.transform.rotation = myInfo.cartGameObject.transform.rotation;
 					// unlock golf ball
 					myInfo.ballGameObject.rigidbody.constraints = RigidbodyConstraints.None;
+					//*/ change animation
+					myInfo.characterGameObject.transform.FindChild("lil_patrick").animation.Play("driveIdle",PlayMode.StopAll);
 					//*/ move camera - HACKY
 					GameObject buggyCam = nvs.myCam.gameObject;
 					buggyCam.transform.parent = myInfo.cartGameObject.transform;
 					(buggyCam.GetComponent("SmoothFollow") as SmoothFollow).enabled = true;
 					Orbit bco = buggyCam.GetComponent("Orbit") as Orbit;
 					Component.Destroy(bco);
-					//*/ change animation
-					myInfo.characterGameObject.transform.FindChild("lil_patrick").animation.Play("driveIdle",PlayMode.StopAll);
 				}
 				networkView.RPC("PlayerSwap", RPCMode.Others, myInfo.currentMode, myInfo.player);
 			}

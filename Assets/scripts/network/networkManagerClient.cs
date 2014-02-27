@@ -6,6 +6,13 @@ public class networkManagerClient : MonoBehaviour {
 	Dictionary<float,string> screenMessages = new Dictionary<float,string>();
 	PlayerInfo myInfo;
 	bool connected = false;
+	
+	/****************************************************
+	 * 
+	 * DONT EDIT THIS SCRIPT UNLESS ITS TO ADD ANYTHING
+	 * IN THE "ANY CLIENT SIDE SCRIPTS GO HERE" SECTION
+	 * 
+	 ****************************************************/
 
 	// Use this for initialization
 	void Start () {
@@ -18,15 +25,22 @@ public class networkManagerClient : MonoBehaviour {
 	void AddScripts() {
 		// updates network-sunk fiziks
 		gameObject.AddComponent("controlClient");
+
 		// chat
 		gameObject.AddComponent("netChat");
+
 		//pause
 		gameObject.AddComponent ("netPause");
+
 		// set the camera in the audio script on the buggy - PUT THIS IN A SCRIPT SOMEONE
 		networkVariables nvs = GetComponent("networkVariables") as networkVariables;
 		CarAudio mca = myInfo.cartGameObject.GetComponent("CarAudio") as CarAudio;
 		mca.followCamera = nvs.myCam;	// replace tmpCam with our one - this messes up sound atm
 		(nvs.myCam.gameObject.AddComponent("SmoothFollow") as SmoothFollow).target = myInfo.cartGameObject.transform;	// add smooth follow script
+		
+		// add the swing script
+		gameObject.AddComponent("netSwing");
+
 		// get self
 		myInfo.player = Network.player;
 		// get server
@@ -124,10 +138,6 @@ public class networkManagerClient : MonoBehaviour {
 		newGuy.characterGameObject = NetworkView.Find(characterViewID).gameObject;
 		newGuy.ballViewID = ballViewID;
 		newGuy.ballGameObject = NetworkView.Find(ballViewID).gameObject;
-		InControlSwingMode ballSwing = newGuy.ballGameObject.GetComponent (typeof(InControlSwingMode)) as InControlSwingMode;
-		ballSwing.cart = newGuy.cartGameObject;
-		TransferToSwing transfSwing = newGuy.cartGameObject.GetComponent (typeof(TransferToSwing)) as TransferToSwing;
-		transfSwing.ball = newGuy.ballGameObject;
 		newGuy.currentMode = mode;
 		newGuy.player = p;
 
