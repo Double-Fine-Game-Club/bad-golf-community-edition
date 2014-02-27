@@ -7,7 +7,7 @@ public class netPause : MonoBehaviour {
 
 	PlayerInfo myInfo;
 
-	private string nameOfLevel;
+	private string nameOfLevel;	// needed?
 
 	// Use this for initialization
 	void Start () {

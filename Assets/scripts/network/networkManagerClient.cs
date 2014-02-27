@@ -10,7 +10,7 @@ public class networkManagerClient : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		// spawn in a cart
-		networkView.RPC("GiveMeACart", RPCMode.Server, "multi_buggy", "ball", "lil_patrick");
+		networkView.RPC("GiveMeACart", RPCMode.Server, "buggy_m", "ball", "lil_patrick");
 	}
 	
 	// CLIENT SIDE SCRIPTS GO HERE
@@ -22,6 +22,11 @@ public class networkManagerClient : MonoBehaviour {
 		gameObject.AddComponent("netChat");
 		//pause
 		gameObject.AddComponent ("netPause");
+		// set the camera in the audio script on the buggy - PUT THIS IN A SCRIPT SOMEONE
+		networkVariables nvs = GetComponent("networkVariables") as networkVariables;
+		CarAudio mca = myInfo.cartGameObject.GetComponent("CarAudio") as CarAudio;
+		mca.followCamera = nvs.myCam;	// replace tmpCam with our one - this messes up sound atm
+		(nvs.myCam.gameObject.AddComponent("SmoothFollow") as SmoothFollow).target = myInfo.cartGameObject.transform;	// add smooth follow script
 		// get self
 		myInfo.player = Network.player;
 		// get server
@@ -29,7 +34,8 @@ public class networkManagerClient : MonoBehaviour {
 		// show that we connected
 		connected = true;
 	}
-	
+
+	// debug shit
 	void OnGUI() {
 		if (!connected) return;
 		// ping list
@@ -70,7 +76,7 @@ public class networkManagerClient : MonoBehaviour {
 	[RPC]
 	void PrintText(string text) {
 		Debug.Log(text);
-		screenMessages.Add(Time.time+5,text);
+		screenMessages.Add(Time.time+5,"[DEBUG] "+text);
 	}
 	
 	// spawns a prefab
@@ -82,9 +88,8 @@ public class networkManagerClient : MonoBehaviour {
 		// set viewID
 		clone.networkView.viewID = viewID;
 
-		// set velocity if we can
-		//if (clone.rigidbody)
-		//	clone.rigidbody.velocity = velocity;
+		// set velocity if we can - why was this commented?
+		if (clone.rigidbody) clone.rigidbody.velocity = velocity;
 	}
 	
 	// tells the player that this viewID is theirs
@@ -108,11 +113,10 @@ public class networkManagerClient : MonoBehaviour {
 		PlayerInfo newGuy = new PlayerInfo();
 
 		newGuy.cartViewIDTransform = cartViewIDTransform;
-		newGuy.cartContainerObject = NetworkView.Find(cartViewIDTransform).gameObject;
+		newGuy.cartGameObject = NetworkView.Find(cartViewIDTransform).gameObject;
 		newGuy.cartViewIDRigidbody = cartViewIDRigidbody;
 		// add another NetworkView for the rigidbody
-		newGuy.cartGameObject = newGuy.cartContainerObject.transform.FindChild ("buggy").gameObject;
-		NetworkView cgr = newGuy.cartGameObject.AddComponent("NetworkView") as NetworkView;
+		NetworkView cgr = newGuy.cartGameObject.AddComponent("NetworkView") as NetworkView;		// add rigidbody tracking
 		cgr.observed = newGuy.cartGameObject.rigidbody;
 		cgr.viewID = cartViewIDRigidbody;
 		cgr.stateSynchronization = NetworkStateSynchronization.Unreliable;

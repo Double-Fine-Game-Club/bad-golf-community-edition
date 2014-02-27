@@ -53,15 +53,16 @@ namespace InControl
 
 			isSetup = true;
 
-			if (enableXInput)
-			{
-				if (Application.platform == RuntimePlatform.WindowsPlayer ||
-					Application.platform == RuntimePlatform.WindowsEditor)
-				{
-					HideDevicesWithProfile( typeof( Xbox360WinProfile ) );
-					InputManager.AddDeviceManager( new XInputDeviceManager() );
-				}
-			}
+			// bad-golf-community-edition: update to allow debugging
+//			if (enableXInput)
+//			{
+//				if (Application.platform == RuntimePlatform.WindowsPlayer ||
+//					Application.platform == RuntimePlatform.WindowsEditor)
+//				{
+//					HideDevicesWithProfile( typeof( Xbox360WinProfile ) );
+//					InputManager.AddDeviceManager( new XInputDeviceManager() );
+//				}
+//			}
 
 			AddDeviceManager( new UnityInputDeviceManager() );
 		}
@@ -249,11 +250,13 @@ namespace InControl
 			get { return enableXInput; }
 			set
 			{
-				if (isSetup)
-				{
-					throw new Exception( "InputManager.EnableXInput must be set before calling InputManager.Setup()." );
-				}
-				enableXInput = value;
+				// bad-golf-community-edition: update to allow debugging
+				throw new NotImplementedException("XInput has been disabled from this build due to technical difficulties.");
+//				if (isSetup)
+//				{
+//					throw new Exception( "InputManager.EnableXInput must be set before calling InputManager.Setup()." );
+//				}
+//				enableXInput = value;
 			}
 		}
 	}

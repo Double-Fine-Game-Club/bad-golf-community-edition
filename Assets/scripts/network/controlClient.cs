@@ -3,7 +3,6 @@ using System.Collections;
 
 public class controlClient : MonoBehaviour {
 	float timer = 0;
-	float forceMultiplyer = 10000;
 	PlayerInfo myInfo;
 	networkVariables nvs;
 	netPause pause;
@@ -13,62 +12,100 @@ public class controlClient : MonoBehaviour {
 		nvs = GetComponent("networkVariables") as networkVariables;
 		myInfo = nvs.myInfo;
 		pause = GetComponent ("netPause") as netPause;
-		GameObject.Find ("lobby_view").transform.FindChild ("camera").gameObject.SetActive (false);
-		myInfo.cartContainerObject.transform.FindChild ("multi_buggy_cam").gameObject.SetActive (true);
+		// change camera
+//		GameObject.Find ("lobby_view").transform.FindChild ("camera").gameObject.SetActive (false);
+//		myInfo.cartContainerObject.transform.FindChild ("multi_buggy_cam").gameObject.SetActive (true);
 
 	}
 
 	void Update () {
-		// if in buggy
-		if (!myInfo.playerIsPaused && myInfo.currentMode==0) {
+		// only do key presses if it's not paused
+		if (!myInfo.playerIsPaused) {
+			// if in buggy
+			if (myInfo.currentMode==0) {
+				// send packets about keyboard every 0.015s
+				timer += Time.deltaTime;
+				if (timer > 0.015) {
+					timer = 0;
+					float h = Input.GetAxis("Horizontal");
+					float v = Input.GetAxis("Vertical");
+					networkView.RPC("KartMovement", RPCMode.Server, h,v);
+				}
+				// HONK
+				if (Input.GetKeyDown(KeyCode.Q)) {
+					networkView.RPC("IHonked", RPCMode.All, myInfo.player);
+				}
+			}
+			// (G)et out of buggy (or get in)
+			if (Input.GetKeyDown(KeyCode.G)) {
+				// if in buggy
+				if (myInfo.currentMode==0) {
+					myInfo.currentMode = 1;
+					// set them at golf ball
+					myInfo.characterGameObject.transform.parent = myInfo.ballGameObject.transform;
+					myInfo.ballGameObject.transform.rotation = Quaternion.identity;		// reset rotation to make it nice
+					myInfo.characterGameObject.transform.localPosition = new Vector3(0,0,-2);
+					myInfo.characterGameObject.transform.rotation = Quaternion.identity;
+					// lock golf ball
+					myInfo.ballGameObject.rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+					//*/ move camera - HACKY
+					GameObject buggyCam = nvs.myCam.gameObject;
+					buggyCam.transform.parent = myInfo.ballGameObject.transform;
+					buggyCam.transform.rotation = Quaternion.identity;
+					buggyCam.transform.localPosition = new Vector3(-6,4,0);
+					buggyCam.transform.localRotation = Quaternion.LookRotation(myInfo.ballGameObject.transform.position - buggyCam.transform.localPosition);
+					(buggyCam.GetComponent("SmoothFollow") as SmoothFollow).enabled = false;
+					Orbit bco = buggyCam.AddComponent("Orbit") as Orbit;
+					bco.Axis = Vector3.up;
+					bco.Point = myInfo.ballGameObject.transform.position;
+					bco.Speed = 0.8f;
+					//*/ change animation
+					myInfo.characterGameObject.transform.FindChild("lil_patrick").animation.Play("golfIdle",PlayMode.StopAll);
+					
+					// if at ball
+				} else if (myInfo.currentMode==1) {
+					myInfo.currentMode = 0;
+					// set them in buggy
+					myInfo.characterGameObject.transform.parent = myInfo.cartGameObject.transform;
+					myInfo.characterGameObject.transform.localPosition = new Vector3(0,0,0);
+					myInfo.characterGameObject.transform.rotation = myInfo.cartGameObject.transform.rotation;
+					// unlock golf ball
+					myInfo.ballGameObject.rigidbody.constraints = RigidbodyConstraints.None;
+					//*/ move camera - HACKY
+					GameObject buggyCam = nvs.myCam.gameObject;
+					buggyCam.transform.parent = myInfo.cartGameObject.transform;
+					(buggyCam.GetComponent("SmoothFollow") as SmoothFollow).enabled = true;
+					Orbit bco = buggyCam.GetComponent("Orbit") as Orbit;
+					Component.Destroy(bco);
+					//*/ change animation
+					myInfo.characterGameObject.transform.FindChild("lil_patrick").animation.Play("driveIdle",PlayMode.StopAll);
+				}
+				networkView.RPC("PlayerSwap", RPCMode.Others, myInfo.currentMode, myInfo.player);
+			}
+		} else {
 			// send packets about keyboard every 0.015s
 			timer += Time.deltaTime;
 			if (timer > 0.015) {
-				timer = 0;
-				float h = Input.GetAxis("Horizontal");
-				float v = Input.GetAxis("Vertical");
-				networkView.RPC("KartMovement", RPCMode.Server, h,v);
-			}
-			if (Input.GetKeyDown(KeyCode.Q)) {
-				networkView.RPC("IHonked", RPCMode.All, myInfo.player);
+				// send a no-keys-pressed message
+				networkView.RPC("KartMovement", RPCMode.Server, 0f, 0f);
 			}
 		}
-		if (!myInfo.playerIsPaused && Input.GetKeyDown(KeyCode.G)) {
-			// if in buggy
-			if (myInfo.currentMode==0) {
-				myInfo.currentMode = 1;
-				// set them at golf ball
-				myInfo.characterGameObject.transform.parent = myInfo.ballGameObject.transform;
-				myInfo.ballGameObject.transform.rotation = Quaternion.identity;		// reset rotation to make it nice
-				myInfo.characterGameObject.transform.localPosition = new Vector3(0,0,-2);
-				myInfo.characterGameObject.transform.rotation = Quaternion.identity;
-				// lock golf ball
-				myInfo.ballGameObject.rigidbody.constraints = RigidbodyConstraints.FreezeAll;
-				
-				// if at ball
-			} else if (myInfo.currentMode==1) {
-				myInfo.currentMode = 0;
-				// set them in buggy
-				myInfo.characterGameObject.transform.parent = myInfo.cartGameObject.transform;
-				myInfo.characterGameObject.transform.localPosition = new Vector3(0,0,0);
-				myInfo.characterGameObject.transform.rotation = myInfo.cartGameObject.transform.rotation;
-				// unlock golf ball
-				myInfo.ballGameObject.rigidbody.constraints = RigidbodyConstraints.None;
+		
+		// pause menu toggler
+		if(Input.GetKeyDown(KeyCode.Escape)) {
+			if(myInfo.playerIsPaused){				// if paused resume
+				pause.SendMessage("onResume");
+			}else if(!myInfo.playerIsBusy){			// if not busy then pause
+				pause.SendMessage("onPause");
 			}
-			networkView.RPC("PlayerSwap", RPCMode.Others, myInfo.currentMode, myInfo.player);
 		}
-		if(!myInfo.playerIsBusy && !myInfo.playerIsPaused && Input.GetKey(KeyCode.Escape)){
-			pause.SendMessage("onPause");
-		}else if(myInfo.playerIsPaused && Input.GetKey(KeyCode.Return)){
-			pause.SendMessage("onResume");
-		}
-
 	}
 
 	// local interpolation - add all other interpolation here aswell
 	void FixedUpdate() {
 		// if in buggy
 		if (myInfo.currentMode==0) {
+			// maybe not the best idea to call GetComponent every time - add it to PlayerInfo at some point so it can do a direct reference
 			CarController car = myInfo.cartGameObject.transform.GetComponent("CarController") as CarController;
 			car.Move(myInfo.h,myInfo.v);
 		} else if (myInfo.currentMode==1) {		// if in ball mode
@@ -103,6 +140,8 @@ public class controlClient : MonoBehaviour {
 					p.characterGameObject.transform.rotation = p.cartGameObject.transform.rotation;
 					// unlock golf ball
 					p.ballGameObject.rigidbody.constraints = RigidbodyConstraints.None;
+					// change animation
+					p.characterGameObject.transform.FindChild("lil_patrick").animation.Play("driveIdle",PlayMode.StopAll);
 					
 				} else if (p.currentMode==1) {	// if they're now at golf ball
 					// set them at golf ball
@@ -112,6 +151,8 @@ public class controlClient : MonoBehaviour {
 					p.characterGameObject.transform.rotation = Quaternion.identity;
 					// lock golf ball
 					p.ballGameObject.rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+					// change animation
+					p.characterGameObject.transform.FindChild("lil_patrick").animation.Play("golfIdle",PlayMode.StopAll);
 				}
 				
 				// reset keyboard buffer

@@ -31,4 +31,9 @@ public class ClickableSimple : MonoBehaviour
 			SoundManager.Get().playSfx( clickAudio);
 		}
 	}
+
+	public void forceMessageSend()
+	{
+		OnMouseUp();
+	}
 }

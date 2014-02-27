@@ -3373,7 +3373,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967039
+    m_Bits: 4294966783
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
@@ -3519,7 +3519,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294966783
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
@@ -6741,6 +6741,14 @@ Prefab:
       propertyPath: m_swingScript
       value: 
       objectReference: {fileID: 489195832}
+    - target: {fileID: 2000002, guid: fcef4560af670864ba96f4861e9a1e9f, type: 2}
+      propertyPath: m_CullingMask.m_Bits
+      value: 4294966783
+      objectReference: {fileID: 0}
+    - target: {fileID: 2000004, guid: fcef4560af670864ba96f4861e9a1e9f, type: 2}
+      propertyPath: m_CullingMask.m_Bits
+      value: 4294966783
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11400026, guid: fcef4560af670864ba96f4861e9a1e9f, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: fcef4560af670864ba96f4861e9a1e9f, type: 2}
@@ -7480,7 +7488,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967039
+    m_Bits: 4294966783
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
