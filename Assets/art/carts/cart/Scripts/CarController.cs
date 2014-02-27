@@ -270,7 +270,8 @@ public class CarController : MonoBehaviour
 				// apply power to wheels marked as powered:
 				// available torque drops off as we approach max speed
 				var currentMaxTorque = Mathf.Lerp (maxTorque, (SpeedFactor < 1) ? minTorque : 0, reversing ? SpeedFactor : curvedSpeedFactor);
-				wheelCollider.motorTorque = AccelInput * currentMaxTorque;
+				if ( wheelCollider != null)
+					wheelCollider.motorTorque = AccelInput * currentMaxTorque;
 				// accumulate RPM from this wheel, for averaging later
 				AvgPowerWheelRpmFactor += wheel.Rpm / wheel.MaxRpm;
 				numPowerWheels++;

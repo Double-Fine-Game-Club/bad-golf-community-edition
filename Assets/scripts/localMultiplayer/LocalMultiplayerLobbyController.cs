@@ -17,7 +17,8 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 
 	public GameObject startMessageTarget;
 
-	Dictionary<int,int> controllerDeviceIndexToPlayerIndexMap = new Dictionary<int,int>();
+	static public Dictionary<int,int> controllerDeviceIndexToPlayerIndexMap = new Dictionary<int,int>();
+	static public int keyboardIndex = -1;
 
 	public GameObject[] controllerHighlights;
 
@@ -85,6 +86,7 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 			ed_joinButtonTexts[playerIndex].SetActive(true);
 			ed_detailControls[playerIndex].SetActive(false);
 			controllerHighlights[playerIndex].SetActive(false);
+			keyboardIndex = -1;
 
 			//if this is a controller turning off then remove from map
 			if ( controllerDeviceIndexToPlayerIndexMap.ContainsValue(playerIndex) )
@@ -117,6 +119,7 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 					if ( kv.Value == playerIndex)
 					{
 						ed_controlSelectors[playerIndex].setIndex(0); 
+						keyboardIndex = -1;
 						break;
 					}
 				}
@@ -127,7 +130,8 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 				ed_playerViewCameras[playerIndex].clearFlags = CameraClearFlags.Skybox;
 				ed_joinButtonTexts[playerIndex].SetActive(false);
 				ed_detailControls[playerIndex].SetActive(true);
-		
+				keyboardIndex = playerIndex;		
+				
 				//if this was a controller remove it
 				if ( controllerDeviceIndexToPlayerIndexMap.ContainsValue(playerIndex) )
 				{	
@@ -160,7 +164,7 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 		string[] split = val.Split( new char[]{'_'});		
 					
 		int playerIndex =  int.Parse(split[0]);
-		int colorDirection = (split[1] == "r")? 1:-1;
+		//int colorDirection = (split[1] == "r")? 1:-1;
 
 		colorPerPlayer[playerIndex] =  (colorPerPlayer[playerIndex] + 1) % 4; 
 		setColorOn( playerIndex);
