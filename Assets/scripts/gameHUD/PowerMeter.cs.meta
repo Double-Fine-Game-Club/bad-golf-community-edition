@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: c6f2b3c2ce176f44087fa23683febcc2
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - m_objectToCircle: {instanceID: 0}
+  - m_markerPrefab: {fileID: 100000, guid: 106aba1f0ace6184ab747ea60caff5f2, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
