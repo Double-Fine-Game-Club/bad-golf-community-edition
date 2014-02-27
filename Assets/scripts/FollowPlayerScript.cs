@@ -79,6 +79,9 @@ public class FollowPlayerScript : MonoBehaviour {
 		// Only check for input if mouseRotate is true
 		if (mouseRotate) {
 
+			// Determine which stick to check for input
+			InputControl currentStick = (analogStick == ASticks.Left) ? inputDevice.LeftStickX : inputDevice.RightStickX ;
+
 			// Check for mouse input first
 			if (Input.GetMouseButton((int)mouseButton)) {
 
@@ -88,15 +91,18 @@ public class FollowPlayerScript : MonoBehaviour {
 				// Rotate around target based on mouse movement times the multiplier
 				transform.RotateAround(target.position, Vector3.up, Input.GetAxis("Mouse X") * rotationMultiplier * Time.deltaTime);
 			}
-
+			
 			// If no mouse input detected, check for analog stick input
-			else if (inputDevice.Analogs[(int)analogStick].Value != 0 && !Input.anyKey) {
+			else if ((currentStick.Value != 0 || inputDevice.Analogs[(int)analogStick].Value != 0) && !Input.anyKey) {
+
+				// Get movement from the active source (Officially supported controller or not supported)
+				float movement = (currentStick.Value != 0) ? -currentStick.Value : -inputDevice.Analogs[(int)analogStick].Value;
 
 				// Update last cam rotation to stop auto-centering of camera
 				lastCamRotation = Time.time;
 
 				// Rotate around target based on analog movement times the multiplier
-				transform.RotateAround(target.position, Vector3.up, -inputDevice.Analogs[(int)analogStick].Value * rotationMultiplier * Time.deltaTime);
+				transform.RotateAround(target.position, Vector3.up, movement * rotationMultiplier * Time.deltaTime);
 			}
 
 			else if (Input.GetKey(resetKey) || inputDevice.GetControl(resetButton)) {
