@@ -58,6 +58,9 @@ public class netChat : MonoBehaviour {
 		currentList = currentList + "\n" + text;
 		// scroll it
 		scrollPosition = new Vector2(0, fontSize*Mathf.Max(0,messageCount-4));
-        ChatBubble.DisplayChat(ID);
+        //display chat bubble over speaking player
+        if (ChatBubble.Instance != null) {
+            ChatBubble.DisplayChat(ID);
+        }
 	}
 }
