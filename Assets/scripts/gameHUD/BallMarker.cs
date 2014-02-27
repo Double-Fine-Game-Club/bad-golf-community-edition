@@ -154,9 +154,10 @@ public class BallMarker : MonoBehaviour {
         m_myPlayerInfo = m_nvs.myInfo;
 
         //can't do anything else if we don't have PlayerInfo resources loaded!
-        if (m_myPlayerInfo.cartContainerObject == null) return;
+        if (m_myPlayerInfo.cartGameObject == null) return;
 
-        m_myCamera = m_myPlayerInfo.cartContainerObject.transform.FindChild("multi_buggy_cam").gameObject.camera;
+        //m_myCamera = m_myPlayerInfo.cartGameObject.transform.FindChild("multi_buggy_cam").gameObject.camera;
+        m_myCamera = Camera.main;
 
         m_myBall = m_myPlayerInfo.ballGameObject;
 
