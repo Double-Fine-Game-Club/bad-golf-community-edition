@@ -3,9 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class controlServer : MonoBehaviour {
-	int maxPlayers = 4;			// ?????????????????
-	bool limitReached=false;	// are these needed?
-
 	networkVariables nvs;
 	PlayerInfo myInfo;
 	netPause pause;
