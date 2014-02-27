@@ -3,6 +3,8 @@ using UnityEngine;
 [RequireComponent(typeof(WheelCollider))]
 public class Wheel : MonoBehaviour
 {
+	[SerializeField] private ParticleSystem skidSmokeSystem;
+
 	public Transform wheelModel;
     public float Rpm { get; private set; }
     public float MaxRpm { get; private set; }
@@ -30,7 +32,6 @@ public class Wheel : MonoBehaviour
     private float spinoutFactor;
     private float sideSlideFactor;
     private float springCompression;
-    private ParticleSystem skidSmokeSystem;
     private Rigidbody rb;
     private WheelFrictionCurve sidewaysFriction;
     private WheelFrictionCurve forwardFriction;
@@ -51,6 +52,7 @@ public class Wheel : MonoBehaviour
     private float skidFactorTarget;
     private bool ignore;
 	private Vector3 originalWheelModelPosition;
+	private float kickUpEmisionRate;
 
 	private Camera followCamera;
 
@@ -76,7 +78,6 @@ public class Wheel : MonoBehaviour
         MaxRpm = (car.MaxSpeed / (Mathf.PI * wheelCollider.radius * 2)) * 60;
 
         // get a reference to the particle system for the tire smoke
-        skidSmokeSystem = car.GetComponentInChildren<ParticleSystem>();
         rb = wheelCollider.attachedRigidbody;
 
         if (skidTrailsDetachedParent == null)
@@ -84,6 +85,7 @@ public class Wheel : MonoBehaviour
             skidTrailsDetachedParent = new GameObject("Skid Trails - Detached").transform;
         }
     }
+
 
 
     // called in sync with the physics system
@@ -137,7 +139,8 @@ public class Wheel : MonoBehaviour
             skidFactorTarget = Mathf.Max(skidFactorTarget, spinoutFactor * rb.velocity.magnitude * .05f);
             skidFactorTarget = Mathf.Clamp01(-.1f + skidFactorTarget * 1.1f);
             SkidFactor = Mathf.MoveTowards(SkidFactor, skidFactorTarget, Time.deltaTime * 2);
-
+			
+			//This is pretty cool we could also emit maybe more then one particle. 
             if (skidSmokeSystem != null)
             {
                 particleEmit += SkidFactor * Time.deltaTime;
