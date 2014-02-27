@@ -31,11 +31,17 @@ public class FollowPlayerScript : MonoBehaviour {
 
 	// Mouse buttons numbers for dropdown
 	public enum MButtons { Left = 0, Middle = 2, Right = 1 }
-	public MButtons mouseButton;
+	public MButtons mouseButton = MButtons.Left;
 
 	// Analog stick numbers for dropdown
 	public enum ASticks { Left = 3, Right = 2 }
-	public ASticks analogStick;
+	public ASticks analogStick = ASticks.Right;
+
+	// Keyboard key to reset view
+	public KeyCode resetKey;
+
+	// Controller button to reset view
+	public InputControlType resetButton;
 
 	// What to multiply input movement with
 	public float rotationMultiplier = 300.0f;
@@ -47,7 +53,7 @@ public class FollowPlayerScript : MonoBehaviour {
 	private float currentDistance = 0f;
 
 	// Last time the camera was rotated by mouse
-	private float lastCamRotation = -10f;
+	private float lastCamRotation = -10.0f;
 
 	// Use this for initialization
 	void Start() {
@@ -91,6 +97,10 @@ public class FollowPlayerScript : MonoBehaviour {
 
 				// Rotate around target based on analog movement times the multiplier
 				transform.RotateAround(target.position, Vector3.up, -inputDevice.Analogs[(int)analogStick].Value * rotationMultiplier * Time.deltaTime);
+			}
+
+			else if (Input.GetKey(resetKey) || inputDevice.GetControl(resetButton)) {
+				lastCamRotation = -10.0f;
 			}
 
 		}
