@@ -56,6 +56,7 @@ public class netChat : MonoBehaviour {
 		Debug.Log(text);
 		messageCount++;
 		currentList = currentList + "\n" + text;
+		// scroll it
 		scrollPosition = new Vector2(0, fontSize*Mathf.Max(0,messageCount-4));
         ChatBubble.DisplayChat(ID);
 	}
