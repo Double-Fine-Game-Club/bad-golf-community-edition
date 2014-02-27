@@ -9,3 +9,13 @@ build_Data/
 *.sln
 *.exe
 *.userprefs
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.[Ss]potlight-V100
+.[Tt]rashes
+[Ee]hthumbs.db
+[Tt]humbs.db
