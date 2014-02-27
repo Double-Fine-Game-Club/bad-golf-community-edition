@@ -6,6 +6,9 @@ public class networkManager : MonoBehaviour {
 	bool connectingToServer = false;
 	string serverVersion;
 	string nameBuffer;
+	string serverBuffer;
+	// random names
+	//string[] randomNames = new string[3] {"Leslie", "Test", "REPLACE ME"};
 	
 	// Use this for initialization
 	void Start () {
@@ -17,8 +20,11 @@ public class networkManager : MonoBehaviour {
 		// get them servers
 		MasterServer.ClearHostList();
 		MasterServer.RequestHostList(serverVersion);
-		// set default name
+		// set default player name
 		nameBuffer = SystemInfo.deviceName;
+		//nameBuffer = randomNames[Random.Range(0,randomNames.Length-1)];
+		// set default server name
+		serverBuffer = SystemInfo.deviceName + "'s Server";
 	}
 	
 	void OnGUI() {
@@ -31,7 +37,7 @@ public class networkManager : MonoBehaviour {
 				(GetComponent("networkVariables") as networkVariables).myInfo.name = nameBuffer;
 				// add the server script to us
 				gameObject.AddComponent("networkManagerServer");
-				// remove this script
+				// disable this script
 				(gameObject.GetComponent("networkManager") as networkManager).enabled = false;
 			}
 			if (GUILayout.Button ("Refresh server list"))
@@ -47,9 +53,13 @@ public class networkManager : MonoBehaviour {
 				Application.LoadLevel( nameOfLevel );
 			}
 
-			GUI.Label(new Rect(Screen.width-250,20,50,20), "Name:");
-			nameBuffer = GUI.TextField(new Rect(Screen.width-200,20,150,20), nameBuffer, 32);
-			
+			// HACKY - REPLACE ME!
+			GUI.Label(new Rect(Screen.width-340,20,100,20), "Player name:");
+			nameBuffer = GUI.TextField(new Rect(Screen.width-200,20,180,20), nameBuffer, 32);
+			GUI.Label(new Rect(Screen.width-340,40,100,20), "Server name:");
+			serverBuffer = GUI.TextField(new Rect(Screen.width-200,40,180,20), serverBuffer, 32);
+
+			// AND THIS BIT
 			HostData[] data = MasterServer.PollHostList();
 			// Go through all the hosts in the host list
 			foreach (HostData element in data)
@@ -82,7 +92,7 @@ public class networkManager : MonoBehaviour {
 		(GetComponent("networkVariables") as networkVariables).myInfo.name = nameBuffer;
 		// add the client script to us
 		gameObject.AddComponent("networkManagerClient");
-		// remove this script
+		// disable this script
 		(gameObject.GetComponent("networkManager") as networkManager).enabled = false;
 	}
 }
