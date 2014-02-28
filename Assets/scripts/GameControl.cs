@@ -112,6 +112,7 @@ public class GameControl : MonoBehaviour
 		ed_onlineLobbyScreen.SetActive(false);
 		ed_optionsScreen.SetActive(false);
 		ed_quitDialogScreen.SetActive(false);
+		ed_levelPreviewScreen.SetActive (false);
 	}
 
 	void Update()

@@ -36,8 +36,10 @@ public class controlClient : MonoBehaviour {
 					networkView.RPC("IHonked", RPCMode.All, myInfo.player);
 				}
 			}
+
+			//This code block is also handled under KeyCode.E
 			// (G)et out of buggy (or get in)
-			if (Input.GetKeyDown(KeyCode.G)) {
+			if (Input.GetKeyDown(KeyCode.G) && false) {	//Ignore because bugged
 				// if in buggy
 				if (myInfo.currentMode==0) {
 					myInfo.currentMode = 1;
