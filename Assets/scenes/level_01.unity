@@ -376,6 +376,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38748c7bed906cc4d94128dd0415374d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skidSmokeSystem: {fileID: 0}
   wheelModel: {fileID: 631858141}
   skidTrailPrefab: {fileID: 400000, guid: 4b6aa99de5d21424eab6ae279f31475b, type: 2}
   loQualDist: 100
@@ -531,7 +532,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96468c245ae8e0d4f8f1c7a7b8b0542e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSingleView: 1
+  isKeyboardControlled: 1
 --- !u!54 &60782536
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -697,6 +698,13 @@ MonoBehaviour:
   camZoom: 0
   camLean: 1
   camCollideRadius: 2
+  mouseRotate: 1
+  mouseButton: 0
+  analogStick: 2
+  resetKey: 0
+  resetButton: 0
+  rotationMultiplier: 300
+  rotationWaitTime: 1
 --- !u!20 &70642354
 Camera:
   m_ObjectHideFlags: 0
@@ -1554,6 +1562,13 @@ MonoBehaviour:
   camZoom: 0
   camLean: 1
   camCollideRadius: 2
+  mouseRotate: 1
+  mouseButton: 0
+  analogStick: 2
+  resetKey: 0
+  resetButton: 0
+  rotationMultiplier: 300
+  rotationWaitTime: 1
 --- !u!20 &236841268
 Camera:
   m_ObjectHideFlags: 0
@@ -1751,6 +1766,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38748c7bed906cc4d94128dd0415374d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skidSmokeSystem: {fileID: 0}
   wheelModel: {fileID: 1168120606}
   skidTrailPrefab: {fileID: 400000, guid: 4b6aa99de5d21424eab6ae279f31475b, type: 2}
   loQualDist: 100
@@ -1866,6 +1882,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38748c7bed906cc4d94128dd0415374d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skidSmokeSystem: {fileID: 0}
   wheelModel: {fileID: 636233207}
   skidTrailPrefab: {fileID: 400000, guid: 4b6aa99de5d21424eab6ae279f31475b, type: 2}
   loQualDist: 100
@@ -2098,6 +2115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38748c7bed906cc4d94128dd0415374d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skidSmokeSystem: {fileID: 0}
   wheelModel: {fileID: 194462256}
   skidTrailPrefab: {fileID: 400000, guid: 4b6aa99de5d21424eab6ae279f31475b, type: 2}
   loQualDist: 100
@@ -2253,7 +2271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96468c245ae8e0d4f8f1c7a7b8b0542e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSingleView: 0
+  isKeyboardControlled: 1
 --- !u!54 &334838531
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3962,6 +3980,13 @@ MonoBehaviour:
   camZoom: 0
   camLean: 1
   camCollideRadius: 2
+  mouseRotate: 1
+  mouseButton: 0
+  analogStick: 2
+  resetKey: 0
+  resetButton: 0
+  rotationMultiplier: 300
+  rotationWaitTime: 1
 --- !u!20 &502024278
 Camera:
   m_ObjectHideFlags: 0
@@ -4043,6 +4068,13 @@ MonoBehaviour:
   camZoom: 0
   camLean: 1
   camCollideRadius: 2
+  mouseRotate: 1
+  mouseButton: 0
+  analogStick: 2
+  resetKey: 0
+  resetButton: 0
+  rotationMultiplier: 300
+  rotationWaitTime: 1
 --- !u!20 &505633470
 Camera:
   m_ObjectHideFlags: 0
@@ -6539,6 +6571,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38748c7bed906cc4d94128dd0415374d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skidSmokeSystem: {fileID: 0}
   wheelModel: {fileID: 1552475248}
   skidTrailPrefab: {fileID: 400000, guid: 4b6aa99de5d21424eab6ae279f31475b, type: 2}
   loQualDist: 100
@@ -7518,6 +7551,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38748c7bed906cc4d94128dd0415374d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skidSmokeSystem: {fileID: 0}
   wheelModel: {fileID: 1593569329}
   skidTrailPrefab: {fileID: 400000, guid: 4b6aa99de5d21424eab6ae279f31475b, type: 2}
   loQualDist: 100
@@ -7889,6 +7923,13 @@ MonoBehaviour:
   camZoom: 0
   camLean: 1
   camCollideRadius: 2
+  mouseRotate: 1
+  mouseButton: 0
+  analogStick: 2
+  resetKey: 0
+  resetButton: 0
+  rotationMultiplier: 300
+  rotationWaitTime: 1
 --- !u!20 &825665796
 Camera:
   m_ObjectHideFlags: 0
@@ -10492,6 +10533,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38748c7bed906cc4d94128dd0415374d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skidSmokeSystem: {fileID: 0}
   wheelModel: {fileID: 1971625403}
   skidTrailPrefab: {fileID: 400000, guid: 4b6aa99de5d21424eab6ae279f31475b, type: 2}
   loQualDist: 100
@@ -10700,6 +10742,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38748c7bed906cc4d94128dd0415374d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skidSmokeSystem: {fileID: 0}
   wheelModel: {fileID: 843221175}
   skidTrailPrefab: {fileID: 400000, guid: 4b6aa99de5d21424eab6ae279f31475b, type: 2}
   loQualDist: 100
@@ -11080,6 +11123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38748c7bed906cc4d94128dd0415374d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skidSmokeSystem: {fileID: 0}
   wheelModel: {fileID: 329347329}
   skidTrailPrefab: {fileID: 400000, guid: 4b6aa99de5d21424eab6ae279f31475b, type: 2}
   loQualDist: 100
@@ -11155,6 +11199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38748c7bed906cc4d94128dd0415374d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skidSmokeSystem: {fileID: 0}
   wheelModel: {fileID: 10087257}
   skidTrailPrefab: {fileID: 400000, guid: 4b6aa99de5d21424eab6ae279f31475b, type: 2}
   loQualDist: 100
@@ -11272,6 +11317,13 @@ MonoBehaviour:
   camZoom: 0
   camLean: 1
   camCollideRadius: 2
+  mouseRotate: 1
+  mouseButton: 0
+  analogStick: 2
+  resetKey: 0
+  resetButton: 0
+  rotationMultiplier: 300
+  rotationWaitTime: 1
 --- !u!20 &1008491985
 Camera:
   m_ObjectHideFlags: 0
@@ -11571,6 +11623,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerObjectList:
   - {fileID: 334838524}
+  playerToControllerIndex: 
+  ready: 0
 --- !u!1 &1040842579
 GameObject:
   m_ObjectHideFlags: 0
@@ -11730,7 +11784,7 @@ MonoBehaviour:
   onEnableClipName: 
   onDisableClipName: 
   onStartClip: {fileID: 0}
-  onEnableClip: {fileID: 8300000, guid: 4dbcfafd903b9f649ba3caa337003243, type: 3}
+  onEnableClip: {fileID: 8300000, guid: a6cd8e32a033a4640a67135ae9929dbb, type: 3}
   onDisableClip: {fileID: 0}
   volume: .5
   overrideVolume: 0
@@ -11747,7 +11801,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ed_pauseScreen: {fileID: 930600750}
-  ed_singleView: {fileID: 961363685}
 --- !u!1 &1083327726
 GameObject:
   m_ObjectHideFlags: 0
@@ -11816,6 +11869,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38748c7bed906cc4d94128dd0415374d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skidSmokeSystem: {fileID: 0}
   wheelModel: {fileID: 1150149904}
   skidTrailPrefab: {fileID: 400000, guid: 4b6aa99de5d21424eab6ae279f31475b, type: 2}
   loQualDist: 100
@@ -13330,6 +13384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38748c7bed906cc4d94128dd0415374d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skidSmokeSystem: {fileID: 0}
   wheelModel: {fileID: 2122382480}
   skidTrailPrefab: {fileID: 400000, guid: 4b6aa99de5d21424eab6ae279f31475b, type: 2}
   loQualDist: 100
@@ -13914,6 +13969,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38748c7bed906cc4d94128dd0415374d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skidSmokeSystem: {fileID: 0}
   wheelModel: {fileID: 529621275}
   skidTrailPrefab: {fileID: 400000, guid: 4b6aa99de5d21424eab6ae279f31475b, type: 2}
   loQualDist: 100
@@ -14073,6 +14129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38748c7bed906cc4d94128dd0415374d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skidSmokeSystem: {fileID: 0}
   wheelModel: {fileID: 127336510}
   skidTrailPrefab: {fileID: 400000, guid: 4b6aa99de5d21424eab6ae279f31475b, type: 2}
   loQualDist: 100
@@ -14148,6 +14205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38748c7bed906cc4d94128dd0415374d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skidSmokeSystem: {fileID: 0}
   wheelModel: {fileID: 898235385}
   skidTrailPrefab: {fileID: 400000, guid: 4b6aa99de5d21424eab6ae279f31475b, type: 2}
   loQualDist: 100
@@ -15037,7 +15095,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96468c245ae8e0d4f8f1c7a7b8b0542e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSingleView: 1
+  isKeyboardControlled: 1
 --- !u!54 &1438790281
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -15206,6 +15264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38748c7bed906cc4d94128dd0415374d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skidSmokeSystem: {fileID: 0}
   wheelModel: {fileID: 882460824}
   skidTrailPrefab: {fileID: 400000, guid: 4b6aa99de5d21424eab6ae279f31475b, type: 2}
   loQualDist: 100
@@ -15339,6 +15398,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38748c7bed906cc4d94128dd0415374d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skidSmokeSystem: {fileID: 0}
   wheelModel: {fileID: 68844414}
   skidTrailPrefab: {fileID: 400000, guid: 4b6aa99de5d21424eab6ae279f31475b, type: 2}
   loQualDist: 100
@@ -15757,6 +15817,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38748c7bed906cc4d94128dd0415374d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skidSmokeSystem: {fileID: 0}
   wheelModel: {fileID: 101795952}
   skidTrailPrefab: {fileID: 400000, guid: 4b6aa99de5d21424eab6ae279f31475b, type: 2}
   loQualDist: 100
@@ -15981,7 +16042,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96468c245ae8e0d4f8f1c7a7b8b0542e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSingleView: 1
+  isKeyboardControlled: 1
 --- !u!114 &1573955598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16132,6 +16193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38748c7bed906cc4d94128dd0415374d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skidSmokeSystem: {fileID: 0}
   wheelModel: {fileID: 1873158633}
   skidTrailPrefab: {fileID: 400000, guid: 4b6aa99de5d21424eab6ae279f31475b, type: 2}
   loQualDist: 100
@@ -16502,7 +16564,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96468c245ae8e0d4f8f1c7a7b8b0542e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSingleView: 1
+  isKeyboardControlled: 1
 --- !u!54 &1622325558
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -16822,7 +16884,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96468c245ae8e0d4f8f1c7a7b8b0542e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSingleView: 1
+  isKeyboardControlled: 1
 --- !u!114 &1631366764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17028,6 +17090,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38748c7bed906cc4d94128dd0415374d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skidSmokeSystem: {fileID: 0}
   wheelModel: {fileID: 1446093085}
   skidTrailPrefab: {fileID: 400000, guid: 4b6aa99de5d21424eab6ae279f31475b, type: 2}
   loQualDist: 100
@@ -17937,6 +18000,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38748c7bed906cc4d94128dd0415374d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skidSmokeSystem: {fileID: 0}
   wheelModel: {fileID: 1461472320}
   skidTrailPrefab: {fileID: 400000, guid: 4b6aa99de5d21424eab6ae279f31475b, type: 2}
   loQualDist: 100
@@ -18231,6 +18295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38748c7bed906cc4d94128dd0415374d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skidSmokeSystem: {fileID: 0}
   wheelModel: {fileID: 577203904}
   skidTrailPrefab: {fileID: 400000, guid: 4b6aa99de5d21424eab6ae279f31475b, type: 2}
   loQualDist: 100
@@ -18473,6 +18538,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38748c7bed906cc4d94128dd0415374d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skidSmokeSystem: {fileID: 0}
   wheelModel: {fileID: 1892170054}
   skidTrailPrefab: {fileID: 400000, guid: 4b6aa99de5d21424eab6ae279f31475b, type: 2}
   loQualDist: 100
@@ -18531,6 +18597,13 @@ MonoBehaviour:
   camZoom: 0
   camLean: 1
   camCollideRadius: 2
+  mouseRotate: 1
+  mouseButton: 0
+  analogStick: 2
+  resetKey: 0
+  resetButton: 0
+  rotationMultiplier: 300
+  rotationWaitTime: 1
 --- !u!20 &1823540535
 Camera:
   m_ObjectHideFlags: 0
@@ -18629,6 +18702,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38748c7bed906cc4d94128dd0415374d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skidSmokeSystem: {fileID: 0}
   wheelModel: {fileID: 634808064}
   skidTrailPrefab: {fileID: 400000, guid: 4b6aa99de5d21424eab6ae279f31475b, type: 2}
   loQualDist: 100
@@ -20367,7 +20441,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96468c245ae8e0d4f8f1c7a7b8b0542e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSingleView: 1
+  isKeyboardControlled: 1
 --- !u!54 &1992053936
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -20452,6 +20526,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38748c7bed906cc4d94128dd0415374d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skidSmokeSystem: {fileID: 0}
   wheelModel: {fileID: 381737770}
   skidTrailPrefab: {fileID: 400000, guid: 4b6aa99de5d21424eab6ae279f31475b, type: 2}
   loQualDist: 100
@@ -20590,6 +20665,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38748c7bed906cc4d94128dd0415374d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skidSmokeSystem: {fileID: 0}
   wheelModel: {fileID: 1941703700}
   skidTrailPrefab: {fileID: 400000, guid: 4b6aa99de5d21424eab6ae279f31475b, type: 2}
   loQualDist: 100
@@ -20786,6 +20862,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38748c7bed906cc4d94128dd0415374d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skidSmokeSystem: {fileID: 0}
   wheelModel: {fileID: 1680712965}
   skidTrailPrefab: {fileID: 400000, guid: 4b6aa99de5d21424eab6ae279f31475b, type: 2}
   loQualDist: 100
@@ -20861,6 +20938,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38748c7bed906cc4d94128dd0415374d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skidSmokeSystem: {fileID: 0}
   wheelModel: {fileID: 368703205}
   skidTrailPrefab: {fileID: 400000, guid: 4b6aa99de5d21424eab6ae279f31475b, type: 2}
   loQualDist: 100
