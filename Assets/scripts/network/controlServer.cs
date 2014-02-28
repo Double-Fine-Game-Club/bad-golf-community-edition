@@ -12,6 +12,7 @@ public class controlServer : MonoBehaviour {
 		nvs = GetComponent("networkVariables") as networkVariables;
 		myInfo = nvs.myInfo;
 		pause = GetComponent ("netPause") as netPause;
+		
 		// change camera
 		//GameObject.Find ("lobby_view").transform.FindChild ("camera").gameObject.SetActive (false);
 		//myInfo.cartContainerObject.transform.FindChild ("multi_buggy_cam").gameObject.SetActive (true);
@@ -24,19 +25,30 @@ public class controlServer : MonoBehaviour {
 			if (Input.GetKeyDown(KeyCode.Q) && myInfo.currentMode==0) {
 				networkView.RPC("IHonked", RPCMode.All, myInfo.player);
 			}
+		if (Input.GetKeyDown (KeyCode.Space)) {
+			myInfo.currentMode=0;
+		}
 			// (G)et out of buggy (or get in)
-			if (Input.GetKeyDown(KeyCode.G)) {
+			if (Input.GetKeyDown(KeyCode.E) && false) {	// IGNORE
 				// if in buggy
 				if (myInfo.currentMode==0) {
 					myInfo.currentMode = 1;
-					// set them at golf ball
+					/* set them at golf ball
 					myInfo.characterGameObject.transform.parent = myInfo.ballGameObject.transform;
 					myInfo.ballGameObject.transform.rotation = Quaternion.identity;		// reset rotation to make it nice
 					myInfo.characterGameObject.transform.localPosition = new Vector3(0,0,-2);
 					myInfo.characterGameObject.transform.rotation = Quaternion.identity;
 					// lock golf ball
 					myInfo.ballGameObject.rigidbody.constraints = RigidbodyConstraints.FreezeAll;
-					//*/ move camera - HACKY
+					*/
+					
+					myInfo.cartGameObject.rigidbody.velocity = Vector3.zero;
+					myInfo.ballGameObject.SendMessage ("turnOnScripts");
+					//myInfo.cartGameObject.SendMessage("turnOffScripts");
+					CarUserControl carCtrl = myInfo.cartGameObject.GetComponent(typeof(CarUserControl)) as CarUserControl;
+					carCtrl.enabled = false;
+				
+					/* move camera - HACKY
 					GameObject buggyCam = nvs.myCam.gameObject;
 					buggyCam.transform.parent = myInfo.ballGameObject.transform;
 					buggyCam.transform.rotation = Quaternion.identity;
@@ -47,25 +59,36 @@ public class controlServer : MonoBehaviour {
 					bco.Axis = Vector3.up;
 					bco.Point = myInfo.ballGameObject.transform.position;
 					bco.Speed = 0.8f;
-					//*/ change animation
+					*/
+					
+					// change animation
 					myInfo.characterGameObject.transform.FindChild("lil_patrick").animation.Play("golfIdle",PlayMode.StopAll);
 
 					// if at ball
 				} else if (myInfo.currentMode==1) {
 					myInfo.currentMode = 0;
-					// set them in buggy
+					/* set them in buggy
 					myInfo.characterGameObject.transform.parent = myInfo.cartGameObject.transform;
 					myInfo.characterGameObject.transform.localPosition = new Vector3(0,0,0);
 					myInfo.characterGameObject.transform.rotation = myInfo.cartGameObject.transform.rotation;
 					// unlock golf ball
 					myInfo.ballGameObject.rigidbody.constraints = RigidbodyConstraints.None;
-					//*/ move camera - HACKY
+					*/
+					
+					myInfo.ballGameObject.SendMessage("turnOffScripts");
+					myInfo.cartGameObject.SendMessage("turnOnScripts");
+					CarUserControl carCtrl = myInfo.cartGameObject.GetComponent(typeof(CarUserControl)) as CarUserControl;
+					carCtrl.enabled = true;
+					
+					/* move camera - HACKY
 					GameObject buggyCam = nvs.myCam.gameObject;
 					buggyCam.transform.parent = myInfo.cartGameObject.transform;
 					(buggyCam.GetComponent("SmoothFollow") as SmoothFollow).enabled = true;
 					Orbit bco = buggyCam.GetComponent("Orbit") as Orbit;
 					Component.Destroy(bco);
-					//*/ change animation
+					*/
+					
+					// change animation
 					myInfo.characterGameObject.transform.FindChild("lil_patrick").animation.Play("driveIdle",PlayMode.StopAll);
 				}
 				// tell server which mode we swapped to

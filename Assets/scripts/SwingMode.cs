@@ -68,7 +68,7 @@ public class SwingMode : SwingBehaviour
 						shotPower = 0;
 
 						// Turn on control scripts and camera on the cart.
-						cart.SendMessage ("turnOnScripts");
+						//cart.SendMessage ("turnOnScripts");
 						// Turn off control scripts (including this one) and camera on the ball.
 						this.gameObject.SendMessage ("turnOffScripts");
 				}

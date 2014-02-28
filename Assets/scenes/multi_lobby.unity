@@ -138,7 +138,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1316b11755235c4296b41f6c3d29a88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serverVersion: HL5
+  serverVersion: sandvich
+  serverName: 
+  myCam: {fileID: 2065442162}
 --- !u!114 &349291804
 MonoBehaviour:
   m_ObjectHideFlags: 0

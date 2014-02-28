@@ -12,10 +12,10 @@ public class controlClient : MonoBehaviour {
 		nvs = GetComponent("networkVariables") as networkVariables;
 		myInfo = nvs.myInfo;
 		pause = GetComponent ("netPause") as netPause;
-		// change camera
+		
+		// should probably remove this...
 //		GameObject.Find ("lobby_view").transform.FindChild ("camera").gameObject.SetActive (false);
 //		myInfo.cartContainerObject.transform.FindChild ("multi_buggy_cam").gameObject.SetActive (true);
-
 	}
 
 	void Update () {
@@ -48,6 +48,8 @@ public class controlClient : MonoBehaviour {
 					myInfo.characterGameObject.transform.rotation = Quaternion.identity;
 					// lock golf ball
 					myInfo.ballGameObject.rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+					//*/ change animation
+					myInfo.characterGameObject.transform.FindChild("lil_patrick").animation.Play("golfIdle",PlayMode.StopAll);
 					//*/ move camera - HACKY
 					GameObject buggyCam = nvs.myCam.gameObject;
 					buggyCam.transform.parent = myInfo.ballGameObject.transform;
@@ -59,8 +61,6 @@ public class controlClient : MonoBehaviour {
 					bco.Axis = Vector3.up;
 					bco.Point = myInfo.ballGameObject.transform.position;
 					bco.Speed = 0.8f;
-					//*/ change animation
-					myInfo.characterGameObject.transform.FindChild("lil_patrick").animation.Play("golfIdle",PlayMode.StopAll);
 					
 					// if at ball
 				} else if (myInfo.currentMode==1) {
@@ -71,14 +71,14 @@ public class controlClient : MonoBehaviour {
 					myInfo.characterGameObject.transform.rotation = myInfo.cartGameObject.transform.rotation;
 					// unlock golf ball
 					myInfo.ballGameObject.rigidbody.constraints = RigidbodyConstraints.None;
+					//*/ change animation
+					myInfo.characterGameObject.transform.FindChild("lil_patrick").animation.Play("driveIdle",PlayMode.StopAll);
 					//*/ move camera - HACKY
 					GameObject buggyCam = nvs.myCam.gameObject;
 					buggyCam.transform.parent = myInfo.cartGameObject.transform;
 					(buggyCam.GetComponent("SmoothFollow") as SmoothFollow).enabled = true;
 					Orbit bco = buggyCam.GetComponent("Orbit") as Orbit;
 					Component.Destroy(bco);
-					//*/ change animation
-					myInfo.characterGameObject.transform.FindChild("lil_patrick").animation.Play("driveIdle",PlayMode.StopAll);
 				}
 				networkView.RPC("PlayerSwap", RPCMode.Others, myInfo.currentMode, myInfo.player);
 			}
@@ -91,12 +91,36 @@ public class controlClient : MonoBehaviour {
 			}
 		}
 		
-		// pause menu toggler
-		if(Input.GetKeyDown(KeyCode.Escape)) {
-			if(myInfo.playerIsPaused){				// if paused resume
-				pause.SendMessage("onResume");
-			}else if(!myInfo.playerIsBusy){			// if not busy then pause
-				pause.SendMessage("onPause");
+		if (!myInfo.playerIsPaused && Input.GetKeyDown (KeyCode.Space)) {
+			myInfo.currentMode=0;
+		}
+		if (!myInfo.playerIsPaused && Input.GetKeyDown(KeyCode.E) && false) {	//false until netSwing is working
+			// if in buggy
+			if (myInfo.currentMode==0) {
+				myInfo.currentMode = 1;
+				// set them at golf ball
+				//myInfo.ballGameObject.transform.rotation = Quaternion.identity;		// reset rotation to make it nice
+				//myInfo.characterGameObject.transform.localPosition = new Vector3(0,0,-2);
+				//myInfo.characterGameObject.transform.rotation = Quaternion.identity;
+				// lock golf ball
+				//myInfo.ballGameObject.rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+				CarUserControl carCtrl = myInfo.cartGameObject.GetComponent(typeof(CarUserControl)) as CarUserControl;
+				carCtrl.enabled = false;
+				myInfo.ballGameObject.SendMessage ("turnOnScripts");
+				myInfo.cartGameObject.SendMessage("turnOffScripts");
+				// if at ball
+			} else if (myInfo.currentMode==1) {
+				myInfo.currentMode = 0;
+				// set them in buggy
+				//myInfo.characterGameObject.transform.parent = myInfo.cartGameObject.transform;
+				//myInfo.characterGameObject.transform.localPosition = new Vector3(0,0,0);
+				//myInfo.characterGameObject.transform.rotation = myInfo.cartGameObject.transform.rotation;
+				// unlock golf ball
+				//myInfo.ballGameObject.rigidbody.constraints = RigidbodyConstraints.None;
+				myInfo.ballGameObject.SendMessage("turnOffScripts");
+				myInfo.cartGameObject.SendMessage("turnOnScripts");
+				CarUserControl carCtrl = myInfo.cartGameObject.GetComponent(typeof(CarUserControl)) as CarUserControl;
+				carCtrl.enabled = true;
 			}
 		}
 	}

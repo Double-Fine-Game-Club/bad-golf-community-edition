@@ -157,7 +157,7 @@ public class BallMarker : MonoBehaviour {
         if (m_myPlayerInfo.cartGameObject == null) return;
 
         //m_myCamera = m_myPlayerInfo.cartGameObject.transform.FindChild("multi_buggy_cam").gameObject.camera;
-        m_myCamera = Camera.main;
+		m_myCamera = m_nvs.myCam;
 
         m_myBall = m_myPlayerInfo.ballGameObject;
 
