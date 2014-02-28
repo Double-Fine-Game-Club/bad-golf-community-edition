@@ -51,8 +51,6 @@ public class networkManager : MonoBehaviour {
 				gameObject.AddComponent("networkManagerServer");
 				// disable this script
 				(gameObject.GetComponent("networkManager") as networkManager).enabled = false;
-				// call for level load
-				networkLevelLoad netLoad = new networkLevelLoad ();
 			}
 			if (GUILayout.Button ("Refresh server list"))
 			{

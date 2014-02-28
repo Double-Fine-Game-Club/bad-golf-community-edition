@@ -89,10 +89,14 @@ public class networkManagerServer : MonoBehaviour {
 		//pause
 		gameObject.AddComponent ("netPause");
 
+		// Load Player's Cart and Golf Vars into PlayerLoad Script
+		networkPlayerLoad netPlayer = gameObject.AddComponent("networkPlayerLoad") as networkPlayerLoad;
+		netPlayer.nvs = nvs;
+
 		// set the camera in the audio script on the buggy - PUT THIS IN A SCRIPT SOMEONE
-		CarAudio mca = myInfo.cartGameObject.GetComponent("CarAudio") as CarAudio;
-		mca.followCamera = nvs.myCam;	// replace tmpCam with our one - this messes up sound atm
-		(nvs.myCam.gameObject.AddComponent("SmoothFollow") as SmoothFollow).target = myInfo.cartGameObject.transform;	// add smooth follow script
+		//CarAudio mca = myInfo.cartGameObject.GetComponent("CarAudio") as CarAudio;
+		//mca.followCamera = nvs.myCam;	// replace tmpCam with our one - this messes up sound atm
+		//(nvs.myCam.gameObject.AddComponent("FollowPlayerScript") as FollowPlayerScript).target = myInfo.cartGameObject.transform;	// add smooth follow script
 
 		// add the swing script
 		gameObject.AddComponent("netSwing");

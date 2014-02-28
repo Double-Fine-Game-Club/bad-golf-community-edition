@@ -91,10 +91,10 @@ public class controlClient : MonoBehaviour {
 			}
 		}
 		
-		if (!myInfo.playerIsPaused && Input.GetKeyDown (KeyCode.Space)) {
+		if (!myInfo.playerIsPaused && Input.GetKeyDown (KeyCode.Space) && false) {
 			myInfo.currentMode=0;
 		}
-		if (!myInfo.playerIsPaused && Input.GetKeyDown(KeyCode.E)) {
+		if (!myInfo.playerIsPaused && Input.GetKeyDown(KeyCode.E) && false) {
 			// if in buggy
 			if (myInfo.currentMode==0) {
 				myInfo.currentMode = 1;
@@ -104,10 +104,10 @@ public class controlClient : MonoBehaviour {
 				//myInfo.characterGameObject.transform.rotation = Quaternion.identity;
 				// lock golf ball
 				//myInfo.ballGameObject.rigidbody.constraints = RigidbodyConstraints.FreezeAll;
-				CarUserControl carCtrl = myInfo.cartGameObject.GetComponent(typeof(CarUserControl)) as CarUserControl;
-				carCtrl.enabled = false;
-				myInfo.ballGameObject.SendMessage ("turnOnScripts");
-				myInfo.cartGameObject.SendMessage("turnOffScripts");
+				networkPlayerLoad netPlay = new networkPlayerLoad();
+				myInfo.cartGameObject.rigidbody.velocity = Vector3.zero;
+				netPlay.BallScriptToggler (myInfo,true);
+				netPlay.CarScriptToggler (myInfo,false);
 				// if at ball
 			} else if (myInfo.currentMode==1) {
 				myInfo.currentMode = 0;
@@ -117,10 +117,10 @@ public class controlClient : MonoBehaviour {
 				//myInfo.characterGameObject.transform.rotation = myInfo.cartGameObject.transform.rotation;
 				// unlock golf ball
 				//myInfo.ballGameObject.rigidbody.constraints = RigidbodyConstraints.None;
-				myInfo.ballGameObject.SendMessage("turnOffScripts");
-				myInfo.cartGameObject.SendMessage("turnOnScripts");
-				CarUserControl carCtrl = myInfo.cartGameObject.GetComponent(typeof(CarUserControl)) as CarUserControl;
-				carCtrl.enabled = true;
+				networkPlayerLoad netPlay = new networkPlayerLoad();
+				myInfo.cartGameObject.rigidbody.velocity = Vector3.zero;
+				netPlay.BallScriptToggler (myInfo,false);
+				netPlay.CarScriptToggler (myInfo,true);
 			}
 		}
 	}
@@ -144,7 +144,7 @@ public class controlClient : MonoBehaviour {
 		foreach (PlayerInfo p in nvs.players) {
 			if (p.player==player) {
 				//TODO: add horn
-				//p.cartGameObject.audio.Play();
+				p.cartGameObject.audio.Play();
 			}
 		}
 	}

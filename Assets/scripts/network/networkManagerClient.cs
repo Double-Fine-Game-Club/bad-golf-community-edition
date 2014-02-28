@@ -32,11 +32,15 @@ public class networkManagerClient : MonoBehaviour {
 		//pause
 		gameObject.AddComponent ("netPause");
 
-		// set the camera in the audio script on the buggy - PUT THIS IN A SCRIPT SOMEONE
+		// Load Player's Cart and Golf Vars into PlayerLoad Script
 		networkVariables nvs = GetComponent("networkVariables") as networkVariables;
-		CarAudio mca = myInfo.cartGameObject.GetComponent("CarAudio") as CarAudio;
-		mca.followCamera = nvs.myCam;	// replace tmpCam with our one - this messes up sound atm
-		(nvs.myCam.gameObject.AddComponent("SmoothFollow") as SmoothFollow).target = myInfo.cartGameObject.transform;	// add smooth follow script
+		networkPlayerLoad netPlayer = gameObject.AddComponent ("networkPlayerLoad") as networkPlayerLoad;
+		netPlayer.nvs = nvs;
+
+		// set the camera in the audio script on the buggy - PUT THIS IN A SCRIPT SOMEONE
+		//CarAudio mca = myInfo.cartGameObject.GetComponent("CarAudio") as CarAudio;
+		//mca.followCamera = nvs.myCam;	// replace tmpCam with our one - this messes up sound atm
+		//(nvs.myCam.gameObject.AddComponent("FollowPlayerScript") as FollowPlayerScript).target = myInfo.cartGameObject.transform;	// add smooth follow script
 		
 		// add the swing script
 		gameObject.AddComponent("netSwing");
@@ -149,19 +153,19 @@ public class networkManagerClient : MonoBehaviour {
 			newGuy.characterGameObject.transform.localPosition = new Vector3(0,0,0);
 			newGuy.characterGameObject.transform.localRotation = Quaternion.identity;
 			myInfo.cartGameObject.rigidbody.velocity = Vector3.zero;
-			myInfo.ballGameObject.SendMessage ("turnOnScripts");
-			myInfo.cartGameObject.SendMessage("turnOffScripts");
-			CarUserControl carCtrl = myInfo.cartGameObject.GetComponent(typeof(CarUserControl)) as CarUserControl;
-			carCtrl.enabled = true;
+			networkPlayerLoad netPlay = new networkPlayerLoad();
+			myInfo.cartGameObject.rigidbody.velocity = Vector3.zero;
+			netPlay.BallScriptToggler (newGuy,true);
+			netPlay.CarScriptToggler (newGuy, false);
 		} else if (newGuy.currentMode==1) {
 			// set them outside the buggy
 			newGuy.characterGameObject.transform.parent = newGuy.ballGameObject.transform;
 			newGuy.characterGameObject.transform.localPosition = new Vector3(0,0,-2);
 			newGuy.characterGameObject.transform.localRotation = Quaternion.identity;
-			myInfo.ballGameObject.SendMessage("turnOffScripts");
-			myInfo.cartGameObject.SendMessage("turnOnScripts");
-			CarUserControl carCtrl = myInfo.cartGameObject.GetComponent(typeof(CarUserControl)) as CarUserControl;
-			carCtrl.enabled = false;
+			networkPlayerLoad netPlay = new networkPlayerLoad();
+			myInfo.cartGameObject.rigidbody.velocity = Vector3.zero;
+			netPlay.BallScriptToggler (newGuy,false);
+			netPlay.CarScriptToggler (newGuy, true);
 		}
 
 

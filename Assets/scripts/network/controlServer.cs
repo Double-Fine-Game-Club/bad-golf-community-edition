@@ -41,12 +41,11 @@ public class controlServer : MonoBehaviour {
 					// lock golf ball
 					myInfo.ballGameObject.rigidbody.constraints = RigidbodyConstraints.FreezeAll;
 					*/
-					
+
+				networkPlayerLoad netPlay = new networkPlayerLoad();
 				myInfo.cartGameObject.rigidbody.velocity = Vector3.zero;
-				myInfo.ballGameObject.SendMessage ("turnOnScripts");
-				//myInfo.cartGameObject.SendMessage("turnOffScripts");
-				CarUserControl carCtrl = myInfo.cartGameObject.GetComponent(typeof(CarUserControl)) as CarUserControl;
-				carCtrl.enabled = false;
+				netPlay.BallScriptTogglerEnabler (myInfo);
+				netPlay.CarScriptTogglerDisabler (myInfo);
 				
 					/* move camera - HACKY
 					GameObject buggyCam = nvs.myCam.gameObject;
@@ -75,10 +74,10 @@ public class controlServer : MonoBehaviour {
 					myInfo.ballGameObject.rigidbody.constraints = RigidbodyConstraints.None;
 					*/
 					
-				myInfo.ballGameObject.SendMessage("turnOffScripts");
-				myInfo.cartGameObject.SendMessage("turnOnScripts");
-				CarUserControl carCtrl = myInfo.cartGameObject.GetComponent(typeof(CarUserControl)) as CarUserControl;
-				carCtrl.enabled = true;
+					networkPlayerLoad netPlay = new networkPlayerLoad();
+					myInfo.cartGameObject.rigidbody.velocity = Vector3.zero;
+					netPlay.BallScriptTogglerDisabler (myInfo);
+					netPlay.CarScriptTogglerEnabler (myInfo);
 				
 					/* move camera - HACKY
 					GameObject buggyCam = nvs.myCam.gameObject;
