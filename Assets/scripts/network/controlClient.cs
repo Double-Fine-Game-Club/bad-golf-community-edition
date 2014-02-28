@@ -94,7 +94,7 @@ public class controlClient : MonoBehaviour {
 		if (!myInfo.playerIsPaused && Input.GetKeyDown (KeyCode.Space)) {
 			myInfo.currentMode=0;
 		}
-		if (!myInfo.playerIsPaused && Input.GetKeyDown(KeyCode.E)) {
+		if (!myInfo.playerIsPaused && Input.GetKeyDown(KeyCode.E) && false) {	//false until netSwing is working
 			// if in buggy
 			if (myInfo.currentMode==0) {
 				myInfo.currentMode = 1;

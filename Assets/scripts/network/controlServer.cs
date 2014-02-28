@@ -42,11 +42,11 @@ public class controlServer : MonoBehaviour {
 					myInfo.ballGameObject.rigidbody.constraints = RigidbodyConstraints.FreezeAll;
 					*/
 					
-				myInfo.cartGameObject.rigidbody.velocity = Vector3.zero;
-				myInfo.ballGameObject.SendMessage ("turnOnScripts");
-				//myInfo.cartGameObject.SendMessage("turnOffScripts");
-				CarUserControl carCtrl = myInfo.cartGameObject.GetComponent(typeof(CarUserControl)) as CarUserControl;
-				carCtrl.enabled = false;
+					myInfo.cartGameObject.rigidbody.velocity = Vector3.zero;
+					myInfo.ballGameObject.SendMessage ("turnOnScripts");
+					//myInfo.cartGameObject.SendMessage("turnOffScripts");
+					CarUserControl carCtrl = myInfo.cartGameObject.GetComponent(typeof(CarUserControl)) as CarUserControl;
+					carCtrl.enabled = false;
 				
 					/* move camera - HACKY
 					GameObject buggyCam = nvs.myCam.gameObject;
@@ -75,11 +75,11 @@ public class controlServer : MonoBehaviour {
 					myInfo.ballGameObject.rigidbody.constraints = RigidbodyConstraints.None;
 					*/
 					
-				myInfo.ballGameObject.SendMessage("turnOffScripts");
-				myInfo.cartGameObject.SendMessage("turnOnScripts");
-				CarUserControl carCtrl = myInfo.cartGameObject.GetComponent(typeof(CarUserControl)) as CarUserControl;
-				carCtrl.enabled = true;
-				
+					myInfo.ballGameObject.SendMessage("turnOffScripts");
+					myInfo.cartGameObject.SendMessage("turnOnScripts");
+					CarUserControl carCtrl = myInfo.cartGameObject.GetComponent(typeof(CarUserControl)) as CarUserControl;
+					carCtrl.enabled = true;
+					
 					/* move camera - HACKY
 					GameObject buggyCam = nvs.myCam.gameObject;
 					buggyCam.transform.parent = myInfo.cartGameObject.transform;

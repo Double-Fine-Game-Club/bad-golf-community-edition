@@ -32,10 +32,10 @@ public class networkManagerServer : MonoBehaviour {
 		// create server owners buggy
 		// This line will get changed at some point - no need to have the camera and the marker in the prefab - they should be in their own scripts
 		// IM FIXING IT NOW
-		GameObject cartGameObject = (Instantiate(Resources.Load("buggy_m"), new Vector3(0,5,0), Quaternion.identity) as GameObject);
+		GameObject cartGameObject = (Instantiate(Resources.Load("buggy_m"), new Vector3(0,12,0), Quaternion.identity) as GameObject);
 		// ****************************
-		GameObject ballGameObject = Instantiate(Resources.Load("golf_ball_m"), new Vector3(3,6,0), Quaternion.identity) as GameObject;
-		GameObject characterGameObject = Instantiate(Resources.Load("lil_patrick"), new Vector3(0,4,0), Quaternion.identity) as GameObject;
+		GameObject ballGameObject = Instantiate(Resources.Load("golf_ball_m"), new Vector3(3,18,0), Quaternion.identity) as GameObject;
+		GameObject characterGameObject = Instantiate(Resources.Load("lil_patrick"), new Vector3(0,12,0), Quaternion.identity) as GameObject;
 		// set buggy as characters parent
 		characterGameObject.transform.parent = cartGameObject.transform;
 
@@ -68,6 +68,10 @@ public class networkManagerServer : MonoBehaviour {
 		nvs.myInfo.characterViewID = characterViewID;
 		nvs.myInfo.currentMode = 0;	// set in buggy
 
+		//Should this be here?
+		GameObject cam = new GameObject ();
+		nvs.myCam = cam.AddComponent<Camera> ();
+
 		// get self
 		nvs.myInfo.player = Network.player;
 
@@ -92,8 +96,8 @@ public class networkManagerServer : MonoBehaviour {
 		// set the camera in the audio script on the buggy - PUT THIS IN A SCRIPT SOMEONE
 		CarAudio mca = myInfo.cartGameObject.GetComponent("CarAudio") as CarAudio;
 		mca.followCamera = nvs.myCam;	// replace tmpCam with our one - this messes up sound atm
-		(nvs.myCam.gameObject.AddComponent("SmoothFollow") as SmoothFollow).target = myInfo.cartGameObject.transform;	// add smooth follow script
-
+		(nvs.myCam.gameObject.AddComponent("FollowPlayerScript") as FollowPlayerScript).target = myInfo.cartGameObject.transform;	// add camera follow script
+		
 		// add the swing script
 		gameObject.AddComponent("netSwing");
 		//********************************************
@@ -178,13 +182,13 @@ public class networkManagerServer : MonoBehaviour {
 	[RPC]
 	void GiveMeACart(string cartModel, string ballModel, string characterModel, NetworkMessageInfo info) {
 		// create new buggy for the new guy - his must be done on the server otherwise collisions wont work!
-		Vector3 spawnLocation = new Vector3(0,0,0);
+		Vector3 spawnLocation = new Vector3(0,12,0);
 		Vector3 velocity = new Vector3(0,0,0);
 
 		// instantiate the prefabs
 		GameObject cartGameObject = Instantiate(Resources.Load(cartModel), spawnLocation, Quaternion.identity) as GameObject;
-		GameObject ballGameObject = Instantiate(Resources.Load(ballModel), spawnLocation + new Vector3(3,0,0), Quaternion.identity) as GameObject;
-		GameObject characterGameObject = Instantiate(Resources.Load(characterModel), spawnLocation + new Vector3(0,-1,0), Quaternion.identity) as GameObject;
+		GameObject ballGameObject = Instantiate(Resources.Load(ballModel), spawnLocation + new Vector3(3,2,0), Quaternion.identity) as GameObject;
+		GameObject characterGameObject = Instantiate(Resources.Load(characterModel), spawnLocation + new Vector3(0,2,0), Quaternion.identity) as GameObject;
 		// set buggy as characters parent
 		characterGameObject.transform.parent = cartGameObject.transform;
 
