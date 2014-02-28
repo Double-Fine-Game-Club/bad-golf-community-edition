@@ -44,8 +44,8 @@ public class controlServer : MonoBehaviour {
 
 				networkPlayerLoad netPlay = new networkPlayerLoad();
 				myInfo.cartGameObject.rigidbody.velocity = Vector3.zero;
-				netPlay.BallScriptTogglerEnabler (myInfo);
-				netPlay.CarScriptTogglerDisabler (myInfo);
+				netPlay.BallScriptToggler (myInfo,true);
+				netPlay.CarScriptToggler (myInfo,false);
 				
 					/* move camera - HACKY
 					GameObject buggyCam = nvs.myCam.gameObject;
@@ -76,8 +76,8 @@ public class controlServer : MonoBehaviour {
 					
 					networkPlayerLoad netPlay = new networkPlayerLoad();
 					myInfo.cartGameObject.rigidbody.velocity = Vector3.zero;
-					netPlay.BallScriptTogglerDisabler (myInfo);
-					netPlay.CarScriptTogglerEnabler (myInfo);
+					netPlay.BallScriptToggler (myInfo,false);
+					netPlay.CarScriptToggler (myInfo,true);
 				
 					/* move camera - HACKY
 					GameObject buggyCam = nvs.myCam.gameObject;
@@ -151,7 +151,7 @@ public class controlServer : MonoBehaviour {
 		foreach (PlayerInfo p in nvs.players) {
 			if (p.player==player) {
 				//TODO: add horn to buggy - who's Todo?
-				//p.cartGameObject.audio.Play();
+				p.cartGameObject.audio.Play();
 			}
 		}
 	}

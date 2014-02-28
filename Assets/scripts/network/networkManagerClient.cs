@@ -153,19 +153,13 @@ public class networkManagerClient : MonoBehaviour {
 			newGuy.characterGameObject.transform.localPosition = new Vector3(0,0,0);
 			newGuy.characterGameObject.transform.localRotation = Quaternion.identity;
 			myInfo.cartGameObject.rigidbody.velocity = Vector3.zero;
-			networkPlayerLoad netPlay = new networkPlayerLoad();
 			myInfo.cartGameObject.rigidbody.velocity = Vector3.zero;
-			netPlay.BallScriptToggler (newGuy,true);
-			netPlay.CarScriptToggler (newGuy, false);
 		} else if (newGuy.currentMode==1) {
 			// set them outside the buggy
 			newGuy.characterGameObject.transform.parent = newGuy.ballGameObject.transform;
 			newGuy.characterGameObject.transform.localPosition = new Vector3(0,0,-2);
 			newGuy.characterGameObject.transform.localRotation = Quaternion.identity;
-			networkPlayerLoad netPlay = new networkPlayerLoad();
 			myInfo.cartGameObject.rigidbody.velocity = Vector3.zero;
-			netPlay.BallScriptToggler (newGuy,false);
-			netPlay.CarScriptToggler (newGuy, true);
 		}
 
 
