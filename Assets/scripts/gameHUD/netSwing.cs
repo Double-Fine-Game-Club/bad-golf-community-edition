@@ -19,19 +19,8 @@ public class netSwing : MonoBehaviour {
 		// add the script to the ball
 		//InControlSwingMode ballSwing = nvs.myInfo.ballGameObject.AddComponent(typeof(InControlSwingMode)) as InControlSwingMode;
 		// set things that the script needs
-		//ballSwing.camera = nvs.myCam;
-
-		// add the script to the ball
-		//TransferToSwing transfSwing = nvs.myInfo.cartGameObject.AddComponent(typeof(TransferToSwing)) as TransferToSwing;
-		// set things that the script needs
-		//transfSwing.ball = nvs.myInfo.ballGameObject;
+		//ballSwing.camera = nvs.myCam.gameObject;
 		
-		// add the script to the ball
-		PowerMeter bpm = myInfo.ballGameObject.AddComponent("PowerMeter") as PowerMeter;
-		// set things that the script needs
-		bpm.m_objectToCircle = myInfo.ballGameObject;
-		bpm.m_markerPrefab = Resources.Load("powerMeterPrefab") as GameObject;
-		bpm.enabled = false;
 	}
 	
 	// Update is called once per frame
@@ -66,11 +55,19 @@ public class netSwing : MonoBehaviour {
 				networkView.RPC("PlayerSwap", RPCMode.Others, myInfo.currentMode, myInfo.player);
 				// Stop the cart's forward motion and stop it from rolling away
 				myInfo.cartGameObject.rigidbody.velocity = Vector3.zero;
+
+				myInfo.cartGameObject.rigidbody.velocity = Vector3.zero;
+				myInfo.ballGameObject.SendMessage ("turnOnScripts");
+				myInfo.cartGameObject.SendMessage("turnOffScripts");
+				CarUserControl carCtrl = myInfo.cartGameObject.GetComponent(typeof(CarUserControl)) as CarUserControl;
+				carCtrl.enabled = false;
+
+				/*
 				myInfo.cartGameObject.rigidbody.constraints = RigidbodyConstraints.FreezeAll;
 
 				// enable the scripts on the ball
 				PowerMeter bpm = myInfo.ballGameObject.GetComponent("PowerMeter") as PowerMeter;
-				bpm.enabled = true;
+				bpm.enabled = true;*/
 
 				
 				// if at ball
@@ -86,12 +83,19 @@ public class netSwing : MonoBehaviour {
 				myInfo.characterGameObject.transform.FindChild("lil_patrick").animation.Play("driveIdle",PlayMode.StopAll);
 				// tell everyone
 				networkView.RPC("PlayerSwap", RPCMode.Others, myInfo.currentMode, myInfo.player);
+
+				myInfo.ballGameObject.SendMessage("turnOffScripts");
+				myInfo.cartGameObject.SendMessage("turnOnScripts");
+				CarUserControl carCtrl = myInfo.cartGameObject.GetComponent(typeof(CarUserControl)) as CarUserControl;
+				carCtrl.enabled = true;
+
+				/*
 				// undo cart lock
 				myInfo.cartGameObject.rigidbody.constraints = RigidbodyConstraints.None;
 				
 				// disable the scripts on the ball
 				PowerMeter bpm = myInfo.ballGameObject.GetComponent("PowerMeter") as PowerMeter;
-				bpm.enabled = false;
+				bpm.enabled = false;*/
 			}
 		}
 	}
@@ -102,7 +106,7 @@ public class netSwing : MonoBehaviour {
 		GUI.Box (new Rect (200, 200, 100, 100), "in range: " + inHittingRange);
 	}
 
-	
+
 	// when a player changes mode - player needed since it would comes from the server!
 	[RPC]
 	void PlayerSwap(int newMode, NetworkPlayer player) {

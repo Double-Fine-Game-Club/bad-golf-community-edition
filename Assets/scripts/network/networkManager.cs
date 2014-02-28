@@ -51,6 +51,8 @@ public class networkManager : MonoBehaviour {
 				gameObject.AddComponent("networkManagerServer");
 				// disable this script
 				(gameObject.GetComponent("networkManager") as networkManager).enabled = false;
+				// call for level load
+				networkLevelLoad netLoad = new networkLevelLoad ();
 			}
 			if (GUILayout.Button ("Refresh server list"))
 			{
@@ -102,7 +104,7 @@ public class networkManager : MonoBehaviour {
 	void OnConnectedToServer() {
 		//disable menu level preview
 		GameControl gCtrl = GameObject.Find("main").GetComponent(typeof(GameControl)) as GameControl;
-		gCtrl.ed_levelPreviewScreen.SetActive(false);
+		gCtrl.ed_levelPreviewScreen.SetActive(false);		
 		// set name
 		(GetComponent("networkVariables") as networkVariables).myInfo.name = nameBuffer;
 		// add the client script to us

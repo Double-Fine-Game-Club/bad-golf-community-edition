@@ -8,17 +8,17 @@ public class FollowPlayerScript : MonoBehaviour
 		//public GameObject car;
 		public Transform target;
 		// The distance in the x-z plane to the target
-		public float distance = 5.0f;
+		public float distance = 8.0f;
 		// the height we want the camera to be above the target
-		public float height = 4.0f;
+		public float height = 5.0f;
 
 		public float heightDamping = 2.0f;
 		public float rotationDamping = 3.0f;
 		public float leanDamping = 2.0f;
 
 		// To adjust camera angle, in order to see ahead while driving.
-		public float cameraTilt = 1.5f;
-		public float minDistance = 3.0f;
+		public float cameraTilt = 3.0f;
+		public float minDistance = 6.0f;
 
 	    // zoom camera if near plane corner collide with geometry before reaching target
 		public bool camZoom = false;
