@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -6,11 +6,19 @@ public class networkManagerClient : MonoBehaviour {
 	Dictionary<float,string> screenMessages = new Dictionary<float,string>();
 	PlayerInfo myInfo;
 	bool connected = false;
+	/****************************************************
+	 * 
+	 * DONT EDIT THIS SCRIPT UNLESS ITS TO ADD ANYTHING
+	 * IN THE "ANY CLIENT SIDE SCRIPTS GO HERE" SECTION
+	 * 
+	 ****************************************************/
 
 	// Use this for initialization
 	void Start () {
 		// spawn in a cart
-		networkView.RPC("GiveMeACart", RPCMode.Server, "buggy_m", "ball", "lil_patrick");
+		networkView.RPC("GiveMeACart", RPCMode.Server, "buggy_m", "golf_ball_m", "lil_patrick");
+		networkVariables nvs = GetComponent("networkVariables") as networkVariables;
+		
 	}
 	
 	// CLIENT SIDE SCRIPTS GO HERE
@@ -18,15 +26,27 @@ public class networkManagerClient : MonoBehaviour {
 	void AddScripts() {
 		// updates network-sunk fiziks
 		gameObject.AddComponent("controlClient");
+
 		// chat
 		gameObject.AddComponent("netChat");
+
 		//pause
 		gameObject.AddComponent ("netPause");
+
 		// set the camera in the audio script on the buggy - PUT THIS IN A SCRIPT SOMEONE
 		networkVariables nvs = GetComponent("networkVariables") as networkVariables;
+
+		//THIS SHOULD BE IN ANOTHER SCRIPT
+		GameObject cam = new GameObject ();
+		nvs.myCam = cam.AddComponent<Camera> ();
+		//PUT THIS IN ANOTHER SCRIPT
 		CarAudio mca = myInfo.cartGameObject.GetComponent("CarAudio") as CarAudio;
 		mca.followCamera = nvs.myCam;	// replace tmpCam with our one - this messes up sound atm
-		(nvs.myCam.gameObject.AddComponent("SmoothFollow") as SmoothFollow).target = myInfo.cartGameObject.transform;	// add smooth follow script
+		(nvs.myCam.gameObject.AddComponent("FollowPlayerScript") as FollowPlayerScript).target = myInfo.cartGameObject.transform;	// add smooth follow script
+
+		// add the swing script
+		gameObject.AddComponent("netSwing");
+
 		// get self
 		myInfo.player = Network.player;
 		// get server
@@ -127,19 +147,25 @@ public class networkManagerClient : MonoBehaviour {
 		newGuy.currentMode = mode;
 		newGuy.player = p;
 
-		// ADD MORE SHIT HERE
+		// ADD MORE STUFF HERE
 		if (newGuy.currentMode==0){
 			// set them inside the buggy
 			newGuy.characterGameObject.transform.parent = newGuy.cartGameObject.transform;
 			newGuy.characterGameObject.transform.localPosition = new Vector3(0,0,0);
 			newGuy.characterGameObject.transform.localRotation = Quaternion.identity;
+			newGuy.cartGameObject.rigidbody.velocity = Vector3.zero;
+			CarUserControl carCtrl = newGuy.cartGameObject.GetComponent(typeof(CarUserControl)) as CarUserControl;
+			carCtrl.enabled = true;
 		} else if (newGuy.currentMode==1) {
-			// set them inside the buggy
+			// set them outside the buggy
 			newGuy.characterGameObject.transform.parent = newGuy.ballGameObject.transform;
 			newGuy.characterGameObject.transform.localPosition = new Vector3(0,0,-2);
 			newGuy.characterGameObject.transform.localRotation = Quaternion.identity;
+			CarUserControl carCtrl = newGuy.cartGameObject.GetComponent(typeof(CarUserControl)) as CarUserControl;
+			carCtrl.enabled = false;
 		}
-		
+
+
 		// and let us have them aswell
 		networkVariables nvs = GetComponent("networkVariables") as networkVariables;
 		nvs.players.Add(newGuy);

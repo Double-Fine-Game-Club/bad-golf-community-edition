@@ -5,7 +5,7 @@ using System.Collections;
 
 public abstract class SwingBehaviour : MonoBehaviour
 {
-		public GameObject camera, cart;
+		public GameObject camera;
 		public int hitMultiplier = 10;
 		public const int k_maxShotPower = 500;
 		public const int k_maxArcAngle = 80;
@@ -47,9 +47,10 @@ public class InControlSwingMode : SwingBehaviour
 						Screen.lockCursor = false;
 			
 						// Turn on control scripts and camera on the cart.
-						cart.SendMessage ("turnOnScripts");
+						//cart.SendMessage ("turnOnScripts");
+
 						// Turn off control scripts (including this one) and camera on the ball.
-						this.gameObject.SendMessage ("turnOffScripts");
+						//this.gameObject.SendMessage ("turnOffScripts");
 						return;
 				}
 				InputManager.Update ();
@@ -96,7 +97,6 @@ public class InControlSwingMode : SwingBehaviour
 						arc.y = 0;
 						arc.Normalize ();
 						arc.y = Mathf.Sin (shotAngle * Mathf.Deg2Rad);
-						;
 						rigidbody.AddForce (transform.localRotation * arc * shotPower * k_shotBoost);
 						shotPower = 0;
 						
