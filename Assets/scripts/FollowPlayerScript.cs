@@ -61,7 +61,9 @@ public class FollowPlayerScript : MonoBehaviour {
 		currentDistance = distance;
 
 		// Set up the InputManager
-		InputManager.Setup();
+		//Dont do this, wer are all ready doing this at the very beginning of the game
+		//	InputManager.Setup();
+
 		InputManager.AttachDevice(new UnityInputDevice(new SwingModeProfile()));
 	}
 

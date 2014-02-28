@@ -8,10 +8,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/scenes/main.unity
   - enabled: 1
-    path: Assets/scenes/level_full.unity
+    path: Assets/scenes/level_full_local_multi.unity
   - enabled: 1
     path: Assets/scenes/level_01.unity
   - enabled: 1
     path: Assets/scenes/multi_lobby.unity
   - enabled: 1
     path: Assets/scenes/level_01_local_multi.unity
+  - enabled: 1
+    path: Assets/scenes/level_full_local_multi.unity
