@@ -4,7 +4,6 @@ using System.Collections;
 public class PauseMenu : MonoBehaviour {
 
 	public GameObject ed_pauseScreen;
-	public GameObject ed_singleView;
 
 	private string nameOfLevel;
 	private bool isPaused=false;
@@ -21,7 +20,8 @@ public class PauseMenu : MonoBehaviour {
 	}
 
 	void hideAllScreens(){
-		ed_singleView.SetActive (false);
+		LocalMultiplayerController.currentView.SetActive (false);
+		LocalMultiplayerController.currentUI.SetActive (false);
 		ed_pauseScreen.SetActive (false);
 	}
 
@@ -34,12 +34,12 @@ public class PauseMenu : MonoBehaviour {
 
 	void onResume(){
 		hideAllScreens ();
-		ed_singleView.SetActive (true);
+		LocalMultiplayerController.currentView.SetActive (true);
+		LocalMultiplayerController.currentUI.SetActive (true);
 		Time.timeScale = 1;
 		isPaused = false;
 
-	}
-	
+	}	
 
 	void onExit(){
 		//Go back to main menu

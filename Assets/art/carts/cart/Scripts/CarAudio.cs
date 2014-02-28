@@ -123,7 +123,7 @@ public class CarAudio : MonoBehaviour {
 				lowAccel.pitch = pitch*pitchMultiplier;
 				lowDecel.pitch = pitch*pitchMultiplier;
 				highAccel.pitch =  pitch*highPitchMultiplier*pitchMultiplier;
-				highDecel.pitch =  pitch*highPitchMultiplier*pitchMultiplier;
+				highDecel.pitch = Mathf.Min (1, pitch*highPitchMultiplier*pitchMultiplier);
 
                 // get values for fading the sounds based on the acceleration
 				float accFade = Mathf.Abs (carController.AccelInput);

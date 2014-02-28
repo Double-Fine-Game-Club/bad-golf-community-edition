@@ -4,7 +4,7 @@ using UnityEngine;
 public class CarUserControl : MonoBehaviour
 {
     private CarController car;  // the car controller we want to use
-	public bool isSingleView = true; //true means only single person, false means split screen
+	public bool isKeyboardControlled = true; //true means only single person, false means split screen
 
     void Awake ()
     {
@@ -23,7 +23,7 @@ public class CarUserControl : MonoBehaviour
 		float h = Input.GetAxis("Horizontal");
 		float v = Input.GetAxis("Vertical");
 #endif
-		if ( isSingleView)
+		if ( isKeyboardControlled)
 		{
 			//Debug.Log ( h + " , " +v );
 			car.Move(h,v);
