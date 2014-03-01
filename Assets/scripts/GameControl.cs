@@ -88,7 +88,7 @@ public class GameControl : MonoBehaviour
 
 	public void onMultiSkip()
 	{
-		nameOfLevel = "multi_lobby";
+		nameOfLevel = "level_full";
 		Application.LoadLevelAdditive( nameOfLevel );
 		
 		hideAllScreens();

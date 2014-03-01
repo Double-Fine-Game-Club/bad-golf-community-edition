@@ -54,12 +54,12 @@ public class controlClient : MonoBehaviour {
 					buggyCam.transform.rotation = Quaternion.identity;
 					buggyCam.transform.localPosition = new Vector3(-6,4,0);
 					buggyCam.transform.localRotation = Quaternion.LookRotation(myInfo.ballGameObject.transform.position - buggyCam.transform.localPosition);
-					(buggyCam.GetComponent("SmoothFollow") as SmoothFollow).enabled = false;
+					(buggyCam.GetComponent("FollowPlayerScript") as FollowPlayerScript).enabled = false;
 					Orbit bco = buggyCam.AddComponent("Orbit") as Orbit;
 					bco.Axis = Vector3.up;
 					bco.Point = myInfo.ballGameObject.transform.position;
 					bco.Speed = 0.8f;
-					//*/ change animation
+					//*/// change animation
 					myInfo.characterGameObject.transform.FindChild("lil_patrick").animation.Play("golfIdle",PlayMode.StopAll);
 					
 					// if at ball
@@ -74,10 +74,10 @@ public class controlClient : MonoBehaviour {
 					//*/ move camera - HACKY
 					GameObject buggyCam = nvs.myCam.gameObject;
 					buggyCam.transform.parent = myInfo.cartGameObject.transform;
-					(buggyCam.GetComponent("SmoothFollow") as SmoothFollow).enabled = true;
+					(buggyCam.GetComponent("FollowPlayerScript") as FollowPlayerScript).enabled = true;
 					Orbit bco = buggyCam.GetComponent("Orbit") as Orbit;
 					Component.Destroy(bco);
-					//*/ change animation
+					//*/// change animation
 					myInfo.characterGameObject.transform.FindChild("lil_patrick").animation.Play("driveIdle",PlayMode.StopAll);
 				}
 				networkView.RPC("PlayerSwap", RPCMode.Others, myInfo.currentMode, myInfo.player);
@@ -109,7 +109,9 @@ public class controlClient : MonoBehaviour {
 			CarController car = myInfo.cartGameObject.transform.GetComponent("CarController") as CarController;
 			car.Move(myInfo.h,myInfo.v);
 		} else if (myInfo.currentMode==1) {		// if in ball mode
-
+			
+		} else if (myInfo.currentMode==2) {		// if in spectate mode
+			
 		}
 	}
 	
@@ -119,8 +121,7 @@ public class controlClient : MonoBehaviour {
 		// find the player
 		foreach (PlayerInfo p in nvs.players) {
 			if (p.player==player) {
-				//TODO: add horn
-				//p.cartGameObject.audio.Play();
+				p.cartGameObject.audio.Play();
 			}
 		}
 	}

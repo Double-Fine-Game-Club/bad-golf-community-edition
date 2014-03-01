@@ -8,7 +8,7 @@ public class FollowPlayerScript : MonoBehaviour {
 	//public GameObject car;
 	public Transform target;
 	// The distance in the x-z plane to the target
-	public float distance = 5.0f;
+	public float distance = 8.0f;
 	// the height we want the camera to be above the target
 	public float height = 4.0f;
 
@@ -61,8 +61,11 @@ public class FollowPlayerScript : MonoBehaviour {
 		currentDistance = distance;
 
 		// Set up the InputManager
-		//Dont do this, wer are all ready doing this at the very beginning of the game
-		//	InputManager.Setup();
+		if ( !InControlSetup.hasBeenSetup )
+		{
+			InputManager.Setup ();
+			InControlSetup.hasBeenSetup = true;
+		}
 
 		InputManager.AttachDevice(new UnityInputDevice(new SwingModeProfile()));
 	}

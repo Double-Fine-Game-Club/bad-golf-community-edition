@@ -9,13 +9,11 @@ public class netChat : MonoBehaviour {
 	string currentList = "Chat log:";
 	Vector2 scrollPosition = Vector2.zero;
 	int fontSize = 18;	// massive fonts due to Linux
-    NetworkViewID myID;
-
+	
 	void Start () {
 		// get variables we need
 		networkVariables nvs = GetComponent("networkVariables") as networkVariables;
 		myName = nvs.myInfo.name;
-        myID = nvs.myInfo.ballViewID;
 	}
 	
 	// chat box
@@ -30,7 +28,7 @@ public class netChat : MonoBehaviour {
 			chatVisible = false;
 			if (chatBuffer!="") {
 				// this line sends the message
-				networkView.RPC("SendChatMessage", RPCMode.All, myName + ": " + chatBuffer, myID);
+				networkView.RPC("SendChatMessage", RPCMode.All, myName + ": " + chatBuffer);
 				chatBuffer = "";
 			}
 		}
@@ -49,18 +47,14 @@ public class netChat : MonoBehaviour {
 		GUI.Label(new Rect(0,0,Screen.width/2,fontSize*messageCount+4), currentList);
 		GUI.EndScrollView();
 	}
-
+	
 	// recieved a message
 	[RPC]
-	void SendChatMessage(string text, NetworkViewID ID) {
+	void SendChatMessage(string text) {
 		Debug.Log(text);
 		messageCount++;
 		currentList = currentList + "\n" + text;
 		// scroll it
 		scrollPosition = new Vector2(0, fontSize*Mathf.Max(0,messageCount-4));
-        //display chat bubble over speaking player
-        if (ChatBubble.Instance != null) {
-            ChatBubble.DisplayChat(ID);
-        }
 	}
 }

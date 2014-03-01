@@ -13,7 +13,7 @@ public class Orbit : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		transform.RotateAround(Point, Axis, Speed);
 	}
 }

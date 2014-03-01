@@ -25,9 +25,14 @@ public class InControlSwingMode : SwingBehaviour
 		// Use this for initialization
 		void Start ()
 		{
+				//XInput only works on windows
 				//InputManager.EnableXInput = true;
-				//Dont do this, wer are all ready doing this at the very beginning of the game
-				//InputManager.Setup ();
+
+				if ( !InControlSetup.hasBeenSetup )
+				{
+					InputManager.Setup ();
+					InControlSetup.hasBeenSetup = true;
+				}
 
 				// Add a custom device profile.
 				InputManager.AttachDevice (new UnityInputDevice (new SwingModeProfile ()));

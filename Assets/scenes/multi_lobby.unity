@@ -138,7 +138,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1316b11755235c4296b41f6c3d29a88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serverVersion: HL5
+  myCam: {fileID: 2065442162}
+  lowestHeight: -10
+  buggyModels:
+  - buggy_m
+  - hotrod_m
+  buggyModelNames:
+  - Buggy
+  - Hotrod
+  ballModels:
+  - ball
+  ballModelNames:
+  - Ball
+  characterModels:
+  - lil_patrick
+  characteryModelNames:
+  - Patrick
+  serverVersion: sandvich3
+  serverName: 
 --- !u!114 &349291804
 MonoBehaviour:
   m_ObjectHideFlags: 0
