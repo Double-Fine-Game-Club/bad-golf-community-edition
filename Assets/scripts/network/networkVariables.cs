@@ -15,9 +15,9 @@ public class networkVariables : MonoBehaviour {
 	[HideInInspector]
 	public string[] ballModelNames = new string[1] {"Ball"};	// ball models names
 	[HideInInspector]
-	public string[] characterModels = new string[1] {"lil_patrick"};	// character models
+	public string[] characterModels = new string[2] {"lil_patrick", "BradOverPatrick"};	// character models
 	[HideInInspector]
-	public string[] characteryModelNames = new string[1] {"Patrick"};	// character models names
+	public string[] characteryModelNames = new string[2] {"Patrick", "Brad"};	// character models names
 	
 	// client only variables
 	// maybe put the pause things in here?

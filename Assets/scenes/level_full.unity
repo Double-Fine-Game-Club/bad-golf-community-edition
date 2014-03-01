@@ -362,9 +362,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 198239879}
   - 114: {fileID: 198239881}
-  - 114: {fileID: 198239880}
   - 114: {fileID: 198239882}
   - 148: {fileID: 198239883}
+  - 114: {fileID: 198239880}
   m_Layer: 0
   m_Name: networkObject
   m_TagString: Untagged
@@ -408,8 +408,10 @@ MonoBehaviour:
   - Ball
   characterModels:
   - lil_patrick
+  - BradOverPatrick
   characteryModelNames:
   - Patrick
+  - Brad
   serverVersion: sandvich3
   serverName: 
 --- !u!114 &198239881
