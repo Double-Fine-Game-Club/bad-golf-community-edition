@@ -17423,7 +17423,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
-  m_Sprite: {fileID: 21300000, guid: dd013c3b344c23641a0bdb31a0ed5231, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b77b731422e5e384b96bd52660e04932, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1587986038
 GameObject:
@@ -18954,8 +18954,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetTextMesh: {fileID: 1769259808}
-  colorHover: {r: .375862062, g: 0, b: 0, a: 1}
-  colorNormal: {r: .300000042, g: 0, b: 0, a: 1}
+  colorHover: {r: .920689642, g: .920689642, b: .920689642, a: 1}
+  colorNormal: {r: 1, g: 1, b: 1, a: 1}
   colorDisabled: {r: .75, g: .75, b: .75, a: 1}
   hoverAudio: {fileID: 0}
   disabled: 0
@@ -18981,7 +18981,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1769259803}
-  m_Text: Quit
+  m_Text: Back
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
@@ -18994,7 +18994,7 @@ TextMesh:
   m_Font: {fileID: 12800000, guid: ef1647174345c5e4f8509b41e2077e85, type: 3}
   m_Color:
     serializedVersion: 2
-    rgba: 4278190176
+    rgba: 4294967295
 --- !u!23 &1769259809
 Renderer:
   m_ObjectHideFlags: 0
