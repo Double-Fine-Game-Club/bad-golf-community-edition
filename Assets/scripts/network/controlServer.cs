@@ -128,8 +128,7 @@ public class controlServer : MonoBehaviour {
 		// find the player
 		foreach (PlayerInfo p in nvs.players) {
 			if (p.player==player) {
-				//TODO: add horn to buggy - who's Todo?
-				//p.cartGameObject.audio.Play();
+				p.cartGameObject.audio.Play();
 			}
 		}
 	}
