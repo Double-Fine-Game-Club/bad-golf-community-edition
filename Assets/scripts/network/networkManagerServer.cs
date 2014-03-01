@@ -47,6 +47,9 @@ public class networkManagerServer : MonoBehaviour {
 		//pause
 		gameObject.AddComponent ("netPause");
 		
+		//cart reset
+		gameObject.AddComponent ("netPlayerRespawn");
+		
 		// set the camera in the audio script on the buggy - PUT THIS IN A SCRIPT SOMEONE
 		CarAudio mca = myInfo.cartGameObject.GetComponent("CarAudio") as CarAudio;
 		mca.followCamera = nvs.myCam;	// replace tmpCam with our one - this messes up sound atm
@@ -63,7 +66,7 @@ public class networkManagerServer : MonoBehaviour {
 		float spacer = 360 / nvs.players.Count;
 		foreach (PlayerInfo newGuy in nvs.players) {
 			// create new buggy for the new guy - his must be done on the server otherwise collisions wont work!
-			Vector3 spawnLocation = Quaternion.AngleAxis(spacer * i++, Vector3.up) * new Vector3(10,2,0);
+			Vector3 spawnLocation = transform.position + Quaternion.AngleAxis(spacer * i++, Vector3.up) * new Vector3(10,2,0);
 			
 			// instantiate the prefabs
 			GameObject cartGameObject = Instantiate(Resources.Load(newGuy.cartModel), spawnLocation, Quaternion.identity) as GameObject;

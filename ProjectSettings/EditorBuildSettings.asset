@@ -16,4 +16,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/scenes/level_01_local_multi.unity
   - enabled: 1
-    path: Assets/scenes/level_full_local_multi.unity
+    path: Assets/scenes/level_full.unity

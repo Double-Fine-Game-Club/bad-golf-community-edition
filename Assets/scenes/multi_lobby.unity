@@ -139,6 +139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myCam: {fileID: 2065442162}
+  lowestHeight: -10
   buggyModels:
   - buggy_m
   - hotrod_m
