@@ -121,8 +121,7 @@ public class controlClient : MonoBehaviour {
 		// find the player
 		foreach (PlayerInfo p in nvs.players) {
 			if (p.player==player) {
-				//TODO: add horn
-				//p.cartGameObject.audio.Play();
+				p.cartGameObject.audio.Play();
 			}
 		}
 	}

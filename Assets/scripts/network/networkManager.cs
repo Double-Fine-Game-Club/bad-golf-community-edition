@@ -5,6 +5,7 @@ using InControl;	// remove me later
 
 public class networkManager : MonoBehaviour {
 	bool connectingToServer = false;
+	bool showFailMessage = false;
 	string serverVersion;
 	networkVariables nvs;
 	// random names
@@ -108,9 +109,12 @@ public class networkManager : MonoBehaviour {
 					// Connect to HostData struct, internally the correct method is used (GUID when using NAT).
 					Network.Connect(element);
 					connectingToServer = true;
+					showFailMessage = false;
 				}
 				GUILayout.EndHorizontal();
 			}
+			if (showFailMessage) 
+				GUILayout.Label("Failed to connect");
 		}
 	}
 	
@@ -128,4 +132,10 @@ public class networkManager : MonoBehaviour {
 		// disable this script
 		this.enabled = false;
 	}
+
+	void OnFailedToConnect(NetworkConnectionError error){
+		connectingToServer = false;
+		showFailMessage = true;
+	}
+
 }

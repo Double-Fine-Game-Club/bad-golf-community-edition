@@ -12,6 +12,15 @@ public class CarUserControl : MonoBehaviour
         car = GetComponent<CarController>();
     }
 
+	void Update()
+	{
+#if CROSS_PLATFORM_INPUT
+		//if(CrossPlatformInput.GetAction3());	//Probably not right
+#else
+		if(Input.GetKeyDown(KeyCode.Q))
+			gameObject.audio.Play();
+#endif
+	}
 
     void FixedUpdate()
     {
