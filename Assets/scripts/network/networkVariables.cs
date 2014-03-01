@@ -3,17 +3,35 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class networkVariables : MonoBehaviour {
-	// ADD VARIABLES HERE
-	public PlayerInfo myInfo = new PlayerInfo();	// stores info on the current player
-	public string serverVersion = "sandvich";		// server version - EDIT IN HERE NOT IN THE EDITOR
-	public string serverName = "";					// server name
-	public ArrayList players = new ArrayList();		// list of players
+	// ADD VARIABLES HERE - after adding you will need to reset the object in the inspector and re-assign everything
 	public Camera myCam;							// camera
-
+	[HideInInspector]
+	public string[] buggyModels = new string[2] {"buggy_m", "hotrod_m"};		// buggy models
+	[HideInInspector]
+	public string[] buggyModelNames = new string[2] {"Buggy", "Hotrod"};	// buggy models names
+	[HideInInspector]
+	public string[] ballModels = new string[1] {"ball"};	// ball models
+	[HideInInspector]
+	public string[] ballModelNames = new string[1] {"Ball"};	// ball models names
+	[HideInInspector]
+	public string[] characterModels = new string[1] {"lil_patrick"};	// character models
+	[HideInInspector]
+	public string[] characteryModelNames = new string[1] {"Patrick"};	// character models names
+	
 	// client only variables
 	// maybe put the pause things in here?
-
+	
 	// server only variables
+
+	// techincal bits
+	[HideInInspector]
+	public PlayerInfo myInfo = new PlayerInfo();	// stores info on the current player
+	[HideInInspector]
+	public string serverVersion = "sandvich3";		// server version
+	[HideInInspector]
+	public string serverName = "";					// server name
+	[HideInInspector]
+	public ArrayList players = new ArrayList();		// list of players
 }
 
 
@@ -30,11 +48,13 @@ public class PlayerInfo {
 	public NetworkViewID characterViewID;		// NetworkViewID of the character
 	public GameObject characterGameObject;		// GameObject of the character
 	public string characterModel;				// model of the character
-	public int currentMode;						// current mode of the player (0=in buggy, 1=on foot)
+	public int currentMode = 2;						// current mode of the player (0=in buggy, 1=on foot, 2=spectator)
 	public string name;							// name
+	
+	// do these need to be net-sunk?
 	public bool playerIsBusy   = false;			// player is engaged in an uninteruptable action
 	public bool playerIsPaused = false;			// player is paused
-
+	
 	public float v;		//player accelleration/brake input
 	public float h;		//player steering input
 }
