@@ -10981,7 +10981,7 @@ MonoBehaviour:
   musicVolume: 1
   fadeTime: 2
   sfxVolume: 1
-  muteAllSound: 1
+  muteAllSound: 0
   muteMusic: 0
   muteSfx: 0
   audioPoolSize: 8
