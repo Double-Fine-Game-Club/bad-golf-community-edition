@@ -4,7 +4,8 @@ using System.Collections.Generic;
 
 public class networkVariables : MonoBehaviour {
 	// ADD VARIABLES HERE - after adding you will need to reset the object in the inspector and re-assign everything
-	public Camera myCam;							// camera
+	public Camera myCam;				// camera
+	public float lowestHeight;			// lowest height before respawn
 	[HideInInspector]
 	public string[] buggyModels = new string[2] {"buggy_m", "hotrod_m"};		// buggy models
 	[HideInInspector]
