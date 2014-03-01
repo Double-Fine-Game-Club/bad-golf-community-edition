@@ -6450,7 +6450,7 @@ Camera:
   m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
@@ -10575,7 +10575,7 @@ MonoBehaviour:
   onStartClip: {fileID: 0}
   onEnableClip: {fileID: 8300000, guid: 1b4410968fbb8d24e89580b572248597, type: 3}
   onDisableClip: {fileID: 0}
-  volume: 0
+  volume: 1
   overrideVolume: 0
   onDisableStopMusic: 0
 --- !u!114 &977792252
@@ -10597,10 +10597,10 @@ MonoBehaviour:
   musicClips:
   - {fileID: 8300000, guid: 1b4410968fbb8d24e89580b572248597, type: 3}
   - {fileID: 8300000, guid: a6cd8e32a033a4640a67135ae9929dbb, type: 3}
-  musicVolume: 0
-  fadeTime: 0
-  sfxVolume: 0
-  muteAllSound: 1
+  musicVolume: 1
+  fadeTime: 1
+  sfxVolume: 1
+  muteAllSound: 0
   muteMusic: 0
   muteSfx: 0
   audioPoolSize: 8
@@ -10642,8 +10642,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 0c3957d17699bd6428074586dfe48912, type: 3}
   - {fileID: 8300000, guid: 949b6122fc505d749a05fa62ba55a31b, type: 3}
   overrideVolume: 0
-  volume: 0
-  onDisableStopMusic: 1
+  volume: 1
+  onDisableStopMusic: 0
 --- !u!1 &998982229
 GameObject:
   m_ObjectHideFlags: 0
@@ -10981,7 +10981,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1037379302
 Transform:
   m_ObjectHideFlags: 0
@@ -12892,7 +12892,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1241405400
 Transform:
   m_ObjectHideFlags: 0
@@ -12906,7 +12906,7 @@ Transform:
   - {fileID: 686759789}
   - {fileID: 469745866}
   - {fileID: 580855526}
-  - {fileID: 1769259804}
+  - {fileID: 1579787706}
   m_Father: {fileID: 977792248}
 --- !u!1 &1248924770
 GameObject:
@@ -17358,6 +17358,73 @@ Transform:
   m_Children:
   - {fileID: 1899059307}
   m_Father: {fileID: 1538595813}
+--- !u!1 &1579787705
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1579787706}
+  - 212: {fileID: 1579787708}
+  - 114: {fileID: 1579787707}
+  m_Layer: 0
+  m_Name: btn_quit
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1579787706
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1579787705}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -1.49011612e-08, z: -7.45996094}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1769259804}
+  m_Father: {fileID: 1241405400}
+--- !u!114 &1579787707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1579787705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaf4fd1247b03f946ad5dd979e0cbe8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiCamera: {fileID: 580855530}
+  widthPercent: .5
+  heightPercent: .400000006
+  setPercentsFromCurrentTransforms: 0
+--- !u!212 &1579787708
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1579787705}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
+  m_Sprite: {fileID: 21300000, guid: dd013c3b344c23641a0bdb31a0ed5231, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1587986038
 GameObject:
   m_ObjectHideFlags: 0
@@ -18854,7 +18921,6 @@ GameObject:
   - 4: {fileID: 1769259804}
   - 23: {fileID: 1769259809}
   - 102: {fileID: 1769259808}
-  - 114: {fileID: 1769259807}
   - 114: {fileID: 1769259806}
   - 114: {fileID: 1769259805}
   - 65: {fileID: 1769259810}
@@ -18872,10 +18938,10 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1769259803}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6, y: -3, z: -1.37936795}
-  m_LocalScale: {x: .154939994, y: .154939994, z: .154939994}
+  m_LocalPosition: {x: 0, y: 0, z: -.867585182}
+  m_LocalScale: {x: .0890123621, y: .0890123621, z: .0890123621}
   m_Children: []
-  m_Father: {fileID: 1241405400}
+  m_Father: {fileID: 1579787706}
 --- !u!114 &1769259805
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18888,8 +18954,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetTextMesh: {fileID: 1769259808}
-  colorHover: {r: 1, g: 0, b: 0, a: 1}
-  colorNormal: {r: 1, g: 1, b: 1, a: 1}
+  colorHover: {r: .375862062, g: 0, b: 0, a: 1}
+  colorNormal: {r: .300000042, g: 0, b: 0, a: 1}
   colorDisabled: {r: .75, g: .75, b: .75, a: 1}
   hoverAudio: {fileID: 0}
   disabled: 0
@@ -18908,21 +18974,6 @@ MonoBehaviour:
   messageName: onMenu
   clickAudio: {fileID: 0}
   messageValue: 
---- !u!114 &1769259807
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1769259803}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aaf4fd1247b03f946ad5dd979e0cbe8a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  uiCamera: {fileID: 580855530}
-  widthPercent: .0500000007
-  heightPercent: .100000001
-  setPercentsFromCurrentTransforms: 0
 --- !u!102 &1769259808
 TextMesh:
   serializedVersion: 3
@@ -18930,11 +18981,11 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1769259803}
-  m_Text: Exit
+  m_Text: Quit
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
-  m_Anchor: 0
+  m_Anchor: 4
   m_Alignment: 0
   m_TabSize: 4
   m_FontSize: 36
@@ -18943,7 +18994,7 @@ TextMesh:
   m_Font: {fileID: 12800000, guid: ef1647174345c5e4f8509b41e2077e85, type: 3}
   m_Color:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4278190176
 --- !u!23 &1769259809
 Renderer:
   m_ObjectHideFlags: 0
@@ -18975,8 +19026,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 6, y: 4.13964844, z: 0}
-  m_Center: {x: 3, y: -2.06982422, z: 0}
+  m_Size: {x: 12.1099997, y: 5.98999977, z: 0}
+  m_Center: {x: .25, y: -.289999992, z: 0}
 --- !u!1 &1777557415
 GameObject:
   m_ObjectHideFlags: 0
