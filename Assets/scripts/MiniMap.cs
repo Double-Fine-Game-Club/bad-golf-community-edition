@@ -7,14 +7,14 @@ public class MiniMap : MonoBehaviour {
 	public Texture2D playerIcon;
 	public Texture2D playerDirectionIcon;
 	public Texture2D ballIcon;
-	public float iconScale = 0.2f;
+	public float iconScale = 0.3f;
 
-	public Color playerColor;
+	public Color playerColor = new Color(1,0,0,1);
 	
 	public Transform player;
 	public Transform flag;
 	public Transform ball;
-	public Mesh level;
+	public GameObject level;
 	public Camera mapCamera;
 
 	private Rect playerPos;
@@ -54,8 +54,8 @@ public class MiniMap : MonoBehaviour {
 
 	// Obtains the screenspace bounds of the minimap camera
 	void UpdateCameraBounds() {
-		camMin = mapCamera.WorldToScreenPoint( level.bounds.min );
-		camMax = mapCamera.WorldToScreenPoint( level.bounds.max );
+		camMin = mapCamera.WorldToScreenPoint( level.collider.bounds.min );
+		camMax = mapCamera.WorldToScreenPoint( level.collider.bounds.max );
 	}
 
 	void UpdateIconSize() {
@@ -83,9 +83,11 @@ public class MiniMap : MonoBehaviour {
 		//ballPos.center   = new Vector2( camBall.x, Screen.height - camBall.y );
 		//flagPos.center   = new Vector2( camFlag.x, Screen.height - camFlag.y - flagPos.height * 0.5f );
 
-		playerPos.center = NormalizedPosition( player.position, level.bounds.min, level.bounds.max, camMin, camMax );
-		ballPos.center = NormalizedPosition( ball.position, level.bounds.min, level.bounds.max, camMin, camMax );
-		flagPos.center = NormalizedPosition( flag.position, level.bounds.min, level.bounds.max, camMin, camMax );
+		playerPos.center = NormalizedPosition( player.position, level.collider.bounds.min, level.collider.bounds.max, camMin, camMax );
+		ballPos.center = NormalizedPosition( ball.position, level.collider.bounds.min, level.collider.bounds.max, camMin, camMax );
+		flagPos.center = NormalizedPosition( flag.position, level.collider.bounds.min, level.collider.bounds.max, camMin, camMax );
+
+		flagPos.center = new Vector2( flagPos.center.x, flagPos.center.y - flagPos.height * 0.5f);
 
 	}
 
