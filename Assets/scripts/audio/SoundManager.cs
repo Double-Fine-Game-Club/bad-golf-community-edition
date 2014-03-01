@@ -128,7 +128,16 @@ public class SoundManager : MonoBehaviour
 	return null;
 #endif
 	}
-	
+
+	public int musicListCount
+	{
+		get
+		{
+			return musicClips.Count;
+		}
+	}
+
+
 	public void pauseMusic()
 	{
 		if ( currentMusicAudioSource != null)
@@ -141,6 +150,23 @@ public class SoundManager : MonoBehaviour
 			currentMusicAudioSource.Play();	
 	}
 
+	public void playMusic(int musicClipIndex)
+	{
+		playMusic (musicClipIndex, musicVolume);
+	}
+
+	public void playMusic(int musicClipIndex, float volume)
+	{
+		if (musicClipIndex < 0 || musicClipIndex >= musicClips.Count)
+		{
+			debugMusic ("Tried to play music index : " + musicClipIndex + " but list size is " + musicClips.Count);
+		}
+		else
+		{
+			playMusic (musicClips [musicClipIndex], volume);
+		}
+	}
+	
 	public void playMusic(string musicClipName)
 	{
 		playMusic(musicClipName, musicVolume);	
@@ -175,103 +201,113 @@ public class SoundManager : MonoBehaviour
 			{
 				debugMusic("Tried to play music : " + musicClipName + " but soundManager could not find it!");
 				return;
-			}	
-		
-			//we have music playing already
-			if(currentMusicAudioSource.isPlaying)
-			{
-				debugMusic("music is aleady playing, checking options");
-			
-				//check if we are in the middle of fadingIn or Out 
-				if(musicFadeOutTweener.IsTweening(musicFadeOutTweener.target) || musicFadeInTweener.IsTweening(musicFadeInTweener.target))
-				{
-					debugMusic("A Fade is happening...");
+			}
 
-					//at this point we only care if one of the musics that was fading is the one we want
-					//and we want to play it at its current volume back up to 1, the other music we fade out 
-					//unless neither of them are the one we want, then do a crossfade
-				
-					AudioSource fadeOutTarget = null;
-					AudioSource fadeInTarget = null;
-				
-					if(musicFadeInTweener.target != null && ((AudioSource)musicFadeInTweener.target).clip.name == musicClipName)
-					{
-						fadeInTarget = (AudioSource)musicFadeInTweener.target;
-					
-						if(musicFadeOutTweener.target != null)
-						{
-							fadeOutTarget = (AudioSource)musicFadeOutTweener.target;
-						}
-					}
-				
-					if(fadeInTarget == null && musicFadeOutTweener.target != null && ((AudioSource)musicFadeOutTweener.target).clip.name == musicClipName)
-					{
-						fadeInTarget = (AudioSource)musicFadeOutTweener.target;
-					
-						if(musicFadeInTweener.target != null)
-						{
-							fadeOutTarget = (AudioSource)musicFadeOutTweener.target;
-						}
-					}
-				
-					//clean up faders 
-					musicFadeInTweener.Kill();
-					musicFadeOutTweener.Kill();
-				
-					if(fadeOutTarget != null)
-					{
-						debugMusic("Fading out:" + fadeOutTarget.clip.name);
-						fadeOutMusic(fadeOutTarget);
-					}
-				
-					if(fadeInTarget != null)
-					{
-						debugMusic("Fading in:" + fadeInTarget.clip.name);
-						doMusicPlay(musicClip, fadeInTarget.volume, volume);	
-					}
-				
-					//make sure the audioSources match up
-					if(fadeOutTarget == null)
-					{
-						if(fadeInTarget != null)
-						{
-							AudioSource otherSource = (fadeInTarget == musicAudioSourceA) ? musicAudioSourceB : musicAudioSourceA;
-							if(otherSource.clip != null)
-							{
-								debugMusic("Stopping music :" + otherSource.clip.name);
-								otherSource.Stop();
-							}
-						}
-					}
-				
-					//we want a new clip to play if neither of the fades where for this clip
-					if(fadeInTarget == null)
-					{
-						doMusicCrossFade(musicClip, volume);
-					}
-				}
-				//check if its the same clip that is already playing
-				else if(currentMusicAudioSource.clip.name == musicClipName)
-				{
-					debugMusic("The same music is playing already, so we will ignore play.");
-					return; //this could be some other behavior like restarting it or something 
-				}
-				//another music is playing, crossfade from one music to another
-				else
-				{
-					debugMusic("Another music is playing, we will do a standard crossfade.");
-					doMusicCrossFade(musicClip, volume);
-				}
-			}
-			//nothing was playing fade in new music
-			else
-			{
-				debugMusic("no music was playing, playing: " + musicClip.name);
-				doMusicPlay(musicClip, volume);
-			}
+			playMusic (musicClip, volume);
 		}
 	}
 
+	public void playMusic(AudioClip musicClip)
+	{
+		playMusic(musicClip, musicVolume);	
+	}
+
+	public void playMusic(AudioClip musicClip, float volume)
+	{
+		//we have music playing already
+		if(currentMusicAudioSource.isPlaying)
+		{
+			debugMusic("music is aleady playing, checking options");
+			
+			//check if we are in the middle of fadingIn or Out 
+			if(musicFadeOutTweener.IsTweening(musicFadeOutTweener.target) || musicFadeInTweener.IsTweening(musicFadeInTweener.target))
+			{
+				debugMusic("A Fade is happening...");
+				
+				//at this point we only care if one of the musics that was fading is the one we want
+				//and we want to play it at its current volume back up to 1, the other music we fade out 
+				//unless neither of them are the one we want, then do a crossfade
+				
+				AudioSource fadeOutTarget = null;
+				AudioSource fadeInTarget = null;
+				
+				if(musicFadeInTweener.target != null && ((AudioSource)musicFadeInTweener.target).clip.name == musicClip.name)
+				{
+					fadeInTarget = (AudioSource)musicFadeInTweener.target;
+					
+					if(musicFadeOutTweener.target != null)
+					{
+						fadeOutTarget = (AudioSource)musicFadeOutTweener.target;
+					}
+				}
+				
+				if(fadeInTarget == null && musicFadeOutTweener.target != null && ((AudioSource)musicFadeOutTweener.target).clip.name == musicClip.name)
+				{
+					fadeInTarget = (AudioSource)musicFadeOutTweener.target;
+					
+					if(musicFadeInTweener.target != null)
+					{
+						fadeOutTarget = (AudioSource)musicFadeOutTweener.target;
+					}
+				}
+				
+				//clean up faders 
+				musicFadeInTweener.Kill();
+				musicFadeOutTweener.Kill();
+				
+				if(fadeOutTarget != null)
+				{
+					debugMusic("Fading out:" + fadeOutTarget.clip.name);
+					fadeOutMusic(fadeOutTarget);
+				}
+				
+				if(fadeInTarget != null)
+				{
+					debugMusic("Fading in:" + fadeInTarget.clip.name);
+					doMusicPlay(musicClip, fadeInTarget.volume, volume);	
+				}
+				
+				//make sure the audioSources match up
+				if(fadeOutTarget == null)
+				{
+					if(fadeInTarget != null)
+					{
+						AudioSource otherSource = (fadeInTarget == musicAudioSourceA) ? musicAudioSourceB : musicAudioSourceA;
+						if(otherSource.clip != null)
+						{
+							debugMusic("Stopping music :" + otherSource.clip.name);
+							otherSource.Stop();
+						}
+					}
+				}
+				
+				//we want a new clip to play if neither of the fades where for this clip
+				if(fadeInTarget == null)
+				{
+					doMusicCrossFade(musicClip, volume);
+				}
+			}
+			//check if its the same clip that is already playing
+			else if(currentMusicAudioSource.clip.name == musicClip.name)
+			{
+				debugMusic("The same music is playing already, so we will ignore play.");
+				return; //this could be some other behavior like restarting it or something 
+			}
+			//another music is playing, crossfade from one music to another
+			else
+			{
+				debugMusic("Another music is playing, we will do a standard crossfade.");
+				doMusicCrossFade(musicClip, volume);
+			}
+		}
+		//nothing was playing fade in new music
+		else
+		{
+			debugMusic("no music was playing, playing: " + musicClip.name);
+			doMusicPlay(musicClip, volume);
+		}
+	}
+	
 	private void doMusicCrossFade(AudioClip musicClip, float endVolume)
 	{
 		doMusicCrossFade(musicClip, 0f, endVolume);
