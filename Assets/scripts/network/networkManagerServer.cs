@@ -30,7 +30,7 @@ public class networkManagerServer : MonoBehaviour {
 		string serverName = nvs.serverName;
 		
 		// Use NAT punchthrough if no public IP present
-		Network.InitializeServer(3, 11177, !Network.HavePublicAddress());
+		Network.InitializeServer(31, 11177, !Network.HavePublicAddress());
 		MasterServer.RegisterHost(serverVersion, SystemInfo.deviceName, serverName);
 
 		gameObject.AddComponent("netLobby");
