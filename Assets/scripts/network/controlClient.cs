@@ -35,6 +35,7 @@ public class controlClient : MonoBehaviour {
 				// HONK
 				if (Input.GetKeyDown(KeyCode.Q)) {
 					// need to wait for the audio guys to fix this
+					// if you think you've fixed this test in online aswell
 					//networkView.RPC("IHonked", RPCMode.All, myInfo.player);
 				}
 			}
@@ -62,8 +63,12 @@ public class controlClient : MonoBehaviour {
 					bco.Axis = Vector3.up;
 					bco.Point = myInfo.ballGameObject.transform.position;
 					bco.Speed = 0.8f;
-					//*/// change animation - doesn't work with Brad due to prefab layout
-					myInfo.characterGameObject.transform.FindChild(myInfo.characterModel).animation.Play("golfIdle",PlayMode.StopAll);
+					//*/// change animation - try and keep the prefabs similar so this doesn't become a massive else if list
+					if (myInfo.characterModel=="lil_patrick") {
+						myInfo.characterGameObject.transform.FindChild(myInfo.characterModel).animation.Play("golfIdle",PlayMode.StopAll);
+					} else {
+						myInfo.characterGameObject.animation.Play("golfIdle",PlayMode.StopAll);
+					}
 					
 					// if at ball
 				} else if (myInfo.currentMode==1) {
@@ -80,8 +85,12 @@ public class controlClient : MonoBehaviour {
 					Orbit bco = buggyCam.GetComponent("Orbit") as Orbit;
 					Component.Destroy(bco);
 					(buggyCam.GetComponent("FollowPlayerScript") as FollowPlayerScript).enabled = true;
-					//*/// change animation - doesn't work with Brad due to prefab layout
-					myInfo.characterGameObject.transform.FindChild(myInfo.characterModel).animation.Play("driveIdle",PlayMode.StopAll);
+					//*/// change animation - try and keep the prefabs similar so this doesn't become a massive else if list
+					if (myInfo.characterModel=="lil_patrick") {
+						myInfo.characterGameObject.transform.FindChild(myInfo.characterModel).animation.Play("driveIdle",PlayMode.StopAll);
+					} else {
+						myInfo.characterGameObject.animation.Play("driveIdle",PlayMode.StopAll);
+					}
 				}
 				networkView.RPC("PlayerSwap", RPCMode.Others, myInfo.currentMode, myInfo.player);
 			}
