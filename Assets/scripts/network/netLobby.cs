@@ -15,6 +15,9 @@ public class netLobby : MonoBehaviour {
 		nvs.myInfo.cartModel = nvs.buggyModels[0];
 		nvs.myInfo.ballModel = nvs.ballModels[0];
 		nvs.myInfo.characterModel = nvs.characterModels[0];
+		
+		// add chat
+		gameObject.AddComponent("netChat");
 	}
 	
 	// Update is called once per frame

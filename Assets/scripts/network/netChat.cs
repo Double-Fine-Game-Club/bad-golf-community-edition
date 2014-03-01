@@ -5,10 +5,9 @@ public class netChat : MonoBehaviour {
 	string myName;
 	string chatBuffer = "";
 	bool chatVisible = false;
-	int messageCount = 1;
 	string currentList = "Chat log:";
 	Vector2 scrollPosition = Vector2.zero;
-	int fontSize = 18;	// massive fonts due to Linux
+	bool updateScroll = false;
 	
 	void Start () {
 		// get variables we need
@@ -35,26 +34,32 @@ public class netChat : MonoBehaviour {
 		// show chat box if needed
 		if (chatVisible) {
 			GUI.SetNextControlName("ChatBox");
-			chatBuffer = GUI.TextField(new Rect(10,Screen.height/2,Screen.width/2,20), chatBuffer, 64);
+			chatBuffer = GUI.TextField(new Rect(10,Screen.height/2,Screen.width/2,20), chatBuffer, 96);
 			GUI.FocusControl("ChatBox");
 		}
 		// look for T event
 		if ((Event.current.type == EventType.KeyUp) && (Event.current.keyCode == KeyCode.T)) {
 			chatVisible = true;
 		}
-		scrollPosition = GUI.BeginScrollView(new Rect(10,Screen.height/2 + 20,Screen.width/2,100), scrollPosition, new Rect(0,0,Screen.width/2,fontSize*messageCount));
+		// do the chat stuff
+		GUI.BeginGroup(new Rect(10,Screen.height/2 + 20,Screen.width/2,100));
+		scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.MaxWidth(Screen.width/2), GUILayout.MaxHeight(100));
 		// show chat
-		GUI.Label(new Rect(0,0,Screen.width/2,fontSize*messageCount+4), currentList);
-		GUI.EndScrollView();
+		GUILayout.Label(currentList, GUILayout.ExpandHeight(true));
+		GUILayout.EndScrollView();
+		GUI.EndGroup();
+		// scroll it if needed
+		if (updateScroll) {
+			// scroll to a ridiculous height
+			scrollPosition = new Vector2(0, Mathf.Max(10000,scrollPosition.y*2));
+		}
 	}
 	
 	// recieved a message
 	[RPC]
 	void SendChatMessage(string text) {
 		Debug.Log(text);
-		messageCount++;
 		currentList = currentList + "\n" + text;
-		// scroll it
-		scrollPosition = new Vector2(0, fontSize*Mathf.Max(0,messageCount-4));
+		updateScroll = true;
 	}
 }

@@ -28,7 +28,8 @@ public class networkManagerClient : MonoBehaviour {
 		nvs.players.Add(myInfo);
 
 		networkView.RPC("MyName", RPCMode.Server, nvs.myInfo.name);
-
+		
+		// go into the lobby
 		gameObject.AddComponent("netLobby");
 	}
 	
