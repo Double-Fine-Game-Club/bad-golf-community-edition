@@ -41,9 +41,6 @@ public class networkManagerClient : MonoBehaviour {
 		// updates network-sunk fiziks
 		gameObject.AddComponent("controlClient");
 		
-		// chat
-		gameObject.AddComponent("netChat");
-		
 		//pause
 		gameObject.AddComponent ("netPause");
 		
