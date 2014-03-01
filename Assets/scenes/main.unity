@@ -5569,14 +5569,15 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 469745865}
-  m_Text: Double Fine, Patrick, community, FIX ME
+  m_Text: "Big thanks to Double Fine, Patrick Hackett and the DF community\r\n\r\nView
+    our contributors on GitHub\r\nhttps://github.com/Double-Fine-Game-Club/bad-golf-community-edition"
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
   m_Anchor: 0
   m_Alignment: 0
   m_TabSize: 4
-  m_FontSize: 36
+  m_FontSize: 24
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: 63ceaca538b9be64d948e6c3fe29802a, type: 3}
@@ -7615,12 +7616,12 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 686759788}
-  m_Text: Credits
+  m_Text: Credits (todo)
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
-  m_Anchor: 0
-  m_Alignment: 0
+  m_Anchor: 1
+  m_Alignment: 1
   m_TabSize: 4
   m_FontSize: 36
   m_FontStyle: 0
@@ -22457,7 +22458,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1990011329}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.49011612e-08, z: -1.37915003}
+  m_LocalPosition: {x: 0, y: -.0167714953, z: -1.37915003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 857228976}
