@@ -20,8 +20,12 @@ public class PauseMenu : MonoBehaviour {
 	}
 
 	void hideAllScreens(){
-		LocalMultiplayerController.currentView.SetActive (false);
-		LocalMultiplayerController.currentUI.SetActive (false);
+		
+		if ( LocalMultiplayerController.currentView != null )
+		{
+			LocalMultiplayerController.currentView.SetActive (false);
+			LocalMultiplayerController.currentUI.SetActive (false);
+		}
 		ed_pauseScreen.SetActive (false);
 	}
 
@@ -34,8 +38,11 @@ public class PauseMenu : MonoBehaviour {
 
 	void onResume(){
 		hideAllScreens ();
-		LocalMultiplayerController.currentView.SetActive (true);
-		LocalMultiplayerController.currentUI.SetActive (true);
+		if ( LocalMultiplayerController.currentView != null )
+		{
+			LocalMultiplayerController.currentView.SetActive (true);
+			LocalMultiplayerController.currentUI.SetActive (true);
+		}
 		Time.timeScale = 1;
 		isPaused = false;
 
