@@ -9,10 +9,11 @@ public class Config : MonoBehaviour
 {
 	private string configFileName = "config";
 	private string fileExtension = ".xml";
-	private string result;
-	private ConfigReader xmlResult;
 	
+	static private string result;
+	static private ConfigReader xmlResult;
 	static private bool loaded = false;
+
 	static public string[] levels;
 	static public Dictionary<string, string[]> colorsDictionary = new Dictionary<string, string[]>();
 
