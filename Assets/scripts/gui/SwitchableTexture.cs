@@ -42,6 +42,11 @@ public class SwitchableTexture : MonoBehaviour
 
 	public void showIndex()
 	{
+		showIndex(true);
+	}
+
+	public void showIndex( bool sendMessage)
+	{
 		for (int i = 0; i < objectsToSwitchBetween.Length; i++) 
 		{
 			if ( index == i )
@@ -65,6 +70,6 @@ public class SwitchableTexture : MonoBehaviour
 	public void setIndex( int newIndex)
 	{
 		index = newIndex;
-		showIndex();
+		showIndex( false );
 	}
 }
