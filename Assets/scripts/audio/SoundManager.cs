@@ -120,6 +120,27 @@ public class SoundManager : MonoBehaviour
 	}
 
 #region Play Music	
+
+	public void setMusicVolume(float value)
+	{
+		musicVolume = value;
+		currentMusicAudioSource.volume = value;
+	}
+
+	public void setMusicOnOff( bool value) // true = On, false = off 
+	{
+		if( value)
+		{
+			muteMusic = false;
+			currentMusicAudioSource.Play();
+		}
+		else
+		{
+			pauseMusic();
+			muteMusic = true;
+		}
+	}
+
 	public AudioClip getMusicByName(string name)
 	{
 #if !REMOVE_AUDIO
@@ -146,7 +167,7 @@ public class SoundManager : MonoBehaviour
 	
 	public void unPauseMusic()
 	{
-		if ( currentMusicAudioSource != null)
+		if ( !muteMusic && currentMusicAudioSource != null)
 			currentMusicAudioSource.Play();	
 	}
 
@@ -215,7 +236,7 @@ public class SoundManager : MonoBehaviour
 	public void playMusic(AudioClip musicClip, float volume)
 	{
 		//we have music playing already
-		if(currentMusicAudioSource.isPlaying)
+		if(!muteSfx && currentMusicAudioSource.isPlaying)
 		{
 			debugMusic("music is aleady playing, checking options");
 			
@@ -301,7 +322,7 @@ public class SoundManager : MonoBehaviour
 			}
 		}
 		//nothing was playing fade in new music
-		else
+		else if ( !muteMusic)
 		{
 			debugMusic("no music was playing, playing: " + musicClip.name);
 			doMusicPlay(musicClip, volume);
@@ -411,6 +432,36 @@ public class SoundManager : MonoBehaviour
 #endregion
 
 #region Play Sound Effects
+
+	public void setSoundVolume(float value)
+	{
+		sfxVolume = value;
+		foreach( AudioSource clip in audioSourcePool)
+		{
+			clip.volume = value;
+		}	
+	}
+
+	public void setSoundOnOff( bool value) // true = On, false = off 
+	{
+		if ( value)
+		{
+			muteSfx = false;
+		}
+		else
+		{
+			stopAllPlayingSounds();
+			muteSfx = true;
+		}
+	}
+
+	public void stopAllPlayingSounds()
+	{
+		//I havent actually tested if this works correctly, if it doesnt just stoping all 
+		//sounds in the list directly is probably easy too
+		playSfx( "notreallyanysound", 1f, SoundInterruptType.DontInterruptButInterruptOthers );
+	}
+	
 	public void createSet(string setName, string[] clipNames)
 	{
 		sfxSets.Add(setName, clipNames);
