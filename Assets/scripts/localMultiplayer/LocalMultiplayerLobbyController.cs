@@ -166,7 +166,7 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 		int playerIndex =  int.Parse(split[0]);
 		//int colorDirection = (split[1] == "r")? 1:-1;
 
-		colorPerPlayer[playerIndex] =  (colorPerPlayer[playerIndex] + 1) % 4; 
+		colorPerPlayer[playerIndex] =  (colorPerPlayer[playerIndex] + 1) % colorKeys.Length; 
 		setColorOn( playerIndex);
 	}
 

@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Config>
 	<Options>
-		<Option optionName="SoundVolume" value=".75f"/>
-		<Option optionName="MusicVolume" value=".5f"/>
+		<Option optionName="SoundVolume" value=".75"/>
+		<Option optionName="MusicVolume" value=".5"/>
 		<Option optionName="SoundIsOn" value="true"/>
 		<Option optionName="MusicIsOn" value="true"/>
 	</Options>

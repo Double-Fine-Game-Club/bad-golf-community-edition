@@ -43,7 +43,8 @@ public class Config : MonoBehaviour
 			#if !UNITY_WEBPLAYER
 			try
 			{
-				result = System.IO.File.ReadAllText(filePath);
+				if ( System.IO.File.Exists( filePath) )
+					result = System.IO.File.ReadAllText(filePath);
 				if ( result.Length < 5) //some random lenght more than 0
 				{
 					TextAsset textAsset = Resources.Load<TextAsset>(configFileName);
