@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public class MusicPlayMulti : MonoBehaviour 
 {
@@ -10,6 +11,8 @@ public class MusicPlayMulti : MonoBehaviour
 	public float volume = 1f;
 
 	public bool onDisableStopMusic = false;
+
+	public float delay = 1f; // time to wait before playing, this script plays before config is loaded, because of coroutines, so I added this (invadererik)
 
 	SoundManager soundManager;
 	
@@ -66,9 +69,18 @@ public class MusicPlayMulti : MonoBehaviour
 	
 	void OnEnable ()
 	{
-		ChooseRandomMusic ();
+		if ( delay > 0)
+			StartCoroutine( waitThenChooseRandomMusic());
+		else
+			ChooseRandomMusic ();
 	}
-	
+
+	IEnumerator waitThenChooseRandomMusic()
+	{
+		yield return new WaitForSeconds( delay);
+		ChooseRandomMusic();
+	}
+
 	void OnDisable()
 	{
 		if ( onDisableStopMusic )

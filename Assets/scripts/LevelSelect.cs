@@ -1,21 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LevelSelect : MonoBehaviour {
-	
-	public int levelSelected;
-	public string[] levels;
+public class LevelSelect : MonoBehaviour 
+{
+	private int levelSelected;
 	private TextMesh lvlSel;
 
 	public GameObject messageTarget;
 
-	
 	void Start()
 	{
 		lvlSel = gameObject.GetComponent ("TextMesh") as TextMesh;
-		GameObject gObj = gameObject;
-		Config cfg = (Config)gObj.GetComponent(typeof(Config));
-		cfg.cfgLoadLevels();
 	}
 	
 	// Update is called once per frame
@@ -23,22 +18,26 @@ public class LevelSelect : MonoBehaviour {
 	{
 		if (this.gameObject.name == "levelID") 
 		{
-			if (Input.GetKeyDown (KeyCode.LeftArrow) && levelSelected > 0) {
+			if (Input.GetKeyDown (KeyCode.LeftArrow) && levelSelected > 0) 
+			{
 				levelSelected--;
-			} else if (Input.GetKeyDown (KeyCode.RightArrow) && levelSelected < levels.Length - 1) {
+			} 
+			else if (Input.GetKeyDown (KeyCode.RightArrow) && levelSelected < Config.levels.Length - 1) 
+			{
 				levelSelected++;
 			}
-			lvlSel.text = levels [levelSelected];
+
+			lvlSel.text = Config.levels[levelSelected];
 		}
 	}
 
 	public void onNextLevel()
 	{
-		levelSelected = (levelSelected + 1)% levels.Length;
+		levelSelected = (levelSelected + 1)% Config.levels.Length;
 	}
 
 	public void onStartClicked( )
 	{
-		messageTarget.SendMessage( "onStartClicked", levels[levelSelected]);
+		messageTarget.SendMessage( "onStartClicked", Config.levels[levelSelected]);
 	}
 }

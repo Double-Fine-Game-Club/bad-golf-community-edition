@@ -129,6 +129,9 @@ public class SoundManager : MonoBehaviour
 
 	public void setMusicOnOff( bool value) // true = On, false = off 
 	{
+		if ( !muteMusic == value)
+			return; 
+
 		if( value)
 		{
 			muteMusic = false;
@@ -235,8 +238,18 @@ public class SoundManager : MonoBehaviour
 
 	public void playMusic(AudioClip musicClip, float volume)
 	{
+		if ( muteMusic )
+		{
+			currentMusicAudioSource = musicAudioSourceA;
+			currentMusicAudioSource.clip = musicClip;
+			currentMusicAudioSource.volume = volume;
+			currentMusicAudioSource.Play();
+			currentMusicAudioSource.Pause();
+			return;
+		}
+
 		//we have music playing already
-		if(!muteSfx && currentMusicAudioSource.isPlaying)
+		if( currentMusicAudioSource.isPlaying)
 		{
 			debugMusic("music is aleady playing, checking options");
 			
@@ -444,6 +457,9 @@ public class SoundManager : MonoBehaviour
 
 	public void setSoundOnOff( bool value) // true = On, false = off 
 	{
+		if ( !muteSfx == value)
+			return; 
+
 		if ( value)
 		{
 			muteSfx = false;

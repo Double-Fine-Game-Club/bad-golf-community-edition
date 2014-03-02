@@ -26,20 +26,19 @@ public class SliderObject : MonoBehaviour
 
 	public TextMesh numericDisplay;
 
-	// Use this for initialization
-	void Start () 
+	void OnEnable()
 	{
 		if ( sliderDirection == 0)
 		{	
 			positionSliderToValue( sliderValue, 
-			                     new Vector3(sliderMoveArea.bounds.center.x,targetSliderObject.transform.position.y,targetSliderObject.transform.position.z) - new Vector3(sliderMoveArea.bounds.extents.x,0,0),
-			                     new Vector3(sliderMoveArea.bounds.center.x,targetSliderObject.transform.position.y,targetSliderObject.transform.position.z) + new Vector3(sliderMoveArea.bounds.extents.x,0,0));
+			                      new Vector3(sliderMoveArea.bounds.center.x,targetSliderObject.transform.position.y,targetSliderObject.transform.position.z) - new Vector3(sliderMoveArea.bounds.extents.x,0,0),
+			                      new Vector3(sliderMoveArea.bounds.center.x,targetSliderObject.transform.position.y,targetSliderObject.transform.position.z) + new Vector3(sliderMoveArea.bounds.extents.x,0,0));
 		}
 		else
 		{
 			positionSliderToValue( sliderValue, 
-			                     new Vector3(targetSliderObject.transform.position.x, sliderMoveArea.bounds.center.y, targetSliderObject.transform.position.z) - new Vector3(0,sliderMoveArea.bounds.extents.y,0),
-			                     new Vector3(targetSliderObject.transform.position.x, sliderMoveArea.bounds.center.y, targetSliderObject.transform.position.z) + new Vector3(0,sliderMoveArea.bounds.extents.y,0));
+			                      new Vector3(targetSliderObject.transform.position.x, sliderMoveArea.bounds.center.y, targetSliderObject.transform.position.z) - new Vector3(0,sliderMoveArea.bounds.extents.y,0),
+			                      new Vector3(targetSliderObject.transform.position.x, sliderMoveArea.bounds.center.y, targetSliderObject.transform.position.z) + new Vector3(0,sliderMoveArea.bounds.extents.y,0));
 		}
 	}
 
@@ -112,6 +111,7 @@ public class SliderObject : MonoBehaviour
 	{
 		targetSliderObject.transform.position = Vector3.Lerp( start, end, val);
 		updateNumericText();
+		sendValueChangeMessage();
 	}
 
 	void sendValueChangeMessage( )

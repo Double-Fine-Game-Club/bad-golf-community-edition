@@ -1,5 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Config>
+	<Options>
+		<Option optionName="SoundVolume" value=".75f"/>
+		<Option optionName="MusicVolume" value=".5f"/>
+		<Option optionName="SoundIsOn" value="true"/>
+		<Option optionName="MusicIsOn" value="true"/>
+	</Options>
 	<Levels LevelsPath="Assets/scenes/">
 		<Map>level_full_local_multi</Map>
 		<Map>level_01_local_multi</Map>
@@ -12,5 +18,9 @@
 		<Color colorName="blue" one="165,201,255" two="82,137,255" three="0,65,140" four="0,136,255"/>
 		<Color colorName="yellow" one="255,254,179" two="255,250,32" three="239,167,8" four="255,212,13"/>
 		<Color colorName="green" one="190,255,199" two="82,255,150" three="0,137,96 " four="44,216,111"/>
+		<Color colorName="pink" one="255,208,247" two="255,155,138" three="126,0,83" four="255,15,151"/>
+		<Color colorName="purple" one="230,212,250" two="182,146,233" three="68,19,74 " four="115,63,118"/>
+		<Color colorName="brown" one="250,239,212" two="193,165,135" three="81,36,0" four="136,92,62"/>
+		<Color colorName="bnw" one="255,255,255" two="170,170,170" three="0,0,0" four="78,78,78"/>
 	</PlayerColors>
 </Config>

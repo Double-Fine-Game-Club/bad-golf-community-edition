@@ -41,4 +41,11 @@ public class CheckBoxGambeObject : MonoBehaviour
 	{
 		onCheckBox();
 	}
+
+	public void setCheckBox ( bool value)
+	{
+		isChecked = value;
+		targetSwitchSprite.SetActive( isChecked);
+		forceMessageSend();
+	}
 }
