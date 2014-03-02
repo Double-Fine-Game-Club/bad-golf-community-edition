@@ -11966,6 +11966,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   splashScreens:
   - {fileID: 21300000, guid: f95777ccc96b13a4abd8eb8faef73e06, type: 3}
+  - {fileID: 21300000, guid: d1bf8074894300244962ba485b7e1b60, type: 3}
 --- !u!1 &1124186159
 GameObject:
   m_ObjectHideFlags: 0
