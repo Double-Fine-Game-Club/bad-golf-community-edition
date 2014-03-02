@@ -9,21 +9,12 @@ public class ScriptToggler : MonoBehaviour
 		// Also a camera so all the other scripts don't need to have it.
 		public GameObject camera;
 
-		// Use this for initialization
-		void Start ()
-		{
-		}
-	
-		// Update is called once per frame
-		void Update ()
-		{
-
-		}
-
 		// Turn on all the scripts and the camera on the object.
 		void turnOnScripts ()
 		{
-				foreach (MonoBehaviour script in scripts) {
+				foreach (MonoBehaviour script in scripts) 
+				{
+					if(script!=null)
 						script.enabled = true;
 				}
 				camera.SetActive (true);
@@ -32,7 +23,9 @@ public class ScriptToggler : MonoBehaviour
 		// Turn off all the scripts and the camera.
 		void turnOffScripts ()
 		{
-				foreach (MonoBehaviour script in scripts) {
+				foreach (MonoBehaviour script in scripts) 
+				{
+					if(script!=null)
 						script.enabled = false;
 				}
 				camera.SetActive (false);

@@ -1,10 +1,13 @@
 using UnityEngine;
+using InControl;
 
 [RequireComponent(typeof(CarController))]
 public class CarUserControl : MonoBehaviour
 {
     private CarController car;  // the car controller we want to use
 	public bool isKeyboardControlled = true; //true means only single person, false means split screen
+	public InputDevice inputDevice;
+	public bool isLocalMulti = false;
 
     void Awake ()
     {
@@ -43,6 +46,7 @@ public class CarUserControl : MonoBehaviour
 	{
 //		Debug.Log ( direction.x + " , " + direction.y );
 
-		car.Move ( direction.x, direction.y);
+		if ( enabled)
+			car.Move ( direction.x, direction.y);
 	}
 }

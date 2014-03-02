@@ -39,11 +39,20 @@ public class LocalMultiplayerController : MonoBehaviour
 		players += LocalMultiplayerLobbyController.controllerDeviceIndexToPlayerIndexMap.Count;
 
 		//convert the device map to something usable
-		int[] playerToControllerIndex = Enumerable.Repeat(-1, Mathf.Max (4, LobbyControllerSupport.inputDeviceList.Length)).ToArray();
-		foreach( KeyValuePair<int,int> kv in LocalMultiplayerLobbyController.controllerDeviceIndexToPlayerIndexMap)
+		int[] playerToControllerIndex = Enumerable.Repeat(-1, 4).ToArray();
+		if ( LobbyControllerSupport.inputDeviceList != null )
 		{
-			playerToControllerIndex[kv.Value] = kv.Key;
-		}	
+			playerToControllerIndex = Enumerable.Repeat(-1, Mathf.Max (4, LobbyControllerSupport.inputDeviceList.Length)).ToArray();
+			foreach( KeyValuePair<int,int> kv in LocalMultiplayerLobbyController.controllerDeviceIndexToPlayerIndexMap)
+			{
+				playerToControllerIndex[kv.Value] = kv.Key;
+			}	
+		}
+		else
+		{
+			LocalMultiplayerLobbyController.keyboardIndex = 0;
+			players = 1;
+		}
 
 		//do setup based on number of players & assign the correct devices to the correct prefab
 		if ( players == 1 )

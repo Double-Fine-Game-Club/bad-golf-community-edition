@@ -306,11 +306,11 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 34005484}
   m_LocalRotation: {x: 0, y: .999860644, z: 0, w: .0166972242}
-  m_LocalPosition: {x: -4.12722015, y: .432826042, z: -.367828727}
-  m_LocalScale: {x: .685857892, y: .685857892, z: .685857892}
+  m_LocalPosition: {x: 1.97789001, y: 82.0435715, z: 124.492798}
+  m_LocalScale: {x: .685857952, y: .685857892, z: .685857952}
   m_Children:
   - {fileID: 589073234}
-  m_Father: {fileID: 291363685}
+  m_Father: {fileID: 413461026}
 --- !u!114 &34005486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -803,7 +803,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1129080041}
-  - {fileID: 1282193243}
   - {fileID: 2003553109}
   - {fileID: 626471889}
   - {fileID: 2102829849}
@@ -1046,6 +1045,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ball: {fileID: 1282193242}
+  guiBoxPosition:
+    serializedVersion: 2
+    x: 200
+    y: 100
+    width: 100
+    height: 100
+  showGUI: 0
 --- !u!82 &100820881
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1254,7 +1260,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &108034681
 Transform:
   m_ObjectHideFlags: 0
@@ -3859,16 +3865,16 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: .00086505356, g: .0119665619, b: .0294117928, a: .0196078438}
+  m_BackGroundColor: {r: .192156866, g: .301960796, b: .474509805, a: .0196078438}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
+    x: .5
     y: 0
     width: 1
-    height: 1
-  near clip plane: .400000006
+    height: .5
+  near clip plane: .300000012
   far clip plane: 1000
-  field of view: 80.9000015
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -3917,7 +3923,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 539582074}
-  - {fileID: 34005485}
   - {fileID: 282875994}
   - {fileID: 1352177955}
   - {fileID: 2128292444}
@@ -4123,6 +4128,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ball: {fileID: 34005484}
+  guiBoxPosition:
+    serializedVersion: 2
+    x: 200
+    y: 100
+    width: 100
+    height: 100
+  showGUI: 0
 --- !u!82 &291363690
 AudioSource:
   m_ObjectHideFlags: 0
@@ -6008,7 +6020,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 383064194}
-  - {fileID: 489195830}
   - {fileID: 406835391}
   - {fileID: 958586092}
   - {fileID: 710364256}
@@ -6338,6 +6349,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ball: {fileID: 489195829}
+  guiBoxPosition:
+    serializedVersion: 2
+    x: 200
+    y: 200
+    width: 100
+    height: 100
+  showGUI: 0
 --- !u!82 &388057056
 AudioSource:
   m_ObjectHideFlags: 0
@@ -6548,6 +6566,7 @@ Transform:
   m_LocalPosition: {x: -17, y: -76.1331711, z: 211.610001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 34005485}
   - {fileID: 1242234204}
   - {fileID: 291363685}
   - {fileID: 1817078385}
@@ -7269,6 +7288,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ball: {fileID: 1887095077}
+  guiBoxPosition:
+    serializedVersion: 2
+    x: 200
+    y: 400
+    width: 100
+    height: 100
+  showGUI: 0
 --- !u!82 &473915854
 AudioSource:
   m_ObjectHideFlags: 0
@@ -7481,7 +7507,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1638164217}
-  - {fileID: 1887095078}
   - {fileID: 1555504565}
   - {fileID: 738714970}
   - {fileID: 1140889744}
@@ -7527,11 +7552,11 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 489195829}
   m_LocalRotation: {x: 0, y: .999860644, z: 0, w: .0166972242}
-  m_LocalPosition: {x: -4.12722015, y: .432826042, z: -.367828727}
-  m_LocalScale: {x: .685857892, y: .685857892, z: .685857892}
+  m_LocalPosition: {x: 1.97789061, y: 82.0435715, z: 124.492798}
+  m_LocalScale: {x: .685857952, y: .685857892, z: .685857952}
   m_Children:
   - {fileID: 1491978674}
-  m_Father: {fileID: 388057045}
+  m_Father: {fileID: 1375897704}
 --- !u!114 &489195831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11351,7 +11376,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1372629043}
-  - {fileID: 680774701}
   - {fileID: 321802323}
   - {fileID: 949300397}
   - {fileID: 664398603}
@@ -11557,6 +11581,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ball: {fileID: 680774700}
+  guiBoxPosition:
+    serializedVersion: 2
+    x: 400
+    y: 100
+    width: 100
+    height: 100
+  showGUI: 0
 --- !u!82 &574253669
 AudioSource:
   m_ObjectHideFlags: 0
@@ -11883,16 +11914,16 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: .00086505356, g: .0119665619, b: .0294117928, a: .0196078438}
+  m_BackGroundColor: {r: .192156866, g: .301960796, b: .474509805, a: .0196078438}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0
+    y: .5
     width: 1
-    height: 1
-  near clip plane: .400000006
+    height: .5
+  near clip plane: .300000012
   far clip plane: 1000
-  field of view: 80.9000015
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -14443,11 +14474,11 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 680774700}
   m_LocalRotation: {x: 0, y: .999860644, z: 0, w: .0166972242}
-  m_LocalPosition: {x: -4.12722015, y: .432826042, z: -.367828727}
-  m_LocalScale: {x: .685857892, y: .685857892, z: .685857892}
+  m_LocalPosition: {x: 1.97789001, y: 82.0435715, z: 124.492798}
+  m_LocalScale: {x: .685857952, y: .685857892, z: .685857952}
   m_Children:
   - {fileID: 934267567}
-  m_Father: {fileID: 574253664}
+  m_Father: {fileID: 877235124}
 --- !u!114 &680774702
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17149,6 +17180,7 @@ Transform:
   m_LocalPosition: {x: -23.3099995, y: -76.1331711, z: 210.675781}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1090516528}
   - {fileID: 1720954497}
   - {fileID: 908305916}
   - {fileID: 447623400}
@@ -18765,16 +18797,16 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: .00086505356, g: .0119665619, b: .0294117928, a: .0196078438}
+  m_BackGroundColor: {r: .192156866, g: .301960796, b: .474509805, a: .0196078438}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
     y: 0
     width: 1
-    height: 1
-  near clip plane: .400000006
+    height: .5
+  near clip plane: .300000012
   far clip plane: 1000
-  field of view: 80.9000015
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -20470,6 +20502,7 @@ Transform:
   m_LocalPosition: {x: -20.3999996, y: -76.1331711, z: 222.199997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 680774701}
   - {fileID: 700462197}
   - {fileID: 574253664}
   - {fileID: 230706011}
@@ -20571,7 +20604,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 184417980}
-  - {fileID: 1090516528}
   - {fileID: 1621846644}
   - {fileID: 1541468563}
   - {fileID: 1929652709}
@@ -20814,6 +20846,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ball: {fileID: 1090516527}
+  guiBoxPosition:
+    serializedVersion: 2
+    x: 200
+    y: 400
+    width: 100
+    height: 100
+  showGUI: 0
 --- !u!82 &908305922
 AudioSource:
   m_ObjectHideFlags: 0
@@ -21042,16 +21081,16 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: .00086505356, g: .0119665619, b: .0294117928, a: .0196078438}
+  m_BackGroundColor: {r: .192156866, g: .301960796, b: .474509805, a: .0196078438}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0
-    width: 1
+    y: .5
+    width: .5
     height: 1
-  near clip plane: .400000006
+  near clip plane: .300000012
   far clip plane: 1000
-  field of view: 80.9000015
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -21155,16 +21194,16 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: .00086505356, g: .0119665619, b: .0294117928, a: .0196078438}
+  m_BackGroundColor: {r: .192156866, g: .301960796, b: .474509805, a: .0196078438}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
-    y: 0
+    x: .5
+    y: .5
     width: 1
     height: 1
-  near clip plane: .400000006
+  near clip plane: .300000012
   far clip plane: 1000
-  field of view: 80.9000015
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -26972,11 +27011,11 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1090516527}
   m_LocalRotation: {x: 0, y: .999860644, z: 0, w: .0166972242}
-  m_LocalPosition: {x: -4.12722015, y: .432826042, z: -.367828727}
-  m_LocalScale: {x: .685857892, y: .685857892, z: .685857892}
+  m_LocalPosition: {x: 1.97789001, y: 82.0435715, z: 124.492798}
+  m_LocalScale: {x: .685857952, y: .685857892, z: .685857952}
   m_Children:
   - {fileID: 781311234}
-  m_Father: {fileID: 908305916}
+  m_Father: {fileID: 725227535}
 --- !u!114 &1090516529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27051,7 +27090,7 @@ NetworkView:
   m_StateSynchronization: 1
   m_Observed: {fileID: 1090516528}
   m_ViewID:
-    m_ID: 1
+    m_ID: 6
     m_Type: 1
 --- !u!23 &1090516534
 Renderer:
@@ -30958,6 +30997,7 @@ Transform:
   m_LocalPosition: {x: -9.10000038, y: -76.1331711, z: 222.199997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1282193243}
   - {fileID: 1027276270}
   - {fileID: 100820875}
   - {fileID: 608448643}
@@ -31464,11 +31504,11 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1241439811}
   m_LocalRotation: {x: 0, y: .999860644, z: 0, w: .0166972242}
-  m_LocalPosition: {x: -4.12722015, y: .432826042, z: -.367828727}
-  m_LocalScale: {x: .685857892, y: .685857892, z: .685857892}
+  m_LocalPosition: {x: 1.97789001, y: 82.0435715, z: 124.492798}
+  m_LocalScale: {x: .685857952, y: .685857892, z: .685857952}
   m_Children:
   - {fileID: 283481666}
-  m_Father: {fileID: 1630503483}
+  m_Father: {fileID: 1648858375}
 --- !u!114 &1241439813
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33006,11 +33046,11 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1282193242}
   m_LocalRotation: {x: 0, y: .999860644, z: 0, w: .0166972242}
-  m_LocalPosition: {x: -4.12722015, y: .432826042, z: -.367828727}
-  m_LocalScale: {x: .685857892, y: .685857892, z: .685857892}
+  m_LocalPosition: {x: 1.97789001, y: 82.0435715, z: 124.492798}
+  m_LocalScale: {x: .685857952, y: .685857892, z: .685857952}
   m_Children:
   - {fileID: 928714048}
-  m_Father: {fileID: 100820875}
+  m_Father: {fileID: 1161575907}
 --- !u!114 &1282193244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36877,6 +36917,7 @@ Transform:
   m_LocalPosition: {x: -44.6355858, y: -76.1331711, z: 210.675781}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 489195830}
   - {fileID: 1436162094}
   - {fileID: 388057045}
   - {fileID: 325953177}
@@ -38697,16 +38738,16 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: .00086505356, g: .0119665619, b: .0294117928, a: .0196078438}
+  m_BackGroundColor: {r: .192156866, g: .301960796, b: .474509805, a: .0196078438}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1
-    height: 1
-  near clip plane: .400000006
+    width: .5
+    height: .5
+  near clip plane: .300000012
   far clip plane: 1000
-  field of view: 80.9000015
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -40376,6 +40417,7 @@ Transform:
   m_LocalPosition: {x: -25.2999992, y: -76.1331711, z: 222.199997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1887095078}
   - {fileID: 2071279949}
   - {fileID: 473915862}
   - {fileID: 234827624}
@@ -43303,7 +43345,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1594029072}
-  - {fileID: 1241439812}
   - {fileID: 266000409}
   - {fileID: 565234338}
   - {fileID: 568367477}
@@ -43546,6 +43587,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ball: {fileID: 1241439811}
+  guiBoxPosition:
+    serializedVersion: 2
+    x: 400
+    y: 400
+    width: 100
+    height: 100
+  showGUI: 0
 --- !u!82 &1630503489
 AudioSource:
   m_ObjectHideFlags: 0
@@ -43953,6 +44001,7 @@ Transform:
   m_LocalPosition: {x: -14.5, y: -76.1331711, z: 222.199997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1241439812}
   - {fileID: 600010886}
   - {fileID: 1630503483}
   - {fileID: 7840044}
@@ -54014,11 +54063,11 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1887095077}
   m_LocalRotation: {x: 0, y: .999860644, z: 0, w: .0166972242}
-  m_LocalPosition: {x: -4.12722015, y: .432826042, z: -.367828727}
-  m_LocalScale: {x: .685857892, y: .685857892, z: .685857892}
+  m_LocalPosition: {x: 1.97789001, y: 82.0435715, z: 124.492798}
+  m_LocalScale: {x: .685857952, y: .685857892, z: .685857952}
   m_Children:
   - {fileID: 1479562254}
-  m_Father: {fileID: 473915862}
+  m_Father: {fileID: 1537633359}
 --- !u!114 &1887095079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62205,7 +62254,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2107823199
 Transform:
   m_ObjectHideFlags: 0
