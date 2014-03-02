@@ -51,6 +51,9 @@ public class networkManagerServer : MonoBehaviour {
 		//show names over player's cart
 		gameObject.AddComponent ("PlayerNames");
 
+		//show player on minimap
+		gameObject.AddComponent ("mapIndicatorScript");	
+
 		// set the camera in the audio script on the buggy - PUT THIS IN A SCRIPT SOMEONE
 		CarAudio mca = myInfo.cartGameObject.GetComponent("CarAudio") as CarAudio;
 		mca.followCamera = nvs.myCam;	// replace tmpCam with our one - this messes up sound atm

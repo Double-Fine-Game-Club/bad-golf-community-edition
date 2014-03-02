@@ -52,6 +52,9 @@ public class networkManagerClient : MonoBehaviour {
 		mca.followCamera = nvs.myCam;	// replace tmpCam with our one - this messes up sound atm
 		(nvs.myCam.gameObject.AddComponent("FollowPlayerScript") as FollowPlayerScript).target = myInfo.cartGameObject.transform;	// add smooth follow script
 
+		//show player on minimap
+		gameObject.AddComponent ("mapIndicatorScript");	
+
 		//show chat bubbles over talking players
 		//gameObject.AddComponent ("ChatBubble");	//Not working quite yet
 
