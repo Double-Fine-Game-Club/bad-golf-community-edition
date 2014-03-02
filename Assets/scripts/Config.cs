@@ -12,11 +12,15 @@ public class Config : MonoBehaviour
 	private string result;
 	private ConfigReader xmlResult;
 	
+	static private bool loaded = false;
 	static public string[] levels;
 	static public Dictionary<string, string[]> colorsDictionary = new Dictionary<string, string[]>();
 
 	void Start () 
 	{
+		if ( loaded)
+			return;
+
 		StartCoroutine(retrieveFromPath( Application.persistentDataPath));
 	}
 
@@ -72,6 +76,8 @@ public class Config : MonoBehaviour
 		cfgLoadLevels();
 		cfgLoadColors();
 		cfgLoadOptions();
+
+		loaded = true;
 	}
 
 	void cfgLoadLevels()
