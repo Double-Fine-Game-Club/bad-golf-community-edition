@@ -28,7 +28,8 @@ public class networkManagerClient : MonoBehaviour {
 		nvs.players.Add(myInfo);
 
 		networkView.RPC("MyName", RPCMode.Server, nvs.myInfo.name);
-
+		
+		// go into the lobby
 		gameObject.AddComponent("netLobby");
 	}
 	
@@ -39,9 +40,6 @@ public class networkManagerClient : MonoBehaviour {
 
 		// updates network-sunk fiziks
 		gameObject.AddComponent("controlClient");
-		
-		// chat
-		gameObject.AddComponent("netChat");
 		
 		//pause
 		gameObject.AddComponent ("netPause");

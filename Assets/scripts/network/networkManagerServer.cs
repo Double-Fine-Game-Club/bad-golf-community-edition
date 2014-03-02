@@ -33,6 +33,7 @@ public class networkManagerServer : MonoBehaviour {
 		Network.InitializeServer(31, 11177, !Network.HavePublicAddress());
 		MasterServer.RegisterHost(serverVersion, SystemInfo.deviceName, serverName);
 
+		// go into the lobby
 		gameObject.AddComponent("netLobby");
 	}
 	
@@ -40,9 +41,6 @@ public class networkManagerServer : MonoBehaviour {
 	void AddScripts() {
 		// receives all players inputs and handles fiziks
 		gameObject.AddComponent("controlServer");
-		
-		// chat
-		gameObject.AddComponent("netChat");
 		
 		//pause
 		gameObject.AddComponent ("netPause");
