@@ -100,6 +100,26 @@ public class GameControl : MonoBehaviour
 		Application.Quit();
 	}
 
+	public void onMusicCheckBox( bool value)
+	{
+		SoundManager.Get().setMusicOnOff( value);
+	}
+	
+	public void onSoundCheckBox( bool value)
+	{
+		SoundManager.Get().setSoundOnOff( value);
+	}
+
+	public void setSoundVolume( float value)
+	{
+		SoundManager.Get().setSoundVolume(value); 
+	}
+
+	public void setMusicVolume( float value)
+	{
+		SoundManager.Get().setMusicVolume(value);
+	}
+
 	public void hideAllScreens()
 	{
 		ed_introScreen.SetActive(false);
