@@ -53,7 +53,10 @@ public class networkManagerClient : MonoBehaviour {
 		(nvs.myCam.gameObject.AddComponent("FollowPlayerScript") as FollowPlayerScript).target = myInfo.cartGameObject.transform;	// add smooth follow script
 
 		//show player on minimap
-		gameObject.AddComponent ("mapIndicatorScript");	
+		gameObject.AddComponent ("mapIndicatorScript");
+
+        //show chat bubble over players when they chat
+        gameObject.AddComponent("ChatBubble");
 
 		//show chat bubbles over talking players
 		//gameObject.AddComponent ("ChatBubble");	//Not working quite yet

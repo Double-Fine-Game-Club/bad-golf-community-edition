@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -52,7 +52,10 @@ public class networkManagerServer : MonoBehaviour {
 		gameObject.AddComponent ("PlayerNames");
 
 		//show player on minimap
-		gameObject.AddComponent ("mapIndicatorScript");	
+		gameObject.AddComponent ("mapIndicatorScript");
+
+        //show chat bubble over players when they chat
+        gameObject.AddComponent("ChatBubble");
 
 		// set the camera in the audio script on the buggy - PUT THIS IN A SCRIPT SOMEONE
 		CarAudio mca = myInfo.cartGameObject.GetComponent("CarAudio") as CarAudio;
