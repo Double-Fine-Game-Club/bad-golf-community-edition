@@ -21,13 +21,20 @@ public class ControllerSupport : MonoBehaviour
 		for (int i = 0; i < playerToControllerIndex.Length; i++) 
 		{
 			if ( playerToControllerIndex[i] == -1 )
+			{
 				playerObjectList[i].GetComponent<CarUserControl>().isKeyboardControlled = true;
+				playerObjectList[i].GetComponent<CarUserControl>().isLocalMulti = true;
+			}
 			else
+			{
 				playerObjectList[i].GetComponent<CarUserControl>().isKeyboardControlled = false;
+				playerObjectList[i].GetComponent<CarUserControl>().inputDevice = LobbyControllerSupport.inputDeviceList[playerToControllerIndex[i]];
+				playerObjectList[i].GetComponent<CarUserControl>().isLocalMulti = true;
+			}
 		}
 	}
 	
-	void FixedUpdate () 
+	void Update () 
 	{
 		if( ready )
 		{
@@ -36,8 +43,19 @@ public class ControllerSupport : MonoBehaviour
 				if ( playerToControllerIndex[i] == -1) //keyboard controlled
 					continue;
 	
+				//direction
 				playerObjectList[i].SendMessage( "directionUpdate", 
 				                                LobbyControllerSupport.inputDeviceList[playerToControllerIndex[i]].Direction );		
+			
+				//any button press
+				if ( LobbyControllerSupport.inputDeviceList[playerToControllerIndex[i]].Action1.WasReleased ||  
+				     LobbyControllerSupport.inputDeviceList[playerToControllerIndex[i]].Action2.WasReleased || 
+				     LobbyControllerSupport.inputDeviceList[playerToControllerIndex[i]].Action3.WasReleased || 
+				     LobbyControllerSupport.inputDeviceList[playerToControllerIndex[i]].Action4.WasReleased)
+				{
+					playerObjectList[i].SendMessage( "onUserGamePadButton", 
+					                                LobbyControllerSupport.inputDeviceList[playerToControllerIndex[i]].Direction);
+				}
 			}
 		}
 	}
