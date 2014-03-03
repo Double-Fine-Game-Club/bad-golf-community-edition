@@ -1290,6 +1290,9 @@ MonoBehaviour:
   - {fileID: 291363684}
   - {fileID: 908305915}
   playerToControllerIndex: ffffffffffffffff
+  playerBodyList:
+  - {fileID: 1769356632}
+  - {fileID: 1686449756}
   ready: 0
 --- !u!1 &116084366
 GameObject:
@@ -3681,6 +3684,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
+  - {fileID: 2100000, guid: a0c5d9a9fd520104ea5baa03f4a2debc, type: 2}
   - {fileID: 2100000, guid: a0c5d9a9fd520104ea5baa03f4a2debc, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
@@ -20504,7 +20508,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 877235123}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -20.3999996, y: -76.1331711, z: 222.199997}
+  m_LocalPosition: {x: -21.5, y: -76.1331711, z: 222.199997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 680774701}
@@ -30944,7 +30948,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1150274598
 Transform:
   m_ObjectHideFlags: 0
@@ -30977,6 +30981,11 @@ MonoBehaviour:
   - {fileID: 473915849}
   - {fileID: 1630503482}
   playerToControllerIndex: ffffffffffffffffffffffffffffffff
+  playerBodyList:
+  - {fileID: 231838655}
+  - {fileID: 1122381263}
+  - {fileID: 423770023}
+  - {fileID: 1238734624}
   ready: 0
 --- !u!1 &1161575906
 GameObject:
@@ -31000,7 +31009,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1161575906}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -9.10000038, y: -76.1331711, z: 222.199997}
+  m_LocalPosition: {x: -6.4000001, y: -76.1331711, z: 222.199997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1282193243}
@@ -38096,8 +38105,8 @@ Transform:
   m_Children:
   - {fileID: 2116444448}
   - {fileID: 2065120411}
-  - {fileID: 1258884888}
   - {fileID: 2042471945}
+  - {fileID: 1258884888}
   - {fileID: 1579541437}
   - {fileID: 1346775745}
   - {fileID: 585846594}
@@ -40481,7 +40490,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1537633358}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -25.2999992, y: -76.1331711, z: 222.199997}
+  m_LocalPosition: {x: -28.6000004, y: -76, z: 222.199997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1887095078}
@@ -62322,7 +62331,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2107823199
 Transform:
   m_ObjectHideFlags: 0
@@ -62349,6 +62358,8 @@ MonoBehaviour:
   playerObjectList:
   - {fileID: 388057044}
   playerToControllerIndex: ffffffff
+  playerBodyList:
+  - {fileID: 268125527}
   ready: 0
 --- !u!1 &2112567577
 GameObject:

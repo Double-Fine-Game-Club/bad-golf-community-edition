@@ -9,6 +9,7 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 	public Camera[] ed_playerViewCameras;
 	public SwitchableTexture[] ed_controlSelectors;
 	public Renderer[] ed_playerRenderer;
+	static public Material[] playerMats;
 	public GameObject[] ed_joinButtonTexts;
 	public GameObject[] ed_detailControls;
 
@@ -25,7 +26,8 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 	void Start()
 	{
 		colorPerPlayer = new int[] { 0,1,2,3 };
-
+		playerMats = new Material[ ed_playerRenderer.Length ];
+	
 		colorKeys = new string[Config.colorsDictionary.Count ];
 		Config.colorsDictionary.Keys.CopyTo( colorKeys,0);
 
@@ -70,6 +72,7 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 		mat.SetColor("_Color04", new Color( float.Parse(split[0])/255, float.Parse(split[1])/255, float.Parse(split[2])/255));
 		
 		ed_playerRenderer[index].material = mat;
+		playerMats[index] = mat;
 	}
 
 	public void onControl( SwitchableTexture callingSwitch )

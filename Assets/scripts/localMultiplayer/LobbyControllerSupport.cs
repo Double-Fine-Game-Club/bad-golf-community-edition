@@ -13,8 +13,11 @@ public class LobbyControllerSupport : MonoBehaviour
 	private float minTimeForRepeat = .35f;
 	private float minChangeInDirection = .4f;
 
+	static public bool wasInitialized = false;
+
 	void OnEnable () 
 	{
+		wasInitialized = true;
 		inputDeviceList = InputManager.Devices.ToArray(); 
 		
 		timeSinceLastMove =new float[]{Time.time,Time.time,Time.time,Time.time};

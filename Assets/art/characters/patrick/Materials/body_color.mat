@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: body_color
-  m_Shader: {fileID: 7, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 4800000, guid: 644fda01c260c0c4ea0615f1db5453af, type: 3}
   m_ShaderKeywords: []
   m_CustomRenderQueue: -1
   m_SavedProperties:
@@ -17,7 +17,14 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: 87bd309e425c9c9419f0e583120878f1, type: 3}
+          m_Texture: {fileID: 2800000, guid: a4fbe9af5ef8fe44c9d4134496fc552d, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _MaskTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 7436fd9a03344bd41b53ce4762eb7b5f, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats: {}
@@ -26,3 +33,19 @@ Material:
         first:
           name: _Color
         second: {r: .0351999998, g: .190200001, b: 0, a: 1}
+      data:
+        first:
+          name: _Color01
+        second: {r: .838235259, g: .271193773, b: .271193773, a: 1}
+      data:
+        first:
+          name: _Color02
+        second: {r: .823529422, g: .381487906, b: .427216172, a: 1}
+      data:
+        first:
+          name: _Color03
+        second: {r: .742647052, g: .51330018, b: .51330018, a: 1}
+      data:
+        first:
+          name: _Color04
+        second: {r: .507352948, g: .100724488, b: .100724488, a: 1}
