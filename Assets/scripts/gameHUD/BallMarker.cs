@@ -23,6 +23,9 @@ public class BallMarker : MonoBehaviour {
     private float m_positionOffset = 0.0f;
     private int m_numPlayersExpected;
 
+    private const float k_maxBallScalar = 1.2f;
+    private const float k_heightOffsetFromBall = 3.0f;
+
 
 	void Start () 
     {
@@ -73,7 +76,7 @@ public class BallMarker : MonoBehaviour {
                 if (player != m_myPlayerInfo) {
                     GameObject playerBall = player.ballGameObject;
                     Vector3 thisBallMarkerPos = playerBall.transform.position;
-                    thisBallMarkerPos.y += 2.5f;
+                    thisBallMarkerPos.y += k_heightOffsetFromBall;
                     GameObject thisBallMarker = GameObject.Instantiate(m_enemyBallMarkerPrefab) as GameObject;
                     thisBallMarker.transform.position = thisBallMarkerPos;
 
@@ -88,48 +91,45 @@ public class BallMarker : MonoBehaviour {
     {
         Vector3 ballPos = m_myBall.transform.position;
         Vector3 startingPos = new Vector3(ballPos.x, ballPos.y, ballPos.z);
-        startingPos.y += (2.5f + m_positionOffset); //needs to be high enough to prevent weird collision issues with ball
+        startingPos.y += (k_heightOffsetFromBall + m_positionOffset); //needs to be high enough to prevent weird collision issues with ball
 
         m_myBallMarker.transform.position = startingPos;
 
         m_myBallMarker.transform.rotation = m_myCamera.transform.rotation; //billboard ball marker towards the camera
 
-        UpdateColor(m_myBallMarker);
+        UpdateColorScaleToDistance(m_myBallMarker);
 
         foreach (PlayerInfo player in m_nvs.players) {
             if (m_enemyBallMarkers.ContainsKey(player)) {
                 if (player != m_myPlayerInfo) {
                     GameObject playerBall = m_enemyBallMarkers[player];
                     Vector3 thisBallMarkerPos = player.ballGameObject.transform.position;
-                    thisBallMarkerPos.y += 2.5f;
+                    thisBallMarkerPos.y += k_heightOffsetFromBall;
                     playerBall.transform.position = thisBallMarkerPos;
 
                     playerBall.transform.rotation = m_myCamera.transform.rotation; //billboard ball marker towards the camera
-                    UpdateColor(playerBall);
+                    UpdateColorScaleToDistance(playerBall);
                 }
             }
         }
     }
 
-    void UpdateColor(GameObject objectToColorize)
+    void UpdateColorScaleToDistance(GameObject objectToUpdate)
     {
-        Renderer objRenderer = objectToColorize.GetComponentInChildren<Renderer>();
+        Renderer objRenderer = objectToUpdate.GetComponentInChildren<Renderer>();
 
         //if renderer is not obtained, bail out
         if (objRenderer == null) return;
         Color objColor = objRenderer.material.GetColor("_Color");
-        float distance = Vector3.Distance(objectToColorize.transform.position, m_myPlayerInfo.cartGameObject.transform.position);
+        float distance = Vector3.Distance(objectToUpdate.transform.position, m_myPlayerInfo.cartGameObject.transform.position);
 
         objColor.a = Mathf.Abs(distance * 0.25f / 10.0f);
 
-        Vector3 scale = objectToColorize.transform.localScale;
-        scale.x = Mathf.Max(distance / 10.0f * 1.5f, 1.5f);
-        scale.y = Mathf.Max(distance / 10.0f * 1.5f, 1.5f);
+        Vector3 scale = objectToUpdate.transform.localScale;
+        scale.x = Mathf.Max(distance / 15.0f * k_maxBallScalar, k_maxBallScalar);
+        scale.y = Mathf.Max(distance / 15.0f * k_maxBallScalar, k_maxBallScalar);
 
-        objectToColorize.transform.localScale = scale;
-
-
-
+        objectToUpdate.transform.localScale = scale;
 
         objRenderer.material.SetColor("_Color", objColor);
     }
