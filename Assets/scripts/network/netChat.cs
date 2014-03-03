@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class netChat : MonoBehaviour {
 	string myName;
+    PlayerInfo myInfo;
 	string chatBuffer = "";
 	bool chatVisible = false;
 	string currentList = "Chat log:";
@@ -13,6 +14,7 @@ public class netChat : MonoBehaviour {
 		// get variables we need
 		networkVariables nvs = GetComponent("networkVariables") as networkVariables;
 		myName = nvs.myInfo.name;
+        myInfo = nvs.myInfo;
 	}
 	
 	// chat box
@@ -27,7 +29,7 @@ public class netChat : MonoBehaviour {
 			chatVisible = false;
 			if (chatBuffer!="") {
 				// this line sends the message
-				networkView.RPC("SendChatMessage", RPCMode.All, myName + ": " + chatBuffer);
+				networkView.RPC("SendChatMessage", RPCMode.All, myName + ": " + chatBuffer, myInfo.ballViewID);
 				chatBuffer = "";
 			}
 		}
@@ -57,9 +59,13 @@ public class netChat : MonoBehaviour {
 	
 	// recieved a message
 	[RPC]
-	void SendChatMessage(string text) {
+	void SendChatMessage(string text, NetworkViewID myID) {
 		Debug.Log(text);
 		currentList = currentList + "\n" + text;
 		updateScroll = true;
+
+        if (ChatBubble.Instance != null) {
+            ChatBubble.DisplayChat(myID);
+        }
 	}
 }
