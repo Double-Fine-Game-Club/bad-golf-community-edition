@@ -15,9 +15,10 @@ public class ChatBubble : MonoBehaviour {
     private Camera m_myCamera;
 
     private bool m_initialized = false;
-    private bool m_moveUp = false;
-    private float m_positionOffset = 0.0f;
     private int m_numPlayersExpected;
+
+    //tweak this for offest of chat bubble over cart
+    private const float k_heightOverCart = 4.2f;
 
 
     void Start()
@@ -77,11 +78,11 @@ public class ChatBubble : MonoBehaviour {
             if (player != null) {
                 if (!m_chatBubbles.ContainsKey(player)) {
                     GameObject playerCart = player.cartGameObject;
-                    Vector3 thisBallMarkerPos = playerCart.transform.position;
-                    thisBallMarkerPos.y += 3.5f;
-                    GameObject thisBallMarker = GameObject.Instantiate(Resources.Load("chatBubblePrefab")) as GameObject;
-                    thisBallMarker.transform.position = thisBallMarkerPos;
-                    Renderer objRenderer = thisBallMarker.GetComponentInChildren<Renderer>();
+                    Vector3 thisChatBubblePos = playerCart.transform.position;
+                    thisChatBubblePos.y += k_heightOverCart;
+                    GameObject thisChatBubble = GameObject.Instantiate(Resources.Load("chatBubblePrefab")) as GameObject;
+                    thisChatBubble.transform.position = thisChatBubblePos;
+                    Renderer objRenderer = thisChatBubble.GetComponentInChildren<Renderer>();
 
                     //if renderer is not obtained, bail out
                     if (objRenderer != null) {
@@ -92,7 +93,7 @@ public class ChatBubble : MonoBehaviour {
                         objRenderer.material.SetColor("_Color", objColor);
                     }
 
-                    m_chatBubbles.Add(player, thisBallMarker);
+                    m_chatBubbles.Add(player, thisChatBubble);
                     m_numPlayersExpected++;
                 }
             }
@@ -105,12 +106,12 @@ public class ChatBubble : MonoBehaviour {
             PlayerInfo player = (PlayerInfo)m_nvs.players[i];
             if (player != null) {
                 if (m_chatBubbles.ContainsKey(player)) {
-                    GameObject playerBall = m_chatBubbles[player];
-                    Vector3 thisBallMarkerPos = player.cartGameObject.transform.position;
-                    thisBallMarkerPos.y += 3.5f;
-                    playerBall.transform.position = thisBallMarkerPos;
+                    GameObject playerChatBubble = m_chatBubbles[player];
+                    Vector3 thisChatBubblePos = player.cartGameObject.transform.position;
+                    thisChatBubblePos.y += k_heightOverCart;
+                    playerChatBubble.transform.position = thisChatBubblePos;
 
-                    playerBall.transform.rotation = m_myCamera.transform.rotation; //billboard ball marker towards the camera
+                    playerChatBubble.transform.rotation = m_myCamera.transform.rotation; //billboard ball marker towards the camera
                 }
             }
         }
@@ -145,9 +146,6 @@ public class ChatBubble : MonoBehaviour {
         if (m_myCart == null || m_myCamera == null) {
             return;
         }
-
-        Vector3 startingPos = m_myCart.transform.position;
-        startingPos.y += 3.5f; //needs to be high enough to prevent weird collision issues with ball
         
         //initialize enemy ball markers
         m_chatBubbles = new Dictionary<PlayerInfo, GameObject>();
@@ -156,10 +154,10 @@ public class ChatBubble : MonoBehaviour {
             if (player != null) {
                 if (!m_chatBubbles.ContainsKey(player)) {
                     GameObject playerCart = player.cartGameObject;
-                    Vector3 thisBallMarkerPos = playerCart.transform.position;
-                    thisBallMarkerPos.y += 3.5f;
-                    GameObject thisBallMarker = GameObject.Instantiate(Resources.Load("chatBubblePrefab")) as GameObject;
-                    Renderer objRenderer = thisBallMarker.GetComponentInChildren<Renderer>();
+                    Vector3 thisChatBubblePos = playerCart.transform.position;
+                    thisChatBubblePos.y += k_heightOverCart;
+                    GameObject thisChatBubble = GameObject.Instantiate(Resources.Load("chatBubblePrefab")) as GameObject;
+                    Renderer objRenderer = thisChatBubble.GetComponentInChildren<Renderer>();
 
                     //if renderer is not obtained, bail out
                     if (objRenderer != null) {
@@ -169,9 +167,9 @@ public class ChatBubble : MonoBehaviour {
 
                         objRenderer.material.SetColor("_Color", objColor);
                     }
-                    thisBallMarker.transform.position = thisBallMarkerPos;
+                    thisChatBubble.transform.position = thisChatBubblePos;
 
-                    m_chatBubbles.Add(player, thisBallMarker);
+                    m_chatBubbles.Add(player, thisChatBubble);
                     m_numPlayersExpected++;
                 }
             }
@@ -183,9 +181,11 @@ public class ChatBubble : MonoBehaviour {
     //called in from wherever a netChat message is received, giving network ID of player to display bubble over
     public static void DisplayChat(NetworkViewID ID)
     {
+        //Debug.Log("Passed ID: " + ID);
         for (int i = 0; i < Instance.m_nvs.players.Count; i++) {
             PlayerInfo player = (PlayerInfo)Instance.m_nvs.players[i];
             if (player != null) {
+                //Debug.Log("My ID: " + player.ballViewID);
                 if (player.ballViewID == ID) {
                     Instance.StartCoroutine(Instance.Display(Instance.m_chatBubbles[player], 1.0f));
                     break;
