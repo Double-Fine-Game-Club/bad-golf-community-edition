@@ -1256,7 +1256,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967039
+    m_Bits: 4294966783
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
@@ -2261,6 +2261,13 @@ MonoBehaviour:
   camZoom: 0
   camLean: 1
   camCollideRadius: 2
+  mouseRotate: 1
+  mouseButton: 0
+  analogStick: 2
+  resetKey: 0
+  resetButton: 0
+  rotationMultiplier: 300
+  rotationWaitTime: 1
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2308,7 +2315,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96468c245ae8e0d4f8f1c7a7b8b0542e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSingleView: 1
+  isKeyboardControlled: 1
 --- !u!114 &11400008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2524,7 +2531,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ed_pauseScreen: {fileID: 100056}
-  ed_singleView: {fileID: 100062}
 --- !u!114 &11400034
 MonoBehaviour:
   m_ObjectHideFlags: 1
