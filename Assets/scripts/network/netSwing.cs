@@ -45,7 +45,7 @@ public class netSwing : SwingBehaviour {
 		// This is where the swing happens.
 		if ( myInfo.currentMode==1 && 		//At ball
 		    !myInfo.playerIsPaused && 		//Not paused
-		    Input.GetKeyUp(KeyCode.G)) 	//Hit ball key
+		    Input.GetKeyUp(KeyCode.E)) 	//Hit ball key
 		{
 			flying = true;
 			if (shotPower > k_maxShotPower)

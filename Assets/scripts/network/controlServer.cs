@@ -88,6 +88,7 @@ public class controlServer : MonoBehaviour {
 			myInfo.ballGameObject.rigidbody.constraints = RigidbodyConstraints.FreezeAll;
 			//*/ move camera - HACKY
 			GameObject buggyCam = nvs.myCam.gameObject;
+			buggyCam.transform.parent = myInfo.ballGameObject.transform;
 			buggyCam.transform.rotation = Quaternion.identity;	// is this line needed?
 			buggyCam.transform.localPosition = new Vector3(-6,4,0);
 			buggyCam.transform.rotation = Quaternion.LookRotation(myInfo.ballGameObject.transform.position - buggyCam.transform.position);

@@ -46,7 +46,7 @@ public class netTransferToSwing : MonoBehaviour {
 			//temp.SetColor("_ColorTint", originalColor);
 			//ball.renderer.sharedMaterial = temp;
 		}
-		if (!myInfo.playerIsPaused && Input.GetKeyUp (KeyCode.G) ) 
+		if (!myInfo.playerIsPaused && Input.GetKeyUp (KeyCode.E) ) 
 		{
 			if (inHittingRange) 
 			{
