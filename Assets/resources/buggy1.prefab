@@ -175,7 +175,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294966783
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
@@ -447,6 +447,13 @@ MonoBehaviour:
   camZoom: 0
   camLean: 1
   camCollideRadius: 2
+  mouseRotate: 1
+  mouseButton: 0
+  analogStick: 2
+  resetKey: 0
+  resetButton: 0
+  rotationMultiplier: 300
+  rotationWaitTime: 1
 --- !u!124 &12400000
 Behaviour:
   m_ObjectHideFlags: 1

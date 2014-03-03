@@ -138,7 +138,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967039
+    m_Bits: 4294966783
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
@@ -209,14 +209,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c14520cc82be9a2419f1d8ec75176b32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  car: {fileID: 100002}
+  target: {fileID: 0}
   distance: 5
   height: 4
   heightDamping: 2
   rotationDamping: 3
+  leanDamping: 2
   cameraTilt: 1.5
   minDistance: 3
-  zoom: 1
+  camZoom: 0
+  camLean: 1
+  camCollideRadius: 2
+  mouseRotate: 1
+  mouseButton: 0
+  analogStick: 2
+  resetKey: 0
+  resetButton: 0
+  rotationMultiplier: 300
+  rotationWaitTime: 1
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
