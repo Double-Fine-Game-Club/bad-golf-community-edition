@@ -9,11 +9,10 @@ public class MiniMap : MonoBehaviour {
 	public Texture2D ballIcon;
 	public float iconScale = 0.3f;
 
+	//TODO This color should be set to be the client player's color
 	public Color playerColor = new Color(1,0,0,1);
-	
-	public Transform player;
+
 	public Transform flag;
-	public Transform ball;
 	public GameObject level;
 	public Camera mapCamera;
 
@@ -24,6 +23,8 @@ public class MiniMap : MonoBehaviour {
 
 	private Vector3 camMin;
 	private Vector3 camMax;
+
+	private networkVariables nvs;
 
 	// Use this for initialization
 	void Start () {
@@ -39,6 +40,8 @@ public class MiniMap : MonoBehaviour {
 		playerAngle = 0;
 
 		UpdateIconSize();
+
+		nvs = FindObjectOfType<networkVariables>();
 
 	}
 
@@ -71,6 +74,14 @@ public class MiniMap : MonoBehaviour {
 	
 	// Update is called once per frame
 	void LateUpdate () {
+
+		// TODO : Checking if ball object exists 
+		if( !nvs.myInfo.ballGameObject ) {
+			return;
+		}
+
+		Transform player = nvs.myInfo.cartGameObject.transform;
+		Transform ball = nvs.myInfo.ballGameObject.transform;
 
 		playerAngle = FullAngle(new Vector2(-Vector3.forward.x, -Vector3.forward.z), new Vector2(player.forward.x, player.forward.z ));
 
@@ -105,6 +116,12 @@ public class MiniMap : MonoBehaviour {
 	}
 
 	void OnGUI() {
+
+		// TODO : Checking if ball object exists 
+		if( !nvs.myInfo.ballGameObject ) {
+			return;
+		}
+
 		GUI.DrawTexture( flagPos,flagIcon,ScaleMode.ScaleToFit );
 
 		GUI.color = playerColor;

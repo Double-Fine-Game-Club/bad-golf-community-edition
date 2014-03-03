@@ -1805,6 +1805,7 @@ Transform:
   - {fileID: 2116444448}
   - {fileID: 2065120411}
   - {fileID: 2042471945}
+  - {fileID: 758896052}
   - {fileID: 942947981}
   - {fileID: 198239879}
   - {fileID: 1579541437}
@@ -2415,7 +2416,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &673441569
 Transform:
   m_ObjectHideFlags: 0
@@ -4777,6 +4778,32 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &758896051
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 758896052}
+  m_Layer: 0
+  m_Name: Pin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &758896052
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 758896051}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 13.9192772, y: -27.9238243, z: -244.815247}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 438107478}
 --- !u!1 &784900437
 GameObject:
   m_ObjectHideFlags: 0
@@ -8670,6 +8697,7 @@ GameObject:
   - 124: {fileID: 1346775743}
   - 92: {fileID: 1346775742}
   - 81: {fileID: 1346775741}
+  - 114: {fileID: 1346775746}
   m_Layer: 0
   m_Name: MiniMapCamera
   m_TagString: Untagged
@@ -8738,6 +8766,26 @@ Transform:
   m_LocalScale: {x: 1.25064504, y: 1.60077226, z: 1.25064504}
   m_Children: []
   m_Father: {fileID: 438107478}
+--- !u!114 &1346775746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1346775740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f4348f8d2d33b44ea8bdee55fe9e4c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flagIcon: {fileID: 2800000, guid: 08e3f5505e7b6fb4ca70fcfd8dec7e31, type: 3}
+  playerIcon: {fileID: 2800000, guid: 67fb366972f12b146bd3a4875f8f3909, type: 3}
+  playerDirectionIcon: {fileID: 2800000, guid: 2524ffc9b2661e54b8f7c08c75b8368b, type: 3}
+  ballIcon: {fileID: 2800000, guid: 73f0f822c2bd41e418d84e33dd5123af, type: 3}
+  iconScale: .349999994
+  playerColor: {r: .154411793, g: .860040486, b: 1, a: 1}
+  flag: {fileID: 758896052}
+  level: {fileID: 2065120406}
+  mapCamera: {fileID: 1346775744}
 --- !u!1 &1375897703
 GameObject:
   m_ObjectHideFlags: 0
