@@ -1252,6 +1252,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isKeyboardControlled: 1
+  isLocalMulti: 0
 --- !u!54 &388057051
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1458,6 +1459,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ball: {fileID: 489195829}
+  guiBoxPosition:
+    serializedVersion: 2
+    x: 200
+    y: 200
+    width: 100
+    height: 100
+  showGUI: 0
 --- !u!82 &388057056
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1785,6 +1793,8 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 438107478}
+  - 114: {fileID: 438107479}
+  - 114: {fileID: 438107480}
   m_Layer: 0
   m_Name: level_full
   m_TagString: Untagged
@@ -1813,6 +1823,48 @@ Transform:
   - {fileID: 494588120}
   - {fileID: 1375897704}
   m_Father: {fileID: 0}
+--- !u!114 &438107479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 438107477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc0f894fe079633479040a5c96aaa692, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onStartClipName: 
+  onEnableClipName: 
+  onDisableClipName: 
+  onStartClip: {fileID: 0}
+  onEnableClip: {fileID: 8300000, guid: a6cd8e32a033a4640a67135ae9929dbb, type: 3}
+  onDisableClip: {fileID: 0}
+  volume: .5
+  overrideVolume: 0
+  onDisableStopMusic: 0
+--- !u!114 &438107480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 438107477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fed32e75e5fb36408594d8de246ebfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  edx_defaultClip: {fileID: 0}
+  defaultClip: {fileID: 0}
+  sfxClips: []
+  musicClips: []
+  musicVolume: 1
+  fadeTime: 2
+  sfxVolume: 1
+  muteAllSound: 0
+  muteMusic: 0
+  muteSfx: 0
+  audioPoolSize: 8
 --- !u!1 &474499754
 GameObject:
   m_ObjectHideFlags: 0
@@ -9692,6 +9744,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ball: {fileID: 489195829}
+  guiBoxPosition:
+    serializedVersion: 2
+    x: 200
+    y: 200
+    width: 100
+    height: 100
+  showGUI: 0
 --- !u!82 &1741447823
 AudioSource:
   m_ObjectHideFlags: 0
@@ -9839,6 +9898,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isKeyboardControlled: 1
+  isLocalMulti: 0
 --- !u!114 &1741447829
 MonoBehaviour:
   m_ObjectHideFlags: 0
