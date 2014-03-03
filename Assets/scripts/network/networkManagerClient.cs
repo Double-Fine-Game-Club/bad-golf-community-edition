@@ -27,8 +27,9 @@ public class networkManagerClient : MonoBehaviour {
 		// add us to the player list
 		nvs.players.Add(myInfo);
 
-		networkView.RPC("MyName", RPCMode.Server, nvs.myInfo.name);
-
+		networkView.RPC("MyName", RPCMode.Server, nvs.myInfo.name);	
+		
+		// go into the lobby
 		gameObject.AddComponent("netLobby");
 	}
 	
@@ -40,17 +41,23 @@ public class networkManagerClient : MonoBehaviour {
 		// updates network-sunk fiziks
 		gameObject.AddComponent("controlClient");
 		
-		// chat
-		gameObject.AddComponent("netChat");
-		
 		//pause
 		gameObject.AddComponent ("netPause");
-		
+
+		//show names over player's cart
+		gameObject.AddComponent ("PlayerNames");
+
 		// set the camera in the audio script on the buggy - PUT THIS IN A SCRIPT SOMEONE
 		CarAudio mca = myInfo.cartGameObject.GetComponent("CarAudio") as CarAudio;
 		mca.followCamera = nvs.myCam;	// replace tmpCam with our one - this messes up sound atm
 		(nvs.myCam.gameObject.AddComponent("FollowPlayerScript") as FollowPlayerScript).target = myInfo.cartGameObject.transform;	// add smooth follow script
-		
+
+		//show player on minimap
+		gameObject.AddComponent ("mapIndicatorScript");	
+
+		//show chat bubbles over talking players
+		//gameObject.AddComponent ("ChatBubble");	//Not working quite yet
+
 		// add the swing script
 		//gameObject.AddComponent("netSwing");
 
@@ -61,6 +68,11 @@ public class networkManagerClient : MonoBehaviour {
 	// debug shit
 	void OnGUI() {
 		if (!connected) return;
+		//number of players in game
+		GUILayout.BeginHorizontal();
+		GUILayout.Label("Active players: ");
+		GUILayout.Label (nvs.players.Count.ToString());
+		GUILayout.EndHorizontal();
 		// ping list
 		GUILayout.BeginHorizontal();
 		GUILayout.Label("Ping: " + Network.GetAveragePing(myInfo.server) + "ms");
@@ -224,6 +236,15 @@ public class networkManagerClient : MonoBehaviour {
 	void RemoveViewID(NetworkViewID viewID) {
 		// remove the object
 		if (NetworkView.Find(viewID)) Destroy(NetworkView.Find(viewID).gameObject);
+	}
+
+	[RPC]
+	void UpdateName( NetworkPlayer player, string name){
+		foreach(PlayerInfo p in nvs.players) {
+			if (p.player==player) {
+				p.name = name;
+			}
+		}
 	}
 	
 	

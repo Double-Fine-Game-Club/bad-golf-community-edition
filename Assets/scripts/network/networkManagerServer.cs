@@ -27,12 +27,13 @@ public class networkManagerServer : MonoBehaviour {
 		// get server version
 		serverVersion = nvs.serverVersion;
 		// get server name
-		string serverName = nvs.serverName;
+		string serverComment = nvs.serverName + ": Lobby";
 		
 		// Use NAT punchthrough if no public IP present
 		Network.InitializeServer(31, 11177, !Network.HavePublicAddress());
-		MasterServer.RegisterHost(serverVersion, SystemInfo.deviceName, serverName);
-
+		MasterServer.RegisterHost(serverVersion, SystemInfo.deviceName, serverComment);
+		
+		// go into the lobby
 		gameObject.AddComponent("netLobby");
 	}
 	
@@ -41,20 +42,26 @@ public class networkManagerServer : MonoBehaviour {
 		// receives all players inputs and handles fiziks
 		gameObject.AddComponent("controlServer");
 		
-		// chat
-		gameObject.AddComponent("netChat");
-		
 		//pause
 		gameObject.AddComponent ("netPause");
 		
 		//cart reset
 		gameObject.AddComponent ("netPlayerRespawn");
-		
+
+		//show names over player's cart
+		gameObject.AddComponent ("PlayerNames");
+
+		//show player on minimap
+		gameObject.AddComponent ("mapIndicatorScript");	
+
 		// set the camera in the audio script on the buggy - PUT THIS IN A SCRIPT SOMEONE
 		CarAudio mca = myInfo.cartGameObject.GetComponent("CarAudio") as CarAudio;
 		mca.followCamera = nvs.myCam;	// replace tmpCam with our one - this messes up sound atm
 		(nvs.myCam.gameObject.AddComponent("FollowPlayerScript") as FollowPlayerScript).target = myInfo.cartGameObject.transform;	// add player follow script
-		
+
+		//show chat bubbles over talking players
+		//gameObject.AddComponent ("ChatBubble");	//not working quite yet
+
 		// add the swing script
 		//gameObject.AddComponent("netSwing");
 	}
@@ -184,6 +191,7 @@ public class networkManagerServer : MonoBehaviour {
 	
 	// debug shit
 	void OnGUI() {
+		//number of players in game
 		GUILayout.BeginHorizontal();
 		GUILayout.Label ("Active Players: ");
 		GUILayout.Label (nvs.players.Count.ToString());
@@ -223,6 +231,8 @@ public class networkManagerServer : MonoBehaviour {
 		}
 		Debug.Log(tmpPwCuzUnitysShit);
 		Network.incomingPassword = tmpPwCuzUnitysShit;
+		string serverComment = nvs.serverName + ": Game started";
+		MasterServer.RegisterHost(serverVersion, SystemInfo.deviceName, serverComment);
 
 		// tell everyone what their choices were
 		foreach (PlayerInfo p in nvs.players)
@@ -266,7 +276,7 @@ public class networkManagerServer : MonoBehaviour {
 		foreach(PlayerInfo p in nvs.players) {
 			if (p.player==info.sender) {
 				p.name = name;
-				// add something that updates clients
+				networkView.RPC ("UpdateName", RPCMode.Others, p.player, name);
 			}
 		}
 	}
@@ -286,4 +296,6 @@ public class networkManagerServer : MonoBehaviour {
 	void StartingGame(string a, string b, string c) {}
 	[RPC]
 	void AddPlayer(string cartModel, string ballModel, string characterModel, NetworkPlayer player, string name) {}
+	[RPC]
+	void UpdateName( NetworkPlayer player, string name){}
 }

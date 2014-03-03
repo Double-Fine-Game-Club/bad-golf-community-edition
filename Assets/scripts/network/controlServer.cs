@@ -6,6 +6,7 @@ public class controlServer : MonoBehaviour {
 	networkVariables nvs;
 	PlayerInfo myInfo;
 	netPause pause;
+	Transform cameraParentTransform;
 
 	void Start() {
 		// get variables we need
@@ -22,7 +23,9 @@ public class controlServer : MonoBehaviour {
 		if (!myInfo.playerIsPaused) {
 			// HONK (only if in a buggy)
 			if (Input.GetKeyDown(KeyCode.Q) && myInfo.currentMode==0) {
-				networkView.RPC("IHonked", RPCMode.All, myInfo.player);
+				// need to wait for the audio guys to fix this
+				// if you think you've fixed this test in online aswell
+				//networkView.RPC("IHonked", RPCMode.All, myInfo.player);
 			}
 			// (G)et out of buggy (or get in)
 			if (Input.GetKeyDown(KeyCode.G)) {
@@ -38,17 +41,22 @@ public class controlServer : MonoBehaviour {
 					myInfo.ballGameObject.rigidbody.constraints = RigidbodyConstraints.FreezeAll;
 					//*/ move camera - HACKY
 					GameObject buggyCam = nvs.myCam.gameObject;
+					cameraParentTransform = buggyCam.transform.parent;
 					buggyCam.transform.parent = myInfo.ballGameObject.transform;
-					buggyCam.transform.rotation = Quaternion.identity;
+					buggyCam.transform.rotation = Quaternion.identity;	// is this line needed?
 					buggyCam.transform.localPosition = new Vector3(-6,4,0);
-					buggyCam.transform.localRotation = Quaternion.LookRotation(myInfo.ballGameObject.transform.position - buggyCam.transform.localPosition);
+					buggyCam.transform.rotation = Quaternion.LookRotation(myInfo.ballGameObject.transform.position - buggyCam.transform.position);
 					(buggyCam.GetComponent("FollowPlayerScript") as FollowPlayerScript).enabled = false;
 					Orbit bco = buggyCam.AddComponent("Orbit") as Orbit;
 					bco.Axis = Vector3.up;
 					bco.Point = myInfo.ballGameObject.transform.position;
 					bco.Speed = 0.8f;
-					//*/// change animation
-					myInfo.characterGameObject.transform.FindChild("lil_patrick").animation.Play("golfIdle",PlayMode.StopAll);
+					//*/// change animation - try and keep the prefabs similar so this doesn't become a massive else if list
+					if (myInfo.characterModel=="lil_patrick") {
+						myInfo.characterGameObject.transform.FindChild(myInfo.characterModel).animation.Play("golfIdle",PlayMode.StopAll);
+					} else {
+						myInfo.characterGameObject.animation.Play("golfIdle",PlayMode.StopAll);
+					}
 
 					// if at ball
 				} else if (myInfo.currentMode==1) {
@@ -61,12 +69,16 @@ public class controlServer : MonoBehaviour {
 					myInfo.ballGameObject.rigidbody.constraints = RigidbodyConstraints.None;
 					//*/ move camera - HACKY
 					GameObject buggyCam = nvs.myCam.gameObject;
-					buggyCam.transform.parent = myInfo.cartGameObject.transform;
-					(buggyCam.GetComponent("FollowPlayerScript") as FollowPlayerScript).enabled = true;
+					buggyCam.transform.parent = cameraParentTransform;
 					Orbit bco = buggyCam.GetComponent("Orbit") as Orbit;
 					Component.Destroy(bco);
-					//*/// change animation
-					myInfo.characterGameObject.transform.FindChild("lil_patrick").animation.Play("driveIdle",PlayMode.StopAll);
+					(buggyCam.GetComponent("FollowPlayerScript") as FollowPlayerScript).enabled = true;
+					//*/// change animation - try and keep the prefabs similar so this doesn't become a massive else if list
+					if (myInfo.characterModel=="lil_patrick") {
+						myInfo.characterGameObject.transform.FindChild(myInfo.characterModel).animation.Play("driveIdle",PlayMode.StopAll);
+					} else {
+						myInfo.characterGameObject.animation.Play("driveIdle",PlayMode.StopAll);
+					}
 				}
 				// tell server which mode we swapped to
 				networkView.RPC("PlayerSwap", RPCMode.Server, myInfo.currentMode, myInfo.player);
@@ -148,8 +160,12 @@ public class controlServer : MonoBehaviour {
 					p.characterGameObject.transform.rotation = p.cartGameObject.transform.rotation;
 					// unlock golf ball
 					p.ballGameObject.rigidbody.constraints = RigidbodyConstraints.None;
-					// change animation
-					p.characterGameObject.transform.FindChild("lil_patrick").animation.Play("driveIdle",PlayMode.StopAll);
+					// change animation - try and keep the prefabs similar so this doesn't become a massive else if list
+					if (p.characterModel=="lil_patrick") {
+						p.characterGameObject.transform.FindChild(p.characterModel).animation.Play("driveIdle",PlayMode.StopAll);
+					} else {
+						p.characterGameObject.animation.Play("driveIdle",PlayMode.StopAll);
+					}
 					
 				} else if (p.currentMode==1) {	// if they're now at golf ball
 					// set them at golf ball
@@ -159,8 +175,12 @@ public class controlServer : MonoBehaviour {
 					p.characterGameObject.transform.rotation = Quaternion.identity;
 					// lock golf ball
 					p.ballGameObject.rigidbody.constraints = RigidbodyConstraints.FreezeAll;
-					// change animation
-					p.characterGameObject.transform.FindChild("lil_patrick").animation.Play("golfIdle",PlayMode.StopAll);
+					// change animation - try and keep the prefabs similar so this doesn't become a massive else if list
+					if (p.characterModel=="lil_patrick") {
+						p.characterGameObject.transform.FindChild(p.characterModel).animation.Play("golfIdle",PlayMode.StopAll);
+					} else {
+						p.characterGameObject.animation.Play("golfIdle",PlayMode.StopAll);
+					}
 				}
 
 				// reset keyboard buffer
