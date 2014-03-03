@@ -40,7 +40,13 @@ public class networkManagerClient : MonoBehaviour {
 
 		// updates network-sunk fiziks
 		gameObject.AddComponent("controlClient");
-		
+
+		//hit ball
+		gameObject.AddComponent ("netSwing");
+
+		//ball range finder
+		gameObject.AddComponent ("netTransferToSwing");
+
 		//pause
 		gameObject.AddComponent ("netPause");
 
@@ -51,18 +57,9 @@ public class networkManagerClient : MonoBehaviour {
 		CarAudio mca = myInfo.cartGameObject.GetComponent("CarAudio") as CarAudio;
 		mca.followCamera = nvs.myCam;	// replace tmpCam with our one - this messes up sound atm
 		(nvs.myCam.gameObject.AddComponent("FollowPlayerScript") as FollowPlayerScript).target = myInfo.cartGameObject.transform;	// add smooth follow script
-
-		//show player on minimap
-		gameObject.AddComponent ("mapIndicatorScript");
-
-        //show chat bubble over players when they chat
+		
+		 //show chat bubble over players when they chat
         gameObject.AddComponent("ChatBubble");
-
-		//show chat bubbles over talking players
-		//gameObject.AddComponent ("ChatBubble");	//Not working quite yet
-
-		// add the swing script
-		//gameObject.AddComponent("netSwing");
 
 		// show that we connected
 		connected = true;

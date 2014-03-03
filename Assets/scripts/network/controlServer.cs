@@ -28,61 +28,8 @@ public class controlServer : MonoBehaviour {
 				//networkView.RPC("IHonked", RPCMode.All, myInfo.player);
 			}
 			// (G)et out of buggy (or get in)
-			if (Input.GetKeyDown(KeyCode.G)) {
-				// if in buggy
-				if (myInfo.currentMode==0) {
-					myInfo.currentMode = 1;
-					// set them at golf ball
-					myInfo.characterGameObject.transform.parent = myInfo.ballGameObject.transform;
-					myInfo.ballGameObject.transform.rotation = Quaternion.identity;		// reset rotation to make it nice
-					myInfo.characterGameObject.transform.localPosition = new Vector3(0,0,-2);
-					myInfo.characterGameObject.transform.rotation = Quaternion.identity;
-					// lock golf ball
-					myInfo.ballGameObject.rigidbody.constraints = RigidbodyConstraints.FreezeAll;
-					//*/ move camera - HACKY
-					GameObject buggyCam = nvs.myCam.gameObject;
-					cameraParentTransform = buggyCam.transform.parent;
-					buggyCam.transform.parent = myInfo.ballGameObject.transform;
-					buggyCam.transform.rotation = Quaternion.identity;	// is this line needed?
-					buggyCam.transform.localPosition = new Vector3(-6,4,0);
-					buggyCam.transform.rotation = Quaternion.LookRotation(myInfo.ballGameObject.transform.position - buggyCam.transform.position);
-					(buggyCam.GetComponent("FollowPlayerScript") as FollowPlayerScript).enabled = false;
-					Orbit bco = buggyCam.AddComponent("Orbit") as Orbit;
-					bco.Axis = Vector3.up;
-					bco.Point = myInfo.ballGameObject.transform.position;
-					bco.Speed = 0.8f;
-					//*/// change animation - try and keep the prefabs similar so this doesn't become a massive else if list
-					if (myInfo.characterModel=="lil_patrick") {
-						myInfo.characterGameObject.transform.FindChild(myInfo.characterModel).animation.Play("golfIdle",PlayMode.StopAll);
-					} else {
-						myInfo.characterGameObject.animation.Play("golfIdle",PlayMode.StopAll);
-					}
-
-					// if at ball
-				} else if (myInfo.currentMode==1) {
-					myInfo.currentMode = 0;
-					// set them in buggy
-					myInfo.characterGameObject.transform.parent = myInfo.cartGameObject.transform;
-					myInfo.characterGameObject.transform.localPosition = new Vector3(0,0,0);
-					myInfo.characterGameObject.transform.rotation = myInfo.cartGameObject.transform.rotation;
-					// unlock golf ball
-					myInfo.ballGameObject.rigidbody.constraints = RigidbodyConstraints.None;
-					//*/ move camera - HACKY
-					GameObject buggyCam = nvs.myCam.gameObject;
-					buggyCam.transform.parent = cameraParentTransform;
-					Orbit bco = buggyCam.GetComponent("Orbit") as Orbit;
-					Component.Destroy(bco);
-					(buggyCam.GetComponent("FollowPlayerScript") as FollowPlayerScript).enabled = true;
-					//*/// change animation - try and keep the prefabs similar so this doesn't become a massive else if list
-					if (myInfo.characterModel=="lil_patrick") {
-						myInfo.characterGameObject.transform.FindChild(myInfo.characterModel).animation.Play("driveIdle",PlayMode.StopAll);
-					} else {
-						myInfo.characterGameObject.animation.Play("driveIdle",PlayMode.StopAll);
-					}
-				}
-				// tell server which mode we swapped to
-				networkView.RPC("PlayerSwap", RPCMode.Server, myInfo.currentMode, myInfo.player);
-			}
+			//if (Input.GetKeyDown(KeyCode.G)) {	//handled by netTransferToSwing
+				
 		}
 
 		// pause menu toggler
@@ -122,6 +69,63 @@ public class controlServer : MonoBehaviour {
 			myInfo.v = 0f;
 		}
 	}
+
+	
+	void switchToBall(){
+		// if in buggy
+		if (myInfo.currentMode==0) {
+			networkView.RPC ("PlayerSwap", RPCMode.Server, 1, myInfo.player);	//to ball
+			myInfo.currentMode = 1;
+			//stop cart
+			myInfo.cartGameObject.rigidbody.velocity = Vector3.zero;
+			myInfo.cartGameObject.rigidbody.angularVelocity = Vector3.zero;
+			// set them at golf ball
+			myInfo.characterGameObject.transform.parent = myInfo.ballGameObject.transform;
+			myInfo.ballGameObject.transform.rotation = Quaternion.identity;		// reset rotation to make it nice
+			myInfo.characterGameObject.transform.localPosition = new Vector3(1.5f,0,-2);
+			myInfo.characterGameObject.transform.rotation = Quaternion.identity * new Quaternion(0f, -Mathf.PI/2, 0f, 1f);
+			// lock golf ball
+			myInfo.ballGameObject.rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+			//*/ move camera - HACKY
+			GameObject buggyCam = nvs.myCam.gameObject;
+			buggyCam.transform.rotation = Quaternion.identity;	// is this line needed?
+			buggyCam.transform.localPosition = new Vector3(-6,4,0);
+			buggyCam.transform.rotation = Quaternion.LookRotation(myInfo.ballGameObject.transform.position - buggyCam.transform.position);
+			(buggyCam.GetComponent("FollowPlayerScript") as FollowPlayerScript).enabled = false;
+			
+			//*/// change animation - try and keep the prefabs similar so this doesn't become a massive else if list
+			if (myInfo.characterModel=="lil_patrick") {
+				myInfo.characterGameObject.transform.FindChild(myInfo.characterModel).animation.Play("golfIdle",PlayMode.StopAll);
+			} else {
+				myInfo.characterGameObject.animation.Play("golfIdle",PlayMode.StopAll);
+			}
+			
+		}
+	}
+
+	void switchToCart(){
+		myInfo.currentMode = 0;
+		networkView.RPC ("PlayerSwap", RPCMode.Server, 0, myInfo.player);	//to cart
+		// set them in buggy
+		myInfo.characterGameObject.transform.parent = myInfo.cartGameObject.transform;
+		myInfo.characterGameObject.transform.localPosition = new Vector3(0,0,0);
+		myInfo.characterGameObject.transform.rotation = myInfo.cartGameObject.transform.rotation;
+		// unlock golf ball
+		myInfo.ballGameObject.rigidbody.constraints = RigidbodyConstraints.None;
+		//*/ move camera - HACKY
+		GameObject buggyCam = nvs.myCam.gameObject;
+		buggyCam.transform.parent = myInfo.cartGameObject.transform;
+		
+		(buggyCam.GetComponent("FollowPlayerScript") as FollowPlayerScript).enabled = true;
+		//*/// change animation - try and keep the prefabs similar so this doesn't become a massive else if list
+		if (myInfo.characterModel=="lil_patrick") {
+			myInfo.characterGameObject.transform.FindChild(myInfo.characterModel).animation.Play("driveIdle",PlayMode.StopAll);
+		} else {
+			myInfo.characterGameObject.animation.Play("driveIdle",PlayMode.StopAll);
+		}
+		(GetComponent ("netTransferToSwing") as netTransferToSwing).enabled = true;
+	}
+
 
 	// update what they are currenly doing - this also adds new players automagically
 	[RPC]
@@ -168,11 +172,14 @@ public class controlServer : MonoBehaviour {
 					}
 					
 				} else if (p.currentMode==1) {	// if they're now at golf ball
+					//stop cart
+					p.cartGameObject.rigidbody.velocity = Vector3.zero;
+					p.cartGameObject.rigidbody.angularVelocity = Vector3.zero;
 					// set them at golf ball
 					p.characterGameObject.transform.parent = p.ballGameObject.transform;
 					p.ballGameObject.transform.rotation = Quaternion.identity;		// reset rotation to make it nice
-					p.characterGameObject.transform.localPosition = new Vector3(0,0,-2);
-					p.characterGameObject.transform.rotation = Quaternion.identity;
+					p.characterGameObject.transform.localPosition = new Vector3(1.5f,0,-2);
+					p.characterGameObject.transform.rotation = Quaternion.identity * new Quaternion(0f, -Mathf.PI/2, 0f, 1f);
 					// lock golf ball
 					p.ballGameObject.rigidbody.constraints = RigidbodyConstraints.FreezeAll;
 					// change animation - try and keep the prefabs similar so this doesn't become a massive else if list
@@ -189,6 +196,7 @@ public class controlServer : MonoBehaviour {
 			}
 		}
 	}
+
 
 
 }
