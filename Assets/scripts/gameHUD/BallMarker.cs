@@ -25,6 +25,7 @@ public class BallMarker : MonoBehaviour {
 
     private const float k_maxBallScalar = 1.2f;
     private const float k_heightOffsetFromBall = 3.0f;
+    private const float k_maxAlphaPercentEnemyMarkers = 0.35f;
 
 
 	void Start () 
@@ -97,7 +98,7 @@ public class BallMarker : MonoBehaviour {
 
         m_myBallMarker.transform.rotation = m_myCamera.transform.rotation; //billboard ball marker towards the camera
 
-        UpdateColorScaleToDistance(m_myBallMarker);
+        UpdateColorScaleToDistance(m_myBallMarker, true);
 
         foreach (PlayerInfo player in m_nvs.players) {
             if (m_enemyBallMarkers.ContainsKey(player)) {
@@ -108,13 +109,13 @@ public class BallMarker : MonoBehaviour {
                     playerBall.transform.position = thisBallMarkerPos;
 
                     playerBall.transform.rotation = m_myCamera.transform.rotation; //billboard ball marker towards the camera
-                    UpdateColorScaleToDistance(playerBall);
+                    UpdateColorScaleToDistance(playerBall, false);
                 }
             }
         }
     }
 
-    void UpdateColorScaleToDistance(GameObject objectToUpdate)
+    void UpdateColorScaleToDistance(GameObject objectToUpdate, bool myBall)
     {
         Renderer objRenderer = objectToUpdate.GetComponentInChildren<Renderer>();
 
@@ -123,7 +124,11 @@ public class BallMarker : MonoBehaviour {
         Color objColor = objRenderer.material.GetColor("_Color");
         float distance = Vector3.Distance(objectToUpdate.transform.position, m_myPlayerInfo.cartGameObject.transform.position);
 
-        objColor.a = Mathf.Abs(distance * 0.25f / 10.0f);
+        if (myBall) {
+            objColor.a = Mathf.Abs(distance * 0.25f / 10.0f);
+        } else {
+            objColor.a = Mathf.Min(k_maxAlphaPercentEnemyMarkers, Mathf.Abs(distance * 0.25f / 10.0f));
+        }
 
         Vector3 scale = objectToUpdate.transform.localScale;
         scale.x = Mathf.Max(distance / 15.0f * k_maxBallScalar, k_maxBallScalar);
