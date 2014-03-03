@@ -17,8 +17,12 @@ public class LocalMultiplayerController : MonoBehaviour
 	static public GameObject currentView;
 	static public GameObject currentUI;
 
+	private int winningPlayer = -1;
+
 	void OnEnable () 
 	{
+		winningPlayer = -1;
+
 		//deactivat all views
 		ed_singleView.SetActive(false);
 		ed_dualView.SetActive(false);
@@ -144,14 +148,37 @@ public class LocalMultiplayerController : MonoBehaviour
 				currentView.GetComponent<ControllerSupport>().playerObjectList[unused].SetActive( false);
 			}
 
-			
-
 			currentView.GetComponent<ControllerSupport>().ready = true;
 			currentView.SetActive(true);
 			currentUI.SetActive(true);
 		}
 
 		currentView.GetComponent<ControllerSupport>().checkKeyboard();
+	}
+
+	void declareWinner (GameObject player)
+	{
+		for (int i = 0; i < currentView.GetComponent<ControllerSupport>().playerToControllerIndex.Length; i++) 
+		{
+			if (  currentView.GetComponent<ControllerSupport>().playerObjectList[i].transform.parent.gameObject == player )
+			{
+				winningPlayer = i+1;
+				break;
+			}
+		}
+	}
+
+	void OnGUI()
+	{
+		if( winningPlayer > -1)
+		{
+			GUIStyle myStyle = new GUIStyle();
+			myStyle.fontSize = 34;
+			myStyle.normal.textColor = Color.red;
+
+
+			GUI.Label( new Rect( Screen.width/2, Screen.height/2, 200, 200), "Player " + winningPlayer + " is the Winner !",myStyle);
+		}
 	}
 	
 	void Update () 

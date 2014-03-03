@@ -1200,6 +1200,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isKeyboardControlled: 1
+  isLocalMulti: 0
 --- !u!54 &100820887
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4283,6 +4284,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isKeyboardControlled: 1
+  isLocalMulti: 0
 --- !u!114 &291363696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6143,6 +6145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isKeyboardControlled: 1
+  isLocalMulti: 0
 --- !u!54 &388057051
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -7443,6 +7446,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isKeyboardControlled: 1
+  isLocalMulti: 0
 --- !u!114 &473915860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11736,6 +11740,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isKeyboardControlled: 1
+  isLocalMulti: 0
 --- !u!114 &574253675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21001,6 +21006,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isKeyboardControlled: 1
+  isLocalMulti: 0
 --- !u!54 &908305928
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -32860,6 +32866,66 @@ ParticleSystem:
     subEmitterCollision1: {fileID: 0}
     subEmitterDeath: {fileID: 0}
     subEmitterDeath1: {fileID: 0}
+--- !u!1 &1258884887
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1258884888}
+  - 65: {fileID: 1258884890}
+  - 114: {fileID: 1258884889}
+  m_Layer: 0
+  m_Name: winningPole
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1258884888
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1258884887}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -28.5818577, y: 11.5686731, z: -148.472214}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1384798608}
+--- !u!114 &1258884889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1258884887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b767c516fb1bff94fb9a5703e29099db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ed_targetBalls:
+  - {fileID: 680774700}
+  - {fileID: 34005484}
+  - {fileID: 1282193242}
+  - {fileID: 489195829}
+  - {fileID: 1887095077}
+  - {fileID: 1090516527}
+  - {fileID: 1241439811}
+  messageTarget: {fileID: 1384798607}
+--- !u!65 &1258884890
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1258884887}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: .5, y: 2.5, z: .5}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1263712635
 GameObject:
   m_ObjectHideFlags: 0
@@ -38030,6 +38096,7 @@ Transform:
   m_Children:
   - {fileID: 2116444448}
   - {fileID: 2065120411}
+  - {fileID: 1258884888}
   - {fileID: 2042471945}
   - {fileID: 1579541437}
   - {fileID: 1346775745}
@@ -43742,6 +43809,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isKeyboardControlled: 1
+  isLocalMulti: 0
 --- !u!54 &1630503495
 Rigidbody:
   m_ObjectHideFlags: 0
