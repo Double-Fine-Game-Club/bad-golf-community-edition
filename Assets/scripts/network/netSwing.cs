@@ -19,6 +19,7 @@ public abstract class SwingBehaviour : MonoBehaviour
 
 //Attach this script to a network object
 public class netSwing : SwingBehaviour {
+	public const int k_angleBoost = 5;
 	private Vector3 cameraPos = new Vector3 (0, 2, -7);
 	private bool flying = false;
 	private bool showGui = false;
@@ -29,6 +30,10 @@ public class netSwing : SwingBehaviour {
 	networkVariables nvs;
 	PlayerInfo myInfo;
 	PowerMeter meter;
+
+	//Server variables for smoothing
+	private float lastAngle = 0.0f;
+	private double lastTime = 0.0;
 
 	// Use this for initialization
 	void Start () {
@@ -45,7 +50,7 @@ public class netSwing : SwingBehaviour {
 		// This is where the swing happens.
 		if ( myInfo.currentMode==1 && 		//At ball
 		    !myInfo.playerIsPaused && 		//Not paused
-		    Input.GetKeyUp(KeyCode.E)) 	//Hit ball key
+		    Input.GetKeyUp(KeyCode.Space)) 	//Hit ball key
 		{
 			flying = true;
 			if (shotPower > k_maxShotPower)
@@ -63,6 +68,21 @@ public class netSwing : SwingBehaviour {
 			meter.HideArc();
 			meter.enabled=false;
 
+			//Switch back to cart
+			gameObject.SendMessage("switchToCart");
+			(GetComponent ("netTransferToSwing") as netTransferToSwing).enabled = true;
+			showGui=false;
+			//This doesn't disable here because the RPC handlers are needed :/
+
+		}else if ( myInfo.currentMode==1 && 		//At ball
+		     !myInfo.playerIsPaused && 		//Not paused
+		     Input.GetKeyUp(KeyCode.E)) 	//Hit ball key
+		{
+			//Leave without swinging
+			shotPower = 0;	
+			meter.HideArc();
+			meter.enabled=false;
+			
 			//Switch back to cart
 			gameObject.SendMessage("switchToCart");
 			(GetComponent ("netTransferToSwing") as netTransferToSwing).enabled = true;
@@ -88,8 +108,9 @@ public class netSwing : SwingBehaviour {
 		if (timer > 0.1f) {	//Needs to be fast but not spammy :/
 			timer=0.0f;
 			rotationInput = Input.GetAxis ("Horizontal");
-			networkView.RPC ("RotatePlayer", RPCMode.Server, rotationInput*5);	//multiplier mismatch = smoothing
-			rotationInput*=4;
+			rotationInput = rotationInput*k_angleBoost;
+			networkView.RPC ("RotatePlayer", RPCMode.Server, rotationInput);	//multiplier mismatch = smoothing
+
 		}
 		powerInput = Input.GetAxis("Vertical");
 
@@ -126,9 +147,17 @@ public class netSwing : SwingBehaviour {
 		return shotPower;
 	}
 
+
 	[RPC]
 	void RotatePlayer(float angle, NetworkMessageInfo info){
 		if (Network.isClient)	return;	//Ball will be synchronized by the server
+
+		//Add the assumed angle that would have been added while the packet
+		//	was being delivered
+		float deltaTime = (float)(info.timestamp - Network.time);
+		float deltaAngle = angle - lastAngle;
+		lastAngle = angle;
+		float adjustedAngle = deltaAngle * deltaTime + angle;
 
 		GameObject playersBall = null;
 		foreach (PlayerInfo p in nvs.players) {
@@ -139,8 +168,8 @@ public class netSwing : SwingBehaviour {
 		}
 		if (playersBall == null)
 			throw new UnassignedReferenceException ("Recieved message from unknown NetworkPlayer");
-		playersBall.transform.Rotate (0f, angle, 0f);
-		myInfo.ballGameObject.rigidbody.freezeRotation = true;
+		playersBall.transform.Rotate (0f, adjustedAngle, 0f);
+		//myInfo.ballGameObject.rigidbody.freezeRotation = true;
 	}
 
 	[RPC]

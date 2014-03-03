@@ -7,12 +7,14 @@ public class controlServer : MonoBehaviour {
 	PlayerInfo myInfo;
 	netPause pause;
 	Transform cameraParentTransform;
+	GameObject pin;
 
 	void Start() {
 		// get variables we need
 		nvs = GetComponent("networkVariables") as networkVariables;
 		myInfo = nvs.myInfo;
 		pause = GetComponent ("netPause") as netPause;
+		pin = GameObject.Find ("Pin") as GameObject;
 		// change camera
 		//GameObject.Find ("lobby_view").transform.FindChild ("camera").gameObject.SetActive (false);
 		//myInfo.cartContainerObject.transform.FindChild ("multi_buggy_cam").gameObject.SetActive (true);
@@ -74,25 +76,27 @@ public class controlServer : MonoBehaviour {
 	void switchToBall(){
 		// if in buggy
 		if (myInfo.currentMode==0) {
-			networkView.RPC ("PlayerSwap", RPCMode.Server, 1, myInfo.player);	//to ball
+			networkView.RPC ("PlayerSwap", RPCMode.Others, 1, myInfo.player);	//to ball
 			myInfo.currentMode = 1;
 			//stop cart
 			myInfo.cartGameObject.rigidbody.velocity = Vector3.zero;
 			myInfo.cartGameObject.rigidbody.angularVelocity = Vector3.zero;
 			// set them at golf ball
 			myInfo.characterGameObject.transform.parent = myInfo.ballGameObject.transform;
-			myInfo.ballGameObject.transform.rotation = Quaternion.identity;		// reset rotation to make it nice
+			myInfo.ballGameObject.transform.rotation = Quaternion.LookRotation((pin.transform.position - myInfo.ballGameObject.transform.position) - new Vector3(0, pin.transform.position.y - myInfo.ballGameObject.transform.position.y,0));	
 			myInfo.characterGameObject.transform.localPosition = new Vector3(1.5f,0,-2);
-			myInfo.characterGameObject.transform.rotation = Quaternion.identity * new Quaternion(0f, -Mathf.PI/2, 0f, 1f);
+			myInfo.characterGameObject.transform.localRotation = Quaternion.identity * new Quaternion(0f, -Mathf.PI/2, 0f, 1f);
 			// lock golf ball
 			myInfo.ballGameObject.rigidbody.constraints = RigidbodyConstraints.FreezeAll;
 			//*/ move camera - HACKY
 			GameObject buggyCam = nvs.myCam.gameObject;
+			(buggyCam.GetComponent("FollowPlayerScript") as FollowPlayerScript).enabled = false;
 			buggyCam.transform.parent = myInfo.ballGameObject.transform;
 			buggyCam.transform.rotation = Quaternion.identity;	// is this line needed?
 			buggyCam.transform.localPosition = new Vector3(-6,4,0);
-			buggyCam.transform.rotation = Quaternion.LookRotation(myInfo.ballGameObject.transform.position - buggyCam.transform.position);
-			(buggyCam.GetComponent("FollowPlayerScript") as FollowPlayerScript).enabled = false;
+			//buggyCam.transform.rotation = Quaternion.LookRotation(myInfo.ballGameObject.transform.position - buggyCam.transform.position);
+			buggyCam.transform.localRotation = Quaternion.identity;
+
 			
 			//*/// change animation - try and keep the prefabs similar so this doesn't become a massive else if list
 			if (myInfo.characterModel=="lil_patrick") {
@@ -106,7 +110,7 @@ public class controlServer : MonoBehaviour {
 
 	void switchToCart(){
 		myInfo.currentMode = 0;
-		networkView.RPC ("PlayerSwap", RPCMode.Server, 0, myInfo.player);	//to cart
+		networkView.RPC ("PlayerSwap", RPCMode.Others, 0, myInfo.player);	//to cart
 		// set them in buggy
 		myInfo.characterGameObject.transform.parent = myInfo.cartGameObject.transform;
 		myInfo.characterGameObject.transform.localPosition = new Vector3(0,0,0);
@@ -178,9 +182,9 @@ public class controlServer : MonoBehaviour {
 					p.cartGameObject.rigidbody.angularVelocity = Vector3.zero;
 					// set them at golf ball
 					p.characterGameObject.transform.parent = p.ballGameObject.transform;
-					p.ballGameObject.transform.rotation = Quaternion.identity;		// reset rotation to make it nice
+					p.ballGameObject.transform.rotation = Quaternion.LookRotation((pin.transform.position - p.ballGameObject.transform.position) - new Vector3(0, pin.transform.position.y - p.ballGameObject.transform.position.y,0));	
 					p.characterGameObject.transform.localPosition = new Vector3(1.5f,0,-2);
-					p.characterGameObject.transform.rotation = Quaternion.identity * new Quaternion(0f, -Mathf.PI/2, 0f, 1f);
+					p.characterGameObject.transform.localRotation = Quaternion.identity * new Quaternion(0f, -Mathf.PI/2, 0f, 1f);
 					// lock golf ball
 					p.ballGameObject.rigidbody.constraints = RigidbodyConstraints.FreezeAll;
 					// change animation - try and keep the prefabs similar so this doesn't become a massive else if list
