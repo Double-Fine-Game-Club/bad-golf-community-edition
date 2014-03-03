@@ -237,7 +237,7 @@ public class networkManagerServer : MonoBehaviour {
 		Debug.Log(tmpPwCuzUnitysShit);
 		Network.incomingPassword = tmpPwCuzUnitysShit;
 		string serverName = nvs.serverName + ": Game started";
-		string serverComment = nvs.serverName + ": Game started";
+		string serverComment = "Add stuff like spectators here maybe?";
 		MasterServer.RegisterHost(serverVersion, serverName, serverComment);
 
 		// tell everyone what their choices were

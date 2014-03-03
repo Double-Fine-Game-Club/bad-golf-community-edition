@@ -13,7 +13,7 @@ public class networkManager : MonoBehaviour {
 	
 	/****************************************************
 	 * 
-	 * DONT EDIT THIS SCRIPT
+	 * DO EDIT THIS SCRIPT
 	 * 
 	 ****************************************************/
 	
@@ -93,13 +93,20 @@ public class networkManager : MonoBehaviour {
 			foreach (HostData element in data)
 			{
 				GUILayout.BeginHorizontal();
-				string name = element.gameName + " " + element.connectedPlayers + " / " + element.playerLimit;
+				if (element.passwordProtected) {
+					GUILayout.Label("Locked");
+				} else {
+					GUILayout.Label("");
+				}
+				GUILayout.Space(5);
+				string name = element.gameName;
 				GUILayout.Label(name);
 				GUILayout.Space(5);
-				string hostInfo = "[";
-				foreach (var host in element.ip) hostInfo = hostInfo + host + ":" + element.port + " ";
-				hostInfo = hostInfo + "]";
-				GUILayout.Label(hostInfo);
+				GUILayout.Label(element.connectedPlayers + " / " + element.playerLimit);
+				//string hostInfo = "[";
+				//foreach (var host in element.ip) hostInfo = hostInfo + host + ":" + element.port + " ";
+				//hostInfo = hostInfo + "]";
+				//GUILayout.Label(hostInfo);
 				GUILayout.Space(5);
 				GUILayout.Label(element.comment);
 				GUILayout.Space(5);
