@@ -42,7 +42,7 @@ public class LocalMultiplayerController : MonoBehaviour
 
 		players += LocalMultiplayerLobbyController.controllerDeviceIndexToPlayerIndexMap.Count;
 
-		//convert the device map to something usable
+		//convert the device map to something usable for this case
 		int[] playerToControllerIndex = Enumerable.Repeat(-1, 4).ToArray();
 		if ( LobbyControllerSupport.inputDeviceList != null )
 		{
@@ -86,7 +86,7 @@ public class LocalMultiplayerController : MonoBehaviour
 				currentView.GetComponent<ControllerSupport>().playerToControllerIndex[0] = targetDevice; 
 				currentView.SetActive(true);
 				currentUI.SetActive(true);
-			}
+			}	
 		}
 		else if ( players == 2)
 		{
@@ -153,7 +153,38 @@ public class LocalMultiplayerController : MonoBehaviour
 			currentUI.SetActive(true);
 		}
 
+		//done setting gamepads above, now setup keyboard correctly, and tell certain components that care what they are controlled by 
 		currentView.GetComponent<ControllerSupport>().checkKeyboard();
+
+		//set colors picked from before, only if we went through the lobby
+		if ( LobbyControllerSupport.wasInitialized )
+		{
+			//characters in order of index matching screenview (camera) NOT player  
+			Renderer[] bodyList = currentView.GetComponent<ControllerSupport>().playerBodyList;
+			
+			//for every golfer, find its matching device, then get the player index for that device, apply that color  
+			for (int i = 0; i < bodyList.Length; i++) 
+			{
+				int controllerIndex = currentView.GetComponent<ControllerSupport>().playerToControllerIndex[i];	 
+				
+				int playerIndex;
+				if ( controllerIndex == -1) //this might be a keyboard
+				{
+					playerIndex = LocalMultiplayerLobbyController.keyboardIndex;
+				}
+				else
+					playerIndex = LocalMultiplayerLobbyController.controllerDeviceIndexToPlayerIndexMap[controllerIndex]; 
+				
+				//replace all the materials in the object cause we have many materials for the body at the moment
+				Material[] matList = bodyList[i].sharedMaterials;
+				for (int c = 0; c < matList.Length; c++) 
+				{
+					matList[c] = LocalMultiplayerLobbyController.playerMats[playerIndex]; 
+				}
+				bodyList[i].sharedMaterials = matList;
+			}		
+		}
+		//done coloring
 	}
 
 	void declareWinner (GameObject player)

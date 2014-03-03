@@ -9,6 +9,8 @@ public class ControllerSupport : MonoBehaviour
 	public GameObject[] playerObjectList;
 	public int[] playerToControllerIndex;
 
+	public Renderer[] playerBodyList;
+
 	public bool ready = false;
 
 	void Start () 
