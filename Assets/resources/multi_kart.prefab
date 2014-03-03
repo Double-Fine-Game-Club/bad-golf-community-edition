@@ -927,7 +927,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967039
+    m_Bits: 4294966783
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
@@ -1751,6 +1751,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38748c7bed906cc4d94128dd0415374d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skidSmokeSystem: {fileID: 0}
   wheelModel: {fileID: 400006}
   skidTrailPrefab: {fileID: 400000, guid: 4b6aa99de5d21424eab6ae279f31475b, type: 2}
   loQualDist: 100
@@ -1784,8 +1785,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 100044}
-  hitMultiplier: 10
   cart: {fileID: 100016}
+  hitMultiplier: 10
 --- !u!114 &11400014
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1801,6 +1802,7 @@ MonoBehaviour:
   m_markerPrefab: {fileID: 100000, guid: 106aba1f0ace6184ab747ea60caff5f2, type: 2}
   m_meterRadius: 1
   m_meterPoints: 100
+  m_swingScript: {fileID: 0}
 --- !u!114 &11400016
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1826,6 +1828,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38748c7bed906cc4d94128dd0415374d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skidSmokeSystem: {fileID: 0}
   wheelModel: {fileID: 400002}
   skidTrailPrefab: {fileID: 400000, guid: 4b6aa99de5d21424eab6ae279f31475b, type: 2}
   loQualDist: 100
@@ -1845,7 +1848,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ed_pauseScreen: {fileID: 0}
-  ed_singleView: {fileID: 100042}
 --- !u!114 &11400022
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1868,6 +1870,13 @@ MonoBehaviour:
   camZoom: 0
   camLean: 1
   camCollideRadius: 2
+  mouseRotate: 1
+  mouseButton: 0
+  analogStick: 2
+  resetKey: 0
+  resetButton: 0
+  rotationMultiplier: 300
+  rotationWaitTime: 1
 --- !u!114 &11400024
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1879,6 +1888,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38748c7bed906cc4d94128dd0415374d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skidSmokeSystem: {fileID: 0}
   wheelModel: {fileID: 400050}
   skidTrailPrefab: {fileID: 400000, guid: 4b6aa99de5d21424eab6ae279f31475b, type: 2}
   loQualDist: 100
@@ -1897,6 +1907,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38748c7bed906cc4d94128dd0415374d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skidSmokeSystem: {fileID: 0}
   wheelModel: {fileID: 400032}
   skidTrailPrefab: {fileID: 400000, guid: 4b6aa99de5d21424eab6ae279f31475b, type: 2}
   loQualDist: 100
