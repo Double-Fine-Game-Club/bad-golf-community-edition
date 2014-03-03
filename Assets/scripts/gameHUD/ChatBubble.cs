@@ -15,9 +15,10 @@ public class ChatBubble : MonoBehaviour {
     private Camera m_myCamera;
 
     private bool m_initialized = false;
-    private bool m_moveUp = false;
-    private float m_positionOffset = 0.0f;
     private int m_numPlayersExpected;
+
+    //tweak this for offest of chat bubble over cart
+    private const float k_heightOverCart = 4.2f;
 
 
     void Start()
@@ -78,7 +79,7 @@ public class ChatBubble : MonoBehaviour {
                 if (!m_chatBubbles.ContainsKey(player)) {
                     GameObject playerCart = player.cartGameObject;
                     Vector3 thisChatBubblePos = playerCart.transform.position;
-                    thisChatBubblePos.y += 3.5f;
+                    thisChatBubblePos.y += k_heightOverCart;
                     GameObject thisChatBubble = GameObject.Instantiate(Resources.Load("chatBubblePrefab")) as GameObject;
                     thisChatBubble.transform.position = thisChatBubblePos;
                     Renderer objRenderer = thisChatBubble.GetComponentInChildren<Renderer>();
@@ -107,7 +108,7 @@ public class ChatBubble : MonoBehaviour {
                 if (m_chatBubbles.ContainsKey(player)) {
                     GameObject playerChatBubble = m_chatBubbles[player];
                     Vector3 thisChatBubblePos = player.cartGameObject.transform.position;
-                    thisChatBubblePos.y += 4.0f;
+                    thisChatBubblePos.y += k_heightOverCart;
                     playerChatBubble.transform.position = thisChatBubblePos;
 
                     playerChatBubble.transform.rotation = m_myCamera.transform.rotation; //billboard ball marker towards the camera
@@ -154,7 +155,7 @@ public class ChatBubble : MonoBehaviour {
                 if (!m_chatBubbles.ContainsKey(player)) {
                     GameObject playerCart = player.cartGameObject;
                     Vector3 thisChatBubblePos = playerCart.transform.position;
-                    thisChatBubblePos.y += 4.0f;
+                    thisChatBubblePos.y += k_heightOverCart;
                     GameObject thisChatBubble = GameObject.Instantiate(Resources.Load("chatBubblePrefab")) as GameObject;
                     Renderer objRenderer = thisChatBubble.GetComponentInChildren<Renderer>();
 
