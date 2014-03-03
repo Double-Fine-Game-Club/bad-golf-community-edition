@@ -25,13 +25,15 @@ public class networkManagerServer : MonoBehaviour {
 		nvs.players.Add(myInfo);
 		
 		// get server version
-		serverVersion = nvs.serverVersion;
+		serverVersion = nvs.serverVersion;	// maybe set the server version to the map name?
 		// get server name
-		string serverComment = nvs.serverName + ": Lobby";
+		string serverName = nvs.serverName + ": Lobby";
+		string serverComment = "Add stuff like spectators here maybe?";
 		
 		// Use NAT punchthrough if no public IP present
 		Network.InitializeServer(31, 11177, !Network.HavePublicAddress());
-		MasterServer.RegisterHost(serverVersion, SystemInfo.deviceName, serverComment);
+		MasterServer.updateRate = 5;
+		MasterServer.RegisterHost(serverVersion, serverName, serverComment);
 		
 		// go into the lobby
 		gameObject.AddComponent("netLobby");
@@ -234,8 +236,9 @@ public class networkManagerServer : MonoBehaviour {
 		}
 		Debug.Log(tmpPwCuzUnitysShit);
 		Network.incomingPassword = tmpPwCuzUnitysShit;
+		string serverName = nvs.serverName + ": Game started";
 		string serverComment = nvs.serverName + ": Game started";
-		MasterServer.RegisterHost(serverVersion, SystemInfo.deviceName, serverComment);
+		MasterServer.RegisterHost(serverVersion, serverName, serverComment);
 
 		// tell everyone what their choices were
 		foreach (PlayerInfo p in nvs.players)
