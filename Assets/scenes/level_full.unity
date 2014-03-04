@@ -412,7 +412,8 @@ MonoBehaviour:
   characteryModelNames:
   - Patrick
   - Brad
-  serverVersion: sandvich3
+  gameHasBegun: 0
+  serverVersion: sandvich4
   serverName: 
 --- !u!114 &198239881
 MonoBehaviour:

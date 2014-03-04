@@ -62,16 +62,18 @@ public class BallMarker : MonoBehaviour {
     void CleanupPlayerList()
 	{
 		// have to treat dictionaries weirdly
-		PlayerInfo keyToRemove = new PlayerInfo();	// create a blank PlayerInfo
+		ArrayList keysToRemove = new ArrayList();	// create a blank ArrayList
         foreach (KeyValuePair<PlayerInfo,GameObject> keypair in m_enemyBallMarkers) {	// iterate through the dictionary
 			if (!m_nvs.players.Contains(keypair.Key)) {	// check if we have a copy
-				keyToRemove = keypair.Key;	// don't worry about there being more than 1 - it'll update next frame
+				keysToRemove.Add(keypair.Key);
             }
 		}
-		if (m_enemyBallMarkers.ContainsKey(keyToRemove)) {	// if something does need removing then remove it
-			Destroy(m_enemyBallMarkers[keyToRemove]);
-			m_enemyBallMarkers.Remove(keyToRemove);
-			m_numPlayersExpected--;
+		foreach(PlayerInfo keyToRemove in keysToRemove) {
+			if (m_enemyBallMarkers.ContainsKey(keyToRemove)) {	// if something does need removing then remove it
+				Destroy(m_enemyBallMarkers[keyToRemove]);
+				m_enemyBallMarkers.Remove(keyToRemove);
+				m_numPlayersExpected--;
+			}
 		}
     }
 

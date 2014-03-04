@@ -7,6 +7,7 @@ public class networkManagerServer : MonoBehaviour {
 	networkVariables nvs;
 	PlayerInfo myInfo;
 	string serverVersion;
+	bool gameHasBegun;
 	
 	/****************************************************
 	 * 
@@ -34,6 +35,9 @@ public class networkManagerServer : MonoBehaviour {
 		Network.InitializeServer(31, 11177, !Network.HavePublicAddress());
 		MasterServer.updateRate = 5;
 		MasterServer.RegisterHost(serverVersion, serverName, serverComment);
+
+		// get game state
+		gameHasBegun = nvs.gameHasBegun;
 		
 		// go into the lobby
 		gameObject.AddComponent("netLobby");
@@ -41,11 +45,11 @@ public class networkManagerServer : MonoBehaviour {
 	
 	// ANY SERVER SIDE SCRIPTS GO HERE
 	void AddScripts() {
+		// anything you want to have running in the lobby should go in the netLobby script
+		// bare in mind that it may not have access to everything it needs (for example gameobjects wont have spawned yet)
+
 		// receives all players inputs and handles fiziks
 		gameObject.AddComponent("controlServer");
-		
-		//pause
-		gameObject.AddComponent ("netPause");
 		
 		//cart reset
 		gameObject.AddComponent ("netPlayerRespawn");
@@ -63,9 +67,6 @@ public class networkManagerServer : MonoBehaviour {
 		CarAudio mca = myInfo.cartGameObject.GetComponent("CarAudio") as CarAudio;
 		mca.followCamera = nvs.myCam;	// replace tmpCam with our one - this messes up sound atm
 		(nvs.myCam.gameObject.AddComponent("FollowPlayerScript") as FollowPlayerScript).target = myInfo.cartGameObject.transform;	// add player follow script
-
-		//show chat bubbles over talking players
-		//gameObject.AddComponent ("ChatBubble");	//not working quite yet
 
 		// add the swing script
 		//gameObject.AddComponent("netSwing");
@@ -151,16 +152,31 @@ public class networkManagerServer : MonoBehaviour {
 			// tell the player this is a player and not some random objects
 			networkView.RPC("SpawnPlayer", player, p.cartViewIDTransform, p.cartViewIDRigidbody, p.ballViewID, p.characterViewID, p.currentMode, p.player);
 			*/
+			// if we've started then give the new guy the prefabs to watch
+			if (gameHasBegun) {
+				networkView.RPC("SpawnPrefab", player, p.cartViewIDTransform, p.cartGameObject.transform.position, p.cartGameObject.rigidbody.velocity, p.cartModel);
+				networkView.RPC("SpawnPrefab", player, p.ballViewID, p.ballGameObject.transform.position, p.ballGameObject.rigidbody.velocity, p.ballModel);
+				networkView.RPC("SpawnPrefab", player, p.characterViewID, p.characterGameObject.transform.position, new Vector3(0,0,0), p.characterModel);
+			}
+
 			// tell the new player about the iterated player
 			networkView.RPC("AddPlayer", player, p.cartModel, p.ballModel, p.characterModel, p.player, p.name);
-			// tell the iterated player about the new player, unless the iterated player is the server
-			if (p.player!=myInfo.player) {
+
+			// tell the iterated player about the new player, unless the iterated player is the server or we have started
+			if (p.player!=myInfo.player && !gameHasBegun) {
 				networkView.RPC("AddPlayer", p.player, newGuy.cartModel, newGuy.ballModel, newGuy.characterModel, newGuy.player, newGuy.name);
+			}
+
+			// also tell them to spawn this one as a player if they're spectating
+			if (gameHasBegun) {
+				networkView.RPC("SpawnPlayer", player, p.cartViewIDTransform, p.cartViewIDRigidbody, p.ballViewID, p.characterViewID, p.currentMode, p.player);
 			}
 		}
 		
-		// add it to the list
-		nvs.players.Add(newGuy);
+		// add it to the list if the game hasn't started
+		if (!gameHasBegun) {
+			nvs.players.Add(newGuy);
+		}
 	}
 
 	void OnPlayerDisconnected(NetworkPlayer player) {
@@ -226,7 +242,7 @@ public class networkManagerServer : MonoBehaviour {
 
 	void StartGame() {
 		Component.Destroy(GetComponent("netLobby"));
-
+		/*
 		// don't let anyone else join - this doesn't work (and hasn't since 2010 -_-)
 		MasterServer.UnregisterHost();
 		// instead make up a password and set it to that
@@ -236,6 +252,8 @@ public class networkManagerServer : MonoBehaviour {
 		}
 		Debug.Log(tmpPwCuzUnitysShit);
 		Network.incomingPassword = tmpPwCuzUnitysShit;
+		*/
+
 		string serverName = nvs.serverName + ": Game started";
 		string serverComment = "Add stuff like spectators here maybe?";
 		MasterServer.RegisterHost(serverVersion, serverName, serverComment);
@@ -250,6 +268,8 @@ public class networkManagerServer : MonoBehaviour {
 
 		// start the game
 		BeginGame();
+		// set the game to have started
+		gameHasBegun = true;
 		// call the functions that need them
 		AddScripts();
 	}
@@ -262,7 +282,9 @@ public class networkManagerServer : MonoBehaviour {
 	[RPC]
 	void PrintText(string text) {
 		Debug.Log(text);
-		screenMessages.Add(Time.time+5,"[DEBUG] "+text);
+		int i;
+		for (i=10; screenMessages.ContainsKey(Time.time+((float)i)/2); i++);
+		screenMessages.Add(Time.time+((float)i)/2,"[DEBUG] "+text);
 	}
 
 	[RPC]
@@ -272,7 +294,7 @@ public class networkManagerServer : MonoBehaviour {
 				p.cartModel = cartModel;
 				p.ballModel = ballModel;
 				p.characterModel = characterModel;
-				// add something that updates clients
+				// add something that updates clients - next thing I'll do :P
 			}
 		}
 	}
@@ -284,6 +306,11 @@ public class networkManagerServer : MonoBehaviour {
 				p.name = name;
 				networkView.RPC ("UpdateName", RPCMode.Others, p.player, name);
 			}
+		}
+
+		// tell them they're spectating if we've begun
+		if (gameHasBegun) {
+			networkView.RPC("YoureSpectating", info.sender);
 		}
 	}
 	
@@ -304,4 +331,6 @@ public class networkManagerServer : MonoBehaviour {
 	void AddPlayer(string cartModel, string ballModel, string characterModel, NetworkPlayer player, string name) {}
 	[RPC]
 	void UpdateName( NetworkPlayer player, string name){}
+	[RPC]
+	void YoureSpectating(){}
 }

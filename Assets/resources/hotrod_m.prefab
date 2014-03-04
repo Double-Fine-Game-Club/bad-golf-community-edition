@@ -1260,7 +1260,7 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100044}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 100
   m_Drag: .100000001
   m_AngularDrag: .0500000007
   m_UseGravity: 1
@@ -1629,6 +1629,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isKeyboardControlled: 1
+  isLocalMulti: 0
 --- !u!124 &12400000
 Behaviour:
   m_ObjectHideFlags: 1
