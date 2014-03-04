@@ -36,13 +36,11 @@ public class networkManagerClient : MonoBehaviour {
 	// CLIENT SIDE SCRIPTS GO HERE
 	// all scripts are called after we have a reference to the buggy and a NetworkViewID
 	void AddScripts() {
-		Component.Destroy(GetComponent("netLobby"));
+		// anything you want to have running in the lobby should go in the netLobby script
+		// bare in mind that it may not have access to everything it needs (for example gameobjects wont have spawned yet)
 
 		// updates network-sunk fiziks
 		gameObject.AddComponent("controlClient");
-		
-		//pause
-		gameObject.AddComponent ("netPause");
 
 		//show names over player's cart
 		gameObject.AddComponent ("PlayerNames");
@@ -57,9 +55,6 @@ public class networkManagerClient : MonoBehaviour {
 
         //show chat bubble over players when they chat
         gameObject.AddComponent("ChatBubble");
-
-		//show chat bubbles over talking players
-		//gameObject.AddComponent ("ChatBubble");	//Not working quite yet
 
 		// add the swing script
 		//gameObject.AddComponent("netSwing");
@@ -248,6 +243,22 @@ public class networkManagerClient : MonoBehaviour {
 				p.name = name;
 			}
 		}
+	}
+
+	// tells the player they're spectating
+	[RPC]
+	void YoureSpectating() {
+		netLobby ntl = GetComponent("netLobby") as netLobby;
+		ntl.enabled = false;
+		Component.Destroy(ntl);
+		
+		// show that we connected
+		connected = true;
+
+		// add crappy controls
+		nvs.myCam.gameObject.AddComponent("SpectatorView");
+		// remove us as we aren't playing
+		nvs.players.Remove(myInfo);
 	}
 	
 	
