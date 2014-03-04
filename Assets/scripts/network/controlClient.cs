@@ -42,6 +42,10 @@ public class controlClient : MonoBehaviour {
 					// if you think you've fixed this test in online aswell
 					//networkView.RPC("IHonked", RPCMode.All, myInfo.player);
 				}
+				// reset
+				if (Input.GetKeyDown(KeyCode.R) && Network.isClient) {
+					networkView.RPC("ResetMe", RPCMode.Server);
+				}
 			}
 
 		} else {
@@ -211,4 +215,6 @@ public class controlClient : MonoBehaviour {
 	void KartMovement(float h, float v) {}
 	[RPC]
 	void SpawnBall(NetworkViewID viewId) {}
+	[RPC]
+	void ResetMe() {}
 }

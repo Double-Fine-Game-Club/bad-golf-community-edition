@@ -21,6 +21,13 @@ public class netPlayerRespawn : MonoBehaviour {
 		spawnLocation = transform.position;
 	}
 	
+	// reset
+	void Update () {
+		if (Input.GetKeyDown(KeyCode.R)) {
+			nvs.myInfo.cartGameObject.transform.position = new Vector3(0,respawnThreshold - 1,0);
+		}
+	}
+	
 	// Update is called once per frame
 	void FixedUpdate () {
 		// go through all the players buggys
@@ -38,6 +45,17 @@ public class netPlayerRespawn : MonoBehaviour {
 				p.ballGameObject.rigidbody.angularVelocity = Vector3.zero;
 				p.ballGameObject.transform.rotation = Quaternion.identity;
 				p.ballGameObject.transform.position = spawnLocation + Quaternion.AngleAxis(Random.Range(0,360), Vector3.up) * new Vector3(10,2,0);
+			}
+		}
+	}
+	
+	// honks
+	[RPC]
+	void ResetMe(NetworkMessageInfo info) {
+		// find the player
+		foreach (PlayerInfo p in nvs.players) {
+			if (p.player==info.sender) {
+				p.cartGameObject.transform.position = new Vector3(0,respawnThreshold - 1,0);
 			}
 		}
 	}
