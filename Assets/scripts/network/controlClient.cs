@@ -94,7 +94,7 @@ public class controlClient : MonoBehaviour {
 			//myInfo.characterGameObject.transform.parent = myInfo.ballGameObject.transform;
 			myInfo.characterGameObject.transform.parent = localBallAnalog.transform;
 
-			myInfo.characterGameObject.transform.localPosition = new Vector3(1.5f,0,-2);
+			myInfo.characterGameObject.transform.localPosition = new Vector3(1.7f,0,0);
 			myInfo.characterGameObject.transform.localRotation = Quaternion.identity * new Quaternion(0f, -Mathf.PI/2, 0f, 1f);
 
 			myInfo.ballGameObject.transform.rotation = Quaternion.LookRotation((pin.transform.position - myInfo.ballGameObject.transform.position) - new Vector3(0, pin.transform.position.y - myInfo.ballGameObject.transform.position.y,0));	
@@ -181,7 +181,7 @@ public class controlClient : MonoBehaviour {
 					// set them at golf ball
 					p.ballGameObject.transform.rotation = Quaternion.identity;
 					p.characterGameObject.transform.parent = p.ballGameObject.transform;	
-					p.characterGameObject.transform.localPosition = new Vector3(1.5f,0f,-2f);
+					p.characterGameObject.transform.localPosition = new Vector3(1.7f,0f,0);
 					p.characterGameObject.transform.localRotation = Quaternion.identity * new Quaternion(0f, -Mathf.PI/2, 0f, 1f);	//90degrees to camera angle
 					p.ballGameObject.transform.rotation = Quaternion.LookRotation((pin.transform.position - p.ballGameObject.transform.position) - new Vector3(0, pin.transform.position.y - p.ballGameObject.transform.position.y,0));	
 
@@ -192,6 +192,10 @@ public class controlClient : MonoBehaviour {
 						p.characterGameObject.transform.FindChild(p.characterModel).animation.Play("golfIdle",PlayMode.StopAll);
 					} else {
 						p.characterGameObject.animation.Play("golfIdle",PlayMode.StopAll);
+					}
+					if(p==myInfo){
+						//Note:client-to-client arrives after client-to-server
+						localBallAnalog.transform.position = myInfo.ballGameObject.transform.position;
 					}
 				}
 				
