@@ -8,6 +8,7 @@ public class controlClient : MonoBehaviour {
 	netPause pause;
 	Transform cameraParentTransform;
 	GameObject pin;
+	GameObject localBallAnalog;	//hack_answers
 
 
 	void Start() {
@@ -19,7 +20,7 @@ public class controlClient : MonoBehaviour {
 		// change camera
 //		GameObject.Find ("lobby_view").transform.FindChild ("camera").gameObject.SetActive (false);
 //		myInfo.cartContainerObject.transform.FindChild ("multi_buggy_cam").gameObject.SetActive (true);
-
+		localBallAnalog = new GameObject ();
 	}
 
 	void Update () {
@@ -86,7 +87,13 @@ public class controlClient : MonoBehaviour {
 			myInfo.cartGameObject.rigidbody.angularVelocity = Vector3.zero;
 			// set them at golf ball
 			myInfo.ballGameObject.transform.rotation = Quaternion.identity;
-			myInfo.characterGameObject.transform.parent = myInfo.ballGameObject.transform;
+
+			localBallAnalog.transform.position = myInfo.ballGameObject.transform.position;	//hack_answers
+			localBallAnalog.transform.rotation = myInfo.ballGameObject.transform.rotation;	//hack_answers
+			localBallAnalog.transform.localScale = myInfo.ballGameObject.transform.localScale;	//hack_answers
+			//myInfo.characterGameObject.transform.parent = myInfo.ballGameObject.transform;
+			myInfo.characterGameObject.transform.parent = localBallAnalog.transform;
+
 			myInfo.characterGameObject.transform.localPosition = new Vector3(1.5f,0,-2);
 			myInfo.characterGameObject.transform.localRotation = Quaternion.identity * new Quaternion(0f, -Mathf.PI/2, 0f, 1f);
 
@@ -96,10 +103,15 @@ public class controlClient : MonoBehaviour {
 			//*/ move camera - HACKY
 			GameObject buggyCam = nvs.myCam.gameObject;
 			(buggyCam.GetComponent("FollowPlayerScript") as FollowPlayerScript).enabled = false;
-			buggyCam.transform.parent = myInfo.ballGameObject.transform;
+			//buggyCam.transform.parent = myInfo.ballGameObject.transform;
+
+			buggyCam.transform.parent = localBallAnalog.transform;	//hack_answers
+
 			buggyCam.transform.rotation = Quaternion.identity;	// is this line needed?
 			buggyCam.transform.localPosition = new Vector3(-6,4,0);
 			buggyCam.transform.rotation = Quaternion.LookRotation(myInfo.ballGameObject.transform.position - buggyCam.transform.position);
+
+
 			
 			//*/// change animation - try and keep the prefabs similar so this doesn't become a massive else if list
 			if (myInfo.characterModel=="lil_patrick") {
@@ -169,7 +181,7 @@ public class controlClient : MonoBehaviour {
 				} else if (p.currentMode==1) {	// if they're now at golf ball
 					// set them at golf ball
 					p.ballGameObject.transform.rotation = Quaternion.identity;
-					p.characterGameObject.transform.parent = p.ballGameObject.transform;
+					p.characterGameObject.transform.parent = p.ballGameObject.transform;	
 					p.characterGameObject.transform.localPosition = new Vector3(1.5f,0f,-2f);
 					p.characterGameObject.transform.localRotation = Quaternion.identity * new Quaternion(0f, -Mathf.PI/2, 0f, 1f);	//90degrees to camera angle
 					p.ballGameObject.transform.rotation = Quaternion.LookRotation((pin.transform.position - p.ballGameObject.transform.position) - new Vector3(0, pin.transform.position.y - p.ballGameObject.transform.position.y,0));	

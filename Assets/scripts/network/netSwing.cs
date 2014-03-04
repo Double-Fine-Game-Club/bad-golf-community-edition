@@ -55,7 +55,9 @@ public class netSwing : SwingBehaviour {
 			flying = true;
 			if (shotPower > k_maxShotPower)
 				shotPower = k_maxShotPower;
-			networkView.RPC("GolfSwing", RPCMode.Server, shotPower, shotAngle, myInfo.player);
+			networkView.RPC("GolfSwing", RPCMode.Server, shotPower, shotAngle, myInfo.player, myInfo.characterGameObject.transform.parent.rotation.y);
+
+			myInfo.ballGameObject.transform.rotation = myInfo.characterGameObject.transform.parent.rotation;	//hack_answers
 
 			Vector3 arc = Vector3.forward;
 			arc.y = 0;
@@ -109,20 +111,23 @@ public class netSwing : SwingBehaviour {
 			timer=0.0f;
 			rotationInput = Input.GetAxis ("Horizontal");
 			rotationInput = rotationInput*k_angleBoost;
-			networkView.RPC ("RotatePlayer", RPCMode.Server, rotationInput);	//multiplier mismatch = smoothing
+			//networkView.RPC ("RotatePlayer", RPCMode.Server, rotationInput);	
 
 		}
 		powerInput = Input.GetAxis("Vertical");
+		//GameObject rotationObject = myInfo.ballGameObject;
+		GameObject rotationObject = myInfo.characterGameObject.transform.parent.gameObject;	//hack_answers
 
 		// Rotate ball with 'a' and 'd'.
-		myInfo.ballGameObject.transform.Rotate (0f, rotationInput, 0f);
-		myInfo.ballGameObject.rigidbody.freezeRotation = true;
-		
+		rotationObject.transform.Rotate (0f, rotationInput, 0f);
+		//rotationObject.rigidbody.freezeRotation = true;
+
 		// Crappy camera script taken from the original movement.cs. Makes rotation around the ball possible.
-		Vector3 newPos = myInfo.ballGameObject.transform.position + myInfo.ballGameObject.transform.localRotation * cameraPos;
+		//Vector3 newPos = rotationObject.transform.position + rotationObject.transform.localRotation * cameraPos;
+		Vector3 newPos = rotationObject.transform.position + rotationObject.transform.localRotation * cameraPos;	
 		float lerper = Mathf.Min ((camera.transform.position - newPos).sqrMagnitude / 100, 1);
 		camera.transform.position = (1 - lerper) * camera.transform.position + lerper * newPos;
-		camera.transform.rotation = Quaternion.Lerp (camera.transform.rotation, Quaternion.LookRotation (myInfo.ballGameObject.transform.position - camera.transform.position), lerper);
+		camera.transform.rotation = Quaternion.Lerp (camera.transform.rotation, Quaternion.LookRotation (rotationObject.transform.position - camera.transform.position), lerper);
 		
 		//add remove power with vertical axis
 		shotPower += powerInput * hitMultiplier;
@@ -147,7 +152,7 @@ public class netSwing : SwingBehaviour {
 		return shotPower;
 	}
 
-
+	//Unused due to being too stuttery
 	[RPC]
 	void RotatePlayer(float angle, NetworkMessageInfo info){
 		if (Network.isClient)	return;	//Ball will be synchronized by the server
@@ -173,7 +178,7 @@ public class netSwing : SwingBehaviour {
 	}
 
 	[RPC]
-	void GolfSwing(float power, float angle, NetworkPlayer swinger){
+	void GolfSwing(float power, float angle, NetworkPlayer swinger, float ballFacing){
 		if (Network.isClient)	return;	//Ball will be synchronized by the server
 
 		PlayerInfo player = null;
@@ -183,6 +188,9 @@ public class netSwing : SwingBehaviour {
 				break;
 			}
 		}
+		Quaternion oldFacing = player.characterGameObject.transform.parent.rotation;	//hack_answers
+		Quaternion newFacing = new Quaternion (oldFacing.x, ballFacing, oldFacing.z, oldFacing.w);
+		player.ballGameObject.transform.rotation = newFacing;
 
 		if (power > k_maxShotPower)
 			power = k_maxShotPower;
