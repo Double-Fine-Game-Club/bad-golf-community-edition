@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class MiniMap : MonoBehaviour {
 
@@ -7,16 +8,21 @@ public class MiniMap : MonoBehaviour {
 	public Texture2D playerIcon;
 	public Texture2D playerDirectionIcon;
 	public Texture2D ballIcon;
-	public float iconScale = 0.3f;
+	public float iconScale = 0.2f;
 
 	//TODO This color should be set to be the client player's color
-	public Color playerColor = new Color(1,0,0,1);
+	public Color playerColor = new Color(0,1,1,1);
+	
+	public Color opponentColor = new Color(1,0,0,1);
 
 	public Transform flag;
 	public GameObject level;
 	public Camera mapCamera;
 
 	private Rect playerPos;
+
+	private List<Rect> opponentPos = null;
+
 	private Rect ballPos;
 	private Rect flagPos;
 	private float playerAngle;
@@ -61,7 +67,7 @@ public class MiniMap : MonoBehaviour {
 		camMax = mapCamera.WorldToScreenPoint( level.collider.bounds.max );
 	}
 
-	void UpdateIconSize() {
+	float UpdateIconSize() {
 		float size = (camMax.x-camMin.x) * iconScale;
 		
 		playerPos.width = size;
@@ -70,6 +76,8 @@ public class MiniMap : MonoBehaviour {
 		ballPos.height = size;
 		flagPos.width = size;
 		flagPos.height = size;
+
+		return size;
 	}
 	
 	// Update is called once per frame
@@ -78,6 +86,17 @@ public class MiniMap : MonoBehaviour {
 		// TODO : Checking if ball object exists 
 		if( !nvs.myInfo.ballGameObject ) {
 			return;
+		}
+
+		opponentPos = new List<Rect>();
+
+		float size = UpdateIconSize();
+
+		foreach( PlayerInfo opponent in nvs.players ) {
+			if( opponent != nvs.myInfo ) {
+				Vector2 c = NormalizedPosition( opponent.cartGameObject.transform.position, level.collider.bounds.min, level.collider.bounds.max, camMin, camMax );
+				opponentPos.Add( new Rect(c.x,c.y,size,size) );
+			}
 		}
 
 		Transform player = nvs.myInfo.cartGameObject.transform;
@@ -123,6 +142,13 @@ public class MiniMap : MonoBehaviour {
 		}
 
 		GUI.DrawTexture( flagPos,flagIcon,ScaleMode.ScaleToFit );
+
+		if( opponentPos.Count > 0 ) {
+			GUI.color = opponentColor;
+			foreach( Rect opponent in opponentPos ) {
+				GUI.DrawTexture( opponent, playerIcon, ScaleMode.ScaleToFit );
+			}
+		}
 
 		GUI.color = playerColor;
 		GUI.DrawTexture( playerPos, playerIcon, ScaleMode.ScaleToFit );
