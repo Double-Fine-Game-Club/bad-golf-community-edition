@@ -106,7 +106,7 @@ public class controlClient : MonoBehaviour {
 			GameObject buggyCam = nvs.myCam.gameObject;
 			(buggyCam.GetComponent("FollowPlayerScript") as FollowPlayerScript).enabled = false;
 			//buggyCam.transform.parent = myInfo.ballGameObject.transform;
-
+			cameraParentTransform = buggyCam.transform.parent;	// keep a reference for later
 			buggyCam.transform.parent = localBallAnalog.transform;	//hack_answers
 
 			buggyCam.transform.localPosition = new Vector3(-6,4,0);
@@ -132,7 +132,7 @@ public class controlClient : MonoBehaviour {
 		myInfo.ballGameObject.rigidbody.constraints = RigidbodyConstraints.None;
 		//*/ move camera - HACKY
 		GameObject buggyCam = nvs.myCam.gameObject;
-		buggyCam.transform.parent = myInfo.cartGameObject.transform;
+		buggyCam.transform.parent = cameraParentTransform;	// put it back
 		
 		(buggyCam.GetComponent("FollowPlayerScript") as FollowPlayerScript).enabled = true;
 		//*/// change animation - try and keep the prefabs similar so this doesn't become a massive else if list

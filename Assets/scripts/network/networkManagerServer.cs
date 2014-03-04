@@ -297,7 +297,8 @@ public class networkManagerServer : MonoBehaviour {
 				p.cartModel = cartModel;
 				p.ballModel = ballModel;
 				p.characterModel = characterModel;
-				// add something that updates clients - next thing I'll do :P
+				// tell the other clients that it changed
+				networkView.RPC ("UpdateModels", RPCMode.Others, p.player, cartModel, ballModel, characterModel);
 			}
 		}
 	}
@@ -336,4 +337,6 @@ public class networkManagerServer : MonoBehaviour {
 	void UpdateName( NetworkPlayer player, string name){}
 	[RPC]
 	void YoureSpectating(){}
+	[RPC]
+	void UpdateModels(NetworkPlayer player, string cartModel, string ballModel, string characterModel) {}
 }

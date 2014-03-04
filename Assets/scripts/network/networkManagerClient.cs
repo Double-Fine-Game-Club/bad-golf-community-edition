@@ -263,6 +263,18 @@ public class networkManagerClient : MonoBehaviour {
 		// remove us as we aren't playing
 		nvs.players.Remove(myInfo);
 	}
+
+	// tell them that someone changed their models
+	[RPC]
+	void UpdateModels(NetworkPlayer player, string cartModel, string ballModel, string characterModel) {
+		foreach (PlayerInfo p in nvs.players) {
+			if (p.player==player) {
+				p.cartModel = cartModel;
+				p.ballModel = ballModel;
+				p.characterModel = characterModel;
+			}
+		}
+	}
 	
 	
 	
