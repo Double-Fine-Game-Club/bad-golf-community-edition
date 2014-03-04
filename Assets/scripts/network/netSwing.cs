@@ -104,23 +104,14 @@ public class netSwing : SwingBehaviour {
 			return;
 		}
 
-		float rotationInput = 0f;
-		float powerInput = 0f;
-		timer += Time.fixedDeltaTime;
-		if (timer > 0.1f) {	//Needs to be fast but not spammy :/
-			timer=0.0f;
-			rotationInput = Input.GetAxis ("Horizontal");
-			rotationInput = rotationInput*k_angleBoost;
-			//networkView.RPC ("RotatePlayer", RPCMode.Server, rotationInput);	
-
-		}
-		powerInput = Input.GetAxis("Vertical");
+		float powerInput = Input.GetAxis("Vertical");
+		float rotationInput = Input.GetAxis ("Horizontal");
 		//GameObject rotationObject = myInfo.ballGameObject;
 		GameObject rotationObject = myInfo.characterGameObject.transform.parent.gameObject;	//hack_answers
 
 		// Rotate ball with 'a' and 'd'.
 		rotationObject.transform.Rotate (0f, rotationInput, 0f);
-		//rotationObject.rigidbody.freezeRotation = true;
+		myInfo.ballGameObject.rigidbody.freezeRotation = true;
 
 		// Crappy camera script taken from the original movement.cs. Makes rotation around the ball possible.
 		//Vector3 newPos = rotationObject.transform.position + rotationObject.transform.localRotation * cameraPos;
