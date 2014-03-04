@@ -23,12 +23,14 @@ public class networkVariables : MonoBehaviour {
 	// maybe put the pause things in here?
 	
 	// server only variables
+	[HideInInspector]
+	public bool gameHasBegun = false;
 
 	// techincal bits
 	[HideInInspector]
 	public PlayerInfo myInfo = new PlayerInfo();	// stores info on the current player
 	[HideInInspector]
-	public string serverVersion = "sandvich3";		// server version
+	public string serverVersion = "sandvich4";		// server version
 	[HideInInspector]
 	public string serverName = "";					// server name
 	[HideInInspector]
@@ -49,8 +51,9 @@ public class PlayerInfo {
 	public NetworkViewID characterViewID;		// NetworkViewID of the character
 	public GameObject characterGameObject;		// GameObject of the character
 	public string characterModel;				// model of the character
-	public int currentMode = 2;						// current mode of the player (0=in buggy, 1=on foot, 2=spectator)
+	public int currentMode = 2;					// current mode of the player (0=in buggy, 1=on foot, 2=spectator)
 	public string name;							// name
+	public int score = 0;						// player score
 	
 	// do these need to be net-sunk?
 	public bool playerIsBusy   = false;			// player is engaged in an uninteruptable action

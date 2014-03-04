@@ -21,6 +21,9 @@ public class netLobby : MonoBehaviour {
 		
 		// add chat
 		gameObject.AddComponent("netChat");
+		
+		//pause
+		gameObject.AddComponent ("netPause");
 
 		currentList += nvs.myInfo.name;
 	}
