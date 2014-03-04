@@ -48,9 +48,6 @@ public class networkManagerClient : MonoBehaviour {
 		//ball range finder
 		gameObject.AddComponent ("netTransferToSwing");
 
-		//pause
-		gameObject.AddComponent ("netPause");
-
 		//show names over player's cart
 		gameObject.AddComponent ("PlayerNames");
 
@@ -262,6 +259,18 @@ public class networkManagerClient : MonoBehaviour {
 		nvs.myCam.gameObject.AddComponent("SpectatorView");
 		// remove us as we aren't playing
 		nvs.players.Remove(myInfo);
+	}
+
+	// tell them that someone changed their models
+	[RPC]
+	void UpdateModels(NetworkPlayer player, string cartModel, string ballModel, string characterModel) {
+		foreach (PlayerInfo p in nvs.players) {
+			if (p.player==player) {
+				p.cartModel = cartModel;
+				p.ballModel = ballModel;
+				p.characterModel = characterModel;
+			}
+		}
 	}
 	
 	

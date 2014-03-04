@@ -413,7 +413,7 @@ MonoBehaviour:
   - Patrick
   - Brad
   gameHasBegun: 0
-  serverVersion: sandvich4
+  serverVersion: sandvich5
   serverName: 
 --- !u!114 &198239881
 MonoBehaviour:
@@ -437,9 +437,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df379323a409b6b4e9e0e1602c61d3fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_myBallMarkerPrefab: {fileID: 100000, guid: ca9f549fa3440c34c87976f1c27e9e25, type: 2}
-  m_enemyBallMarkerPrefab: {fileID: 100000, guid: 892850cbce2bacc48bd581d303c956d1,
-    type: 2}
+  m_nvs: {fileID: 0}
+  m_myCamera: {fileID: 0}
+  m_initialized: 0
 --- !u!148 &198239883
 NetworkView:
   m_ObjectHideFlags: 0
