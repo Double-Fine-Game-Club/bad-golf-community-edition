@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class MiniMap : MonoBehaviour {
 
@@ -7,18 +8,25 @@ public class MiniMap : MonoBehaviour {
 	public Texture2D playerIcon;
 	public Texture2D playerDirectionIcon;
 	public Texture2D ballIcon;
-	public float iconScale = 0.3f;
+	public float iconScale = 0.2f;
+	public float dirArrowScale = 1.2f;
 
 	//TODO This color should be set to be the client player's color
-	public Color playerColor = new Color(1,0,0,1);
+	public Color playerColor = new Color(0,1,1,1);
+	
+	public Color opponentColor = new Color(1,0,0,1);
 
 	public Transform flag;
 	public GameObject level;
 	public Camera mapCamera;
 
-	private Rect playerPos;
-	private Rect ballPos;
-	private Rect flagPos;
+	private Rect playerRect;
+	private Rect playerDirRect;
+
+	private List<Rect> opponentRects = null;
+
+	private Rect ballRect;
+	private Rect flagRect;
 	private float playerAngle;
 
 	private Vector3 camMin;
@@ -33,9 +41,10 @@ public class MiniMap : MonoBehaviour {
 
 		float size = (camMax.x-camMin.x) * iconScale;
 
-		playerPos       = new Rect(0,0,size,size);
-		ballPos         = new Rect(0,0,size,size);
-		flagPos         = new Rect(0,0,size,size);
+		playerRect       = new Rect(0,0,size,size);
+		playerDirRect    = new Rect(0,0,size,size);
+		ballRect         = new Rect(0,0,size,size);
+		flagRect         = new Rect(0,0,size,size);
 
 		playerAngle = 0;
 
@@ -61,15 +70,19 @@ public class MiniMap : MonoBehaviour {
 		camMax = mapCamera.WorldToScreenPoint( level.collider.bounds.max );
 	}
 
-	void UpdateIconSize() {
+	float UpdateIconSize() {
 		float size = (camMax.x-camMin.x) * iconScale;
 		
-		playerPos.width = size;
-		playerPos.height = size;
-		ballPos.width = size;
-		ballPos.height = size;
-		flagPos.width = size;
-		flagPos.height = size;
+		playerRect.width = size;
+		playerRect.height = size;
+		playerDirRect.width = size * dirArrowScale;
+		playerDirRect.height = size * dirArrowScale;
+		ballRect.width = size;
+		ballRect.height = size;
+		flagRect.width = size;
+		flagRect.height = size;
+
+		return size;
 	}
 	
 	// Update is called once per frame
@@ -78,6 +91,17 @@ public class MiniMap : MonoBehaviour {
 		// TODO : Checking if ball object exists 
 		if( !nvs.myInfo.ballGameObject ) {
 			return;
+		}
+
+		opponentRects = new List<Rect>();
+
+		float size = UpdateIconSize();
+
+		foreach( PlayerInfo opponent in nvs.players ) {
+			if( opponent != nvs.myInfo ) {
+				Vector2 c = NormalizedPosition( opponent.cartGameObject.transform.position, level.collider.bounds.min, level.collider.bounds.max, camMin, camMax );
+				opponentRects.Add( new Rect(c.x,c.y,size,size) );
+			}
 		}
 
 		Transform player = nvs.myInfo.cartGameObject.transform;
@@ -94,11 +118,12 @@ public class MiniMap : MonoBehaviour {
 		//ballPos.center   = new Vector2( camBall.x, Screen.height - camBall.y );
 		//flagPos.center   = new Vector2( camFlag.x, Screen.height - camFlag.y - flagPos.height * 0.5f );
 
-		playerPos.center = NormalizedPosition( player.position, level.collider.bounds.min, level.collider.bounds.max, camMin, camMax );
-		ballPos.center = NormalizedPosition( ball.position, level.collider.bounds.min, level.collider.bounds.max, camMin, camMax );
-		flagPos.center = NormalizedPosition( flag.position, level.collider.bounds.min, level.collider.bounds.max, camMin, camMax );
+		playerRect.center = NormalizedPosition( player.position, level.collider.bounds.min, level.collider.bounds.max, camMin, camMax );
+		playerDirRect.center = playerRect.center;
+		ballRect.center = NormalizedPosition( ball.position, level.collider.bounds.min, level.collider.bounds.max, camMin, camMax );
+		flagRect.center = NormalizedPosition( flag.position, level.collider.bounds.min, level.collider.bounds.max, camMin, camMax );
 
-		flagPos.center = new Vector2( flagPos.center.x, flagPos.center.y - flagPos.height * 0.5f);
+		flagRect.center = new Vector2( flagRect.center.x, flagRect.center.y - flagRect.height * 0.5f);
 
 	}
 
@@ -122,13 +147,20 @@ public class MiniMap : MonoBehaviour {
 			return;
 		}
 
-		GUI.DrawTexture( flagPos,flagIcon,ScaleMode.ScaleToFit );
+		GUI.DrawTexture( flagRect,flagIcon,ScaleMode.ScaleToFit );
+
+		if( opponentRects.Count > 0 ) {
+			GUI.color = opponentColor;
+			foreach( Rect opponent in opponentRects ) {
+				GUI.DrawTexture( opponent, playerIcon, ScaleMode.ScaleToFit );
+			}
+		}
 
 		GUI.color = playerColor;
-		GUI.DrawTexture( playerPos, playerIcon, ScaleMode.ScaleToFit );
-		GUI.DrawTexture( ballPos, ballIcon, ScaleMode.ScaleToFit );
+		GUI.DrawTexture( playerRect, playerIcon, ScaleMode.ScaleToFit );
+		GUI.DrawTexture( ballRect, ballIcon, ScaleMode.ScaleToFit );
 
-		GUIUtility.RotateAroundPivot(playerAngle, playerPos.center); 
-		GUI.DrawTexture( playerPos, playerDirectionIcon, ScaleMode.ScaleToFit );
+		GUIUtility.RotateAroundPivot(playerAngle, playerRect.center); 
+		GUI.DrawTexture( playerDirRect, playerDirectionIcon, ScaleMode.ScaleToFit );
 	}
 }

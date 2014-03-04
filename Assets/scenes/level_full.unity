@@ -8834,8 +8834,10 @@ MonoBehaviour:
   playerIcon: {fileID: 2800000, guid: 67fb366972f12b146bd3a4875f8f3909, type: 3}
   playerDirectionIcon: {fileID: 2800000, guid: 2524ffc9b2661e54b8f7c08c75b8368b, type: 3}
   ballIcon: {fileID: 2800000, guid: 73f0f822c2bd41e418d84e33dd5123af, type: 3}
-  iconScale: .349999994
-  playerColor: {r: .154411793, g: .860040486, b: 1, a: 1}
+  iconScale: .200000003
+  dirArrowScale: 1.20000005
+  playerColor: {r: 0, g: 1, b: 1, a: 1}
+  opponentColor: {r: 1, g: 0, b: 0, a: 1}
   flag: {fileID: 758896052}
   level: {fileID: 2065120406}
   mapCamera: {fileID: 1346775744}
