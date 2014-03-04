@@ -84,7 +84,7 @@ public class controlServer : MonoBehaviour {
 			// set them at golf ball
 			myInfo.characterGameObject.transform.parent = myInfo.ballGameObject.transform;
 			myInfo.ballGameObject.transform.rotation = Quaternion.LookRotation((pin.transform.position - myInfo.ballGameObject.transform.position) - new Vector3(0, pin.transform.position.y - myInfo.ballGameObject.transform.position.y,0));	
-			myInfo.characterGameObject.transform.localPosition = new Vector3(1.7f,0,0);
+			myInfo.characterGameObject.transform.localPosition = new Vector3(1.7f,-.2f,0);
 			myInfo.characterGameObject.transform.localRotation = Quaternion.identity * new Quaternion(0f, -Mathf.PI/2, 0f, 1f);
 			// lock golf ball
 			myInfo.ballGameObject.rigidbody.constraints = RigidbodyConstraints.FreezeAll;
@@ -183,7 +183,7 @@ public class controlServer : MonoBehaviour {
 					// set them at golf ball
 					p.characterGameObject.transform.parent = p.ballGameObject.transform;
 					p.ballGameObject.transform.rotation = Quaternion.LookRotation((pin.transform.position - p.ballGameObject.transform.position) - new Vector3(0, pin.transform.position.y - p.ballGameObject.transform.position.y,0));	
-					p.characterGameObject.transform.localPosition = new Vector3(1.7f,0);
+					p.characterGameObject.transform.localPosition = new Vector3(1.7f,-.2f,0);
 					p.characterGameObject.transform.localRotation = Quaternion.identity * new Quaternion(0f, -Mathf.PI/2, 0f, 1f);
 					// lock golf ball
 					p.ballGameObject.rigidbody.constraints = RigidbodyConstraints.FreezeAll;
