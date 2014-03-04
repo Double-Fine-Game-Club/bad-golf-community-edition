@@ -50,15 +50,21 @@ public class networkManagerServer : MonoBehaviour {
 
 		// receives all players inputs and handles fiziks
 		gameObject.AddComponent("controlServer");
+
+		//ball range finder
+		gameObject.AddComponent ("netTransferToSwing");
+
+		//hitball
+		gameObject.AddComponent ("netSwing");
+
+		//pause
+		gameObject.AddComponent ("netPause");
 		
 		//cart reset
 		gameObject.AddComponent ("netPlayerRespawn");
 
 		//show names over player's cart
 		gameObject.AddComponent ("PlayerNames");
-
-		//show player on minimap
-		gameObject.AddComponent ("mapIndicatorScript");
 
         //show chat bubble over players when they chat
         gameObject.AddComponent("ChatBubble");
@@ -67,9 +73,6 @@ public class networkManagerServer : MonoBehaviour {
 		CarAudio mca = myInfo.cartGameObject.GetComponent("CarAudio") as CarAudio;
 		mca.followCamera = nvs.myCam;	// replace tmpCam with our one - this messes up sound atm
 		(nvs.myCam.gameObject.AddComponent("FollowPlayerScript") as FollowPlayerScript).target = myInfo.cartGameObject.transform;	// add player follow script
-
-		// add the swing script
-		//gameObject.AddComponent("netSwing");
 	}
 
 	// carts for all!
