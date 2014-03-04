@@ -22,6 +22,7 @@ public class BallMarker : MonoBehaviour {
     private bool m_moveUp = false;
     private float m_positionOffset = 0.0f;
     private int m_numPlayersExpected;
+    private int m_myLastMode = 0;
 
     private const float k_maxBallScalar = 1.2f;
     private const float k_heightOffsetFromBall = 3.0f;
@@ -41,6 +42,9 @@ public class BallMarker : MonoBehaviour {
             return;
         }
 
+        //check what mode player is in - swinging or driving?
+        CheckMode();
+
         //first, make sure the players we expect are there, or clean up
         //appropriate containing structures
         CheckPlayerListValidity();
@@ -48,6 +52,20 @@ public class BallMarker : MonoBehaviour {
         UpdatePositions();
         
 	}
+
+    //hide markers (layer 12) if swinging
+    void CheckMode()
+    {
+        int currMode = m_myPlayerInfo.currentMode;
+        if (currMode != m_myLastMode) {
+            if (currMode == 1) {
+                m_myCamera.cullingMask &= ~(1 << 12);
+            } else {
+                m_myCamera.cullingMask |= (1 << 12);
+            }
+            m_myLastMode = currMode;
+        }
+    }
 
     void CheckPlayerListValidity()
     {
