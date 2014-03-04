@@ -109,12 +109,9 @@ public class controlClient : MonoBehaviour {
 
 			buggyCam.transform.parent = localBallAnalog.transform;	//hack_answers
 
-			buggyCam.transform.rotation = Quaternion.identity;	// is this line needed?
 			buggyCam.transform.localPosition = new Vector3(-6,4,0);
-			buggyCam.transform.rotation = Quaternion.LookRotation(myInfo.ballGameObject.transform.position - buggyCam.transform.position);
+			buggyCam.transform.rotation = myInfo.ballGameObject.transform.rotation;
 
-
-			
 			//*/// change animation - try and keep the prefabs similar so this doesn't become a massive else if list
 			if (myInfo.characterModel=="lil_patrick") {
 				myInfo.characterGameObject.transform.FindChild(myInfo.characterModel).animation.Play("golfIdle",PlayMode.StopAll);

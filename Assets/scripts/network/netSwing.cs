@@ -55,7 +55,7 @@ public class netSwing : SwingBehaviour {
 			flying = true;
 			if (shotPower > k_maxShotPower)
 				shotPower = k_maxShotPower;
-			networkView.RPC("GolfSwing", RPCMode.Server, shotPower, shotAngle, myInfo.player, myInfo.characterGameObject.transform.parent.rotation.y);
+			networkView.RPC("GolfSwing", RPCMode.Server, shotPower, shotAngle, myInfo.player, myInfo.characterGameObject.transform.parent.rotation);
 
 			myInfo.ballGameObject.transform.rotation = myInfo.characterGameObject.transform.parent.rotation;	//hack_answers
 
@@ -177,8 +177,9 @@ public class netSwing : SwingBehaviour {
 		//myInfo.ballGameObject.rigidbody.freezeRotation = true;
 	}
 
+	//Quaternion math can reduce the size of this
 	[RPC]
-	void GolfSwing(float power, float angle, NetworkPlayer swinger, float ballFacing){
+	void GolfSwing(float power, float angle, NetworkPlayer swinger, Quaternion ballFacing){
 		if (Network.isClient)	return;	//Ball will be synchronized by the server
 
 		PlayerInfo player = null;
@@ -188,9 +189,7 @@ public class netSwing : SwingBehaviour {
 				break;
 			}
 		}
-		Quaternion oldFacing = player.characterGameObject.transform.parent.rotation;	//hack_answers
-		Quaternion newFacing = new Quaternion (oldFacing.x, ballFacing, oldFacing.z, oldFacing.w);
-		player.ballGameObject.transform.rotation = newFacing;
+		player.ballGameObject.transform.rotation = ballFacing;
 
 		if (power > k_maxShotPower)
 			power = k_maxShotPower;
@@ -199,7 +198,7 @@ public class netSwing : SwingBehaviour {
 		arc.Normalize ();
 		arc.y = Mathf.Sin (angle * Mathf.Deg2Rad);
 		player.ballGameObject.rigidbody.constraints = RigidbodyConstraints.None;
-		player.ballGameObject.rigidbody.AddForce (player.ballGameObject.transform.localRotation * arc * power * k_shotBoost);
+		player.ballGameObject.rigidbody.AddForce (player.ballGameObject.transform.rotation * arc * power * k_shotBoost);
 	}
 	
 }
