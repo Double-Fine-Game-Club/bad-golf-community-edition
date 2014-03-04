@@ -21,7 +21,14 @@ public class netPause : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+		// pause menu toggler
+		if(Input.GetKeyDown(KeyCode.Escape)) {
+			if(myInfo.playerIsPaused){				// if paused resume
+				onResume();
+			}else if(!myInfo.playerIsBusy){			// if not busy then pause
+				onPause();
+			}
+		}
 	}
 
 	void hideAllScreens(){

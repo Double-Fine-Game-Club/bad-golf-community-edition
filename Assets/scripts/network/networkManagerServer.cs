@@ -56,9 +56,6 @@ public class networkManagerServer : MonoBehaviour {
 
 		//hitball
 		gameObject.AddComponent ("netSwing");
-
-		//pause
-		gameObject.AddComponent ("netPause");
 		
 		//cart reset
 		gameObject.AddComponent ("netPlayerRespawn");

@@ -56,15 +56,6 @@ public class controlClient : MonoBehaviour {
 				networkView.RPC("KartMovement", RPCMode.Server, 0f, 0f);
 			}
 		}
-		
-		// pause menu toggler
-		if(Input.GetKeyDown(KeyCode.Escape)) {
-			if(myInfo.playerIsPaused){				// if paused resume
-				pause.SendMessage("onResume");
-			}else if(!myInfo.playerIsBusy){			// if not busy then pause
-				pause.SendMessage("onPause");
-			}
-		}
 	}
 
 	// local interpolation - add all other interpolation here aswell

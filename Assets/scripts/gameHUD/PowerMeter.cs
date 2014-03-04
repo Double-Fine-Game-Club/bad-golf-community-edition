@@ -29,7 +29,7 @@ public class PowerMeter : MonoBehaviour
     {
         //proper behavior relies on swingScript being in the scene
 		if (m_swingScript != null) {
-			Debug.Log("Shot Power: " + m_swingScript.GetShowPower());
+			//Debug.Log("Shot Power: " + m_swingScript.GetShowPower());	 - SO MUCH SPAM
 			m_percentMaxShotPower = m_swingScript.GetShowPower() / SwingBehaviour.k_maxShotPower;
             DrawArc(m_meterPoints, m_percentMaxShotPower);
         }

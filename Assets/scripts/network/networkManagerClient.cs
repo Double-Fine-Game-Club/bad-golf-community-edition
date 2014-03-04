@@ -48,9 +48,6 @@ public class networkManagerClient : MonoBehaviour {
 		//ball range finder
 		gameObject.AddComponent ("netTransferToSwing");
 
-		//pause
-		gameObject.AddComponent ("netPause");
-
 		//show names over player's cart
 		gameObject.AddComponent ("PlayerNames");
 

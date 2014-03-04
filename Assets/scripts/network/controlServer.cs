@@ -33,15 +33,6 @@ public class controlServer : MonoBehaviour {
 			//if (Input.GetKeyDown(KeyCode.G)) {	//handled by netTransferToSwing
 				
 		}
-
-		// pause menu toggler
-		if(Input.GetKeyDown(KeyCode.Escape)) {
-			if(myInfo.playerIsPaused){				// if paused resume
-				pause.SendMessage("onResume");
-			}else if(!myInfo.playerIsBusy){			// if not busy then pause
-				pause.SendMessage("onPause");
-			}
-		}
 	}
 
 	// UPDATE ALL THE FIZIKS!
