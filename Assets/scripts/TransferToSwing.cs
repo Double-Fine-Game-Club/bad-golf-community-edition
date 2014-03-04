@@ -25,7 +25,7 @@ public class TransferToSwing : MonoBehaviour
 
 	void Update ()
 	{
-		Debug.Log ("Cart Vel: " + gameObject.rigidbody.velocity);
+		//Debug.Log ("Cart Vel: " + gameObject.rigidbody.velocity);
 		float distance = Vector3.Distance (gameObject.transform.position, ball.transform.position);
 		if (distance < 5) 
 		{
