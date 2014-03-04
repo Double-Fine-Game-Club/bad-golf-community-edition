@@ -98,6 +98,8 @@ public class controlClient : MonoBehaviour {
 			myInfo.characterGameObject.transform.localRotation = Quaternion.identity * new Quaternion(0f, -Mathf.PI/2, 0f, 1f);
 
 			myInfo.ballGameObject.transform.rotation = Quaternion.LookRotation((pin.transform.position - myInfo.ballGameObject.transform.position) - new Vector3(0, pin.transform.position.y - myInfo.ballGameObject.transform.position.y,0));	
+			localBallAnalog.transform.rotation = myInfo.ballGameObject.transform.rotation;
+
 			// lock golf ball
 			myInfo.ballGameObject.rigidbody.constraints = RigidbodyConstraints.FreezeAll;
 			//*/ move camera - HACKY
