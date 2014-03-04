@@ -79,4 +79,10 @@ public class PowerMeter : MonoBehaviour
             currIndex++;
         }
     }
+
+	public void HideArc(){
+		foreach (GameObject chunk in m_arcChunks) {
+			chunk.SetActive(false);
+		}
+	}
 }
