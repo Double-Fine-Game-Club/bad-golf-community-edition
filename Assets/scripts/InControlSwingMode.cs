@@ -179,5 +179,53 @@ public class InControlSwingMode : SwingBehaviour
 	{
 		return shotPower;
 	}
+
+	#if UNITY_ANDROID || UNITY_IPHONE
+	public void directionUpdate( Vector2 direction)
+	{
+		if (enabled)
+		{
+			// Rotate camera object with both sticks and d-pad.
+			gameObject.transform.Rotate (Vector3.up, 200.0f * Time.deltaTime * direction.x, Space.Self);
+			
+			// Crappy camera script taken from the original movement.cs. Makes rotation around the ball possible.
+			Vector3 newPos = transform.position + transform.localRotation * cameraPos;
+			float lerper = Mathf.Min ((camera.transform.position - newPos).sqrMagnitude / 100, 1);
+			camera.transform.position = (1 - lerper) * camera.transform.position + lerper * newPos;
+			camera.transform.rotation = Quaternion.Lerp (camera.transform.rotation, Quaternion.LookRotation (transform.position - camera.transform.position), lerper);
+			
+			shotPower += direction.y * hitMultiplier;
+			
+			if (shotPower > k_maxShotPower)
+				shotPower = k_maxShotPower;
+			else if (shotPower < 0)
+				shotPower = 0;
+			
+			// flies slow in a high arc. Needs tuning.
+			// elneilios: Tuned this so that harder shots fly straighter (like real golf!)
+			var angleModifier = (shotPower / k_maxShotPower);
+			var angleRange = k_maxArcAngle - k_minArcAngle;
+			shotAngle = k_maxArcAngle - (angleRange * angleModifier);
+		}	
+	}
+
+
+	public void onUserGamePadButton()
+	{
+		if (enabled)
+		{
+			flying = true;
+			if (shotPower < 100)
+				shotPower = 100;
+			
+			Vector3 arc = Vector3.forward;
+			arc.y = 0;
+			arc.Normalize ();
+			arc.y = Mathf.Sin (shotAngle * Mathf.Deg2Rad);
+			rigidbody.AddForce (transform.localRotation * arc * shotPower * k_shotBoost);
+			shotPower = 0;	
+		}
+	}
+	#endif
 }
 

@@ -64,13 +64,16 @@ public class TransferToSwing : MonoBehaviour
 	{
 		if (inHittingRange) 
 		{
-			if (inHittingRange) 
-			{
-				// Stop the cart's forward motion (still might roll away though)
-				gameObject.rigidbody.velocity = Vector3.zero;
-				ball.SendMessage ("turnOnScripts");
-				this.gameObject.SendMessage("turnOffScripts");
-			}
+			ball.SendMessage( "onUserGamePadButton", Vector2.zero);
+			// Stop the cart's forward motion (still might roll away though)
+			gameObject.rigidbody.velocity = Vector3.zero;
+			ball.SendMessage ("turnOnScripts");
+			this.gameObject.SendMessage("turnOffScripts");
 		}
+	}
+
+	void directionUpdate( Vector2 direction)
+	{
+		ball.SendMessage( "directionUpdate", direction);
 	}
 }
