@@ -53,14 +53,19 @@ public class IntegrateHead : MonoBehaviour {
 			Transform boneFromParent = FindChildTransform(body.transform, bonesInBody, boneFromHead.name);
 			if(boneFromParent != null) {
 				print ("[AddHead] Reparenting bone "+boneFromHead.name);
+
 				boneFromHead.transform.parent = boneFromParent.transform;
+				boneFromHead.transform.localPosition = Vector3.zero;
+				boneFromHead.transform.localRotation = Quaternion.identity;
+
 				boneFromHead.name = boneFromHead.name + "_fromHead";
 			}
 		}
 
-		// attach head object and clear offset (has to fit from model!)
+		// attach head object and clear transform (has to fit from model!)
 		head.transform.parent = body.transform;
-		head.transform.localPosition.Set(0, 0, 0);
+		head.transform.localPosition = Vector3.zero;
+		head.transform.localRotation = Quaternion.identity;
 	}
 
 	private Transform FindChildTransform(Transform parent, Transform[] bonesInBody, string name)
