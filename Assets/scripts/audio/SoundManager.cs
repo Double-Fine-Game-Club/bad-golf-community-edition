@@ -84,7 +84,7 @@ public class SoundManager : MonoBehaviour
 		musicAudioSourceB = gameObject.AddComponent<AudioSource>();
 	
 		musicAudioSourceA.volume = musicAudioSourceB.volume = musicVolume;
-		musicAudioSourceA.loop = musicAudioSourceB.loop = true;
+		musicAudioSourceA.loop = musicAudioSourceB.loop = false;
 		musicAudioSourceA.rolloffMode = AudioRolloffMode.Linear;
 		musicAudioSourceB.rolloffMode = AudioRolloffMode.Linear;
 	
@@ -166,6 +166,11 @@ public class SoundManager : MonoBehaviour
 	{
 		if ( currentMusicAudioSource != null)
 			currentMusicAudioSource.Pause();
+	}
+
+	public bool isMusicPlaying()
+	{
+		return currentMusicAudioSource.isPlaying;
 	}
 	
 	public void unPauseMusic()

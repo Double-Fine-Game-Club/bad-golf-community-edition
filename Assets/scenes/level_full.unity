@@ -1794,7 +1794,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 438107478}
-  - 114: {fileID: 438107479}
   - 114: {fileID: 438107480}
   m_Layer: 0
   m_Name: level_full
@@ -1824,26 +1823,6 @@ Transform:
   - {fileID: 494588120}
   - {fileID: 1375897704}
   m_Father: {fileID: 0}
---- !u!114 &438107479
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 438107477}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc0f894fe079633479040a5c96aaa692, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onStartClipName: 
-  onEnableClipName: 
-  onDisableClipName: 
-  onStartClip: {fileID: 0}
-  onEnableClip: {fileID: 8300000, guid: a6cd8e32a033a4640a67135ae9929dbb, type: 3}
-  onDisableClip: {fileID: 0}
-  volume: .5
-  overrideVolume: 0
-  onDisableStopMusic: 0
 --- !u!114 &438107480
 MonoBehaviour:
   m_ObjectHideFlags: 0

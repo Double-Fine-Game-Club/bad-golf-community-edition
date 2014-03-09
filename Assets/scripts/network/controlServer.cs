@@ -27,10 +27,8 @@ public class controlServer : MonoBehaviour {
 			if (Input.GetKeyDown(KeyCode.Q) && myInfo.currentMode==0) {
 				// need to wait for the audio guys to fix this
 				// if you think you've fixed this test in online aswell
-				//networkView.RPC("IHonked", RPCMode.All, myInfo.player);
+				networkView.RPC("IHonked", RPCMode.All, myInfo.player);
 			}
-			// (G)et out of buggy (or get in)
-			//if (Input.GetKeyDown(KeyCode.G)) {	//handled by netTransferToSwing
 				
 		}
 	}
@@ -141,7 +139,8 @@ public class controlServer : MonoBehaviour {
 		// find the player
 		foreach (PlayerInfo p in nvs.players) {
 			if (p.player==player) {
-				p.cartGameObject.audio.Play();
+
+				p.cartGameObject.SendMessage("SoundHorn");
 			}
 		}
 	}
