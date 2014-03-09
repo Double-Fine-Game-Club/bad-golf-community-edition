@@ -7,11 +7,13 @@ public class IntegrateHead : MonoBehaviour {
 	void Update () {
 		if(Input.GetKeyDown(KeyCode.H)) {
 			GameObject body = GameObject.Find("RigtestBody"); // already in scene
-			AddHead(body, "test/RigtestHead");
+			AddHead(body, "test/RigtestHead", "Neck");
 		}
 	}
 
-	
+	/**
+	 * Adds an instance of the named headObject to the body and integrates the rig.
+	 */
 	public void AddHead(GameObject body, string headObjectID, string rigRootID="Rig")
 	{
 		GameObject head = (GameObject)Instantiate(Resources.Load(headObjectID)); // from prefab resource, not in scene yet
@@ -56,8 +58,9 @@ public class IntegrateHead : MonoBehaviour {
 			}
 		}
 
-		// attach head object
+		// attach head object and clear offset (has to fit from model!)
 		head.transform.parent = body.transform;
+		head.transform.localPosition.Set(0, 0, 0);
 	}
 
 	private Transform FindChildTransform(Transform parent, Transform[] bonesInBody, string name)
