@@ -238,6 +238,58 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 105840079}
   m_Mesh: {fileID: 4300006, guid: e2810172cb64d4c4484d132b8dbff79c, type: 3}
+--- !u!1 &151892561
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 151892564}
+  - 65: {fileID: 151892563}
+  - 114: {fileID: 151892562}
+  m_Layer: 0
+  m_Name: winningPole
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &151892562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 151892561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ee30813ca5566e4086a4ed8e0bcadd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  messageTarget: {fileID: 198239878}
+--- !u!65 &151892563
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 151892561}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: .5, y: 2.5, z: .5}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &151892564
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 151892561}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 13.8321667, y: -25.5654373, z: -244.695389}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 438107478}
 --- !u!1 &161360653
 GameObject:
   m_ObjectHideFlags: 0
@@ -1816,13 +1868,13 @@ Transform:
   - {fileID: 2116444448}
   - {fileID: 2065120411}
   - {fileID: 2042471945}
-  - {fileID: 758896052}
   - {fileID: 942947981}
   - {fileID: 198239879}
   - {fileID: 1579541437}
   - {fileID: 1346775745}
   - {fileID: 494588120}
   - {fileID: 1375897704}
+  - {fileID: 151892564}
   m_Father: {fileID: 0}
 --- !u!114 &438107479
 MonoBehaviour:
@@ -4831,32 +4883,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &758896051
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 758896052}
-  m_Layer: 0
-  m_Name: Pin
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &758896052
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 758896051}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.9192772, y: -27.9238243, z: -244.815247}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 438107478}
 --- !u!1 &784900437
 GameObject:
   m_ObjectHideFlags: 0
@@ -8838,7 +8864,7 @@ MonoBehaviour:
   dirArrowScale: 1.20000005
   playerColor: {r: 0, g: 1, b: 1, a: 1}
   opponentColor: {r: 1, g: 0, b: 0, a: 1}
-  flag: {fileID: 758896052}
+  flag: {fileID: 151892564}
   level: {fileID: 2065120406}
   mapCamera: {fileID: 1346775744}
 --- !u!1 &1375897703

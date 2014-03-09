@@ -7,6 +7,8 @@ public class networkManagerClient : MonoBehaviour {
 	PlayerInfo myInfo;
 	bool connected = false;
 	networkVariables nvs;
+	bool playerHasWon = false;
+	string winningPlayer="";
 	
 	/****************************************************
 	 * 
@@ -88,6 +90,16 @@ public class networkManagerClient : MonoBehaviour {
 			}
 		}
 		if (screenMessages.ContainsKey(keyToRemove)) screenMessages.Remove(keyToRemove);
+
+		if( playerHasWon )
+		{
+			GUIStyle myStyle = new GUIStyle();
+			myStyle.fontSize = 34;
+			myStyle.normal.textColor = Color.red;
+			
+			
+			GUI.Label( new Rect( Screen.width/4, 0, 200, 200), winningPlayer + " is the Winner !",myStyle);
+		}
 	}
 	
 	void OnDisconnectedFromServer(NetworkDisconnection info){
@@ -272,9 +284,18 @@ public class networkManagerClient : MonoBehaviour {
 			}
 		}
 	}
-	
-	
-	
+
+	[RPC]
+	void DeclareWinner(NetworkPlayer player){
+		playerHasWon = true;
+		foreach(PlayerInfo pInfo in nvs.players){
+			if(pInfo.player==player){
+				winningPlayer=pInfo.name;
+				break;
+			}
+		}
+	}
+
 	// blank for server use only
 	[RPC]
 	void GiveMeACart(string a, string b, string c) {}
