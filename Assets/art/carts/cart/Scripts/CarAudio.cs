@@ -32,6 +32,7 @@ public class CarAudio : MonoBehaviour {
     public AudioClip highAccelClip;                                                     // Audio clip for high acceleration
     public AudioClip highDecelClip;                                                     // Audio clip for high deceleration
     public AudioClip skidClip;                                                          // Audio clip for the car skidding
+	public AudioClip hornClip;															// Audio clip for the horn
 	public float pitchMultiplier = 1f;                                                  // Used for altering the pitch of audio clips
 	public float lowPitchMin = 1f;                                                      // The lowest possible pitch for the low sounds
 	public float lowPitchMax = 6f;                                                      // The highest possible pitch for the low sounds
@@ -45,6 +46,7 @@ public class CarAudio : MonoBehaviour {
     AudioSource highAccel;                                                              // Source for the high acceleration sounds
     AudioSource highDecel;                                                              // Source for the high deceleration sounds
     AudioSource skidSource;                                                             // Source for the low acceleration sounds
+	AudioSource hornSource;																// Source for the horn sounds
 	bool startedSound;                                                                  // flag for knowing if we have started sounds
     CarController carController;                                                        // Reference to car we are controlling
 
@@ -66,6 +68,9 @@ public class CarAudio : MonoBehaviour {
 
         // setup the skid sound source
 		skidSource = SetUpEngineAudioSource(skidClip);
+
+		//setup the horn sound source
+		hornSource = SetUpHornAudioSource (hornClip);
 
         // flag that we have started the sounds playing
 		startedSound = true;
@@ -160,10 +165,9 @@ public class CarAudio : MonoBehaviour {
 	}
 
 	
-    // sets up and adds new audio source to the gane object
+    // sets up and adds new audio source to the game object
 	AudioSource SetUpEngineAudioSource(AudioClip clip)
 	{
-
         // create the new audio source component on the game object and set up its properties
 		AudioSource source = gameObject.AddComponent<AudioSource>();
 		source.clip = clip;
@@ -178,8 +182,25 @@ public class CarAudio : MonoBehaviour {
 		source.dopplerLevel = 0;
 		return source;
 	}
-	
-	
+
+	// sets up and adds new audio source to the game object
+	AudioSource SetUpHornAudioSource(AudioClip clip)
+	{
+		// create the new audio source component on the game object and set up its properties
+		AudioSource source = gameObject.AddComponent<AudioSource>();
+		source.clip = clip;
+		source.volume = 1f;
+		source.loop = false;
+		source.minDistance = 5;
+		source.maxDistance = maxRolloffDistance;
+		source.dopplerLevel = 0;
+		return source;
+	}
+
+	public void SoundHorn(){
+		hornSource.Play();
+	}
+
 	// unclamped versions of Lerp and Inverse Lerp, to allow value to exceed the from-to range
 	float ULerp (float from, float to, float value) {
 		return (1.0f - value)*from + value*to;
