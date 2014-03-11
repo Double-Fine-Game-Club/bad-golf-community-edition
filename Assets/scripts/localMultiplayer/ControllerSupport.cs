@@ -26,6 +26,12 @@ public class ControllerSupport : MonoBehaviour
 			{
 				playerObjectList[i].GetComponent<CarUserControl>().isKeyboardControlled = true;
 				playerObjectList[i].GetComponent<CarUserControl>().isLocalMulti = true;
+
+				#if !UNITY_EDITOR && (UNITY_IPHONE || UNITY_ANDROID)
+				{
+					playerObjectList[i].GetComponent<CarUserControl>().isKeyboardControlled = false;	
+				}
+				#endif
 			}
 			else
 			{
@@ -35,6 +41,8 @@ public class ControllerSupport : MonoBehaviour
 			}
 		}
 	}
+
+	Vector2 accelerationToSend = Vector2.zero;
 	
 	void Update () 
 	{
@@ -43,8 +51,32 @@ public class ControllerSupport : MonoBehaviour
 			for (int i = 0; i < playerObjectList.Length; i++) 
 			{
 				if ( playerToControllerIndex[i] == -1) //keyboard controlled
+				{
+					//Touch Devices are sorta treated like mouse, check here
+					#if !UNITY_EDITOR && (UNITY_IPHONE || UNITY_ANDROID)
+					{	
+						//acceleromter for direction
+						accelerationToSend.x = Input.acceleration.x;
+						accelerationToSend.y = Input.acceleration.y + .5f;
+						playerObjectList[i].SendMessage( "directionUpdate", 
+						                                accelerationToSend); 
+						//any touch is button
+						if (Input.touchCount > 0)
+						{
+							for (int c = 0; c < Input.touchCount; c++) 
+							{
+								if (Input.GetTouch(c).phase == TouchPhase.Ended) 
+								{
+									playerObjectList[i].SendMessage( "onUserGamePadButton", Vector2.zero );
+								}
+							}
+						}
+					}
+					#endif
+ 
 					continue;
-	
+				}
+
 				//direction
 				playerObjectList[i].SendMessage( "directionUpdate", 
 				                                LobbyControllerSupport.inputDeviceList[playerToControllerIndex[i]].Direction );		
@@ -61,4 +93,17 @@ public class ControllerSupport : MonoBehaviour
 			}
 		}
 	}
+
+// to debug accelerometer uncomment this	
+//#if !UNITY_EDITOR && (UNITY_IPHONE || UNITY_ANDROID)
+//	void OnGUI()
+//	{
+//		GUIStyle myStyle = new GUIStyle();
+//		myStyle.fontSize = 30;
+//		myStyle.normal.textColor = Color.red;
+//		
+//		
+//		GUI.Label( new Rect( 100, 100, 200, 200), accelerationToSend.x.ToString("##.##")  + "," + accelerationToSend.y.ToString("##.##"), myStyle);
+//	}
+//#endif	
 }
