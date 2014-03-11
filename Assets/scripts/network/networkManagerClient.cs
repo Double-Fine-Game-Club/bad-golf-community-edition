@@ -7,8 +7,6 @@ public class networkManagerClient : MonoBehaviour {
 	PlayerInfo myInfo;
 	bool connected = false;
 	networkVariables nvs;
-	bool playerHasWon = false;
-	string winningPlayer="";
 	
 	/****************************************************
 	 * 
@@ -91,14 +89,14 @@ public class networkManagerClient : MonoBehaviour {
 		}
 		if (screenMessages.ContainsKey(keyToRemove)) screenMessages.Remove(keyToRemove);
 
-		if( playerHasWon )
+		if( nvs.playerHasWon )
 		{
 			GUIStyle myStyle = new GUIStyle();
 			myStyle.fontSize = 34;
 			myStyle.normal.textColor = Color.red;
 			
 			
-			GUI.Label( new Rect( Screen.width/4, 0, 200, 200), winningPlayer + " is the Winner !",myStyle);
+			GUI.Label( new Rect( Screen.width/4, 0, 200, 200), nvs.winningPlayer + " is the Winner !",myStyle);
 		}
 	}
 	
@@ -145,6 +143,9 @@ public class networkManagerClient : MonoBehaviour {
 		nvs.myInfo.cartModel = cartModel;
 		nvs.myInfo.ballModel = ballModel;
 		nvs.myInfo.characterModel = characterModel;
+
+		nvs.playerHasWon = false;
+		nvs.winningPlayer = "";
 	}
 	
 	// tells the player that this viewID is theirs - can be moved to SpawnPlayer now
@@ -287,10 +288,10 @@ public class networkManagerClient : MonoBehaviour {
 
 	[RPC]
 	void DeclareWinner(NetworkPlayer player){
-		playerHasWon = true;
+		nvs.playerHasWon = true;
 		foreach(PlayerInfo pInfo in nvs.players){
 			if(pInfo.player==player){
-				winningPlayer=pInfo.name;
+				nvs.winningPlayer=pInfo.name;
 				break;
 			}
 		}

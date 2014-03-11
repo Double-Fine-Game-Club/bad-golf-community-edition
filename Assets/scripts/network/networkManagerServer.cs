@@ -8,8 +8,6 @@ public class networkManagerServer : MonoBehaviour {
 	PlayerInfo myInfo;
 	string serverVersion;
 	bool gameHasBegun;
-	bool playerHasWon = false;
-	string winningPlayer="";
 	
 	/****************************************************
 	 * 
@@ -234,14 +232,14 @@ public class networkManagerServer : MonoBehaviour {
 		if (screenMessages.ContainsKey(keyToRemove)) screenMessages.Remove(keyToRemove);
 
 
-		if( playerHasWon )
+		if( nvs.playerHasWon )
 		{
 			GUIStyle myStyle = new GUIStyle();
 			myStyle.fontSize = 34;
 			myStyle.normal.textColor = Color.red;
 			
 			
-			GUI.Label( new Rect( Screen.width/4, 0, 200, 200), winningPlayer + " is the Winner !",myStyle);
+			GUI.Label( new Rect( Screen.width/4, 0, 200, 200), nvs.winningPlayer + " is the Winner !",myStyle);
 		}
 
 	}
@@ -284,16 +282,18 @@ public class networkManagerServer : MonoBehaviour {
 		BeginGame();
 		// set the game to have started
 		gameHasBegun = true;
+		nvs.playerHasWon = false;
+		nvs.winningPlayer = "";
 		// call the functions that need them
 		AddScripts();
 	}
 
 	[RPC]
 	void DeclareWinner(NetworkPlayer player){
-		playerHasWon = true;
+		nvs.playerHasWon = true;
 		foreach(PlayerInfo pInfo in nvs.players){
 			if(pInfo.player==player){
-				winningPlayer=pInfo.name;
+				nvs.winningPlayer=pInfo.name;
 				break;
 			}
 		}
