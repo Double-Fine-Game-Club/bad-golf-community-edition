@@ -12,7 +12,8 @@ public class MusicPlayMulti : MonoBehaviour
 
 	public bool onDisableStopMusic = false;
 
-	public float delay = 1f; // time to wait before playing, this script plays before config is loaded, because of coroutines, so I added this (invadererik)
+	public const float delay = 1f; // time to wait before playing, this script plays before config is loaded, because of coroutines, so I added this (invadererik)
+	public float timeLeftInMusic = 0;	// time until this music ends and the next should be played
 
 	SoundManager soundManager;
 	
@@ -28,13 +29,27 @@ public class MusicPlayMulti : MonoBehaviour
 			Awake();
 	}
 
+	void Update()
+	{
+		if(timeLeftInMusic>delay && soundManager.isMusicPlaying())	//.2f gives it some leeway
+		{
+			timeLeftInMusic -= Time.deltaTime;
+		}
+		else if(timeLeftInMusic<delay)	
+		{
+			StartCoroutine( waitThenChooseRandomMusic(delay) );
+			timeLeftInMusic=float.MaxValue;	//prevents the starting of more coroutines
+		}
+	}
+
 	public void ChooseRandomMusic()
 	{
 		var numClips = musicClips.Count;
 		if (numClips > 0)
 		{
-			soundManager.playMusic(musicClips[Mathf.FloorToInt(Random.Range(0, numClips - float.Epsilon))],
-			                       getVolume());
+			AudioClip clip = musicClips[Mathf.FloorToInt(Random.Range(0, numClips - float.Epsilon))] as AudioClip;
+			soundManager.playMusic(clip, getVolume());
+			timeLeftInMusic = clip.length;
 		}
 	}
 
@@ -49,6 +64,7 @@ public class MusicPlayMulti : MonoBehaviour
 		if (index >= 0 && index < musicClips.Count)
 		{
 			soundManager.playMusic(musicClips[index], getVolume());
+			timeLeftInMusic = musicClips[index].length;
 			result = true;
 		}
 
@@ -66,18 +82,10 @@ public class MusicPlayMulti : MonoBehaviour
 			return soundManager.musicVolume;
 		}
 	}
-	
-	void OnEnable ()
-	{
-		if ( delay > 0)
-			StartCoroutine( waitThenChooseRandomMusic());
-		else
-			ChooseRandomMusic ();
-	}
 
-	IEnumerator waitThenChooseRandomMusic()
+	IEnumerator waitThenChooseRandomMusic(float time)
 	{
-		yield return new WaitForSeconds( delay);
+		yield return new WaitForSeconds( time+1 );	//"time" is added to clip.length but +1 isn't.  It makes no sense.
 		ChooseRandomMusic();
 	}
 
