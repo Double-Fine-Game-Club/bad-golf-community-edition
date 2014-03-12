@@ -14,6 +14,9 @@ public class BallMarker : NetworkedHUDElement {
     private const float k_maxBallScalar = 1.2f;
     private const float k_heightOffsetFromBall = 3.0f;
     private const float k_maxAlphaPercentEnemyMarkers = 0.35f;
+    private const float k_groundedSensitivity = 1.0f;
+
+    private GameObject m_floor;
 
 	
 	public void Update () 
@@ -94,7 +97,7 @@ public class BallMarker : NetworkedHUDElement {
 
         m_myBallMarker.transform.rotation = m_myCamera.transform.rotation; //billboard ball marker towards the camera
 
-        UpdateColorScaleToDistance(m_myBallMarker, true);
+        UpdateColorScaleToDistance(m_myBallMarker, m_myBall, true);
 
         foreach (PlayerInfo player in m_nvs.players) {
             if (m_enemyBallMarkers.ContainsKey(player)) {
@@ -105,34 +108,40 @@ public class BallMarker : NetworkedHUDElement {
                     playerBall.transform.position = thisBallMarkerPos;
 
                     playerBall.transform.rotation = m_myCamera.transform.rotation; //billboard ball marker towards the camera
-                    UpdateColorScaleToDistance(playerBall, false);
+                    UpdateColorScaleToDistance(playerBall, playerBall, false);
                 }
             }
         }
     }
 
-    private void UpdateColorScaleToDistance(GameObject objectToUpdate, bool myBall)
+    private void UpdateColorScaleToDistance(GameObject objectToUpdate, GameObject associatedBall, bool myBall)
     {
         Renderer objRenderer = objectToUpdate.GetComponentInChildren<Renderer>();
 
         //if renderer is not obtained, bail out
         if (objRenderer == null) return;
         Color objColor = objRenderer.material.GetColor("_Color");
-        float distance = Vector3.Distance(objectToUpdate.transform.position, m_myPlayerInfo.cartGameObject.transform.position);
 
-        if (myBall) {
-            objColor.a = Mathf.Abs(distance * 0.25f / 10.0f);
+        if (Mathf.Abs(associatedBall.rigidbody.velocity.y) > k_groundedSensitivity) {
+            objColor.a = 0.0f;
+            objRenderer.material.SetColor("_Color", objColor);
         } else {
-            objColor.a = Mathf.Min(k_maxAlphaPercentEnemyMarkers, Mathf.Abs(distance * 0.25f / 10.0f));
+            float distance = Vector3.Distance(objectToUpdate.transform.position, m_myPlayerInfo.cartGameObject.transform.position);
+
+            if (myBall) {
+                objColor.a = Mathf.Abs(distance * 0.25f / 10.0f);
+            } else {
+                objColor.a = Mathf.Min(k_maxAlphaPercentEnemyMarkers, Mathf.Abs(distance * 0.25f / 10.0f));
+            }
+
+            Vector3 scale = objectToUpdate.transform.localScale;
+            scale.x = Mathf.Max(distance / 15.0f * k_maxBallScalar, k_maxBallScalar);
+            scale.y = Mathf.Max(distance / 15.0f * k_maxBallScalar, k_maxBallScalar);
+
+            objectToUpdate.transform.localScale = scale;
+
+            objRenderer.material.SetColor("_Color", objColor);
         }
-
-        Vector3 scale = objectToUpdate.transform.localScale;
-        scale.x = Mathf.Max(distance / 15.0f * k_maxBallScalar, k_maxBallScalar);
-        scale.y = Mathf.Max(distance / 15.0f * k_maxBallScalar, k_maxBallScalar);
-
-        objectToUpdate.transform.localScale = scale;
-
-        objRenderer.material.SetColor("_Color", objColor);
     }
 
     //hide markers (layer 12) if swinging

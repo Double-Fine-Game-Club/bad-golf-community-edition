@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 // Mode for being able to hit the ball and send it flying.
@@ -82,7 +82,7 @@ public class SwingMode : SwingBehaviour
 				}
 		}
 
-		public override float GetShowPower ()
+		public override float GetShotPower ()
 		{
 				return shotPower;
 		}
