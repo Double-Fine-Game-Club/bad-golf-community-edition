@@ -1,0 +1,206 @@
+fileFormatVersion: 2
+guid: 20d7538fe1b09d943a867974271b615b
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: Cube
+    100002: Hand_L
+    100004: Hand_R
+    100006: Head
+    100008: LowerArm_L
+    100010: LowerArm_R
+    100012: LowerSpine
+    100014: MidSpine
+    100016: Neck
+    100018: Rig
+    100020: //RootNode
+    100022: Root
+    100024: UpperArm_L
+    100026: UpperArm_R
+    100028: UpperSpine
+    400000: Cube
+    400002: Hand_L
+    400004: Hand_R
+    400006: Head
+    400008: LowerArm_L
+    400010: LowerArm_R
+    400012: LowerSpine
+    400014: MidSpine
+    400016: Neck
+    400018: Rig
+    400020: //RootNode
+    400022: Root
+    400024: UpperArm_L
+    400026: UpperArm_R
+    400028: UpperSpine
+    4300000: Cube
+    7400000: Default Take
+    7400002: RigAction
+    7400004: RigAction_001
+    9500000: //RootNode
+    13700000: Cube
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: RigAction
+      takeName: RigAction
+      firstFrame: -1
+      lastFrame: 47
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Cube
+        weight: 1
+      - path: Rig
+        weight: 1
+      - path: Rig/Root
+        weight: 1
+      - path: Rig/Root/LowerSpine
+        weight: 1
+      - path: Rig/Root/LowerSpine/MidSpine
+        weight: 1
+      - path: Rig/Root/LowerSpine/MidSpine/UpperSpine
+        weight: 1
+      - path: Rig/Root/LowerSpine/MidSpine/UpperSpine/Neck
+        weight: 1
+      - path: Rig/Root/LowerSpine/MidSpine/UpperSpine/Neck/Head
+        weight: 1
+      - path: Rig/Root/LowerSpine/MidSpine/UpperSpine/UpperArm_L
+        weight: 1
+      - path: Rig/Root/LowerSpine/MidSpine/UpperSpine/UpperArm_L/LowerArm_L
+        weight: 1
+      - path: Rig/Root/LowerSpine/MidSpine/UpperSpine/UpperArm_L/LowerArm_L/Hand_L
+        weight: 1
+      - path: Rig/Root/LowerSpine/MidSpine/UpperSpine/UpperArm_R
+        weight: 1
+      - path: Rig/Root/LowerSpine/MidSpine/UpperSpine/UpperArm_R/LowerArm_R
+        weight: 1
+      - path: Rig/Root/LowerSpine/MidSpine/UpperSpine/UpperArm_R/LowerArm_R/Hand_R
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: RigAction_001
+      takeName: RigAction_001
+      firstFrame: -1
+      lastFrame: 47
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Cube
+        weight: 1
+      - path: Rig
+        weight: 1
+      - path: Rig/Root
+        weight: 1
+      - path: Rig/Root/LowerSpine
+        weight: 1
+      - path: Rig/Root/LowerSpine/MidSpine
+        weight: 1
+      - path: Rig/Root/LowerSpine/MidSpine/UpperSpine
+        weight: 1
+      - path: Rig/Root/LowerSpine/MidSpine/UpperSpine/Neck
+        weight: 1
+      - path: Rig/Root/LowerSpine/MidSpine/UpperSpine/Neck/Head
+        weight: 1
+      - path: Rig/Root/LowerSpine/MidSpine/UpperSpine/UpperArm_L
+        weight: 1
+      - path: Rig/Root/LowerSpine/MidSpine/UpperSpine/UpperArm_L/LowerArm_L
+        weight: 1
+      - path: Rig/Root/LowerSpine/MidSpine/UpperSpine/UpperArm_L/LowerArm_L/Hand_L
+        weight: 1
+      - path: Rig/Root/LowerSpine/MidSpine/UpperSpine/UpperArm_R
+        weight: 1
+      - path: Rig/Root/LowerSpine/MidSpine/UpperSpine/UpperArm_R/LowerArm_R
+        weight: 1
+      - path: Rig/Root/LowerSpine/MidSpine/UpperSpine/UpperArm_R/LowerArm_R/Hand_R
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: Root
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
