@@ -88,6 +88,16 @@ public class networkManagerClient : MonoBehaviour {
 			}
 		}
 		if (screenMessages.ContainsKey(keyToRemove)) screenMessages.Remove(keyToRemove);
+
+		if( nvs.playerHasWon )
+		{
+			GUIStyle myStyle = new GUIStyle();
+			myStyle.fontSize = 34;
+			myStyle.normal.textColor = Color.red;
+			
+			
+			GUI.Label( new Rect( Screen.width/4, 0, 200, 200), nvs.winningPlayer + " is the Winner !",myStyle);
+		}
 	}
 	
 	void OnDisconnectedFromServer(NetworkDisconnection info){
@@ -133,6 +143,9 @@ public class networkManagerClient : MonoBehaviour {
 		nvs.myInfo.cartModel = cartModel;
 		nvs.myInfo.ballModel = ballModel;
 		nvs.myInfo.characterModel = characterModel;
+
+		nvs.playerHasWon = false;
+		nvs.winningPlayer = "";
 	}
 	
 	// tells the player that this viewID is theirs - can be moved to SpawnPlayer now
@@ -272,9 +285,18 @@ public class networkManagerClient : MonoBehaviour {
 			}
 		}
 	}
-	
-	
-	
+
+	[RPC]
+	void DeclareWinner(NetworkPlayer player){
+		nvs.playerHasWon = true;
+		foreach(PlayerInfo pInfo in nvs.players){
+			if(pInfo.player==player){
+				nvs.winningPlayer=pInfo.name;
+				break;
+			}
+		}
+	}
+
 	// blank for server use only
 	[RPC]
 	void GiveMeACart(string a, string b, string c) {}

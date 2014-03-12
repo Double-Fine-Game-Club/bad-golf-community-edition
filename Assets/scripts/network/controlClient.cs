@@ -16,7 +16,7 @@ public class controlClient : MonoBehaviour {
 		nvs = GetComponent("networkVariables") as networkVariables;
 		myInfo = nvs.myInfo;
 		pause = GetComponent ("netPause") as netPause;
-		pin = GameObject.Find ("Pin") as GameObject;
+		pin = GameObject.Find ("winningPole") as GameObject;
 		// change camera
 //		GameObject.Find ("lobby_view").transform.FindChild ("camera").gameObject.SetActive (false);
 //		myInfo.cartContainerObject.transform.FindChild ("multi_buggy_cam").gameObject.SetActive (true);

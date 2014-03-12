@@ -3,9 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class networkVariables : MonoBehaviour {
-	// ADD VARIABLES HERE - after adding you will need to reset the object in the inspector and re-assign everything
-	public Camera myCam;				// camera
-	public float lowestHeight;			// lowest height before respawn
 	[HideInInspector]
 	public string[] buggyModels = new string[2] {"buggy_m", "hotrod_m"};		// buggy models
 	[HideInInspector]
@@ -18,7 +15,12 @@ public class networkVariables : MonoBehaviour {
 	public string[] characterModels = new string[2] {"lil_patrick", "BradOverPatrick"};	// character models
 	[HideInInspector]
 	public string[] characteryModelNames = new string[2] {"Patrick", "Brad"};	// character models names
-	
+
+	// ADD VARIABLES HERE - after adding you will need to reset the object in the inspector and re-assign everything
+	public Camera myCam;				// camera
+	public float lowestHeight;			// lowest height before respawn
+	public bool playerHasWon = false;	// indicate if a player has won the current game
+	public string winningPlayer;		// Winner of the last game played
 	// client only variables
 	// maybe put the pause things in here?
 	

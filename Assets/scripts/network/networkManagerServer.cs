@@ -65,7 +65,7 @@ public class networkManagerServer : MonoBehaviour {
 
         //show chat bubble over players when they chat
         gameObject.AddComponent("ChatBubble");
-
+		
 		// set the camera in the audio script on the buggy - PUT THIS IN A SCRIPT SOMEONE
 		CarAudio mca = myInfo.cartGameObject.GetComponent("CarAudio") as CarAudio;
 		mca.followCamera = nvs.myCam;	// replace tmpCam with our one - this messes up sound atm
@@ -230,6 +230,18 @@ public class networkManagerServer : MonoBehaviour {
 			}
 		}
 		if (screenMessages.ContainsKey(keyToRemove)) screenMessages.Remove(keyToRemove);
+
+
+		if( nvs.playerHasWon )
+		{
+			GUIStyle myStyle = new GUIStyle();
+			myStyle.fontSize = 34;
+			myStyle.normal.textColor = Color.red;
+			
+			
+			GUI.Label( new Rect( Screen.width/4, 0, 200, 200), nvs.winningPlayer + " is the Winner !",myStyle);
+		}
+
 	}
 	
 	void OnDisconnectedFromServer(NetworkDisconnection info){
@@ -270,12 +282,22 @@ public class networkManagerServer : MonoBehaviour {
 		BeginGame();
 		// set the game to have started
 		gameHasBegun = true;
+		nvs.playerHasWon = false;
+		nvs.winningPlayer = "";
 		// call the functions that need them
 		AddScripts();
 	}
-	
-	
-	
+
+	[RPC]
+	void DeclareWinner(NetworkPlayer player){
+		nvs.playerHasWon = true;
+		foreach(PlayerInfo pInfo in nvs.players){
+			if(pInfo.player==player){
+				nvs.winningPlayer=pInfo.name;
+				break;
+			}
+		}
+	}
 	
 	// things that can be run over the network
 	// debug text
