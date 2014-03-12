@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using InControl;	// remove me later
 
 public class networkManager : MonoBehaviour {
-	bool connectingToServer = false;
-	bool showFailMessage = false;
+	const float kConnectionTimeout = 10f;	//quit trying to connect after this much time has passed
+	float timeoutTime = 0f;					//time spent trying to connect to server
+	bool connectingToServer = false;		//is trying to connect to a server
+	bool showFailMessage = false;			//Indicate a connection attempt has failed
 	string serverVersion;
 	networkVariables nvs;
 	// random names
@@ -40,6 +42,18 @@ public class networkManager : MonoBehaviour {
 
 		// set default server name
 		nvs.serverName = nvs.myInfo.name + "'s Server";
+	}
+
+	void Update(){
+		//If NAT punchthrough fails, no connected or fail to connect
+		//	events occur so we need a timer to prevent game lock
+		if(connectingToServer){
+			timeoutTime += Time.deltaTime;
+			if(timeoutTime>=kConnectionTimeout){
+				connectingToServer=false;
+				showFailMessage=true;
+			}
+		}
 	}
 	
 	void OnGUI() {
@@ -116,6 +130,7 @@ public class networkManager : MonoBehaviour {
 					// Connect to HostData struct, internally the correct method is used (GUID when using NAT).
 					Network.Connect(element);
 					connectingToServer = true;
+					timeoutTime = 0;
 					showFailMessage = false;
 				}
 				GUILayout.EndHorizontal();

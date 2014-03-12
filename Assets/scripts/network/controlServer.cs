@@ -8,6 +8,7 @@ public class controlServer : MonoBehaviour {
 	netPause pause;
 	Transform cameraParentTransform;
 	GameObject pin;
+	GameObject localBallAnalog;	
 
 	void Start() {
 		// get variables we need
@@ -16,6 +17,8 @@ public class controlServer : MonoBehaviour {
 		pause = GetComponent ("netPause") as netPause;
 		pin = GameObject.Find ("winningPole") as GameObject;
 		(pin.GetComponent ("netWinCollider") as netWinCollider).initialize (); //setup the pin while we have a reference to it.
+
+		localBallAnalog = new GameObject ();
 	}
 
 	void Update() {
@@ -71,17 +74,27 @@ public class controlServer : MonoBehaviour {
 			myInfo.cartGameObject.rigidbody.velocity = Vector3.zero;
 			myInfo.cartGameObject.rigidbody.angularVelocity = Vector3.zero;
 			// set them at golf ball
-			myInfo.characterGameObject.transform.parent = myInfo.ballGameObject.transform;
+			myInfo.ballGameObject.transform.rotation = Quaternion.identity;
+
+			localBallAnalog.transform.position = myInfo.ballGameObject.transform.position;	//hack_answers
+			localBallAnalog.transform.rotation = myInfo.ballGameObject.transform.rotation;	//hack_answers
+			localBallAnalog.transform.localScale = myInfo.ballGameObject.transform.localScale;	//hack_answers
+			//myInfo.characterGameObject.transform.parent = myInfo.ballGameObject.transform;
+			myInfo.characterGameObject.transform.parent = localBallAnalog.transform;
+
 			myInfo.ballGameObject.transform.rotation = Quaternion.LookRotation((pin.transform.position - myInfo.ballGameObject.transform.position) - new Vector3(0, pin.transform.position.y - myInfo.ballGameObject.transform.position.y,0));	
 			myInfo.characterGameObject.transform.localPosition = new Vector3(1.7f,-.2f,0);
 			myInfo.characterGameObject.transform.localRotation = Quaternion.identity * new Quaternion(0f, -Mathf.PI/2, 0f, 1f);
+
+			localBallAnalog.transform.rotation = myInfo.ballGameObject.transform.rotation;
 			// lock golf ball
 			myInfo.ballGameObject.rigidbody.constraints = RigidbodyConstraints.FreezeAll;
 			//*/ move camera - HACKY
 			GameObject buggyCam = nvs.myCam.gameObject;
 			(buggyCam.GetComponent("FollowPlayerScript") as FollowPlayerScript).enabled = false;
 			cameraParentTransform = buggyCam.transform.parent;	// keep a reference for later
-			buggyCam.transform.parent = myInfo.ballGameObject.transform;
+			//buggyCam.transform.parent = myInfo.ballGameObject.transform;
+			buggyCam.transform.parent = localBallAnalog.transform;	//hack_answers
 			buggyCam.transform.rotation = Quaternion.identity;	// is this line needed?
 			buggyCam.transform.localPosition = new Vector3(-6,4,0);
 			//buggyCam.transform.rotation = Quaternion.LookRotation(myInfo.ballGameObject.transform.position - buggyCam.transform.position);

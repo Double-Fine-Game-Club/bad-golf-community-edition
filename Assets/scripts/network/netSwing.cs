@@ -20,6 +20,7 @@ public abstract class SwingBehaviour : MonoBehaviour
 //Attach this script to a network object
 public class netSwing : SwingBehaviour {
 	public const int k_angleBoost = 5;
+	public const float k_swingTimeToHitBall = 0.75f;
 	private Vector3 cameraPos = new Vector3 (0, 2, -7);
 	private bool flying = false;
 	private bool showGui = false;
@@ -27,6 +28,7 @@ public class netSwing : SwingBehaviour {
 	private float shotAngle = 0.0f;
 	private float timer=0.0f;
 	private Rect guiBoxPosition = new Rect (100, 200, 100, 100);
+	private bool isSwinging=false;
 	networkVariables nvs;
 	PlayerInfo myInfo;
 	PowerMeter meter;
@@ -47,32 +49,23 @@ public class netSwing : SwingBehaviour {
 	}
 
 	void Update(){
+		if(isSwinging){return;}
+
 		// This is where the swing happens.
 		if ( myInfo.currentMode==1 && 		//At ball
 		    !myInfo.playerIsPaused && 		//Not paused
 		    Input.GetKeyUp(KeyCode.Space)) 	//Hit ball key
 		{
 			flying = true;
+			isSwinging=true;
 			if (shotPower > k_maxShotPower)
 				shotPower = k_maxShotPower;
-			networkView.RPC("GolfSwing", RPCMode.Server, shotPower, shotAngle, myInfo.player, myInfo.characterGameObject.transform.parent.rotation);
 
-			myInfo.ballGameObject.transform.rotation = myInfo.characterGameObject.transform.parent.rotation;	//hack_answers
-
-			Vector3 arc = Vector3.forward;
-			arc.y = 0;
-			arc.Normalize ();
-			arc.y = Mathf.Sin (shotAngle * Mathf.Deg2Rad);
-			myInfo.ballGameObject.rigidbody.constraints = RigidbodyConstraints.None;
-			myInfo.ballGameObject.rigidbody.AddForce (myInfo.ballGameObject.transform.localRotation * arc * shotPower * k_shotBoost);
-
+			networkView.RPC("GolfSwing", RPCMode.All, shotPower, shotAngle, myInfo.player, myInfo.characterGameObject.transform.parent.rotation.eulerAngles.y);
 			shotPower = 0;	
 			meter.HideArc();
 			meter.enabled=false;
 
-			//Switch back to cart
-			gameObject.SendMessage("switchToCart");
-			(GetComponent ("netTransferToSwing") as netTransferToSwing).enabled = true;
 			showGui=false;
 			//This doesn't disable here because the RPC handlers are needed :/
 
@@ -101,6 +94,14 @@ public class netSwing : SwingBehaviour {
 	void FixedUpdate () {
 		if (myInfo.currentMode != 1 || 	//Not at ball
 			myInfo.playerIsPaused) { 	//Paused
+			return;
+		}
+		if(isSwinging){
+			//Camera stuff
+			nvs.myCam.transform.rotation = Quaternion.Euler(
+				myInfo.ballGameObject.transform.rotation.eulerAngles.x, 
+				myInfo.ballGameObject.transform.rotation.eulerAngles.y,
+				0);
 			return;
 		}
 
@@ -170,8 +171,8 @@ public class netSwing : SwingBehaviour {
 
 	//Quaternion math can reduce the size of this
 	[RPC]
-	void GolfSwing(float power, float angle, NetworkPlayer swinger, Quaternion ballFacing){
-		if (Network.isClient)	return;	//Ball will be synchronized by the server
+	void GolfSwing(float power, float angle, NetworkPlayer swinger, float ballFacing){
+		//if (Network.isClient)	return;	//Ball will be synchronized by the server
 
 		PlayerInfo player = null;
 		foreach (PlayerInfo p in nvs.players) {
@@ -180,16 +181,52 @@ public class netSwing : SwingBehaviour {
 				break;
 			}
 		}
-		player.ballGameObject.transform.rotation = ballFacing;
+		Quaternion ballRotation = player.ballGameObject.transform.rotation;
+		Vector3 eulerAnagles = ballRotation.eulerAngles;
+		eulerAnagles.y = ballFacing;
+		ballRotation.eulerAngles = eulerAnagles;
+		player.ballGameObject.transform.rotation = ballRotation;
+		
+		//play out swing animation then switch to cart
+		StartCoroutine(hitGolfBall(player.characterGameObject.animation.GetClip("swing").length, player, power, angle));
+				
+	}
 
-		if (power > k_maxShotPower)
-			power = k_maxShotPower;
+	IEnumerator hitGolfBall(float time, PlayerInfo player, float power, float angle){
+		//play swing animation
+		if (player.characterModel=="lil_patrick") {
+			player.characterGameObject.transform.FindChild(player.characterModel).animation.Play("swing",PlayMode.StopAll);
+		} else {
+			player.characterGameObject.animation.Play("swing",PlayMode.StopAll);
+		}
+		yield return new WaitForSeconds(k_swingTimeToHitBall);
+
+		//detach lil_patrick from ball
+		player.characterGameObject.transform.parent = null;
+		if(player==myInfo){
+			//follow ball for a bit while it moves
+			nvs.myCam.transform.parent = player.ballGameObject.transform;
+			nvs.myCam.transform.position = nvs.myCam.transform.position - new Vector3(0,1.5f,0);	//looks better
+		}
+
 		Vector3 arc = Vector3.forward;
 		arc.y = 0;
 		arc.Normalize ();
 		arc.y = Mathf.Sin (angle * Mathf.Deg2Rad);
 		player.ballGameObject.rigidbody.constraints = RigidbodyConstraints.None;
-		player.ballGameObject.rigidbody.AddForce (player.ballGameObject.transform.rotation * arc * power * k_shotBoost);
+		if(Network.isServer){
+			//Only server does this. To prevent rubber banding of ball
+			player.ballGameObject.rigidbody.AddForce (player.ballGameObject.transform.localRotation * arc * power * k_shotBoost);
+		}
+		yield return new WaitForSeconds(time-k_swingTimeToHitBall);
+
+		if(player==myInfo){
+
+			//Switch back to cart
+			gameObject.SendMessage("switchToCart");
+			isSwinging=false;
+			(GetComponent ("netTransferToSwing") as netTransferToSwing).enabled = true;
+		}
 	}
 	
 }
