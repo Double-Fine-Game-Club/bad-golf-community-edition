@@ -139,8 +139,7 @@ public class controlServer : MonoBehaviour {
 		// find the player
 		foreach (PlayerInfo p in nvs.players) {
 			if (p.player==player) {
-
-				p.cartGameObject.SendMessage("SoundHorn");
+				SoundManager.Get().playSfx3d(p.cartGameObject, "Car Horn 1", 5, 500, 1);
 			}
 		}
 	}

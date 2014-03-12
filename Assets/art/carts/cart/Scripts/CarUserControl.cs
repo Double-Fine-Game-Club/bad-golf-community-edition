@@ -21,7 +21,7 @@ public class CarUserControl : MonoBehaviour
 		//if(CrossPlatformInput.GetAction3());	//Probably not right
 #else
 		if(Input.GetKeyDown(KeyCode.Q))
-			gameObject.SendMessage("SoundHorn");
+			SoundManager.Get().playSfx3d(gameObject, "Car Horn 1", 5, 500, 1);
 #endif
 	}
 
