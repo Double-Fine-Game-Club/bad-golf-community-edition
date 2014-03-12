@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 
@@ -138,7 +138,7 @@ public class netSwing : SwingBehaviour {
 			GUI.Box (guiBoxPosition, "power: " + (int)shotPower + "\nangle: " + (int)shotAngle);
 	}
 
-	public override float GetShowPower ()
+	public override float GetShotPower ()
 	{
 		return shotPower;
 	}

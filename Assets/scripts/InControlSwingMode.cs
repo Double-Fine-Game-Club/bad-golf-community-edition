@@ -12,7 +12,7 @@ public abstract class SwingBehaviour : MonoBehaviour
 	public const int k_minArcAngle = 35;
 	public const int k_shotBoost = 3;
 	
-	public abstract float GetShowPower ();
+	public abstract float GetShotPower ();
 }
 
 public class InControlSwingMode : SwingBehaviour
@@ -175,7 +175,7 @@ public class InControlSwingMode : SwingBehaviour
 		}
 	}
 
-	public override float GetShowPower ()
+	public override float GetShotPower ()
 	{
 		return shotPower;
 	}
