@@ -102,13 +102,14 @@ public class BallMarker : NetworkedHUDElement {
         foreach (PlayerInfo player in m_nvs.players) {
             if (m_enemyBallMarkers.ContainsKey(player)) {
                 if (player != m_myPlayerInfo) {
-                    GameObject playerBall = m_enemyBallMarkers[player];
+					GameObject playerBall = player.ballGameObject;
+                    GameObject playerBallMarker = m_enemyBallMarkers[player];
                     Vector3 thisBallMarkerPos = player.ballGameObject.transform.position;
                     thisBallMarkerPos.y += k_heightOffsetFromBall;
-                    playerBall.transform.position = thisBallMarkerPos;
+					playerBallMarker.transform.position = thisBallMarkerPos;
 
-                    playerBall.transform.rotation = m_myCamera.transform.rotation; //billboard ball marker towards the camera
-                    UpdateColorScaleToDistance(playerBall, playerBall, false);
+					playerBallMarker.transform.rotation = m_myCamera.transform.rotation; //billboard ball marker towards the camera
+					UpdateColorScaleToDistance(playerBallMarker, playerBall, false);
                 }
             }
         }

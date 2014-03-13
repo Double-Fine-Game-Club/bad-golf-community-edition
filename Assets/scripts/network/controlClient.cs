@@ -8,7 +8,7 @@ public class controlClient : MonoBehaviour {
 	netPause pause;
 	Transform cameraParentTransform;
 	GameObject pin;
-	GameObject localBallAnalog;	//hack_answers
+	GameObject localBallAnalog;	
 
 
 	void Start() {
@@ -17,9 +17,7 @@ public class controlClient : MonoBehaviour {
 		myInfo = nvs.myInfo;
 		pause = GetComponent ("netPause") as netPause;
 		pin = GameObject.Find ("winningPole") as GameObject;
-		// change camera
-//		GameObject.Find ("lobby_view").transform.FindChild ("camera").gameObject.SetActive (false);
-//		myInfo.cartContainerObject.transform.FindChild ("multi_buggy_cam").gameObject.SetActive (true);
+
 		localBallAnalog = new GameObject ();
 	}
 
@@ -188,10 +186,7 @@ public class controlClient : MonoBehaviour {
 					} else {
 						p.characterGameObject.animation.Play("golfIdle",PlayMode.StopAll);
 					}
-					if(p==myInfo){
-						//Note:client-to-client arrives after client-to-server
-						localBallAnalog.transform.position = myInfo.ballGameObject.transform.position;
-					}
+
 				}
 				
 				// reset keyboard buffer
