@@ -3,20 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class BallMarker : NetworkedHUDElement {
-    private GameObject m_myBall;
-    private GameObject m_myBallMarker;
-    private Dictionary<PlayerInfo, GameObject> m_enemyBallMarkers;
+    public GameObject m_myBall;
+    public GameObject m_myBallMarker;
+    public Dictionary<PlayerInfo, GameObject> m_enemyBallMarkers;
 
-    private bool m_moveUp = false;
-    private float m_positionOffset = 0.0f;
-    private int m_myLastMode = 0;
+    protected bool m_moveUp = false;
+    protected float m_positionOffset = 0.0f;
+    protected int m_myLastMode = 0;
 
-    private const float k_maxBallScalar = 1.2f;
-    private const float k_heightOffsetFromBall = 3.0f;
-    private const float k_maxAlphaPercentEnemyMarkers = 0.35f;
-    private const float k_groundedSensitivity = 1.0f;
+    protected const float k_maxBallScalar = 1.2f;
+    protected const float k_heightOffsetFromBall = 3.0f;
+    protected const float k_maxAlphaPercentEnemyMarkers = 0.35f;
+    protected const float k_groundedSensitivity = 1.0f;
 
-    private GameObject m_floor;
+    protected GameObject m_floor;
 
 	
 	public void Update () 
@@ -69,6 +69,7 @@ public class BallMarker : NetworkedHUDElement {
     {
         foreach (PlayerInfo player in toClean) {
             Destroy(m_enemyBallMarkers[player]);
+            m_players.Remove(player);
             m_enemyBallMarkers.Remove(player);
         }
     }
@@ -83,6 +84,10 @@ public class BallMarker : NetworkedHUDElement {
                 GameObject thisBallMarker = GameObject.Instantiate(Resources.Load("enemyBallMarkerPrefab")) as GameObject;
                 thisBallMarker.transform.position = thisBallMarkerPos;
                 m_enemyBallMarkers.Add(player, thisBallMarker);
+            }
+
+            if (!m_players.Contains(player)) {
+                m_players.Add(player);
             }
         }
     }
@@ -99,7 +104,7 @@ public class BallMarker : NetworkedHUDElement {
 
         UpdateColorScaleToDistance(m_myBallMarker, m_myBall, true);
 
-        foreach (PlayerInfo player in m_nvs.players) {
+        foreach (PlayerInfo player in m_players) {
             if (m_enemyBallMarkers.ContainsKey(player)) {
                 if (player != m_myPlayerInfo) {
 					GameObject playerBall = player.ballGameObject;
@@ -115,7 +120,7 @@ public class BallMarker : NetworkedHUDElement {
         }
     }
 
-    private void UpdateColorScaleToDistance(GameObject objectToUpdate, GameObject associatedBall, bool myBall)
+    public void UpdateColorScaleToDistance(GameObject objectToUpdate, GameObject associatedBall, bool myBall)
     {
         Renderer objRenderer = objectToUpdate.GetComponentInChildren<Renderer>();
 
@@ -146,7 +151,7 @@ public class BallMarker : NetworkedHUDElement {
     }
 
     //hide markers (layer 12) if swinging
-    private void CheckMode()
+    public void CheckMode()
     {
         int currMode = m_myPlayerInfo.currentMode;
         if (currMode != m_myLastMode) {
@@ -159,7 +164,7 @@ public class BallMarker : NetworkedHUDElement {
         }
     }
 
-    IEnumerator MoveObject(float min, float max, float overTime)
+    public IEnumerator MoveObject(float min, float max, float overTime)
     {
         m_moveUp = !m_moveUp;
         float startTime = Time.time;
