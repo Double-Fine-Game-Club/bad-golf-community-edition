@@ -5,7 +5,6 @@ public class controlClient : MonoBehaviour {
 	float timer = 0;
 	PlayerInfo myInfo;
 	networkVariables nvs;
-	netPause pause;
 	Transform cameraParentTransform;
 	GameObject pin;
 	GameObject localBallAnalog;	
@@ -15,7 +14,6 @@ public class controlClient : MonoBehaviour {
 		// get variables we need
 		nvs = GetComponent("networkVariables") as networkVariables;
 		myInfo = nvs.myInfo;
-		pause = GetComponent ("netPause") as netPause;
 		pin = GameObject.Find ("winningPole") as GameObject;
 
 		localBallAnalog = new GameObject ();

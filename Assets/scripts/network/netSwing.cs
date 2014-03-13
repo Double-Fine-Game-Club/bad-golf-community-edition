@@ -6,7 +6,7 @@ using System.Collections;
 /*	//Here for reference
 public abstract class SwingBehaviour : MonoBehaviour
 {
-	public GameObject camera, cart;	//cart is unused
+	public GameObject cameraObject, cart;	//cart is unused
 	public int hitMultiplier = 10;
 	public const int k_maxShotPower = 500;
 	public const int k_maxArcAngle = 80;
@@ -22,11 +22,9 @@ public class netSwing : SwingBehaviour {
 	public const int k_angleBoost = 5;
 	public const float k_swingTimeToHitBall = 0.75f;
 	private Vector3 cameraPos = new Vector3 (0, 2, -7);
-	private bool flying = false;
 	private bool showGui = false;
 	private float shotPower = 0.0f;
 	private float shotAngle = 0.0f;
-	private float timer=0.0f;
 	private Rect guiBoxPosition = new Rect (100, 200, 100, 100);
 	private bool isSwinging=false;
 	networkVariables nvs;
@@ -35,13 +33,12 @@ public class netSwing : SwingBehaviour {
 
 	//Server variables for smoothing
 	private float lastAngle = 0.0f;
-	private double lastTime = 0.0;
 
 	// Use this for initialization
 	void Start () {
 		nvs = FindObjectOfType<networkVariables> ();
 		myInfo = nvs.myInfo;
-		camera = nvs.myCam.gameObject;	//may not be set yet
+		cameraObject = nvs.myCam.gameObject;	//may not be set yet
 		meter = myInfo.characterGameObject.AddComponent ("PowerMeter") as PowerMeter;
 		meter.m_objectToCircle = myInfo.characterGameObject;
 		meter.m_markerPrefab = Instantiate (Resources.Load ("powerMeterPrefab")) as GameObject;	//	:(
@@ -56,7 +53,6 @@ public class netSwing : SwingBehaviour {
 		    !myInfo.playerIsPaused && 		//Not paused
 		    Input.GetKeyUp(KeyCode.Space)) 	//Hit ball key
 		{
-			flying = true;
 			isSwinging=true;
 			if (shotPower > k_maxShotPower)
 				shotPower = k_maxShotPower;
@@ -117,9 +113,9 @@ public class netSwing : SwingBehaviour {
 		// Crappy camera script taken from the original movement.cs. Makes rotation around the ball possible.
 		//Vector3 newPos = rotationObject.transform.position + rotationObject.transform.localRotation * cameraPos;
 		Vector3 newPos = rotationObject.transform.position + rotationObject.transform.localRotation * cameraPos;	
-		float lerper = Mathf.Min ((camera.transform.position - newPos).sqrMagnitude / 100, 1);
-		camera.transform.position = (1 - lerper) * camera.transform.position + lerper * newPos;
-		camera.transform.rotation = Quaternion.Lerp (camera.transform.rotation, Quaternion.LookRotation (rotationObject.transform.position - camera.transform.position), lerper);
+		float lerper = Mathf.Min ((cameraObject.transform.position - newPos).sqrMagnitude / 100, 1);
+		cameraObject.transform.position = (1 - lerper) * cameraObject.transform.position + lerper * newPos;
+		cameraObject.transform.rotation = Quaternion.Lerp (cameraObject.transform.rotation, Quaternion.LookRotation (rotationObject.transform.position - cameraObject.transform.position), lerper);
 		
 		//add remove power with vertical axis
 		shotPower += powerInput * hitMultiplier;

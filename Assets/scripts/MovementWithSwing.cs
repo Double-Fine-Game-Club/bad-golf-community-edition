@@ -4,9 +4,8 @@ using System.Collections;
 public class MovementWithSwing : MonoBehaviour
 {
 	float forceMultiplyer = 10000;
-	Vector3 cameraPos = new Vector3 (0, 2, -4);
 	public GameObject ball;
-	public GameObject camera;
+	public GameObject cameraObject;
 	private bool inHittingRange = false;
 	
 	// Update is called once per frame
@@ -41,7 +40,7 @@ public class MovementWithSwing : MonoBehaviour
 		if (Input.GetKey (KeyCode.E)) {
 			if (inHittingRange) {
 				ball.SendMessage ("toggleScript");
-				camera.SetActive (false);
+				cameraObject.SetActive (false);
 				this.enabled = false;
 			}
 		}

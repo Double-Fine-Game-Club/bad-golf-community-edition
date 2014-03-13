@@ -67,12 +67,13 @@ public class FaceState : MonoBehaviour {
 			if (happyIndex > -1) happyTargetVal = 0;
 			if (angryIndex > -1) angryTargetVal = 100;
 			break;
-			break;
 		case "Neutral":
 			if (happyIndex > -1) happyTargetVal = 0;
 			if (angryIndex > -1) angryTargetVal = 0;
 			break;
+		default:
 			break;
 		}
+		return;
 	}
 }
