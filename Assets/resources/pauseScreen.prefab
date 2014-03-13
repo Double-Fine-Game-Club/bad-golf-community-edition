@@ -86,7 +86,7 @@ GameObject:
   - 124: {fileID: 12400000}
   m_Layer: 8
   m_Name: pause_camera
-  m_TagString: MainCamera
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -489,6 +489,7 @@ MonoBehaviour:
   messageTarget: {fileID: 0}
   messageName: onExit
   clickAudio: {fileID: 0}
+  messageValue: 
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -503,6 +504,7 @@ MonoBehaviour:
   messageTarget: {fileID: 0}
   messageName: onResume
   clickAudio: {fileID: 0}
+  messageValue: 
 --- !u!124 &12400000
 Behaviour:
   m_ObjectHideFlags: 1

@@ -32,7 +32,7 @@ public class networkVariables : MonoBehaviour {
 	[HideInInspector]
 	public PlayerInfo myInfo = new PlayerInfo();	// stores info on the current player
 	[HideInInspector]
-	public string serverVersion = "sandvich5";		// server version
+	public string serverVersion = "sandvich6";		// server version
 	[HideInInspector]
 	public string serverName = "";					// server name
 	[HideInInspector]

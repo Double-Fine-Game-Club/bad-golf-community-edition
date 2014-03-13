@@ -797,7 +797,14 @@ public class SoundManager : MonoBehaviour
  	#if !REMOVE_AUDIO
 		if(!muteAllSound && !muteSfx)
 		{
-			AudioSource source = target.GetComponent<AudioSource>();
+			AudioSource[] sources = target.GetComponents<AudioSource>();
+			AudioSource source = null;
+			foreach(AudioSource s in sources){
+				if(s.clip.name==name){
+					source = s;
+					break;
+				}
+			}
 			if(source == null)
 			{
 				source = target.AddComponent<AudioSource>();

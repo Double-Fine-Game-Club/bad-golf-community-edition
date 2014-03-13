@@ -66,7 +66,7 @@ public class CarAudio : MonoBehaviour {
 
         // setup the skid sound source
 		skidSource = SetUpEngineAudioSource(skidClip);
-
+		
         // flag that we have started the sounds playing
 		startedSound = true;
 	}
@@ -160,10 +160,9 @@ public class CarAudio : MonoBehaviour {
 	}
 
 	
-    // sets up and adds new audio source to the gane object
+    // sets up and adds new audio source to the game object
 	AudioSource SetUpEngineAudioSource(AudioClip clip)
 	{
-
         // create the new audio source component on the game object and set up its properties
 		AudioSource source = gameObject.AddComponent<AudioSource>();
 		source.clip = clip;
@@ -178,8 +177,7 @@ public class CarAudio : MonoBehaviour {
 		source.dopplerLevel = 0;
 		return source;
 	}
-	
-	
+
 	// unclamped versions of Lerp and Inverse Lerp, to allow value to exceed the from-to range
 	float ULerp (float from, float to, float value) {
 		return (1.0f - value)*from + value*to;

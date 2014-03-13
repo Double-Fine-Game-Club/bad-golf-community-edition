@@ -38,7 +38,7 @@ public class controlClient : MonoBehaviour {
 				if (Input.GetKeyDown(KeyCode.Q)) {
 					// need to wait for the audio guys to fix this
 					// if you think you've fixed this test in online aswell
-					//networkView.RPC("IHonked", RPCMode.All, myInfo.player);
+					networkView.RPC("IHonked", RPCMode.All, myInfo.player);
 				}
 				// reset
 				if (Input.GetKeyDown(KeyCode.R) && Network.isClient) {
@@ -143,7 +143,7 @@ public class controlClient : MonoBehaviour {
 		// find the player
 		foreach (PlayerInfo p in nvs.players) {
 			if (p.player==player) {
-				p.cartGameObject.audio.Play();
+				SoundManager.Get().playSfx3d(p.cartGameObject, "Car Horn 1", 5, 500, 1);
 			}
 		}
 	}
