@@ -45,8 +45,8 @@ public class LocalHUDElement : MonoBehaviour
         Transform[] children = m_splitView.GetComponentsInChildren<Transform>();
         List<GameObject> playerGameObjects = new List<GameObject>();
         for(int i = 0; i < children.Length; i++) {
-            if (children[i].gameObject.name.Contains("player")) {
-                if (children[i] != this.transform) {
+            if (children[i].gameObject.name.Equals("player")) {
+                if (children[i].GetInstanceID() != this.transform.GetInstanceID()) {
                     playerGameObjects.Add(children[i].gameObject);
                 }
             }
