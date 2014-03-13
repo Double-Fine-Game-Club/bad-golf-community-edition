@@ -1166,7 +1166,7 @@ GameObject:
   - 114: {fileID: 108034682}
   m_Layer: 0
   m_Name: twoSplit_View
-  m_TagString: Untagged
+  m_TagString: LocalMultiplayerView
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6584,7 +6584,8 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 413461026}
-  m_Layer: 0
+  - 114: {fileID: 413461027}
+  m_Layer: 13
   m_Name: player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -6607,6 +6608,23 @@ Transform:
   - {fileID: 291363685}
   - {fileID: 1817078385}
   m_Father: {fileID: 108034681}
+--- !u!114 &413461027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 413461025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d904ad13aad0ae74e83fceae4377456c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_splitView: {fileID: 0}
+  m_myCamera: {fileID: 0}
+  m_initialized: 0
+  m_playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &418365905
 GameObject:
   m_ObjectHideFlags: 0
@@ -11971,7 +11989,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294966783
+    m_Bits: 4294909439
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
@@ -15708,7 +15726,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294966783
+    m_Bits: 4294860287
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
@@ -17144,7 +17162,8 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 725227535}
-  m_Layer: 0
+  - 114: {fileID: 725227536}
+  m_Layer: 14
   m_Name: player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -17167,6 +17186,23 @@ Transform:
   - {fileID: 908305916}
   - {fileID: 447623400}
   m_Father: {fileID: 108034681}
+--- !u!114 &725227536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 725227534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d904ad13aad0ae74e83fceae4377456c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_splitView: {fileID: 0}
+  m_myCamera: {fileID: 0}
+  m_initialized: 0
+  m_playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &729529193
 GameObject:
   m_ObjectHideFlags: 0
@@ -20662,7 +20698,8 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 877235124}
-  m_Layer: 0
+  - 114: {fileID: 877235125}
+  m_Layer: 14
   m_Name: player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -20685,6 +20722,23 @@ Transform:
   - {fileID: 574253664}
   - {fileID: 230706011}
   m_Father: {fileID: 1150274598}
+--- !u!114 &877235125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 877235123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d904ad13aad0ae74e83fceae4377456c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_splitView: {fileID: 0}
+  m_myCamera: {fileID: 0}
+  m_initialized: 0
+  m_playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &881331931
 GameObject:
   m_ObjectHideFlags: 0
@@ -24979,7 +25033,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294966783
+    m_Bits: 4294852095
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
@@ -31358,7 +31412,7 @@ GameObject:
   - 114: {fileID: 1150274599}
   m_Layer: 0
   m_Name: fourSplit_View
-  m_TagString: Untagged
+  m_TagString: LocalMultiplayerView
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31409,7 +31463,8 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1161575907}
-  m_Layer: 0
+  - 114: {fileID: 1161575908}
+  m_Layer: 13
   m_Name: player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -31432,6 +31487,23 @@ Transform:
   - {fileID: 100820875}
   - {fileID: 608448643}
   m_Father: {fileID: 1150274598}
+--- !u!114 &1161575908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1161575906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d904ad13aad0ae74e83fceae4377456c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_splitView: {fileID: 0}
+  m_myCamera: {fileID: 0}
+  m_initialized: 0
+  m_playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &1167921149
 GameObject:
   m_ObjectHideFlags: 0
@@ -32039,7 +32111,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294966783
+    m_Bits: 4294852095
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
@@ -37287,7 +37359,8 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1375897704}
-  m_Layer: 0
+  - 114: {fileID: 1375897705}
+  m_Layer: 13
   m_Name: player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -37310,6 +37383,23 @@ Transform:
   - {fileID: 325953177}
   - {fileID: 673441569}
   m_Father: {fileID: 2107823199}
+--- !u!114 &1375897705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1375897703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d904ad13aad0ae74e83fceae4377456c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_splitView: {fileID: 0}
+  m_myCamera: {fileID: 0}
+  m_initialized: 0
+  m_playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &1376336497
 GameObject:
   m_ObjectHideFlags: 0
@@ -38890,7 +38980,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294966783
+    m_Bits: 4294852095
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
@@ -40861,7 +40951,8 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1537633359}
-  m_Layer: 0
+  - 114: {fileID: 1537633360}
+  m_Layer: 15
   m_Name: player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -40884,6 +40975,23 @@ Transform:
   - {fileID: 473915862}
   - {fileID: 234827624}
   m_Father: {fileID: 1150274598}
+--- !u!114 &1537633360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1537633358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d904ad13aad0ae74e83fceae4377456c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_splitView: {fileID: 0}
+  m_myCamera: {fileID: 0}
+  m_initialized: 0
+  m_playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &1541468562
 GameObject:
   m_ObjectHideFlags: 0
@@ -44357,7 +44465,8 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1648858375}
-  m_Layer: 0
+  - 114: {fileID: 1648858376}
+  m_Layer: 16
   m_Name: player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -44380,6 +44489,23 @@ Transform:
   - {fileID: 1630503483}
   - {fileID: 7840044}
   m_Father: {fileID: 1150274598}
+--- !u!114 &1648858376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1648858374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d904ad13aad0ae74e83fceae4377456c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_splitView: {fileID: 0}
+  m_myCamera: {fileID: 0}
+  m_initialized: 0
+  m_playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &1660292543
 GameObject:
   m_ObjectHideFlags: 0
@@ -45898,7 +46024,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294966783
+    m_Bits: 4294860287
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
@@ -61489,7 +61615,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294966783
+    m_Bits: 4294876671
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
@@ -62677,7 +62803,7 @@ GameObject:
   - 114: {fileID: 2107823200}
   m_Layer: 0
   m_Name: single_View
-  m_TagString: Untagged
+  m_TagString: LocalMultiplayerView
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
