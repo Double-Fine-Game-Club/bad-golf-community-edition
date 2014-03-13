@@ -327,7 +327,6 @@ MonoBehaviour:
   m_objectToCircle: {fileID: 34005484}
   m_markerPrefab: {fileID: 100000, guid: 106aba1f0ace6184ab747ea60caff5f2, type: 2}
   m_meterRadius: 1
-  m_meterPoints: 100
   m_swingScript: {fileID: 34005487}
 --- !u!114 &34005487
 MonoBehaviour:
@@ -340,7 +339,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16e60f2f1c6f89740b3624fed1aeba26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 589073233}
+  cameraObject: {fileID: 589073233}
   cart: {fileID: 291363684}
   hitMultiplier: 10
 --- !u!114 &34005488
@@ -358,7 +357,7 @@ MonoBehaviour:
   scripts:
   - {fileID: 34005487}
   - {fileID: 34005486}
-  camera: {fileID: 589073233}
+  cameraObject: {fileID: 589073233}
 --- !u!54 &34005489
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1026,7 +1025,7 @@ MonoBehaviour:
   - {fileID: 100820886}
   - {fileID: 100820880}
   - {fileID: 0}
-  camera: {fileID: 1027276269}
+  cameraObject: {fileID: 1027276269}
 --- !u!114 &100820883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1064,7 +1063,6 @@ MonoBehaviour:
   highAccelClip: {fileID: 8300000, guid: 03e3bd08a6e70684dbe299a3e185fdd2, type: 3}
   highDecelClip: {fileID: 8300000, guid: 03bf91d88fce91c41995d27de63cc967, type: 3}
   skidClip: {fileID: 8300000, guid: bd9566abdbf08834281bfb4ea8b92a5d, type: 3}
-  hornClip: {fileID: 8300000, guid: d0d36cf65ec2537458d72390dc539a3a, type: 3}
   pitchMultiplier: 1
   lowPitchMin: 1
   lowPitchMax: 6
@@ -4251,7 +4249,7 @@ MonoBehaviour:
   - {fileID: 291363695}
   - {fileID: 291363689}
   - {fileID: 0}
-  camera: {fileID: 1242234203}
+  cameraObject: {fileID: 1242234203}
 --- !u!114 &291363692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4289,7 +4287,6 @@ MonoBehaviour:
   highAccelClip: {fileID: 8300000, guid: 03e3bd08a6e70684dbe299a3e185fdd2, type: 3}
   highDecelClip: {fileID: 8300000, guid: 03bf91d88fce91c41995d27de63cc967, type: 3}
   skidClip: {fileID: 8300000, guid: bd9566abdbf08834281bfb4ea8b92a5d, type: 3}
-  hornClip: {fileID: 8300000, guid: d0d36cf65ec2537458d72390dc539a3a, type: 3}
   pitchMultiplier: 1
   lowPitchMin: 1
   lowPitchMax: 6
@@ -6193,7 +6190,6 @@ MonoBehaviour:
   highAccelClip: {fileID: 8300000, guid: 03e3bd08a6e70684dbe299a3e185fdd2, type: 3}
   highDecelClip: {fileID: 8300000, guid: 03bf91d88fce91c41995d27de63cc967, type: 3}
   skidClip: {fileID: 8300000, guid: bd9566abdbf08834281bfb4ea8b92a5d, type: 3}
-  hornClip: {fileID: 8300000, guid: d0d36cf65ec2537458d72390dc539a3a, type: 3}
   pitchMultiplier: 1
   lowPitchMin: 1
   lowPitchMax: 6
@@ -6459,7 +6455,7 @@ MonoBehaviour:
   - {fileID: 388057050}
   - {fileID: 388057055}
   - {fileID: 0}
-  camera: {fileID: 1436162093}
+  cameraObject: {fileID: 1436162093}
 --- !u!114 &388057058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7351,7 +7347,7 @@ MonoBehaviour:
   - {fileID: 473915859}
   - {fileID: 473915853}
   - {fileID: 0}
-  camera: {fileID: 2071279947}
+  cameraObject: {fileID: 2071279947}
 --- !u!114 &473915856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7389,7 +7385,6 @@ MonoBehaviour:
   highAccelClip: {fileID: 8300000, guid: 03e3bd08a6e70684dbe299a3e185fdd2, type: 3}
   highDecelClip: {fileID: 8300000, guid: 03bf91d88fce91c41995d27de63cc967, type: 3}
   skidClip: {fileID: 8300000, guid: bd9566abdbf08834281bfb4ea8b92a5d, type: 3}
-  hornClip: {fileID: 8300000, guid: d0d36cf65ec2537458d72390dc539a3a, type: 3}
   pitchMultiplier: 1
   lowPitchMin: 1
   lowPitchMax: 6
@@ -7567,7 +7562,7 @@ MonoBehaviour:
   scripts:
   - {fileID: 489195832}
   - {fileID: 489195838}
-  camera: {fileID: 1491978673}
+  cameraObject: {fileID: 1491978673}
 --- !u!114 &489195832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7579,7 +7574,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16e60f2f1c6f89740b3624fed1aeba26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 1491978673}
+  cameraObject: {fileID: 1491978673}
   cart: {fileID: 388057044}
   hitMultiplier: 10
 --- !u!54 &489195833
@@ -7669,7 +7664,6 @@ MonoBehaviour:
   m_objectToCircle: {fileID: 489195829}
   m_markerPrefab: {fileID: 100000, guid: 106aba1f0ace6184ab747ea60caff5f2, type: 2}
   m_meterRadius: 1
-  m_meterPoints: 100
   m_swingScript: {fileID: 489195832}
 --- !u!114 &489195839
 MonoBehaviour:
@@ -11612,7 +11606,7 @@ MonoBehaviour:
   - {fileID: 574253674}
   - {fileID: 574253668}
   - {fileID: 0}
-  camera: {fileID: 700462196}
+  cameraObject: {fileID: 700462196}
 --- !u!114 &574253671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11650,7 +11644,6 @@ MonoBehaviour:
   highAccelClip: {fileID: 8300000, guid: 03e3bd08a6e70684dbe299a3e185fdd2, type: 3}
   highDecelClip: {fileID: 8300000, guid: 03bf91d88fce91c41995d27de63cc967, type: 3}
   skidClip: {fileID: 8300000, guid: bd9566abdbf08834281bfb4ea8b92a5d, type: 3}
-  hornClip: {fileID: 8300000, guid: d0d36cf65ec2537458d72390dc539a3a, type: 3}
   pitchMultiplier: 1
   lowPitchMin: 1
   lowPitchMax: 6
@@ -14471,7 +14464,6 @@ MonoBehaviour:
   m_objectToCircle: {fileID: 680774700}
   m_markerPrefab: {fileID: 100000, guid: 106aba1f0ace6184ab747ea60caff5f2, type: 2}
   m_meterRadius: 1
-  m_meterPoints: 100
   m_swingScript: {fileID: 680774703}
 --- !u!114 &680774703
 MonoBehaviour:
@@ -14484,7 +14476,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16e60f2f1c6f89740b3624fed1aeba26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 934267566}
+  cameraObject: {fileID: 934267566}
   cart: {fileID: 574253663}
   hitMultiplier: 10
 --- !u!114 &680774704
@@ -14502,7 +14494,7 @@ MonoBehaviour:
   scripts:
   - {fileID: 680774703}
   - {fileID: 680774702}
-  camera: {fileID: 934267566}
+  cameraObject: {fileID: 934267566}
 --- !u!54 &680774705
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -21140,7 +21132,7 @@ MonoBehaviour:
   - {fileID: 908305927}
   - {fileID: 908305921}
   - {fileID: 0}
-  camera: {fileID: 1720954496}
+  cameraObject: {fileID: 1720954496}
 --- !u!114 &908305924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21178,7 +21170,6 @@ MonoBehaviour:
   highAccelClip: {fileID: 8300000, guid: 03e3bd08a6e70684dbe299a3e185fdd2, type: 3}
   highDecelClip: {fileID: 8300000, guid: 03bf91d88fce91c41995d27de63cc967, type: 3}
   skidClip: {fileID: 8300000, guid: bd9566abdbf08834281bfb4ea8b92a5d, type: 3}
-  hornClip: {fileID: 8300000, guid: d0d36cf65ec2537458d72390dc539a3a, type: 3}
   pitchMultiplier: 1
   lowPitchMin: 1
   lowPitchMax: 6
@@ -27341,7 +27332,6 @@ MonoBehaviour:
   m_objectToCircle: {fileID: 1090516527}
   m_markerPrefab: {fileID: 100000, guid: 106aba1f0ace6184ab747ea60caff5f2, type: 2}
   m_meterRadius: 1
-  m_meterPoints: 100
   m_swingScript: {fileID: 1090516530}
 --- !u!114 &1090516530
 MonoBehaviour:
@@ -27354,7 +27344,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16e60f2f1c6f89740b3624fed1aeba26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 781311233}
+  cameraObject: {fileID: 781311233}
   cart: {fileID: 908305915}
   hitMultiplier: 10
 --- !u!114 &1090516531
@@ -27372,7 +27362,7 @@ MonoBehaviour:
   scripts:
   - {fileID: 1090516530}
   - {fileID: 1090516529}
-  camera: {fileID: 781311233}
+  cameraObject: {fileID: 781311233}
 --- !u!54 &1090516532
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -31880,7 +31870,6 @@ MonoBehaviour:
   m_objectToCircle: {fileID: 1241439811}
   m_markerPrefab: {fileID: 100000, guid: 106aba1f0ace6184ab747ea60caff5f2, type: 2}
   m_meterRadius: 1
-  m_meterPoints: 100
   m_swingScript: {fileID: 1241439814}
 --- !u!114 &1241439814
 MonoBehaviour:
@@ -31893,7 +31882,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16e60f2f1c6f89740b3624fed1aeba26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 283481665}
+  cameraObject: {fileID: 283481665}
   cart: {fileID: 1630503482}
   hitMultiplier: 10
 --- !u!114 &1241439815
@@ -31911,7 +31900,7 @@ MonoBehaviour:
   scripts:
   - {fileID: 1241439814}
   - {fileID: 1241439813}
-  camera: {fileID: 283481665}
+  cameraObject: {fileID: 283481665}
 --- !u!54 &1241439816
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -33495,7 +33484,6 @@ MonoBehaviour:
   m_objectToCircle: {fileID: 1282193242}
   m_markerPrefab: {fileID: 100000, guid: 106aba1f0ace6184ab747ea60caff5f2, type: 2}
   m_meterRadius: 1
-  m_meterPoints: 100
   m_swingScript: {fileID: 1282193245}
 --- !u!114 &1282193245
 MonoBehaviour:
@@ -33508,7 +33496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16e60f2f1c6f89740b3624fed1aeba26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 928714047}
+  cameraObject: {fileID: 928714047}
   cart: {fileID: 100820874}
   hitMultiplier: 10
 --- !u!114 &1282193246
@@ -33526,7 +33514,7 @@ MonoBehaviour:
   scripts:
   - {fileID: 1282193245}
   - {fileID: 1282193244}
-  camera: {fileID: 928714047}
+  cameraObject: {fileID: 928714047}
 --- !u!54 &1282193247
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -44084,7 +44072,7 @@ MonoBehaviour:
   - {fileID: 1630503494}
   - {fileID: 1630503488}
   - {fileID: 0}
-  camera: {fileID: 600010885}
+  cameraObject: {fileID: 600010885}
 --- !u!114 &1630503491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44122,7 +44110,6 @@ MonoBehaviour:
   highAccelClip: {fileID: 8300000, guid: 03e3bd08a6e70684dbe299a3e185fdd2, type: 3}
   highDecelClip: {fileID: 8300000, guid: 03bf91d88fce91c41995d27de63cc967, type: 3}
   skidClip: {fileID: 8300000, guid: bd9566abdbf08834281bfb4ea8b92a5d, type: 3}
-  hornClip: {fileID: 8300000, guid: d0d36cf65ec2537458d72390dc539a3a, type: 3}
   pitchMultiplier: 1
   lowPitchMin: 1
   lowPitchMax: 6
@@ -54470,7 +54457,6 @@ MonoBehaviour:
   m_objectToCircle: {fileID: 1887095077}
   m_markerPrefab: {fileID: 100000, guid: 106aba1f0ace6184ab747ea60caff5f2, type: 2}
   m_meterRadius: 1
-  m_meterPoints: 100
   m_swingScript: {fileID: 1887095080}
 --- !u!114 &1887095080
 MonoBehaviour:
@@ -54483,7 +54469,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16e60f2f1c6f89740b3624fed1aeba26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 1479562253}
+  cameraObject: {fileID: 1479562253}
   cart: {fileID: 473915849}
   hitMultiplier: 10
 --- !u!114 &1887095081
@@ -54501,7 +54487,7 @@ MonoBehaviour:
   scripts:
   - {fileID: 1887095080}
   - {fileID: 1887095079}
-  camera: {fileID: 1479562253}
+  cameraObject: {fileID: 1479562253}
 --- !u!54 &1887095082
 Rigidbody:
   m_ObjectHideFlags: 0

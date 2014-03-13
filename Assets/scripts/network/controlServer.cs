@@ -5,7 +5,6 @@ using System.Collections.Generic;
 public class controlServer : MonoBehaviour {
 	networkVariables nvs;
 	PlayerInfo myInfo;
-	netPause pause;
 	Transform cameraParentTransform;
 	GameObject pin;
 	GameObject localBallAnalog;	
@@ -14,9 +13,8 @@ public class controlServer : MonoBehaviour {
 		// get variables we need
 		nvs = GetComponent("networkVariables") as networkVariables;
 		myInfo = nvs.myInfo;
-		pause = GetComponent ("netPause") as netPause;
 		pin = GameObject.Find ("winningPole") as GameObject;
-		(pin.GetComponent ("netWinCollider") as netWinCollider).initialize (); //setup the pin while we have a reference to it.
+		if(pin!=null)(pin.GetComponent ("netWinCollider") as netWinCollider).initialize (); //setup the pin while we have a reference to it.
 
 		localBallAnalog = new GameObject ();
 	}

@@ -41,8 +41,9 @@ public class ControllerSupport : MonoBehaviour
 			}
 		}
 	}
-
+#if !UNITY_EDITOR && (UNITY_IPHONE || UNITY_ANDROID)
 	Vector2 accelerationToSend = Vector2.zero;
+#endif
 	
 	void Update () 
 	{

@@ -5,7 +5,7 @@ using System.Collections;
 
 public abstract class SwingBehaviour : MonoBehaviour
 {
-	public GameObject camera, cart;
+	public GameObject cameraObject, cart;
 	public int hitMultiplier = 10;
 	public const int k_maxShotPower = 500;
 	public const int k_maxArcAngle = 80;
@@ -85,9 +85,9 @@ public class InControlSwingMode : SwingBehaviour
 			
 			// Crappy camera script taken from the original movement.cs. Makes rotation around the ball possible.
 			Vector3 newPos = transform.position + transform.localRotation * cameraPos;
-			float lerper = Mathf.Min ((camera.transform.position - newPos).sqrMagnitude / 100, 1);
-			camera.transform.position = (1 - lerper) * camera.transform.position + lerper * newPos;
-			camera.transform.rotation = Quaternion.Lerp (camera.transform.rotation, Quaternion.LookRotation (transform.position - camera.transform.position), lerper);
+			float lerper = Mathf.Min ((cameraObject.transform.position - newPos).sqrMagnitude / 100, 1);
+			cameraObject.transform.position = (1 - lerper) * cameraObject.transform.position + lerper * newPos;
+			cameraObject.transform.rotation = Quaternion.Lerp (cameraObject.transform.rotation, Quaternion.LookRotation (transform.position - cameraObject.transform.position), lerper);
 			
 			// if we are in the air, we don't want player to hit again. Somewhat obsolete now that control returns to car when swung.
 			if (flying) 
@@ -131,9 +131,9 @@ public class InControlSwingMode : SwingBehaviour
 
 			// Crappy camera script taken from the original movement.cs. Makes rotation around the ball possible.
 			Vector3 newPos = transform.position + transform.localRotation * cameraPos;
-			float lerper = Mathf.Min ((camera.transform.position - newPos).sqrMagnitude / 100, 1);
-			camera.transform.position = (1 - lerper) * camera.transform.position + lerper * newPos;
-			camera.transform.rotation = Quaternion.Lerp (camera.transform.rotation, Quaternion.LookRotation (transform.position - camera.transform.position), lerper);
+			float lerper = Mathf.Min ((cameraObject.transform.position - newPos).sqrMagnitude / 100, 1);
+			cameraObject.transform.position = (1 - lerper) * cameraObject.transform.position + lerper * newPos;
+			cameraObject.transform.rotation = Quaternion.Lerp (cameraObject.transform.rotation, Quaternion.LookRotation (transform.position - cameraObject.transform.position), lerper);
 
 			shotPower += inputDevice.Direction.y * hitMultiplier;
 			shotPower += inputDevice.RightStickY * hitMultiplier;
@@ -190,9 +190,9 @@ public class InControlSwingMode : SwingBehaviour
 			
 			// Crappy camera script taken from the original movement.cs. Makes rotation around the ball possible.
 			Vector3 newPos = transform.position + transform.localRotation * cameraPos;
-			float lerper = Mathf.Min ((camera.transform.position - newPos).sqrMagnitude / 100, 1);
-			camera.transform.position = (1 - lerper) * camera.transform.position + lerper * newPos;
-			camera.transform.rotation = Quaternion.Lerp (camera.transform.rotation, Quaternion.LookRotation (transform.position - camera.transform.position), lerper);
+			float lerper = Mathf.Min ((cameraObject.transform.position - newPos).sqrMagnitude / 100, 1);
+			cameraObject.transform.position = (1 - lerper) * cameraObject.transform.position + lerper * newPos;
+			cameraObject.transform.rotation = Quaternion.Lerp (cameraObject.transform.rotation, Quaternion.LookRotation (transform.position - cameraObject.transform.position), lerper);
 			
 			shotPower += direction.y * hitMultiplier;
 			
