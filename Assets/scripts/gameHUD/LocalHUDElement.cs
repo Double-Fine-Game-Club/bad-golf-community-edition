@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -10,6 +10,8 @@ public class LocalHUDElement : MonoBehaviour
     public List<PlayerInfo> m_players; //we don't want this list to include the player himself, so we'll have to account for that
 
     public bool m_initialized;
+
+    public LayerMask m_playerLayer;
 
     public void Update()
     {
@@ -66,16 +68,16 @@ public class LocalHUDElement : MonoBehaviour
         //get info from all players
         m_players = new List<PlayerInfo>();
 
-        //we don't want to use foreachs, for collection iteration errors on disconnect scenarios
         for (int i = 0; i < playerGameObjects.Count; i++) {
             PlayerInfo info = new PlayerInfo();
-            info.ballGameObject = this.transform.FindChild("hit_mode_ball").gameObject;
-            info.cartGameObject = this.transform.FindChild("buggy").gameObject;
+            info.ballGameObject = playerGameObjects[i].transform.FindChild("hit_mode_ball").gameObject;
+            info.cartGameObject = playerGameObjects[i].transform.FindChild("buggy").gameObject;
             if (info != null) {
                 m_players.Add(info);
             }
         }
 
+        m_playerLayer = this.transform.gameObject.layer;
         m_initialized = true;
     }
 

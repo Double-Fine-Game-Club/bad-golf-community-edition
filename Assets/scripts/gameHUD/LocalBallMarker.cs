@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -39,6 +39,8 @@ public class LocalBallMarker : LocalHUDElement
 
         m_myBall = m_myPlayerInfo.ballGameObject;
         m_myBallMarker = GameObject.Instantiate(Resources.Load("ballMarkerPrefab")) as GameObject;
+        m_myBallMarker.layer = m_playerLayer;
+        m_myBallMarker.transform.FindChild("Cube").gameObject.layer = m_playerLayer;
 
         Vector3 startingPos = m_myPlayerInfo.ballGameObject.transform.position;
         startingPos.y += k_heightOffsetFromBall; //needs to be high enough to prevent weird collision issues with ball
@@ -58,6 +60,8 @@ public class LocalBallMarker : LocalHUDElement
                     Vector3 thisBallMarkerPos = playerBall.transform.position;
                     thisBallMarkerPos.y += k_heightOffsetFromBall;
                     GameObject thisBallMarker = GameObject.Instantiate(Resources.Load("enemyBallMarkerPrefab")) as GameObject;
+                    thisBallMarker.layer = m_playerLayer;
+                    thisBallMarker.transform.FindChild("Cube").gameObject.layer = m_playerLayer;
                     thisBallMarker.transform.position = thisBallMarkerPos;
 
                     m_enemyBallMarkers.Add(player, thisBallMarker);

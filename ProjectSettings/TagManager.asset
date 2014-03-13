@@ -22,10 +22,10 @@ TagManager:
   User Layer 10: UI_ONLY
   User Layer 11: localmulti_players
   User Layer 12: hide_on_swing
-  User Layer 13: 
-  User Layer 14: 
-  User Layer 15: 
-  User Layer 16: 
+  User Layer 13: localmulti_player1
+  User Layer 14: localmulti_player2
+  User Layer 15: localmulti_player3
+  User Layer 16: localmulti_player4
   User Layer 17: 
   User Layer 18: 
   User Layer 19: 
