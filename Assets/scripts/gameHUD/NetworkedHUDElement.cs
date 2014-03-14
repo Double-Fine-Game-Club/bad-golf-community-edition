@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -12,7 +12,7 @@ public class NetworkedHUDElement : MonoBehaviour {
     public bool m_initialized;
 
     //thanks for being dumb, Unity - apparently overriding Start/Update isn't quite allowed
-    public bool virtualUpdate()
+    public virtual bool virtualUpdate()
     {
         if (!m_initialized) {
             AttemptInitialize();
