@@ -56,24 +56,29 @@ public class SliderObject : MonoBehaviour
 	{
 		if (isDragging)
 		{
-			Vector3 point =	uiCamera.ScreenToWorldPoint( new Vector3( Input.mousePosition.x, Input.mousePosition.y, targetSliderObject.transform.position.z));
-			
-			if ( sliderDirection == 0)
-			{
-				targetSliderObject.transform.position = new Vector3( Mathf.Clamp( point.x, sliderMoveArea.bounds.center.x - sliderMoveArea.bounds.extents.x, sliderMoveArea.bounds.center.x + sliderMoveArea.bounds.extents.x),
-																	 targetSliderObject.transform.position.y, targetSliderObject.transform.position.z);
-			}
-			else 
-			{
-				targetSliderObject.transform.position = new Vector3( targetSliderObject.transform.position.x,
-				                                                     Mathf.Clamp( point.y, sliderMoveArea.bounds.center.y - sliderMoveArea.bounds.extents.y, sliderMoveArea.bounds.center.y + sliderMoveArea.bounds.extents.y), 
-																	 targetSliderObject.transform.position.z);
-			}
-
-			calculateCurrentVal();
-			updateNumericText();
-			sendValueChangeMessage();
+			moveSliderUsingMousePosition();
 		}
+	}
+
+	void moveSliderUsingMousePosition()
+	{
+		Vector3 point =	uiCamera.ScreenToWorldPoint( new Vector3( Input.mousePosition.x, Input.mousePosition.y, targetSliderObject.transform.position.z));
+		
+		if ( sliderDirection == 0)
+		{
+			targetSliderObject.transform.position = new Vector3( Mathf.Clamp( point.x, sliderMoveArea.bounds.center.x - sliderMoveArea.bounds.extents.x, sliderMoveArea.bounds.center.x + sliderMoveArea.bounds.extents.x),
+			                                                    targetSliderObject.transform.position.y, targetSliderObject.transform.position.z);
+		}
+		else 
+		{
+			targetSliderObject.transform.position = new Vector3( targetSliderObject.transform.position.x,
+			                                                    Mathf.Clamp( point.y, sliderMoveArea.bounds.center.y - sliderMoveArea.bounds.extents.y, sliderMoveArea.bounds.center.y + sliderMoveArea.bounds.extents.y), 
+			                                                    targetSliderObject.transform.position.z);
+		}
+
+		calculateCurrentVal();
+		updateNumericText();
+		sendValueChangeMessage();
 	}
 
 	void updateNumericText()
@@ -81,6 +86,8 @@ public class SliderObject : MonoBehaviour
 		if ( numericDisplay != null )
 		{
 			numericDisplay.text = (sliderValue * 100).ToString( "##") + "%";
+			if ( numericDisplay.text == "%")
+				numericDisplay.text = "0%";
 		}
 	}
 
@@ -131,5 +138,10 @@ public class SliderObject : MonoBehaviour
 			}
 			prevSliderValue = sliderValue;
 		}
+	}
+
+	void onBarAreaClicked ()
+	{
+		moveSliderUsingMousePosition();
 	}
 }

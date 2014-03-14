@@ -11,6 +11,7 @@ public class HoverableSpriteTint : MonoBehaviour
 	public AudioClip hoverAudio;
 
 	public bool disabled = false;
+	public bool isDragging = false;
 
 	void Start()
 	{
@@ -31,7 +32,7 @@ public class HoverableSpriteTint : MonoBehaviour
 
 	void OnMouseEnter()
 	{
-		if ( !disabled && hoverAudio != null )
+		if ( !disabled && hoverAudio != null && isDragging == false )
 		{
 			SoundManager.Get().playSfx( hoverAudio);
 		}
@@ -54,4 +55,14 @@ public class HoverableSpriteTint : MonoBehaviour
 		disabled = false;
 		targetSprite.color = colorNormal;
 	}
+
+	void OnMouseDown()
+	{
+		isDragging = true;
+	}
+	
+	void OnMouseUp()
+	{
+		isDragging = false;		
+	}	
 }

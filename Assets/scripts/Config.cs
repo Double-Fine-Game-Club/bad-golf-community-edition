@@ -7,8 +7,8 @@ using ConfigReader = System.Xml.XmlDocument;
 
 public class Config : MonoBehaviour 
 {
-	private string configFileName = "config";
-	private string fileExtension = ".xml";
+	private const string configFileName = "config";
+	private const string fileExtension = ".xml";
 	
 	static private string result;
 	static private ConfigReader xmlResult;
@@ -19,13 +19,13 @@ public class Config : MonoBehaviour
 
 	void Start () 
 	{
-		if ( loaded)
-			return;
-
-		StartCoroutine(retrieveFromPath( Application.persistentDataPath));
+		if ( loaded ) 
+			cfgLoadOptions();
+		else 
+			StartCoroutine(retrieveFileFromPath( Application.persistentDataPath));
 	}
 
-	private IEnumerator retrieveFromPath( string basePath)
+	private IEnumerator retrieveFileFromPath( string basePath)
 	{ 
 		string filePath = System.IO.Path.Combine(basePath, configFileName + fileExtension);
 		result = "";
