@@ -46,14 +46,29 @@ public class netTransferToSwing : MonoBehaviour {
 			//temp.SetColor("_ColorTint", originalColor);
 			//ball.renderer.sharedMaterial = temp;
 		}
-		if (!myInfo.playerIsPaused && Input.GetKeyUp (KeyCode.E) ) 
+		if (!myInfo.playerIsPaused && inHittingRange) 
 		{
-			if (inHittingRange) 
-			{
-				//But character at the golf ball
-				gameObject.SendMessage("switchToBall");
-				showGUI=false;
-				this.enabled=false;
+			bool attemptGolfActionPressed = Input.GetKeyUp (KeyCode.E);
+			#if !UNITY_EDITOR && (UNITY_IPHONE || UNITY_ANDROID)
+				if (Input.touchCount > 0)
+				{
+					for (int c = 0; c < Input.touchCount; c++) 
+					{
+						if (Input.GetTouch(c).phase == TouchPhase.Ended) 
+						{
+						attemptGolfActionPressed = true;
+							break;
+						}
+					}
+				}
+			#endif
+
+			if ( attemptGolfActionPressed )
+			{ 
+					//But character at the golf ball
+					gameObject.SendMessage("switchToBall");
+					showGUI=false;
+					this.enabled=false;
 			}
 		}
 	}

@@ -50,8 +50,13 @@ public class controlServer : MonoBehaviour {
 		// if in buggy then update what they be pressing
 		if (!myInfo.playerIsPaused && myInfo.currentMode==0) {
 			// add own fiziks
-			myInfo.h = Input.GetAxis("Horizontal");
-			myInfo.v = Input.GetAxis("Vertical");
+			#if !UNITY_EDITOR && (UNITY_IPHONE || UNITY_ANDROID)
+				myInfo.h = Input.acceleration.x;
+				myInfo.v = Input.acceleration.y + .5f;
+			#else
+				myInfo.h = Input.GetAxis("Horizontal");
+				myInfo.v = Input.GetAxis("Vertical");
+			#endif
 
 		} else {
 			// paused so don't move
