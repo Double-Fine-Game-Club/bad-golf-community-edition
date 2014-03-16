@@ -28,8 +28,15 @@ public class controlClient : MonoBehaviour {
 				timer += Time.deltaTime;
 				if (timer > 0.015) {
 					timer = 0;
-					float h = Input.GetAxis("Horizontal");
-					float v = Input.GetAxis("Vertical");
+					float h;
+					float v;
+					#if !UNITY_EDITOR && (UNITY_IPHONE || UNITY_ANDROID)
+						h = Input.acceleration.x;
+						v = Input.acceleration.y + .5f;
+					#else
+						h = Input.GetAxis("Horizontal");
+						v = Input.GetAxis("Vertical");
+					#endif
 					networkView.RPC("KartMovement", RPCMode.Server, h,v);
 				}
 				// HONK

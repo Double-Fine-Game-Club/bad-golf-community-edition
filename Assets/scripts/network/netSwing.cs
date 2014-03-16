@@ -50,21 +50,39 @@ public class netSwing : SwingBehaviour {
 
 		// This is where the swing happens.
 		if ( myInfo.currentMode==1 && 		//At ball
-		    !myInfo.playerIsPaused && 		//Not paused
-		    Input.GetKeyUp(KeyCode.Space)) 	//Hit ball key
+		    !myInfo.playerIsPaused  		//Not paused
+		    )
 		{
-			isSwinging=true;
-			if (shotPower > k_maxShotPower)
-				shotPower = k_maxShotPower;
+			bool attemptSwingActionPressed = Input.GetKeyUp(KeyCode.Space); 	//Hit ball key
+			#if !UNITY_EDITOR && (UNITY_IPHONE || UNITY_ANDROID)
+			if (Input.touchCount > 0)
+			{
+				for (int c = 0; c < Input.touchCount; c++) 
+				{
+					if (Input.GetTouch(c).phase == TouchPhase.Ended) 
+					{
+						attemptSwingActionPressed = true;
+						break;
+					}
+				}
+			}
+			#endif
+			
+			if ( attemptSwingActionPressed )
+			{
 
-			networkView.RPC("GolfSwing", RPCMode.All, shotPower, shotAngle, myInfo.player, myInfo.characterGameObject.transform.parent.rotation.eulerAngles.y);
-			shotPower = 0;	
-			meter.HideArc();
-			meter.enabled=false;
-
-			showGui=false;
-			//This doesn't disable here because the RPC handlers are needed :/
-
+				isSwinging=true;
+				if (shotPower > k_maxShotPower)
+					shotPower = k_maxShotPower;
+	
+				networkView.RPC("GolfSwing", RPCMode.All, shotPower, shotAngle, myInfo.player, myInfo.characterGameObject.transform.parent.rotation.eulerAngles.y);
+				shotPower = 0;	
+				meter.HideArc();
+				//meter.enabled=false; //parent is hidden no reason to hide child
+	
+				showGui=false;
+				//This doesn't disable here because the RPC handlers are needed :/
+			}
 		}else if ( myInfo.currentMode==1 && 		//At ball
 		     !myInfo.playerIsPaused && 		//Not paused
 		     Input.GetKeyUp(KeyCode.E)) 	//Hit ball key
@@ -72,7 +90,7 @@ public class netSwing : SwingBehaviour {
 			//Leave without swinging
 			shotPower = 0;	
 			meter.HideArc();
-			meter.enabled=false;
+			//meter.enabled=false; //parent is hidden no reason to hide child
 			
 			//Switch back to cart
 			gameObject.SendMessage("switchToCart");
@@ -100,9 +118,13 @@ public class netSwing : SwingBehaviour {
 				0);
 			return;
 		}
-
 		float powerInput = Input.GetAxis("Vertical");
 		float rotationInput = Input.GetAxis ("Horizontal");
+		#if !UNITY_EDITOR && (UNITY_IPHONE || UNITY_ANDROID)
+			powerInput = Input.acceleration.y + .5f;
+			rotationInput = Input.acceleration.x; 
+		#endif
+
 		//GameObject rotationObject = myInfo.ballGameObject;
 		GameObject rotationObject = myInfo.characterGameObject.transform.parent.gameObject;	//hack_answers
 
