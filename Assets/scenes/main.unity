@@ -505,6 +505,7 @@ MonoBehaviour:
   colorDisabled: {r: .5, g: .5, b: .5, a: 1}
   hoverAudio: {fileID: 8300000, guid: d443c7900e7e5da478402b367a06d58a, type: 3}
   disabled: 0
+  isDragging: 0
 --- !u!114 &27095768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -741,6 +742,7 @@ MonoBehaviour:
   colorDisabled: {r: .5, g: .5, b: .5, a: 1}
   hoverAudio: {fileID: 8300000, guid: d443c7900e7e5da478402b367a06d58a, type: 3}
   disabled: 0
+  isDragging: 0
 --- !u!65 &34749370
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -751,8 +753,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: .189999998, y: .360000014, z: 1}
-  m_Center: {x: -9.53674316e-07, y: 0, z: 1.1920929e-07}
+  m_Size: {x: .400000006, y: .400000006, z: .200000003}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &37597772
 GameObject:
   m_ObjectHideFlags: 0
@@ -1507,6 +1509,7 @@ MonoBehaviour:
   colorDisabled: {r: .5, g: .5, b: .5, a: 1}
   hoverAudio: {fileID: 8300000, guid: d443c7900e7e5da478402b367a06d58a, type: 3}
   disabled: 0
+  isDragging: 0
 --- !u!114 &88028871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1524,6 +1527,7 @@ MonoBehaviour:
   colorDisabled: {r: .5, g: .5, b: .5, a: 1}
   hoverAudio: {fileID: 0}
   disabled: 0
+  isDragging: 0
 --- !u!65 &88028872
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2286,8 +2290,9 @@ GameObject:
   - 4: {fileID: 161505587}
   - 212: {fileID: 161505588}
   - 65: {fileID: 161505589}
+  - 114: {fileID: 161505590}
   m_Layer: 8
-  m_Name: btn_blue_small
+  m_Name: slider_bg_slide_area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2337,8 +2342,23 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 4, y: .25, z: 1}
-  m_Center: {x: -1.49011612e-08, y: 0, z: 0}
+  m_Size: {x: 4.01999998, y: .140000001, z: .200000003}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &161505590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 161505586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4098d23184bdada4d9ea10a6557a67f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  messageTarget: {fileID: 418333880}
+  messageName: onBarAreaClicked
+  clickAudio: {fileID: 8300000, guid: d2fee02bd0ce9e94d907f5452654eb91, type: 3}
+  messageValue: 
 --- !u!1 &164152827
 GameObject:
   m_ObjectHideFlags: 0
@@ -2461,7 +2481,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 168204655}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.916806281, y: -.475363612, z: -.705413997}
+  m_LocalPosition: {x: -1.1218878, y: -.475363612, z: -.705413997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1772689152}
@@ -2706,6 +2726,7 @@ MonoBehaviour:
   colorDisabled: {r: .5, g: .5, b: .5, a: 1}
   hoverAudio: {fileID: 8300000, guid: d443c7900e7e5da478402b367a06d58a, type: 3}
   disabled: 0
+  isDragging: 0
 --- !u!65 &180892524
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3953,7 +3974,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 307772546}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.89983582, y: -3.11330032, z: -1.37936795}
+  m_LocalPosition: {x: 3.35063004, y: -3.11032009, z: -1.37936795}
   m_LocalScale: {x: .154939994, y: .154939994, z: .154939994}
   m_Children: []
   m_Father: {fileID: 1968385775}
@@ -4178,7 +4199,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 325158352}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.916805863, y: .0333766937, z: -.705413818}
+  m_LocalPosition: {x: -1.12188733, y: .0333767533, z: -.705413818}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 161505587}
@@ -4879,7 +4900,7 @@ GameObject:
   - 114: {fileID: 418333883}
   - 65: {fileID: 418333885}
   m_Layer: 8
-  m_Name: btn_gray_small
+  m_Name: sliderActionButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4937,6 +4958,7 @@ MonoBehaviour:
   colorDisabled: {r: .5, g: .5, b: .5, a: 1}
   hoverAudio: {fileID: 8300000, guid: d443c7900e7e5da478402b367a06d58a, type: 3}
   disabled: 0
+  isDragging: 0
 --- !u!114 &418333884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4970,8 +4992,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.21000004, y: .400000006, z: 1}
-  m_Center: {x: -9.53674316e-07, y: 0, z: 0}
+  m_Size: {x: .400000006, y: .400000006, z: .200000003}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &418954908
 GameObject:
   m_ObjectHideFlags: 0
@@ -7672,7 +7694,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 673157143}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.6491518, y: -.416337967, z: -1.37936795}
+  m_LocalPosition: {x: -1.75738919, y: -.416337967, z: -1.37936795}
   m_LocalScale: {x: .0719610006, y: .0719610006, z: .0719610006}
   m_Children:
   - {fileID: 145846881}
@@ -8663,6 +8685,7 @@ MonoBehaviour:
   colorDisabled: {r: .5, g: .5, b: .5, a: 1}
   hoverAudio: {fileID: 8300000, guid: d443c7900e7e5da478402b367a06d58a, type: 3}
   disabled: 0
+  isDragging: 0
 --- !u!65 &729890571
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9581,6 +9604,7 @@ MonoBehaviour:
   colorDisabled: {r: .5, g: .5, b: .5, a: 1}
   hoverAudio: {fileID: 8300000, guid: d443c7900e7e5da478402b367a06d58a, type: 3}
   disabled: 0
+  isDragging: 0
 --- !u!114 &806668561
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9598,6 +9622,7 @@ MonoBehaviour:
   colorDisabled: {r: .5, g: .5, b: .5, a: 1}
   hoverAudio: {fileID: 0}
   disabled: 0
+  isDragging: 0
 --- !u!65 &806668562
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9728,7 +9753,7 @@ GameObject:
   - 4: {fileID: 813064679}
   - 212: {fileID: 813064680}
   m_Layer: 8
-  m_Name: btn_red_small
+  m_Name: slideFill_Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10160,7 +10185,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 861353886}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.67821527, y: .071387291, z: -1.37936795}
+  m_LocalPosition: {x: -1.78645265, y: .0713873506, z: -1.37936795}
   m_LocalScale: {x: .0719610006, y: .0719610006, z: .0719610006}
   m_Children:
   - {fileID: 1108537483}
@@ -11581,7 +11606,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 965729455}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.00821018033, y: .991789818, z: 0}
+  m_LocalPosition: {x: -.00593031896, y: .994068801, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 806668558}
@@ -15049,6 +15074,7 @@ MonoBehaviour:
   colorDisabled: {r: .5, g: .5, b: .5, a: 1}
   hoverAudio: {fileID: 8300000, guid: d443c7900e7e5da478402b367a06d58a, type: 3}
   disabled: 0
+  isDragging: 0
 --- !u!65 &1321912492
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15560,6 +15586,7 @@ MonoBehaviour:
   colorDisabled: {r: .5, g: .5, b: .5, a: 1}
   hoverAudio: {fileID: 8300000, guid: d443c7900e7e5da478402b367a06d58a, type: 3}
   disabled: 0
+  isDragging: 0
 --- !u!65 &1362492048
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17419,7 +17446,7 @@ GameObject:
   - 4: {fileID: 1457102025}
   - 114: {fileID: 1457102026}
   m_Layer: 8
-  m_Name: slideParent
+  m_Name: slideFillParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17949,6 +17976,7 @@ MonoBehaviour:
   colorDisabled: {r: .5, g: .5, b: .5, a: 1}
   hoverAudio: {fileID: 8300000, guid: d443c7900e7e5da478402b367a06d58a, type: 3}
   disabled: 0
+  isDragging: 0
 --- !u!65 &1490980688
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18718,6 +18746,7 @@ MonoBehaviour:
   colorDisabled: {r: .5, g: .5, b: .5, a: 1}
   hoverAudio: {fileID: 8300000, guid: d443c7900e7e5da478402b367a06d58a, type: 3}
   disabled: 0
+  isDragging: 0
 --- !u!65 &1572863297
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20475,6 +20504,7 @@ GameObject:
   - 4: {fileID: 1772689152}
   - 212: {fileID: 1772689153}
   - 65: {fileID: 1772689154}
+  - 114: {fileID: 1772689155}
   m_Layer: 8
   m_Name: btn_blue_small
   m_TagString: Untagged
@@ -20526,8 +20556,23 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 4, y: .25, z: .200000003}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 4.01999998, y: .140000001, z: .200000003}
+  m_Center: {x: -5.96046448e-08, y: 0, z: 0}
+--- !u!114 &1772689155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1772689151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4098d23184bdada4d9ea10a6557a67f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  messageTarget: {fileID: 34749365}
+  messageName: onBarAreaClicked
+  clickAudio: {fileID: 8300000, guid: d2fee02bd0ce9e94d907f5452654eb91, type: 3}
+  messageValue: 
 --- !u!1 &1777557415
 GameObject:
   m_ObjectHideFlags: 0
@@ -20652,7 +20697,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1788822114}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.00821018033, y: -.403940916, z: -.699754}
+  m_LocalPosition: {x: -.00593031896, y: -.405693889, z: -.699754}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 692611407}
@@ -24389,6 +24434,7 @@ MonoBehaviour:
   colorDisabled: {r: .5, g: .5, b: .5, a: 1}
   hoverAudio: {fileID: 8300000, guid: d443c7900e7e5da478402b367a06d58a, type: 3}
   disabled: 0
+  isDragging: 0
 --- !u!65 &2048742107
 BoxCollider:
   m_ObjectHideFlags: 0
