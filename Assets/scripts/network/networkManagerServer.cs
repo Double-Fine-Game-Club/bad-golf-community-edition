@@ -8,6 +8,7 @@ public class networkManagerServer : MonoBehaviour {
 	PlayerInfo myInfo;
 	string serverVersion;
 	bool gameHasBegun;
+	ServerComment serverComment;
 	
 	/****************************************************
 	 * 
@@ -29,12 +30,16 @@ public class networkManagerServer : MonoBehaviour {
 		serverVersion = nvs.serverVersion;	// maybe set the server version to the map name?
 		// get server name
 		string serverName = nvs.serverName + ": Lobby";
-		string serverComment = "Add stuff like spectators here maybe?";
+		// serverComment also holds extra info about the server
+		serverComment = new ServerComment();
+		serverComment.NATmode = nvs.NATmode;
+		serverComment.comment = "This is a comment about the server";
 		
-		// Use NAT punchthrough if no public IP present
-		Network.InitializeServer(31, 11177, !Network.HavePublicAddress());
-		MasterServer.updateRate = 5;
-		MasterServer.RegisterHost(serverVersion, serverName, serverComment);
+		// Use NAT punchthrough if NATmode says to
+		Network.InitializeServer(31, 11177, nvs.NATmode!=0);
+		Debug.Log(serverComment.toString());
+		//MasterServer.updateRate = 5; - not needed anymore since Unity doesn't understand networking
+		MasterServer.RegisterHost(serverVersion, serverName, serverComment.toString());
 
 		// get game state
 		gameHasBegun = nvs.gameHasBegun;
@@ -267,8 +272,8 @@ public class networkManagerServer : MonoBehaviour {
 		*/
 
 		string serverName = nvs.serverName + ": Game started";
-		string serverComment = "Add stuff like spectators here maybe?";
-		MasterServer.RegisterHost(serverVersion, serverName, serverComment);
+		serverComment.comment = "Add stuff like spectators here maybe?";
+		MasterServer.RegisterHost(serverVersion, serverName, serverComment.toString());
 
 		// tell everyone what their choices were
 		foreach (PlayerInfo p in nvs.players)

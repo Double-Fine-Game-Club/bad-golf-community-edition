@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+// general variables
 public class networkVariables : MonoBehaviour {
 	[HideInInspector]
 	public string[] buggyModels = new string[2] {"buggy_m", "hotrod_m"};		// buggy models
@@ -32,14 +33,16 @@ public class networkVariables : MonoBehaviour {
 	[HideInInspector]
 	public PlayerInfo myInfo = new PlayerInfo();	// stores info on the current player
 	[HideInInspector]
-	public string serverVersion = "sandvich6";		// server version
+	public string serverVersion = "swisscheese";	// server version - next one is Swisshelm
 	[HideInInspector]
 	public string serverName = "";					// server name
 	[HideInInspector]
 	public ArrayList players = new ArrayList();		// list of players
+	[HideInInspector]
+	public int NATmode = -1;						// which NAT version we have for server comparison
 }
 
-
+// a class that contains all information on a player
 public class PlayerInfo {
 	public NetworkPlayer player;				// player
 	public NetworkPlayer server;				// server
@@ -63,4 +66,26 @@ public class PlayerInfo {
 	
 	public float v;		//player accelleration/brake input
 	public float h;		//player steering input
+}
+
+// server comment system
+public class ServerComment {
+	public int NATmode;
+	public string comment;
+	
+	public string toString() {
+		string tmp = "";
+		tmp = tmp + NATmode.ToString() + ";";
+		tmp = tmp + comment + ";";
+		return tmp;
+	}
+	public ServerComment(string str) {
+		string[] tmp = str.Split(new string[]{";"},System.StringSplitOptions.None);
+		NATmode = int.Parse(tmp[0]);
+		comment = tmp[1];
+	}
+	public ServerComment() {
+		NATmode = 0;
+		comment = "";
+	}
 }
