@@ -7,7 +7,7 @@ public class LocalBallMarker : BallMarker
     public GameObject m_splitView;
     public LayerMask m_playerLayer;
 
-    public void Update()
+    new public void Update()
     {
         if (!virtualUpdate()) return;
 
