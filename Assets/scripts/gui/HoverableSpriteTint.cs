@@ -13,15 +13,38 @@ public class HoverableSpriteTint : MonoBehaviour
 	public bool disabled = false;
 	public bool isDragging = false;
 
+	private bool isForcedHover = false;
+
 	void Start()
 	{
-		targetSprite.color = colorNormal;
+		if ( isForcedHover)
+		{
+			targetSprite.color = colorHover;
+		}
+		else if ( disabled )
+		{
+			targetSprite.color = colorDisabled;
+		}
+		else
+		{
+			targetSprite.color = colorNormal;
+		}
 	}
 
 	void OnEnable()
 	{
-		if ( !disabled)
+		if ( isForcedHover)
+		{
+			targetSprite.color = colorHover;
+		}
+		else if ( disabled )
+		{
+			targetSprite.color = colorDisabled;
+		}
+		else
+		{
 			targetSprite.color = colorNormal;
+		}
 	}
 	
 	void OnMouseOver()
@@ -32,7 +55,7 @@ public class HoverableSpriteTint : MonoBehaviour
 
 	void OnMouseEnter()
 	{
-		if ( !disabled && hoverAudio != null && isDragging == false )
+		if ( !isForcedHover && !disabled && hoverAudio != null && isDragging == false )
 		{
 			SoundManager.Get().playSfx( hoverAudio);
 		}
@@ -40,7 +63,7 @@ public class HoverableSpriteTint : MonoBehaviour
 
 	void OnMouseExit()
 	{
-		if ( !disabled)
+		if ( !isForcedHover && !disabled)
 			targetSprite.color = colorNormal;
 	}
 
@@ -53,7 +76,14 @@ public class HoverableSpriteTint : MonoBehaviour
 	public void enableButton()
 	{
 		disabled = false;
-		targetSprite.color = colorNormal;
+		if ( isForcedHover)
+		{
+			targetSprite.color = colorHover;
+		}
+		else
+		{
+			targetSprite.color = colorNormal;
+		}
 	}
 
 	void OnMouseDown()
@@ -65,4 +95,16 @@ public class HoverableSpriteTint : MonoBehaviour
 	{
 		isDragging = false;		
 	}	
+
+	void removeForcedHover()
+	{
+		isForcedHover = false;
+		targetSprite.color = colorNormal;
+	}
+	
+	void forceHover()
+	{
+		targetSprite.color = colorHover;
+		isForcedHover = true;
+	}
 }

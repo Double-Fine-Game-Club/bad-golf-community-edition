@@ -14,9 +14,23 @@ public class SwitchableTexture : MonoBehaviour
 
 	public GameObject messageTarget;
 	public string messageName;
+
+	public GameObject hoverObject;
+
+	private bool isForcedHover = false;
 	
 	void Start()
 	{
+		hoverObject.SetActive(false);
+		showIndex();
+	}
+
+
+	void OnEnable()
+	{	
+		if (!isForcedHover)
+			hoverObject.SetActive(false);
+		
 		showIndex();
 	}
 	
@@ -71,5 +85,32 @@ public class SwitchableTexture : MonoBehaviour
 	{
 		index = newIndex;
 		showIndex( false );
+	}
+
+/// hover stuff below
+
+	void OnMouseOver()
+	{
+		hoverObject.SetActive(true);
+	}
+		
+	void OnMouseExit()
+	{
+		if ( !isForcedHover )
+		{
+			hoverObject.SetActive(false);
+		}
+	}
+	
+	void removeForcedHover()
+	{
+		isForcedHover = false;
+		hoverObject.SetActive(false);
+	}
+	
+	void forceHover()
+	{
+		hoverObject.SetActive(true);
+		isForcedHover = true;
 	}
 }

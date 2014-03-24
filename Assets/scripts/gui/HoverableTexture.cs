@@ -7,22 +7,35 @@ public class HoverableTexture : MonoBehaviour
 	public GameObject hover;
 
 	public AudioClip hoverAudio;
+
+	private bool isForcedHover = false;
 	
 	void OnEnable()
 	{
-		normal.SetActive(true);
-		hover.SetActive(false);
+		if ( isForcedHover)
+		{
+			hover.SetActive(true);
+			normal.SetActive(false);
+		}
+		else
+		{
+			normal.SetActive(true);
+			hover.SetActive(false);
+		}
 	}
 
 	void OnMouseOver()
 	{
-		normal.SetActive(false);
-		hover.SetActive(true);
+		if ( !isForcedHover)
+		{
+			normal.SetActive(false);
+			hover.SetActive(true);
+		}
 	}
 
 	void OnMouseEnter()
 	{
-		if ( hoverAudio != null )
+		if ( !isForcedHover && hoverAudio != null )
 		{
 			SoundManager.Get().playSfx( hoverAudio);
 		}
@@ -30,7 +43,24 @@ public class HoverableTexture : MonoBehaviour
 	
 	void OnMouseExit()
 	{
+		if ( !isForcedHover )
+		{
+			normal.SetActive(true);
+			hover.SetActive(false);
+		}
+	}
+
+	void removeForcedHover()
+	{
+		isForcedHover = false;
 		normal.SetActive(true);
 		hover.SetActive(false);
+	}
+		
+	void forceHover()
+	{
+		hover.SetActive(true);
+		normal.SetActive(false);
+		isForcedHover = true;
 	}
 }
