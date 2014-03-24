@@ -446,8 +446,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1316b11755235c4296b41f6c3d29a88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myCam: {fileID: 942947985}
-  lowestHeight: -50
   buggyModels:
   - buggy_m
   - hotrod_m
@@ -464,9 +462,14 @@ MonoBehaviour:
   characteryModelNames:
   - Patrick
   - Brad
+  myCam: {fileID: 942947985}
+  lowestHeight: -50
+  playerHasWon: 0
+  winningPlayer: 
   gameHasBegun: 0
-  serverVersion: sandvich5
+  serverVersion: swisscheese
   serverName: 
+  NATmode: -1
 --- !u!114 &198239881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -492,6 +495,8 @@ MonoBehaviour:
   m_nvs: {fileID: 0}
   m_myCamera: {fileID: 0}
   m_initialized: 0
+  m_myBall: {fileID: 0}
+  m_myBallMarker: {fileID: 0}
 --- !u!148 &198239883
 NetworkView:
   m_ObjectHideFlags: 0
@@ -1595,7 +1600,7 @@ MonoBehaviour:
   - {fileID: 388057050}
   - {fileID: 388057055}
   - {fileID: 0}
-  camera: {fileID: 1436162093}
+  cameraObject: {fileID: 0}
 --- !u!1 &392334962
 GameObject:
   m_ObjectHideFlags: 0
@@ -2071,7 +2076,7 @@ MonoBehaviour:
   scripts:
   - {fileID: 489195832}
   - {fileID: 489195838}
-  camera: {fileID: 1491978673}
+  cameraObject: {fileID: 0}
 --- !u!114 &489195832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2083,7 +2088,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16e60f2f1c6f89740b3624fed1aeba26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 1491978673}
+  cameraObject: {fileID: 0}
   cart: {fileID: 388057044}
   hitMultiplier: 10
 --- !u!54 &489195833
@@ -2173,7 +2178,6 @@ MonoBehaviour:
   m_objectToCircle: {fileID: 489195829}
   m_markerPrefab: {fileID: 100000, guid: 106aba1f0ace6184ab747ea60caff5f2, type: 2}
   m_meterRadius: 1
-  m_meterPoints: 100
   m_swingScript: {fileID: 489195832}
 --- !u!1 &494588119
 GameObject:
@@ -9855,7 +9859,7 @@ MonoBehaviour:
   - {fileID: 1741447829}
   - {fileID: 1741447828}
   - {fileID: 1741447822}
-  camera: {fileID: 2101953005}
+  cameraObject: {fileID: 0}
 --- !u!114 &1741447825
 MonoBehaviour:
   m_ObjectHideFlags: 0
