@@ -112,7 +112,6 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 			ed_playerViewCameras[playerIndex].clearFlags = CameraClearFlags.Skybox;
 			ed_joinButtonTexts[playerIndex].SetActive(false);
 			ed_detailControls[playerIndex].SetActive(true);
-			
 		}
 		else if ( type == 2) //keyboard
 		{
@@ -134,7 +133,9 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 				ed_playerViewCameras[playerIndex].clearFlags = CameraClearFlags.Skybox;
 				ed_joinButtonTexts[playerIndex].SetActive(false);
 				ed_detailControls[playerIndex].SetActive(true);
-				keyboardIndex = playerIndex;		
+				keyboardIndex = playerIndex;
+
+				controllerHighlights[playerIndex].GetComponent<ControllerHighlightManager>().sendHoverRemoveMessage();
 				
 				//if this was a controller remove it
 				if ( controllerDeviceIndexToPlayerIndexMap.ContainsValue(playerIndex) )

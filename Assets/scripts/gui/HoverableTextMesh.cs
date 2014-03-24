@@ -12,15 +12,38 @@ public class HoverableTextMesh : MonoBehaviour
 
 	public bool disabled = false;
 
+	private bool isForcedHover = false;
+
 	void Start()
 	{
-		targetTextMesh.color = colorNormal;
+		if ( isForcedHover)
+		{
+			targetTextMesh.color = colorHover;
+		}
+		else if ( disabled )
+		{
+			targetTextMesh.color = colorDisabled;
+		}
+		else
+		{
+			targetTextMesh.color = colorNormal;
+		}
 	}
 
 	void OnEnable()
 	{
-		if ( !disabled)
+		if ( isForcedHover)
+		{
+			targetTextMesh.color = colorHover;
+		}
+		else if ( disabled )
+		{
+			targetTextMesh.color = colorDisabled;
+		}
+		else
+		{
 			targetTextMesh.color = colorNormal;
+		}
 	}
 	
 	void OnMouseOver()
@@ -31,7 +54,7 @@ public class HoverableTextMesh : MonoBehaviour
 
 	void OnMouseEnter()
 	{
-		if ( !disabled && hoverAudio != null )
+		if ( !isForcedHover && !disabled && hoverAudio != null )
 		{
 			SoundManager.Get().playSfx( hoverAudio);
 		}
@@ -39,7 +62,7 @@ public class HoverableTextMesh : MonoBehaviour
 
 	void OnMouseExit()
 	{
-		if ( !disabled)
+		if ( !isForcedHover && !disabled)
 			targetTextMesh.color = colorNormal;
 	}
 
@@ -52,6 +75,25 @@ public class HoverableTextMesh : MonoBehaviour
 	public void enableButton()
 	{
 		disabled = false;
+		if ( !isForcedHover)
+		{
+			targetTextMesh.color = colorNormal;
+		}
+		else
+		{
+			targetTextMesh.color = colorHover;
+		}
+	}
+
+	void removeForcedHover()
+	{
+		isForcedHover = false;
 		targetTextMesh.color = colorNormal;
+	}
+	
+	void forceHover()
+	{
+		targetTextMesh.color = colorHover;
+		isForcedHover = true;
 	}
 }

@@ -4,49 +4,71 @@ using System.Collections;
 public class ControllerHighlightManager : MonoBehaviour 
 {
 	public GameObject[] uiItemsToHover;
-	public string[] messagesToSendToThem;	
+
+	public string[] actionMessage;
+	public string[] hoverForceMessage;
+	public string[] hoverRemoveMessage;
 
 	int currentIndex = 0;
 
+	public bool startSelected = true;
+
 	void OnEnable()
 	{
-		currentIndex = 0;
-		transform.position = new Vector3( transform.position.x, uiItemsToHover[currentIndex].transform.position.y, transform.position.z);
+		if ( startSelected )
+			sendHoverForceMessage();
 	}
 
 	void doRight ( )
 	{
-		if ( messagesToSendToThem[currentIndex] != null ||  messagesToSendToThem[currentIndex] != "" )
-		{
-			uiItemsToHover[currentIndex].SendMessage ( messagesToSendToThem[currentIndex] ,SendMessageOptions.DontRequireReceiver);
-		}
+		sendActionMessage();
 	}
 
 	void doLeft ( )
 	{
-		if ( messagesToSendToThem[currentIndex] != null ||  messagesToSendToThem[currentIndex] != "" )
-		{
-			uiItemsToHover[currentIndex].SendMessage ( messagesToSendToThem[currentIndex] ,SendMessageOptions.DontRequireReceiver);
-		}
+		sendActionMessage();
 	}
 
 	void doDown ( )
 	{
-		currentIndex = (currentIndex + 1 < uiItemsToHover.Length)? (currentIndex + 1) : 0 ;
-		transform.position = new Vector3( transform.position.x, uiItemsToHover[currentIndex].transform.position.y, transform.position.z);
+		changeIndex( 1);
 	}
 
 	void doUp ( )
 	{
-		currentIndex = (currentIndex - 1 > -1)? (currentIndex - 1) : uiItemsToHover.Length-1;
-		transform.position = new Vector3( transform.position.x, uiItemsToHover[currentIndex].transform.position.y, transform.position.z);
+		changeIndex(-1);
 	}
 
 	void doButtonPress ( )
 	{
-		if ( messagesToSendToThem[currentIndex] != null ||  messagesToSendToThem[currentIndex] != "" )
+		sendActionMessage();
+	}
+
+	void changeIndex( int direction)
+	{
+		sendHoverRemoveMessage();
+
+		currentIndex = (currentIndex + direction < uiItemsToHover.Length)? (currentIndex + direction) : 0 ;
+		currentIndex = (currentIndex < 0 )? currentIndex = uiItemsToHover.Length-1 : currentIndex;
+
+		sendHoverForceMessage();
+	}
+
+	public void sendHoverRemoveMessage()
+	{
+		uiItemsToHover[currentIndex].SendMessage ( hoverRemoveMessage[currentIndex], SendMessageOptions.DontRequireReceiver);
+	}
+
+	public void sendHoverForceMessage()
+	{
+		uiItemsToHover[currentIndex].SendMessage ( hoverForceMessage[currentIndex], SendMessageOptions.DontRequireReceiver);
+	}
+
+	public void sendActionMessage()
+	{
+		if ( actionMessage[currentIndex] != null ||  actionMessage[currentIndex] != "" )
 		{
-			uiItemsToHover[currentIndex].SendMessage ( messagesToSendToThem[currentIndex]  ,SendMessageOptions.DontRequireReceiver);
+			uiItemsToHover[currentIndex].SendMessage ( actionMessage[currentIndex], SendMessageOptions.DontRequireReceiver);
 		}	
 	}
 }
