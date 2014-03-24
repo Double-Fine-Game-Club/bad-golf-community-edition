@@ -96,11 +96,12 @@ public class MiniMap : MonoBehaviour {
 		opponentRects = new List<Rect>();
 
 		float size = UpdateIconSize();
+		float halfSize = size / 2.0f;
 
 		foreach( PlayerInfo opponent in nvs.players ) {
 			if( opponent != nvs.myInfo ) {
 				Vector2 c = NormalizedPosition( opponent.cartGameObject.transform.position, level.collider.bounds.min, level.collider.bounds.max, camMin, camMax );
-				opponentRects.Add( new Rect(c.x,c.y,size,size) );
+				opponentRects.Add( new Rect(c.x-halfSize,c.y-halfSize,size,size) );
 			}
 		}
 
