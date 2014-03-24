@@ -63,11 +63,11 @@ public class PlayerInfo {
 	// do these need to be net-sunk?
 	public bool playerIsBusy   = false;			// player is engaged in an uninteruptable action
 	public bool playerIsPaused = false;			// player is paused
-	
+
+	public CarController carController;		//The movement script for this player's buggy
 	public float v;		//player accelleration/brake input
 	public float h;		//player steering input
 }
-
 // server comment system
 public class ServerComment {
 	public int NATmode;

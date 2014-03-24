@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class controlServer : MonoBehaviour {
+	float timer = 0;
 	networkVariables nvs;
 	PlayerInfo myInfo;
 	Transform cameraParentTransform;
@@ -37,14 +38,10 @@ public class controlServer : MonoBehaviour {
 		foreach (PlayerInfo p in nvs.players) {
 			// if in buggy
 			if (p.currentMode==0) {
-				// maybe not the best idea to call GetComponent every time - add it to PlayerInfo at some point so it can do a direct reference
-				CarController car = p.cartGameObject.transform.GetComponent("CarController") as CarController;
-				car.Move(p.h,p.v);
+				p.carController.Move(p.h,p.v);
 
 			} else if (p.currentMode==1) {	// if in ball mode
-				// maybe not the best idea to call GetComponent every time - add it to PlayerInfo at some point so it can do a direct reference
-				CarController car = p.cartGameObject.transform.GetComponent("CarController") as CarController;
-				car.Move(0f,0f);
+				p.carController.Move(0f,0f);
 			}
 		}
 		// if in buggy then update what they be pressing
@@ -57,12 +54,24 @@ public class controlServer : MonoBehaviour {
 				myInfo.h = Input.GetAxis("Horizontal");
 				myInfo.v = Input.GetAxis("Vertical");
 			#endif
+			// send packets about keyboard every 0.015s
+			timer += Time.fixedDeltaTime;
+			if (timer > 0.015) {
+				timer = 0;
+				networkView.RPC("KartMovement", RPCMode.All, myInfo.h,myInfo.v, myInfo.player);
+			}
 
 		} else {
 			// paused so don't move
 			myInfo.h = 0f;
 			myInfo.v = 0f;
+			// send packets about keyboard every 0.015s
+			timer += Time.fixedDeltaTime;
+			if (timer > 0.015) {
+				networkView.RPC("KartMovement", RPCMode.All, myInfo.h,myInfo.v, myInfo.player);
+			}
 		}
+
 	}
 
 	
@@ -138,11 +147,13 @@ public class controlServer : MonoBehaviour {
 
 	// update what they are currenly doing - this also adds new players automagically
 	[RPC]
-	public void KartMovement(float h, float v, NetworkMessageInfo info) {
-		foreach (PlayerInfo p in nvs.players) {
-			if (p.player==info.sender) {
-				p.v = v;
-				p.h = h;
+	public void KartMovement(float h, float v, NetworkPlayer player) {
+		if(nvs){	//currently, a player maybe theoretically could load the scene and move before start is finished
+			foreach (PlayerInfo p in nvs.players) {
+				if (p.player==player) {
+					p.v = v;
+					p.h = h;
+				}
 			}
 		}
 	}

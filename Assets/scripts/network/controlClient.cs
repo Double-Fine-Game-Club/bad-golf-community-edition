@@ -17,6 +17,7 @@ public class controlClient : MonoBehaviour {
 		pin = GameObject.Find ("winningPole") as GameObject;
 
 		localBallAnalog = new GameObject ();
+		
 	}
 
 	void Update () {
@@ -37,7 +38,7 @@ public class controlClient : MonoBehaviour {
 						h = Input.GetAxis("Horizontal");
 						v = Input.GetAxis("Vertical");
 					#endif
-					networkView.RPC("KartMovement", RPCMode.Server, h,v);
+					networkView.RPC("KartMovement", RPCMode.All, h,v, myInfo.player);
 				}
 				// HONK
 				if (Input.GetKeyDown(KeyCode.Q)) {
@@ -56,22 +57,18 @@ public class controlClient : MonoBehaviour {
 			timer += Time.deltaTime;
 			if (timer > 0.015) {
 				// send a no-keys-pressed message
-				networkView.RPC("KartMovement", RPCMode.Server, 0f, 0f);
+				networkView.RPC("KartMovement", RPCMode.All, 0f, 0f, myInfo.player);
 			}
 		}
 	}
 
 	// local interpolation - add all other interpolation here aswell
 	void FixedUpdate() {
-		// if in buggy
-		if (myInfo.currentMode==0) {
-			// maybe not the best idea to call GetComponent every time - add it to PlayerInfo at some point so it can do a direct reference
-			CarController car = myInfo.cartGameObject.transform.GetComponent("CarController") as CarController;
-			car.Move(myInfo.h,myInfo.v);
-		} else if (myInfo.currentMode==1) {		// if in ball mode
-			
-		} else if (myInfo.currentMode==2) {		// if in spectate mode
-			
+		foreach (PlayerInfo p in nvs.players) {
+			// if in buggy
+			if (p.currentMode==0) {
+				p.carController.Move(p.h,p.v);
+			}
 		}
 	}
 
@@ -141,6 +138,19 @@ public class controlClient : MonoBehaviour {
 		}
 
 	}
+
+	// update what they are currenly doing
+	[RPC]
+	public void KartMovement(float h, float v, NetworkPlayer player) {
+		if(nvs){	//currently, a player may load the scene and move before start is finished
+			foreach (PlayerInfo p in nvs.players) {
+				if (p.player==player) {
+					p.v = v;
+					p.h = h;
+				}
+			}
+		}
+	}
 	
 	// honks
 	[RPC]
@@ -202,8 +212,6 @@ public class controlClient : MonoBehaviour {
 	}
 
 	// blank for server use only
-	[RPC]
-	void KartMovement(float h, float v) {}
 	[RPC]
 	void SpawnBall(NetworkViewID viewId) {}
 	[RPC]
