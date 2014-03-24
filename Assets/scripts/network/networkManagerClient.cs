@@ -183,6 +183,7 @@ public class networkManagerClient : MonoBehaviour {
 				newGuy.ballViewID = ballViewID;
 				newGuy.ballGameObject = NetworkView.Find(ballViewID).gameObject;
 				newGuy.currentMode = mode;
+				newGuy.carController = newGuy.cartGameObject.transform.GetComponent("CarController") as CarController;
 				
 				
 				// ADD MORE STUFF HERE

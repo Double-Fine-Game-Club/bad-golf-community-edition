@@ -118,6 +118,7 @@ public class networkManagerServer : MonoBehaviour {
 			newGuy.characterGameObject = characterGameObject;
 			newGuy.characterViewID = characterViewID;
 			newGuy.currentMode = 0;	// set them in buggy
+			newGuy.carController = cartGameObject.transform.GetComponent("CarController") as CarController;
 
 			// tell everyone else about it
 			networkView.RPC("SpawnPrefab", RPCMode.Others, cartViewIDTransform, spawnLocation, velocity, newGuy.cartModel);
