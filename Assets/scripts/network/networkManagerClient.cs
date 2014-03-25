@@ -47,7 +47,12 @@ public class networkManagerClient : MonoBehaviour {
 
 		//ball range finder
 		gameObject.AddComponent ("netTransferToSwing");
-
+		
+		//ball marker
+		BallMarker bms = gameObject.AddComponent ("BallMarker") as BallMarker;
+		bms.m_nvs = nvs;
+		bms.m_myCamera = nvs.myCam;	// can be set in the script
+		
 		//show names over player's cart
 		gameObject.AddComponent ("PlayerNames");
 
@@ -139,6 +144,10 @@ public class networkManagerClient : MonoBehaviour {
 	[RPC]
 	void StartingGame(string cartModel, string ballModel, string characterModel) {
 		(GetComponent("netLobby") as netLobby).enabled = false;
+		
+		// lookup from level list will be added here
+		Application.LoadLevelAdditive("level_full");
+
 		// set out stuff
 		nvs.myInfo.cartModel = cartModel;
 		nvs.myInfo.ballModel = ballModel;
@@ -259,7 +268,7 @@ public class networkManagerClient : MonoBehaviour {
 		}
 	}
 
-	// tells the player they're spectating
+	// tells the player they're spectating - REPLACE ME
 	[RPC]
 	void YoureSpectating() {
 		netLobby ntl = GetComponent("netLobby") as netLobby;

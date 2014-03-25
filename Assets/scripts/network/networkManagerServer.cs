@@ -34,6 +34,7 @@ public class networkManagerServer : MonoBehaviour {
 		serverComment = new ServerComment();
 		serverComment.NATmode = nvs.NATmode;
 		serverComment.comment = "This is a comment about the server";
+		serverComment.level = "level_full";	// only use this one since it's the only one set up atm
 		
 		// Use NAT punchthrough if NATmode says to
 		Network.InitializeServer(31, 11177, nvs.NATmode!=0);
@@ -69,7 +70,12 @@ public class networkManagerServer : MonoBehaviour {
 		gameObject.AddComponent ("PlayerNames");
 
         //show chat bubble over players when they chat
-        gameObject.AddComponent("ChatBubble");
+		gameObject.AddComponent("ChatBubble");
+		
+		//ball marker
+		BallMarker bms = gameObject.AddComponent ("BallMarker") as BallMarker;
+		bms.m_nvs = nvs;
+		bms.m_myCamera = nvs.myCam;	// can be set in the script
 		
 		// set the camera in the audio script on the buggy - PUT THIS IN A SCRIPT SOMEONE
 		CarAudio mca = myInfo.cartGameObject.GetComponent("CarAudio") as CarAudio;
@@ -260,6 +266,9 @@ public class networkManagerServer : MonoBehaviour {
 
 	void StartGame() {
 		Component.Destroy(GetComponent("netLobby"));
+
+		// lookup from level list will be added here
+		Application.LoadLevelAdditive("level_full");
 		/*
 		// don't let anyone else join - this doesn't work (and hasn't since 2010 -_-)
 		MasterServer.UnregisterHost();
@@ -273,7 +282,8 @@ public class networkManagerServer : MonoBehaviour {
 		*/
 
 		string serverName = nvs.serverName + ": Game started";
-		serverComment.comment = "Add stuff like spectators here maybe?";
+		serverComment.comment = "This is the server comment";
+		serverComment.level = "level_full";
 		MasterServer.RegisterHost(serverVersion, serverName, serverComment.toString());
 
 		// tell everyone what their choices were

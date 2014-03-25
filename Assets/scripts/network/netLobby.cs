@@ -15,9 +15,9 @@ public class netLobby : MonoBehaviour {
 		nvs = GetComponent("networkVariables") as networkVariables;
 
 		// set models
-		nvs.myInfo.cartModel = nvs.buggyModels[0];
-		nvs.myInfo.ballModel = nvs.ballModels[0];
-		nvs.myInfo.characterModel = nvs.characterModels[0];
+		nvs.myInfo.cartModel = nvs.buggyModels[IcartModel];
+		nvs.myInfo.ballModel = nvs.ballModels[IballModel];
+		nvs.myInfo.characterModel = nvs.characterModels[IballModel];
 		
 		// add chat
 		gameObject.AddComponent("netChat");
@@ -69,15 +69,23 @@ public class netLobby : MonoBehaviour {
 			nvs.myInfo.characterModel = nvs.characterModels[IcharacterModel];
 			changeNeeded = true;
 		}
+		if (GUI.Button(new Rect(Screen.width/4,160,Screen.width/2,20), "level_full"))
+		{
+			// change to next level
+			//IcharacterModel += 1;
+			//IcharacterModel %= nvs.characterModels.Length;
+			//nvs.myInfo.characterModel = nvs.characterModels[IcharacterModel];
+			//changeNeeded = true;
+		}
 		if (Network.isServer) {
-			if (GUI.Button(new Rect(Screen.width/4,160,Screen.width/2,20), "Start!"))
+			if (GUI.Button(new Rect(Screen.width/4,200,Screen.width/2,20), "Start!"))
 			{
 				GetComponent("networkManagerServer").SendMessage("StartGame");
 				this.enabled = false;
 			}
 		}
 		
-		GUI.BeginGroup(new Rect(Screen.width/4,200,Screen.width/2,250));
+		GUI.BeginGroup(new Rect(Screen.width/4,240,Screen.width/2,250));
 		GUILayout.Label ("Players in Lobby:");
 		scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.MaxWidth(Screen.width/2), GUILayout.MaxHeight(200));
 		// show chat
