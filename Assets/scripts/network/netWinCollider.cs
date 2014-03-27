@@ -11,6 +11,9 @@ public class netWinCollider : MonoBehaviour {
 
 	public void initialize()
 	{
+		// get a reference to NetworkObject
+		messageTarget = GameObject.FindWithTag("NetObj");
+
 		nvs = messageTarget.GetComponent ("networkVariables") as networkVariables; 
 		
 		foreach(PlayerInfo player in nvs.players)

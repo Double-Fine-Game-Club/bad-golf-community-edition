@@ -14,7 +14,7 @@ public class PlayerNames : MonoBehaviour {
 	void Start () {
 		nvs = GetComponent ("networkVariables") as networkVariables;
 		playerNames = new Dictionary<PlayerInfo, GameObject> ();
-		myCam = Camera.main;
+		myCam = nvs.myCam;
 		numPlayers = 1;
 	}
 	

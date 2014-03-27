@@ -4076,7 +4076,7 @@ MonoBehaviour:
   characteryModelNames: []
   levelNames: []
   myCam: {fileID: 0}
-  lowestHeight: 0
+  lowestHeight: 50
   playerHasWon: 0
   winningPlayer: 
   gameHasBegun: 0
@@ -4157,7 +4157,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 307772546}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.32954526, y: -3.11363626, z: -1.37936795}
+  m_LocalPosition: {x: 2.1704545, y: -3.11363626, z: -1.37936795}
   m_LocalScale: {x: .154939994, y: .154939994, z: .154939994}
   m_Children: []
   m_Father: {fileID: 1968385775}
@@ -7295,7 +7295,7 @@ Renderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 587905299}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_LightmapIndex: 255
@@ -8790,7 +8790,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 724076257}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.61133051, y: 3.06376481, z: -7.76000023}
+  m_LocalPosition: {x: 4.27991533, y: 3.84112167, z: -7.76000023}
   m_LocalScale: {x: .0869154632, y: .0869154632, z: .0869154632}
   m_Children: []
   m_Father: {fileID: 1037379302}
@@ -9766,7 +9766,7 @@ Renderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 800566956}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_LightmapIndex: 255
@@ -19533,7 +19533,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1605759807}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.59102345, y: 3.04120421, z: -7.45996094}
+  m_LocalPosition: {x: 4.3002224, y: 3.81856108, z: -7.45996094}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1037379302}

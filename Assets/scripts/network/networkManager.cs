@@ -51,7 +51,8 @@ public class networkManager : MonoBehaviour {
 		
 		// sudo make me a camera
 		nvs.myCam = new GameObject("theCamera").AddComponent("Camera") as Camera;
-		nvs.myCam.enabled = false;	// disable it until we have joined a game
+		nvs.myCam.gameObject.AddComponent("AudioListener");
+		nvs.myCam.gameObject.SetActive(false);	// disable it until we have joined a game
 		
 		// get them servers
 		MasterServer.ClearHostList();
@@ -101,7 +102,7 @@ public class networkManager : MonoBehaviour {
 					GameObject.FindWithTag("NetObj").AddComponent("networkManagerServer");
 					
 					// enable the camera
-					nvs.myCam.enabled = true;
+					nvs.myCam.gameObject.SetActive(true);
 
 					// disable this script
 					this.enabled = false;
@@ -166,12 +167,14 @@ public class networkManager : MonoBehaviour {
 					GUILayout.Label("Failed to connect");
 			}
 		}
-		
+
+		/*
 		if(GUILayout.Button ("Back")){
 			//Go back to main menu
 			string nameOfLevel = "main";
 			Application.LoadLevel( nameOfLevel );
 		}
+		*/
 	}
 	
 	void OnConnectedToServer() {
@@ -188,7 +191,7 @@ public class networkManager : MonoBehaviour {
 		GameObject.FindWithTag("NetObj").AddComponent("networkManagerClient");
 		
 		// enable the camera
-		nvs.myCam.enabled = true;
+		nvs.myCam.gameObject.SetActive(true);
 
 		// disable this script
 		this.enabled = false;

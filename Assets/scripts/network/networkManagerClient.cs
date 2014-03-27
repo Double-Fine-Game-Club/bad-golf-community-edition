@@ -8,13 +8,6 @@ public class networkManagerClient : MonoBehaviour {
 	bool connected = false;
 	networkVariables nvs;
 	
-	/****************************************************
-	 * 
-	 * DONT EDIT THIS SCRIPT UNLESS ITS TO ADD ANYTHING
-	 * IN THE "ANY CLIENT SIDE SCRIPTS GO HERE" SECTION
-	 * 
-	 ****************************************************/
-	
 	// Use this for initialization
 	void Start () {
 		// setup reference to networkVariables
@@ -34,10 +27,10 @@ public class networkManagerClient : MonoBehaviour {
 	}
 	
 	// CLIENT SIDE SCRIPTS GO HERE
-	// all scripts are called after we have a reference to the buggy and a NetworkViewID
 	void AddScripts() {
-		// anything you want to have running in the lobby should go in the netLobby script
-		// bare in mind that it may not have access to everything it needs (for example gameobjects wont have spawned yet)
+		// Anything you want to have running in the lobby should go in the netLobby script.
+		// This function gets called when a game starts.
+		// All scripts are called after we have a reference to the buggy and a NetworkViewID.
 
 		// updates network-sunk fiziks
 		gameObject.AddComponent("controlClient");
@@ -51,7 +44,7 @@ public class networkManagerClient : MonoBehaviour {
 		//ball marker
 		BallMarker bms = gameObject.AddComponent ("BallMarker") as BallMarker;
 		bms.m_nvs = nvs;
-		bms.m_myCamera = nvs.myCam;	// can be set in the script
+		bms.m_myCamera = nvs.myCam;	// can be set in the script instead
 		
 		//show names over player's cart
 		gameObject.AddComponent ("PlayerNames");
@@ -61,8 +54,14 @@ public class networkManagerClient : MonoBehaviour {
 		mca.followCamera = nvs.myCam;	// replace tmpCam with our one - this messes up sound atm
 		(nvs.myCam.gameObject.AddComponent("FollowPlayerScript") as FollowPlayerScript).target = myInfo.cartGameObject.transform;	// add smooth follow script
 		
+		// finally disable the preview scene
+		(GameObject.Find("main").GetComponent(typeof(GameControl)) as GameControl).ed_levelPreviewScreen.SetActive(false);
+		
 		 //show chat bubble over players when they chat
-        gameObject.AddComponent("ChatBubble");
+		gameObject.AddComponent("ChatBubble");
+		
+		//cart reset
+		gameObject.AddComponent ("netPlayerRespawn");
 		
 		// show that we connected
 		connected = true;

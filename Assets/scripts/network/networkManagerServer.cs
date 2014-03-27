@@ -10,13 +10,6 @@ public class networkManagerServer : MonoBehaviour {
 	bool gameHasBegun;
 	ServerComment serverComment;
 	
-	/****************************************************
-	 * 
-	 * DONT EDIT THIS SCRIPT UNLESS ITS TO ADD ANYTHING
-	 * IN THE "ANY SERVER SIDE SCRIPTS GO HERE" SECTION
-	 * 
-	 ****************************************************/
-	
 	// Use this for initialization
 	void Start () {
 		// setup reference to networkVariables
@@ -51,8 +44,9 @@ public class networkManagerServer : MonoBehaviour {
 	
 	// ANY SERVER SIDE SCRIPTS GO HERE
 	void AddScripts() {
-		// anything you want to have running in the lobby should go in the netLobby script
-		// bare in mind that it may not have access to everything it needs (for example gameobjects wont have spawned yet)
+		// Anything you want to have running in the lobby should go in the netLobby script.
+		// This function gets called when a game starts.
+		// All scripts are called after we have a reference to the buggy and a NetworkViewID.
 
 		// receives all players inputs and handles fiziks
 		gameObject.AddComponent("controlServer");
@@ -75,22 +69,26 @@ public class networkManagerServer : MonoBehaviour {
 		//ball marker
 		BallMarker bms = gameObject.AddComponent ("BallMarker") as BallMarker;
 		bms.m_nvs = nvs;
-		bms.m_myCamera = nvs.myCam;	// can be set in the script
+		bms.m_myCamera = nvs.myCam;	// can be set in the script instead
 		
 		// set the camera in the audio script on the buggy - PUT THIS IN A SCRIPT SOMEONE
 		CarAudio mca = myInfo.cartGameObject.GetComponent("CarAudio") as CarAudio;
 		mca.followCamera = nvs.myCam;	// replace tmpCam with our one - this messes up sound atm
 		(nvs.myCam.gameObject.AddComponent("FollowPlayerScript") as FollowPlayerScript).target = myInfo.cartGameObject.transform;	// add player follow script
+
+		// finally disable the preview scene
+		(GameObject.Find("main").GetComponent(typeof(GameControl)) as GameControl).ed_levelPreviewScreen.SetActive(false);
 	}
 
 	// carts for all!
 	void BeginGame() {
 		Vector3 velocity = new Vector3(0,0,0);
-		float i = 0;
-		float spacer = 360 / nvs.players.Count;
+		//float i = 0;
+		//float spacer = 360 / nvs.players.Count;
 		foreach (PlayerInfo newGuy in nvs.players) {
 			// create new buggy for the new guy - his must be done on the server otherwise collisions wont work!
-			Vector3 spawnLocation = transform.position + Quaternion.AngleAxis(spacer * i++, Vector3.up) * new Vector3(10,2,0);
+			//Vector3 spawnLocation = transform.position + Quaternion.AngleAxis(spacer * i++, Vector3.up) * new Vector3(10,2,0);
+			Vector3 spawnLocation = new Vector3(0,-200,0);	//start under the map to trigger a reset
 			
 			// instantiate the prefabs
 			GameObject cartGameObject = Instantiate(Resources.Load(newGuy.cartModel), spawnLocation, Quaternion.identity) as GameObject;

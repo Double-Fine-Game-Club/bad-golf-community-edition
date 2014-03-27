@@ -25,7 +25,16 @@ public class netLobby : MonoBehaviour {
 		//pause
 		gameObject.AddComponent ("netPause");
 
-		currentList += nvs.myInfo.name;
+		// add self to the list of people in this game
+		currentList = nvs.myInfo.name;
+
+		// copy the script on the previewCamera in main
+		Orbit cao = nvs.myCam.gameObject.AddComponent("Orbit") as Orbit;
+		cao.Point = new Vector3(28,12,147);
+		cao.Axis = new Vector3(0,1,0);
+		cao.Speed = 0.1f;
+		nvs.myCam.transform.position = new Vector3(26,64,86);
+		nvs.myCam.transform.rotation = Quaternion.Euler(32,Time.time*0.1f,0);	// the Time.time is for the rotation already
 	}
 	
 	// Update is called once per frame
