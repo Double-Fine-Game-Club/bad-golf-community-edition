@@ -33,7 +33,7 @@ public class controlServer : MonoBehaviour {
 		// find the pin
 		if(pin==null){
 			pin = GameObject.Find ("winningPole") as GameObject;
-			(pin.GetComponent ("netWinCollider") as netWinCollider).initialize (); //setup the pin while we have a reference to it.
+			if (pin!=null) (pin.GetComponent ("netWinCollider") as netWinCollider).initialize (); //setup the pin while we have a reference to it.
 		}
 	}
 

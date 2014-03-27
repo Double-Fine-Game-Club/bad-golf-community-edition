@@ -78,10 +78,6 @@ public class Config : MonoBehaviour
 			#endif
 		}
 
-#if UNITY_EDITOR
-		// only look at the one in Resources if it's in the editor
-		result = Resources.Load<TextAsset>(configFileName).text;
-#endif
 		xmlResult = new ConfigReader ();
 		xmlResult.LoadXml(result);
 		
@@ -95,7 +91,11 @@ public class Config : MonoBehaviour
 
 	void cfgLoadLevels()
 	{
-		Xml.XmlNodeList mapNode = xmlResult.GetElementsByTagName ("Map");
+		// levels should be loaded from the internal config.xml
+		ConfigReader xmlResult2 = new ConfigReader ();
+		xmlResult2.LoadXml(Resources.Load<TextAsset>(configFileName).text);
+
+		Xml.XmlNodeList mapNode = xmlResult2.GetElementsByTagName ("Map");
 		
 		int mapCount = mapNode.Count;
 		
@@ -164,11 +164,15 @@ public class Config : MonoBehaviour
 	// setup models
 	void cfgLoadModels()
 	{
+		// models should be loaded from the internal config.xml
+		ConfigReader xmlResult2 = new ConfigReader ();
+		xmlResult2.LoadXml(Resources.Load<TextAsset>(configFileName).text);
+
 		// should change everything to use this format really in case of duplicate names - actually don't worry it seems ok for now
 		//Xml.XmlElement xmodels = xmlResult.GetElementsByTagName("Models").Item(0);	// get all models
 		//foreach xmodels.ChildNodes;
 		
-		Xml.XmlNodeList xcarts = xmlResult.GetElementsByTagName("Cart");			// get all carts
+		Xml.XmlNodeList xcarts = xmlResult2.GetElementsByTagName("Cart");			// get all carts
 		nvs.buggyModelNames = new string[xcarts.Count];								// make some arrays
 		nvs.buggyModels = new string[xcarts.Count];
 		int count = 0;
@@ -196,7 +200,7 @@ public class Config : MonoBehaviour
 			count++;
 		}
 		
-		Xml.XmlNodeList xchars = xmlResult.GetElementsByTagName("Character");		// get all characters
+		Xml.XmlNodeList xchars = xmlResult2.GetElementsByTagName("Character");		// get all characters
 		nvs.characteryModelNames = new string[xchars.Count];						// make some arrays
 		nvs.characterModels = new string[xchars.Count];
 		count = 0;
@@ -224,7 +228,7 @@ public class Config : MonoBehaviour
 			count++;
 		}
 		
-		Xml.XmlNodeList xballs = xmlResult.GetElementsByTagName("Ball");		// get all balls
+		Xml.XmlNodeList xballs = xmlResult2.GetElementsByTagName("Ball");		// get all balls
 		nvs.ballModelNames = new string[xballs.Count];							// make some arrays
 		nvs.ballModels = new string[xballs.Count];
 		count = 0;
@@ -280,13 +284,10 @@ public class Config : MonoBehaviour
 	
 	void OnDestroy()
 	{
-		// only save if it's not in the editor otherwise editting config.xml does nothing
-#if !UNITY_EDITOR
 		saveOptions();
 
 		string filePath = System.IO.Path.Combine(Application.persistentDataPath, configFileName + fileExtension);
 		System.IO.File.WriteAllText(filePath, xmlResult.OuterXml);
-		Debug.Log ( "Saved user config to :" + filePath );
-#endif
+		Debug.Log ( "Saved user config to : " + filePath );
 	}
 }
