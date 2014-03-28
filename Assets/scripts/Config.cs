@@ -155,10 +155,10 @@ public class Config : MonoBehaviour
 			//should only be 1 node so loops fine - also I couldn't find a way to convert between XmlNode and XmlElement
 			nvs.serverVersion = node.GetAttribute("version");						// server version
 			nvs.myInfo.name = node.GetAttribute("playername");						// player name
-			if (nvs.myInfo.name=="") nvs.myInfo.name = SystemInfo.deviceName;		// make sure it's not blank
 			nvs.serverName = node.GetAttribute("hostname");							// server name
-			if (nvs.serverName=="") nvs.serverName = nvs.myInfo.name + "'s Server";	// make sure it's not blank
 		}
+		if (nvs.myInfo.name=="" || nvs.myInfo.name==null) nvs.myInfo.name = SystemInfo.deviceName;		// make sure it's not blank
+		if (nvs.serverName=="" || nvs.serverName==null) nvs.serverName = nvs.myInfo.name + "'s Server";	// make sure it's not blank
 	}
 
 	// setup models
