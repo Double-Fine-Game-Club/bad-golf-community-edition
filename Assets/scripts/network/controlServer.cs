@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class controlServer : MonoBehaviour {
-	float timer = 0;
+	//float timer = 0;
 	networkVariables nvs;
 	PlayerInfo myInfo;
 	Transform cameraParentTransform;
@@ -14,8 +14,6 @@ public class controlServer : MonoBehaviour {
 		// get variables we need
 		nvs = GetComponent("networkVariables") as networkVariables;
 		myInfo = nvs.myInfo;
-		pin = GameObject.Find ("winningPole") as GameObject;
-		if(pin!=null)(pin.GetComponent ("netWinCollider") as netWinCollider).initialize (); //setup the pin while we have a reference to it.
 
 		localBallAnalog = new GameObject ();
 	}
@@ -30,6 +28,12 @@ public class controlServer : MonoBehaviour {
 				networkView.RPC("IHonked", RPCMode.All, myInfo.player);
 			}
 				
+		}
+
+		// find the pin
+		if(pin==null){
+			pin = GameObject.Find ("winningPole") as GameObject;
+			if (pin!=null) (pin.GetComponent ("netWinCollider") as netWinCollider).initialize (); //setup the pin while we have a reference to it.
 		}
 	}
 
@@ -54,22 +58,22 @@ public class controlServer : MonoBehaviour {
 				myInfo.h = Input.GetAxis("Horizontal");
 				myInfo.v = Input.GetAxis("Vertical");
 			#endif
-			// send packets about keyboard every 0.015s
+			/*/ send packets about keyboard every 0.015s
 			timer += Time.fixedDeltaTime;
 			if (timer > 0.015) {
 				timer = 0;
 				networkView.RPC("KartMovement", RPCMode.All, myInfo.h,myInfo.v, myInfo.player);
-			}
+			}*/
 
 		} else {
 			// paused so don't move
 			myInfo.h = 0f;
 			myInfo.v = 0f;
-			// send packets about keyboard every 0.015s
+			/*/ send packets about keyboard every 0.015s
 			timer += Time.fixedDeltaTime;
 			if (timer > 0.015) {
 				networkView.RPC("KartMovement", RPCMode.All, myInfo.h,myInfo.v, myInfo.player);
-			}
+			}*/
 		}
 
 	}

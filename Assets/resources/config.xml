@@ -23,4 +23,26 @@
 		<Color colorName="brown" one="250,239,212" two="193,165,135" three="81,36,0" four="136,92,62"/>
 		<Color colorName="bnw" one="255,255,255" two="170,170,170" three="0,0,0" four="78,78,78"/>
 	</PlayerColors>
+	<!-- Model names and information about them go here -->
+	<Models>
+		<!--
+		Model format:
+			name=human friendly version of the name
+			loc=location relative to the Resources folder, eg "carts/buggy1" - must be / and not \
+			type=what type of model it is:
+				currently available for cart type:
+					"body"
+				currently available for char type:
+					"head" - well I haven't done it yet, but soon
+					"body"
+				not needed for ball since it's just a ball
+		-->
+		<Cart name="Buggy" location="buggy_m" type="body"/>
+		<Cart name="Hotrod" location="hotrod_m" type="body"/>
+		<Character name="Patrick" location="lil_patrick" type="body"/>
+		<Character name="Brad" location="BradOverPatrick" type="body"/>
+		<Ball name="Ball" location="ball"/>
+	</Models>
+	<!-- random server info - next server version will be Swisshelm -->
+	<ServerInfo version="swisscheese" hostname="" playername=""/>
 </Config>

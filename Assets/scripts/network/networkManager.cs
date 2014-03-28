@@ -45,20 +45,18 @@ public class networkManager : MonoBehaviour {
 		Network.natFacilitatorIP = "37.157.247.37";
 		Network.natFacilitatorPort = 50005;
 
-		nvs = GetComponent("networkVariables") as networkVariables;
+		nvs = GameObject.FindWithTag("NetObj").GetComponent("networkVariables") as networkVariables;
 		// get server version
 		serverVersion = nvs.serverVersion;
-
+		
+		// sudo make me a camera
+		nvs.myCam = new GameObject("theCamera").AddComponent("Camera") as Camera;
+		nvs.myCam.gameObject.AddComponent("AudioListener");
+		nvs.myCam.gameObject.SetActive(false);	// disable it until we have joined a game
+		
 		// get them servers
 		MasterServer.ClearHostList();
 		MasterServer.RequestHostList(serverVersion);
-
-		// set default player name
-		nvs.myInfo.name = SystemInfo.deviceName;
-		//nvs.myInfo.name = randomNames[Random.Range(0,randomNames.Length-1)];
-
-		// set default server name
-		nvs.serverName = nvs.myInfo.name + "'s Server";
 		
 		// test the current setup rather than poll for the result
 		connectionTestResult = Network.TestConnection(true);
@@ -95,12 +93,17 @@ public class networkManager : MonoBehaviour {
 					if(GameObject.Find("main"))
 					{
 						GameControl gCtrl = GameObject.Find("main").GetComponent(typeof(GameControl)) as GameControl;
-						gCtrl.ed_levelPreviewScreen.SetActive(false);
+						//gCtrl.ed_levelPreviewScreen.SetActive(false);
+						gCtrl.hideAllScreens();
 					} else {
 						InputManager.Setup();
 					}
-					// add the server script to us
-					gameObject.AddComponent("networkManagerServer");
+					// add the server script to the NetObj
+					GameObject.FindWithTag("NetObj").AddComponent("networkManagerServer");
+					
+					// enable the camera
+					nvs.myCam.gameObject.SetActive(true);
+
 					// disable this script
 					this.enabled = false;
 				}
@@ -164,12 +167,14 @@ public class networkManager : MonoBehaviour {
 					GUILayout.Label("Failed to connect");
 			}
 		}
-		
+
+		/*
 		if(GUILayout.Button ("Back")){
 			//Go back to main menu
 			string nameOfLevel = "main";
 			Application.LoadLevel( nameOfLevel );
 		}
+		*/
 	}
 	
 	void OnConnectedToServer() {
@@ -177,12 +182,17 @@ public class networkManager : MonoBehaviour {
 		if(GameObject.Find("main"))
 		{
 			GameControl gCtrl = GameObject.Find("main").GetComponent(typeof(GameControl)) as GameControl;
-			gCtrl.ed_levelPreviewScreen.SetActive(false);
+			//gCtrl.ed_levelPreviewScreen.SetActive(false);
+			gCtrl.hideAllScreens();
 		} else {
 			InputManager.Setup();
 		}
-		// add the client script to us
-		gameObject.AddComponent("networkManagerClient");
+		// add the client script to the NetObj
+		GameObject.FindWithTag("NetObj").AddComponent("networkManagerClient");
+		
+		// enable the camera
+		nvs.myCam.gameObject.SetActive(true);
+
 		// disable this script
 		this.enabled = false;
 	}
