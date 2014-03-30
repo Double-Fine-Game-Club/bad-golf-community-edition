@@ -457,9 +457,9 @@ MonoBehaviour:
   ballModelNames:
   - Ball
   characterModels:
-  - lil_patrick
+  - PatrickOverPatrick
   - BradOverPatrick
-  characteryModelNames:
+  characterModelNames:
   - Patrick
   - Brad
   myCam: {fileID: 942947985}

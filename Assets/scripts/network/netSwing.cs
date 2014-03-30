@@ -212,14 +212,10 @@ public class netSwing : SwingBehaviour {
 
 	IEnumerator hitGolfBall(float time, PlayerInfo player, float power, float angle){
 		//play swing animation
-		if (player.characterModel=="lil_patrick") {
-			player.characterGameObject.transform.FindChild(player.characterModel).animation.Play("swing",PlayMode.StopAll);
-		} else {
-			player.characterGameObject.animation.Play("swing",PlayMode.StopAll);
-		}
+		player.characterGameObject.animation.Play("swing",PlayMode.StopAll);
 		yield return new WaitForSeconds(k_swingTimeToHitBall);
 
-		//detach lil_patrick from ball
+		//detach character from ball so it doesn't move too
 		player.characterGameObject.transform.parent = null;
 		if(player==myInfo){
 			//follow ball for a bit while it moves

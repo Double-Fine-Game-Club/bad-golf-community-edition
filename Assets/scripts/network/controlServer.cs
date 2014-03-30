@@ -110,14 +110,8 @@ public class controlServer : MonoBehaviour {
 			//buggyCam.transform.rotation = Quaternion.LookRotation(myInfo.ballGameObject.transform.position - buggyCam.transform.position);
 			buggyCam.transform.localRotation = Quaternion.identity;
 
-			
-			//*/// change animation - try and keep the prefabs similar so this doesn't become a massive else if list
-			if (myInfo.characterModel=="lil_patrick") {
-				myInfo.characterGameObject.transform.FindChild(myInfo.characterModel).animation.Play("golfIdle",PlayMode.StopAll);
-			} else {
-				myInfo.characterGameObject.animation.Play("golfIdle",PlayMode.StopAll);
-			}
-			
+			//change animation
+			myInfo.characterGameObject.animation.Play("golfIdle",PlayMode.StopAll);
 		}
 	}
 
@@ -135,12 +129,10 @@ public class controlServer : MonoBehaviour {
 		buggyCam.transform.parent = cameraParentTransform;	// put it back
 		
 		(buggyCam.GetComponent("FollowPlayerScript") as FollowPlayerScript).enabled = true;
-		//*/// change animation - try and keep the prefabs similar so this doesn't become a massive else if list
-		if (myInfo.characterModel=="lil_patrick") {
-			myInfo.characterGameObject.transform.FindChild(myInfo.characterModel).animation.Play("driveIdle",PlayMode.StopAll);
-		} else {
-			myInfo.characterGameObject.animation.Play("driveIdle",PlayMode.StopAll);
-		}
+
+		//change animation
+		myInfo.characterGameObject.animation.Play("driveIdle",PlayMode.StopAll);
+
 		(GetComponent ("netTransferToSwing") as netTransferToSwing).enabled = true;
 	}
 
@@ -184,13 +176,8 @@ public class controlServer : MonoBehaviour {
 					p.characterGameObject.transform.rotation = p.cartGameObject.transform.rotation;
 					// unlock golf ball
 					p.ballGameObject.rigidbody.constraints = RigidbodyConstraints.None;
-					// change animation - try and keep the prefabs similar so this doesn't become a massive else if list
-					if (p.characterModel=="lil_patrick") {
-						p.characterGameObject.transform.FindChild(p.characterModel).animation.Play("driveIdle",PlayMode.StopAll);
-					} else {
-						p.characterGameObject.animation.Play("driveIdle",PlayMode.StopAll);
-					}
-					
+					//change animation
+					p.characterGameObject.animation.Play("driveIdle",PlayMode.StopAll);
 				} else if (p.currentMode==1) {	// if they're now at golf ball
 					//stop cart
 					p.cartGameObject.rigidbody.velocity = Vector3.zero;
@@ -202,12 +189,8 @@ public class controlServer : MonoBehaviour {
 					p.characterGameObject.transform.localRotation = Quaternion.identity * new Quaternion(0f, -Mathf.PI/2, 0f, 1f);
 					// lock golf ball
 					p.ballGameObject.rigidbody.constraints = RigidbodyConstraints.FreezeAll;
-					// change animation - try and keep the prefabs similar so this doesn't become a massive else if list
-					if (p.characterModel=="lil_patrick") {
-						p.characterGameObject.transform.FindChild(p.characterModel).animation.Play("golfIdle",PlayMode.StopAll);
-					} else {
-						p.characterGameObject.animation.Play("golfIdle",PlayMode.StopAll);
-					}
+					//change animation
+					p.characterGameObject.animation.Play("golfIdle",PlayMode.StopAll);
 				}
 
 				// reset keyboard buffer

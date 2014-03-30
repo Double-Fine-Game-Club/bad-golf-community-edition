@@ -58,7 +58,7 @@ public class networkManagerClient : MonoBehaviour {
 		
 		 //show chat bubble over players when they chat
         gameObject.AddComponent("ChatBubble");
-		
+
 		// show that we connected
 		connected = true;
 	}
@@ -184,7 +184,10 @@ public class networkManagerClient : MonoBehaviour {
 				newGuy.ballGameObject = NetworkView.Find(ballViewID).gameObject;
 				newGuy.currentMode = mode;
 				newGuy.carController = newGuy.cartGameObject.transform.GetComponent("CarController") as CarController;
-				
+
+				//Move this to a point that is post all object creation but pre level start
+				Renderer bodyRenderer = newGuy.characterGameObject.transform.FindChild ("body").gameObject.GetComponent<SkinnedMeshRenderer> ();
+				RecolorPlayer.recolorPlayerBody(bodyRenderer, newGuy.color);
 				
 				// ADD MORE STUFF HERE
 				if (newGuy.currentMode==0){
@@ -205,7 +208,7 @@ public class networkManagerClient : MonoBehaviour {
 
 	// tells the player that someone joined
 	[RPC]
-	void AddPlayer(string cartModel, string ballModel, string characterModel, NetworkPlayer player, string name) {
+	void AddPlayer(string cartModel, string ballModel, string characterModel, NetworkPlayer player, string name, string color) {
 		PlayerInfo newGuy = new PlayerInfo();
 		newGuy.cartModel = cartModel;
 		newGuy.ballModel = ballModel;
@@ -213,6 +216,7 @@ public class networkManagerClient : MonoBehaviour {
 		newGuy.currentMode = 2;
 		newGuy.player = player;
 		newGuy.name = name;
+		newGuy.color = color;
 
 		// need to add this as sometimes AddPlayer is called BEFORE Start - should have used Awake thinking about it...
 		nvs = gameObject.GetComponent("networkVariables") as networkVariables;
@@ -277,12 +281,13 @@ public class networkManagerClient : MonoBehaviour {
 
 	// tell them that someone changed their models
 	[RPC]
-	void UpdateModels(NetworkPlayer player, string cartModel, string ballModel, string characterModel) {
+	void UpdateModels(NetworkPlayer player, string cartModel, string ballModel, string characterModel, string color) {
 		foreach (PlayerInfo p in nvs.players) {
 			if (p.player==player) {
 				p.cartModel = cartModel;
 				p.ballModel = ballModel;
 				p.characterModel = characterModel;
+				p.color = color;
 			}
 		}
 	}
