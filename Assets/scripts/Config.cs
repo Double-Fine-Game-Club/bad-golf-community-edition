@@ -14,6 +14,7 @@ public class Config : MonoBehaviour
 	static private ConfigReader xmlResult;
 	static private bool loaded = false;
 
+	// could move these over to netObj?
 	static public string[] levels;
 	static public Dictionary<string, string[]> colorsDictionary = new Dictionary<string, string[]>();
 
@@ -78,8 +79,25 @@ public class Config : MonoBehaviour
 			#endif
 		}
 
+		// load xml from computer
 		xmlResult = new ConfigReader ();
 		xmlResult.LoadXml(result);
+
+		// local xml from game
+		ConfigReader xmlGame = new ConfigReader ();
+		xmlGame.LoadXml(Resources.Load<TextAsset>(configFileName).text);
+
+		//check version numbers
+		if (xmlResult.GetElementById("v")==null){
+			Debug.Log("Updating Config.xml from build 'old' to build " + xmlGame.GetElementById("v").GetAttribute("build"));
+			// update to latest
+			cfgUpdate();
+		} else if(int.Parse(xmlResult.GetElementById("v").GetAttribute("build")) < int.Parse(xmlGame.GetElementById("v").GetAttribute("build"))) {
+			Debug.Log("Updating Config.xml from build " + xmlResult.GetElementById("v").GetAttribute("build") +
+			          " to build " + xmlGame.GetElementById("v").GetAttribute("build"));
+			// update to latest
+			cfgUpdate();
+		}
 		
 		cfgLoadLevels();
 		cfgLoadColors();
@@ -91,11 +109,7 @@ public class Config : MonoBehaviour
 
 	void cfgLoadLevels()
 	{
-		// levels should be loaded from the internal config.xml
-		ConfigReader xmlResult2 = new ConfigReader ();
-		xmlResult2.LoadXml(Resources.Load<TextAsset>(configFileName).text);
-
-		Xml.XmlNodeList mapNode = xmlResult2.GetElementsByTagName ("Map");
+		Xml.XmlNodeList mapNode = xmlResult.GetElementsByTagName ("Map");
 		
 		int mapCount = mapNode.Count;
 		
@@ -148,7 +162,8 @@ public class Config : MonoBehaviour
 			}
 		}
 
-		// load server settings
+
+		/*/ load server settings
 		Xml.XmlNodeList serverInfo = xmlResult.GetElementsByTagName ("ServerInfo");
 		foreach (Xml.XmlElement node in serverInfo)
 		{
@@ -157,6 +172,10 @@ public class Config : MonoBehaviour
 			nvs.myInfo.name = node.GetAttribute("playername");						// player name
 			nvs.serverName = node.GetAttribute("hostname");							// server name
 		}
+		*/
+		// no need to check these elements exist since cfgUpdate should do that
+		nvs.myInfo.name = xmlResult.GetElementById("sip").GetAttribute("playername");
+		nvs.serverName = xmlResult.GetElementById("sih").GetAttribute("hostname");
 		if (nvs.myInfo.name=="" || nvs.myInfo.name==null) nvs.myInfo.name = SystemInfo.deviceName;		// make sure it's not blank
 		if (nvs.serverName=="" || nvs.serverName==null) nvs.serverName = nvs.myInfo.name + "'s Server";	// make sure it's not blank
 	}
@@ -164,15 +183,12 @@ public class Config : MonoBehaviour
 	// setup models
 	void cfgLoadModels()
 	{
-		// models should be loaded from the internal config.xml
-		ConfigReader xmlResult2 = new ConfigReader ();
-		xmlResult2.LoadXml(Resources.Load<TextAsset>(configFileName).text);
-
 		// should change everything to use this format really in case of duplicate names - actually don't worry it seems ok for now
-		//Xml.XmlElement xmodels = xmlResult.GetElementsByTagName("Models").Item(0);	// get all models
-		//foreach xmodels.ChildNodes;
+		// something like:
+		//Xml.XmlElement xmodels = xmlResult.GetElementById("ModelList");	// get all models
+		//foreach in xmodels.ChildNodes;
 		
-		Xml.XmlNodeList xcarts = xmlResult2.GetElementsByTagName("Cart");			// get all carts
+		Xml.XmlNodeList xcarts = xmlResult.GetElementsByTagName("Cart");			// get all carts
 		nvs.buggyModelNames = new string[xcarts.Count];								// make some arrays
 		nvs.buggyModels = new string[xcarts.Count];
 		int count = 0;
@@ -200,7 +216,7 @@ public class Config : MonoBehaviour
 			count++;
 		}
 		
-		Xml.XmlNodeList xchars = xmlResult2.GetElementsByTagName("Character");		// get all characters
+		Xml.XmlNodeList xchars = xmlResult.GetElementsByTagName("Character");		// get all characters
 		nvs.characterModelNames = new string[xchars.Count];						// make some arrays
 		nvs.characterModels = new string[xchars.Count];
 		count = 0;
@@ -228,7 +244,7 @@ public class Config : MonoBehaviour
 			count++;
 		}
 		
-		Xml.XmlNodeList xballs = xmlResult2.GetElementsByTagName("Ball");		// get all balls
+		Xml.XmlNodeList xballs = xmlResult.GetElementsByTagName("Ball");		// get all balls
 		nvs.ballModelNames = new string[xballs.Count];							// make some arrays
 		nvs.ballModels = new string[xballs.Count];
 		count = 0;
@@ -271,6 +287,9 @@ public class Config : MonoBehaviour
 		}
 
 		// save the server settings
+		xmlResult.GetElementById("sip").SetAttribute("playername",nvs.myInfo.name);
+		xmlResult.GetElementById("sih").SetAttribute("hostname",nvs.serverName);
+		/*/xmlResult.GetElementById("sih").GetAttribute("
 		Xml.XmlNodeList serverInfo = xmlResult.GetElementsByTagName ("ServerInfo");
 		foreach (Xml.XmlElement node in serverInfo)
 		{
@@ -279,7 +298,7 @@ public class Config : MonoBehaviour
 			node.SetAttribute("playername", nvs.myInfo.name);
 			// save server name
 			node.SetAttribute("hostname", nvs.serverName);
-		}
+		}*/
 	}
 	
 	void OnDestroy()
@@ -289,5 +308,67 @@ public class Config : MonoBehaviour
 		string filePath = System.IO.Path.Combine(Application.persistentDataPath, configFileName + fileExtension);
 		System.IO.File.WriteAllText(filePath, xmlResult.OuterXml);
 		Debug.Log ( "Saved user config to : " + filePath );
+	}
+
+	// called when we need to update the config
+	// currently it only saves options
+	void cfgUpdate()
+	{
+		//make reference
+		ConfigReader xmlGame = new ConfigReader();
+		xmlGame.LoadXml(Resources.Load<TextAsset>(configFileName).text);
+		//copy options to xmlGame
+		string[] optionList = new string[4];
+		Xml.XmlNodeList optionNodes = xmlResult.GetElementsByTagName ("Option");
+		foreach (Xml.XmlElement nodes in optionNodes)
+		{
+			string attributeName = nodes.GetAttribute("optionName");
+			
+			switch (attributeName)
+			{
+			case "SoundVolume":
+				optionList[0] = nodes.GetAttribute("value");
+				break;
+			case "MusicVolume":
+				optionList[1] = nodes.GetAttribute("value");
+				break;
+			case "SoundIsOn":
+				optionList[2] = nodes.GetAttribute("value");
+				break;
+			case "MusicIsOn":
+				optionList[3] = nodes.GetAttribute("value");
+				break;
+			}
+		}
+		optionNodes = xmlGame.GetElementsByTagName ("Option");
+		foreach (Xml.XmlElement nodes in optionNodes)
+		{
+			string attributeName = nodes.GetAttribute("optionName");
+			
+			switch (attributeName)
+			{
+			case "SoundVolume":
+				nodes.SetAttribute("value",optionList[0]);
+				break;
+			case "MusicVolume":
+				nodes.SetAttribute("value",optionList[1]);
+				break;
+			case "SoundIsOn":
+				nodes.SetAttribute("value",optionList[2]);
+				break;
+			case "MusicIsOn":
+				nodes.SetAttribute("value",optionList[3]);
+				break;
+			}
+		}
+		// copy playername and hostname to xmlGame if they exist
+		if(xmlResult.GetElementById("sip")!=null && xmlResult.GetElementById("sip").GetAttribute("playername")!=null) {
+			xmlGame.GetElementById("sip").SetAttribute("playername",xmlResult.GetElementById("sip").GetAttribute("playername"));
+		}
+		if(xmlResult.GetElementById("sih")!=null && xmlResult.GetElementById("sih").GetAttribute("hostname")!=null) {
+			xmlGame.GetElementById("sih").SetAttribute("hostname",xmlResult.GetElementById("sih").GetAttribute("hostname"));
+		}
+		// set xmlResult as xmlGame
+		xmlResult = xmlGame;
 	}
 }
