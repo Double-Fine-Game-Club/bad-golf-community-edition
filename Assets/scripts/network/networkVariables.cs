@@ -13,9 +13,9 @@ public class networkVariables : MonoBehaviour {
 	[HideInInspector]
 	public string[] ballModelNames = new string[1] {"Ball"};	// ball models names
 	[HideInInspector]
-	public string[] characterModels = new string[2] {"lil_patrick", "BradOverPatrick"};	// character models
+	public string[] characterModels = new string[2] {"PatrickOverPatrick", "BradOverPatrick"};	// character models
 	[HideInInspector]
-	public string[] characteryModelNames = new string[2] {"Patrick", "Brad"};	// character models names
+	public string[] characterModelNames = new string[2] {"Patrick", "Brad"};	// character models names
 
 	// ADD VARIABLES HERE - after adding you will need to reset the object in the inspector and re-assign everything
 	public Camera myCam;				// camera
@@ -33,7 +33,7 @@ public class networkVariables : MonoBehaviour {
 	[HideInInspector]
 	public PlayerInfo myInfo = new PlayerInfo();	// stores info on the current player
 	[HideInInspector]
-	public string serverVersion = "swisscheese";	// server version - next one is Swisshelm
+	public string serverVersion = "DEBUG";			// server version - next one is Swisshelm
 	[HideInInspector]
 	public string serverName = "";					// server name
 	[HideInInspector]
@@ -58,6 +58,7 @@ public class PlayerInfo {
 	public string characterModel;				// model of the character
 	public int currentMode = 2;					// current mode of the player (0=in buggy, 1=on foot, 2=spectator)
 	public string name;							// name
+	public string color;						// player color
 	public int score = 0;						// player score
 	
 	// do these need to be net-sunk?
@@ -68,7 +69,6 @@ public class PlayerInfo {
 	public float v;		//player accelleration/brake input
 	public float h;		//player steering input
 }
-
 // server comment system
 public class ServerComment {
 	public int NATmode;
