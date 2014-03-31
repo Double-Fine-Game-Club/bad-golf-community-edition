@@ -64,6 +64,7 @@ public class PlayerInfo {
 	public string characterModel;				// model of the character
 	public int currentMode = 2;					// current mode of the player (0=in buggy, 1=on foot, 2=spectator)
 	public string name;							// name
+	public string color;						// player color
 	public int score = 0;						// player score
 	
 	// do these need to be net-sunk?
@@ -74,7 +75,6 @@ public class PlayerInfo {
 	public float v;		//player accelleration/brake input
 	public float h;		//player steering input
 }
-
 // server comment system
 public class ServerComment {
 	public int NATmode;

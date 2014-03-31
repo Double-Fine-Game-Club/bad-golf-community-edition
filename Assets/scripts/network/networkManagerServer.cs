@@ -124,6 +124,11 @@ public class networkManagerServer : MonoBehaviour {
 			newGuy.currentMode = 0;	// set them in buggy
 			newGuy.carController = cartGameObject.transform.GetComponent("CarController") as CarController;
 
+			//add details
+			//add player colors
+			Renderer bodyRenderer = newGuy.characterGameObject.transform.FindChild ("body").gameObject.GetComponent<SkinnedMeshRenderer> ();
+			RecolorPlayer.recolorPlayerBody (bodyRenderer, newGuy.color);
+
 			// tell everyone else about it
 			networkView.RPC("SpawnPrefab", RPCMode.Others, cartViewIDTransform, spawnLocation, velocity, newGuy.cartModel);
 			networkView.RPC("SpawnPrefab", RPCMode.Others, ballViewID, spawnLocation, velocity, newGuy.ballModel);
@@ -137,6 +142,7 @@ public class networkManagerServer : MonoBehaviour {
 				networkView.RPC("ThisOnesYours", newGuy.player, cartViewIDTransform, ballViewID, characterViewID);
 			}
 		}
+
 	}
 	
 	// fired when a player joins (if you couldn't tell)
@@ -151,7 +157,11 @@ public class networkManagerServer : MonoBehaviour {
 		newGuy.cartModel = nvs.buggyModels[0];
 		newGuy.ballModel = nvs.ballModels[0];
 		newGuy.characterModel = nvs.characterModels[0];
-		
+
+		string[] tmp = new string[Config.colorsDictionary.Count ];
+		Config.colorsDictionary.Keys.CopyTo(tmp, 0);
+		newGuy.color = tmp [0];
+
 		// send all current players to new guy
 		foreach (PlayerInfo p in nvs.players)
 		{
@@ -170,11 +180,11 @@ public class networkManagerServer : MonoBehaviour {
 			}
 
 			// tell the new player about the iterated player
-			networkView.RPC("AddPlayer", player, p.cartModel, p.ballModel, p.characterModel, p.player, p.name);
+			networkView.RPC("AddPlayer", player, p.cartModel, p.ballModel, p.characterModel, p.player, p.name, p.color);
 
 			// tell the iterated player about the new player, unless the iterated player is the server or we have started
 			if (p.player!=myInfo.player && !gameHasBegun) {
-				networkView.RPC("AddPlayer", p.player, newGuy.cartModel, newGuy.ballModel, newGuy.characterModel, newGuy.player, newGuy.name);
+				networkView.RPC("AddPlayer", p.player, newGuy.cartModel, newGuy.ballModel, newGuy.characterModel, newGuy.player, newGuy.name, newGuy.color);
 			}
 
 			// also tell them to spawn this one as a player if they're spectating
@@ -324,14 +334,15 @@ public class networkManagerServer : MonoBehaviour {
 	}
 
 	[RPC]
-	void ChangeModels(string cartModel, string ballModel, string characterModel, NetworkMessageInfo info) {
+	void ChangeModels(string cartModel, string ballModel, string characterModel, string color, NetworkMessageInfo info) {
 		foreach (PlayerInfo p in nvs.players) {
 			if (p.player==info.sender) {
 				p.cartModel = cartModel;
 				p.ballModel = ballModel;
 				p.characterModel = characterModel;
+				p.color = color;
 				// tell the other clients that it changed
-				networkView.RPC ("UpdateModels", RPCMode.Others, p.player, cartModel, ballModel, characterModel);
+				networkView.RPC ("UpdateModels", RPCMode.Others, p.player, cartModel, ballModel, characterModel, color);
 			}
 		}
 	}
@@ -365,11 +376,11 @@ public class networkManagerServer : MonoBehaviour {
 	[RPC]
 	void StartingGame(string a, string b, string c) {}
 	[RPC]
-	void AddPlayer(string cartModel, string ballModel, string characterModel, NetworkPlayer player, string name) {}
+	void AddPlayer(string cartModel, string ballModel, string characterModel, NetworkPlayer player, string name, string color) {}
 	[RPC]
 	void UpdateName( NetworkPlayer player, string name){}
 	[RPC]
 	void YoureSpectating(){}
 	[RPC]
-	void UpdateModels(NetworkPlayer player, string cartModel, string ballModel, string characterModel) {}
+	void UpdateModels(NetworkPlayer player, string cartModel, string ballModel, string characterModel, string color) {}
 }

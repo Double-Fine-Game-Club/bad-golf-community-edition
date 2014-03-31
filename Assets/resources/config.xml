@@ -39,7 +39,7 @@
 		-->
 		<Cart name="Buggy" location="buggy_m" type="body"/>
 		<Cart name="Hotrod" location="hotrod_m" type="body"/>
-		<Character name="Patrick" location="lil_patrick" type="body"/>
+		<Character name="Patrick" location="PatrickOverPatrick" type="body"/>
 		<Character name="Brad" location="BradOverPatrick" type="body"/>
 		<Ball name="Ball" location="ball"/>
 	</Models>
