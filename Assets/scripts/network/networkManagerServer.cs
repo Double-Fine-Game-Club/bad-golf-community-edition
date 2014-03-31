@@ -153,8 +153,11 @@ public class networkManagerServer : MonoBehaviour {
 		newGuy.cartModel = nvs.buggyModels[0];
 		newGuy.ballModel = nvs.ballModels[0];
 		newGuy.characterModel = nvs.characterModels[0];
-		newGuy.color = "red";
-		
+
+		string[] tmp = new string[Config.colorsDictionary.Count ];
+		Config.colorsDictionary.Keys.CopyTo(tmp, 0);
+		newGuy.color = tmp [0];
+
 		// send all current players to new guy
 		foreach (PlayerInfo p in nvs.players)
 		{

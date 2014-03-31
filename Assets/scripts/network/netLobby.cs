@@ -43,7 +43,10 @@ public class netLobby : MonoBehaviour {
 		if (timer > 0.1 && changeNeeded) {
 			timer = 0;
 			changeNeeded = false;
-			networkView.RPC("ChangeModels", RPCMode.Server, nvs.myInfo.cartModel, nvs.myInfo.ballModel, nvs.myInfo.characterModel, nvs.myInfo.color);
+			if(Network.isClient)	//because server color wasn't being updated by clients
+				networkView.RPC("ChangeModels", RPCMode.Server, nvs.myInfo.cartModel, nvs.myInfo.ballModel, nvs.myInfo.characterModel, nvs.myInfo.color);
+			else
+				networkView.RPC ("UpdateModels", RPCMode.Others, nvs.myInfo.player, nvs.myInfo.cartModel, nvs.myInfo.ballModel, nvs.myInfo.characterModel, nvs.myInfo.color);
 		}
 		if (nvs.players.Count != numPlayers && (nvs.players[nvs.players.Count-1] as PlayerInfo).name != "Some guy") {
 			numPlayers = nvs.players.Count;	
