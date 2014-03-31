@@ -99,6 +99,7 @@ public class netLobby : MonoBehaviour {
 			//IcharacterModel %= nvs.characterModels.Length;
 			//nvs.myInfo.characterModel = nvs.characterModels[IcharacterModel];
 			//changeNeeded = true;
+		}
 
 		if (GUI.Button(new Rect(Screen.width/4,160,Screen.width/2,20), colorKeys[Icolor]))
 		{

@@ -201,7 +201,7 @@ public class Config : MonoBehaviour
 		}
 		
 		Xml.XmlNodeList xchars = xmlResult2.GetElementsByTagName("Character");		// get all characters
-		nvs.characteryModelNames = new string[xchars.Count];						// make some arrays
+		nvs.characterModelNames = new string[xchars.Count];						// make some arrays
 		nvs.characterModels = new string[xchars.Count];
 		count = 0;
 		foreach (Xml.XmlElement node in xchars)
@@ -213,7 +213,7 @@ public class Config : MonoBehaviour
 				//Debug.Log("Body found - don't worry it was dead when we got here");
 				if (Resources.Load(node.GetAttribute("location"))!=null) {
 					// make sure the resource exists
-					nvs.characteryModelNames[count] = node.GetAttribute("name");
+					nvs.characterModelNames[count] = node.GetAttribute("name");
 					nvs.characterModels[count] = node.GetAttribute("location");
 				} else {
 					// if it doesn't then complain

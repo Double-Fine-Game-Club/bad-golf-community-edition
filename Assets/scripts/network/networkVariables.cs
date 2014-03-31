@@ -15,7 +15,7 @@ public class networkVariables : MonoBehaviour {
 	[HideInInspector]
 	public string[] characterModels;	// character models
 	[HideInInspector]
-	public string[] characteryModelNames;	// character models names
+	public string[] characterModelNames;	// character models names
 	[HideInInspector]
 	public string[] levelNames;	// level names
 
