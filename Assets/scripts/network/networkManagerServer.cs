@@ -292,6 +292,7 @@ public class networkManagerServer : MonoBehaviour {
 		string serverName = nvs.serverName + ": Game started";
 		serverComment.comment = "This is the server comment";
 		serverComment.level = "level_full";
+		serverComment.locked = true;
 		MasterServer.RegisterHost(serverVersion, serverName, serverComment.toString());
 
 		// tell everyone what their choices were

@@ -144,7 +144,7 @@ public class networkManager : MonoBehaviour {
 					// only show the server if it's possible to connect to it
 					if (hostParams.NATmode+nvs.NATmode<=2) {
 						GUILayout.BeginHorizontal();
-						if (element.passwordProtected) {
+						if (hostParams.locked) {	// don't use element.passwordProtected since it lies
 							GUILayout.Label("Locked");
 						} else {
 							GUILayout.Label("");
@@ -162,7 +162,7 @@ public class networkManager : MonoBehaviour {
 						GUILayout.Label(hostParams.comment);
 						GUILayout.Space(5);
 						GUILayout.FlexibleSpace();
-						if (!element.passwordProtected && GUILayout.Button("Connect"))
+						if (!hostParams.locked && GUILayout.Button("Connect"))
 						{
 							// Connect to HostData struct, internally the correct method is used (GUID when using NAT).
 							Network.Connect(element);

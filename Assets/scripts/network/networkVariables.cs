@@ -80,12 +80,18 @@ public class ServerComment {
 	public int NATmode;
 	public string comment;
 	public string level;
+	public bool locked;
 	
 	public string toString() {
 		string tmp = "";
 		tmp = tmp + NATmode.ToString() + ";";
 		tmp = tmp + level + ";";
 		tmp = tmp + comment + ";";
+		if (locked) {
+			tmp = tmp + "1;";
+		} else {
+			tmp = tmp + "0;";
+		}
 		return tmp;
 	}
 	public ServerComment(string str) {
@@ -93,10 +99,16 @@ public class ServerComment {
 		NATmode = int.Parse(tmp[0]);
 		level = tmp[1];
 		comment = tmp[2];
+		if (tmp[3]=="1") {
+			locked = true;
+		} else {
+			locked = false;
+		}
 	}
 	public ServerComment() {
 		NATmode = 0;
 		comment = "";
 		level = "";
+		locked = false;
 	}
 }
