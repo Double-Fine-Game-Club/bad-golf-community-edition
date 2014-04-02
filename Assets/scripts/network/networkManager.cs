@@ -48,6 +48,8 @@ public class networkManager : MonoBehaviour {
 		nvs = GameObject.FindWithTag("NetObj").GetComponent("networkVariables") as networkVariables;
 		// get server version
 		serverVersion = nvs.serverVersion;
+		// get NATmode
+		NATmode = nvs.NATmode;
 		
 		// sudo make me a camera
 		nvs.myCam = new GameObject("theCamera").AddComponent("Camera") as Camera;
@@ -57,9 +59,16 @@ public class networkManager : MonoBehaviour {
 		// get them servers
 		MasterServer.ClearHostList();
 		MasterServer.RequestHostList(serverVersion);
-		
-		// test the current setup rather than poll for the result
-		connectionTestResult = Network.TestConnection(true);
+
+		// check if we don't have a valid NATmode
+		if (NATmode==-1) {
+			// test the current setup rather than poll for the result
+			connectionTestResult = Network.TestConnection(true);
+			doneTesting = false;
+		} else {
+			SetMessage();
+			doneTesting = true;
+		}
 	}
 
 	void Update(){
@@ -87,6 +96,7 @@ public class networkManager : MonoBehaviour {
 			// if we aren't connecting to a server
 			} else {
 				// why does this cause an error? It seems to not like being inside an if inside an if inside an if! :S
+				// it's now only an error when removing "Connecting to server..." 
 				if (GUILayout.Button ("Host a server"))
 				{
 					//disable menu level preview - "main" doesn't exist if debugin
@@ -152,7 +162,7 @@ public class networkManager : MonoBehaviour {
 						GUILayout.Label(hostParams.comment);
 						GUILayout.Space(5);
 						GUILayout.FlexibleSpace();
-						if (GUILayout.Button("Connect"))
+						if (!element.passwordProtected && GUILayout.Button("Connect"))
 						{
 							// Connect to HostData struct, internally the correct method is used (GUID when using NAT).
 							Network.Connect(element);
@@ -275,7 +285,32 @@ public class networkManager : MonoBehaviour {
 		if (doneTesting) {
 			// if we're done then update nvs
 			nvs.NATmode = NATmode;
+			// get them servers
+			MasterServer.ClearHostList();
+			MasterServer.RequestHostList(serverVersion);
 		}
 	}
 
+	// changes testStatus to the relevant message
+	void SetMessage() {
+		switch (NATmode) {
+		case 0:	// everythings fine
+			testStatus = "";
+			break;
+			
+		case 1:	// cannot connect to or from sym
+			testStatus = "You may have issues hosting a server.\n"+
+				"Any servers you can't connect to have also been removed.";
+			break;
+			
+		case 2:	// sym cannot connect to anything using NAT-punch
+			testStatus = "You may have issues hosting a server.\n"+
+				"Any servers you can't connect to have also been removed.";
+			break;
+			
+		default:	// error
+			testStatus = "Corrupt Config.xml - try deleting it";
+			break;
+		}
+	}
 }

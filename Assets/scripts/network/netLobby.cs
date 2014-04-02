@@ -65,6 +65,13 @@ public class netLobby : MonoBehaviour {
 		}
 	}
 
+	// remove the rotation camera
+	void OnDestroy() {
+		if (nvs.myCam.gameObject && nvs.myCam.gameObject.GetComponent<Orbit>()) {
+			Component.Destroy(nvs.myCam.gameObject.GetComponent<Orbit>());
+		}
+	}
+
 	
 	void OnGUI() {
 		if (GUI.Button(new Rect(Screen.width/4,40,Screen.width/2,20), nvs.buggyModelNames[IcartModel]))

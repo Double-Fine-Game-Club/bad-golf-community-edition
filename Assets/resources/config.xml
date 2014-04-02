@@ -8,7 +8,7 @@
 ]>
 <Config>
 	<!-- need to update this every time something changes - must be an increasing number -->
-	<Version id="v" build="1"/>
+	<Version id="v" build="2"/>
 	<Options>
 		<Option optionName="SoundVolume" value=".75"/>
 		<Option optionName="MusicVolume" value=".5"/>
@@ -56,4 +56,5 @@
 	<ServerInfo id="siv" version="swisscheese"/>
 	<ServerInfo id="sih" hostname=""/>
 	<ServerInfo id="sip" playername=""/>
+	<ServerInfo id="sin" NATmode="-1"/>
 </Config>
