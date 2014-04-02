@@ -1,14 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE Config [
-   <!ELEMENT Config ANY>
-   <!ELEMENT Version ANY>
-   <!ATTLIST Version id ID #REQUIRED>
-   <!ELEMENT ServerInfo ANY>
-   <!ATTLIST ServerInfo id ID #REQUIRED>
-]>
 <Config>
 	<!-- need to update this every time something changes - must be an increasing number -->
-	<Version id="v" build="2"/>
+	<Version build="4"/>
 	<Options>
 		<Option optionName="SoundVolume" value=".75"/>
 		<Option optionName="MusicVolume" value=".5"/>
@@ -53,8 +46,5 @@
 		<Ball name="Ball" location="ball"/>
 	</Models>
 	<!-- random server info - next server version will be Swisshelm -->
-	<ServerInfo id="siv" version="swisscheese"/>
-	<ServerInfo id="sih" hostname=""/>
-	<ServerInfo id="sip" playername=""/>
-	<ServerInfo id="sin" NATmode="-1"/>
+	<ServerInfo version="swisscheese" hostname="" playername="" NATmode="-1"/>
 </Config>

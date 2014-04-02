@@ -44,7 +44,7 @@ public class Config : MonoBehaviour
 		string filePath = System.IO.Path.Combine(basePath, configFileName + fileExtension);
 		result = "";
 
-		if (filePath.Contains(":/") || filePath.Contains(":\\"))
+		if (filePath.Contains("://"))
 		{
 			WWW www = new WWW(filePath);
 			yield return www;
@@ -84,39 +84,33 @@ public class Config : MonoBehaviour
 			}
 			#endif
 		}
-		Debug.Log(result);
 
-		Debug.Log("a");
 		// load xml from computer
 		xmlResult = new ConfigReader ();
 		xmlResult.LoadXml(result);
-		
-		Debug.Log("b");
+
 		// local xml from game
 		ConfigReader xmlGame = new ConfigReader ();
 		xmlGame.LoadXml(Resources.Load<TextAsset>(configFileName).text);
-		
-		Debug.Log("c");
+
 		//check version numbers
-		if (xmlResult.GetElementById("v")==null){
-			Debug.Log("Updating Config.xml from build 'old' to build " + xmlGame.GetElementById("v").GetAttribute("build"));
+		if (xmlResult.GetElementsByTagName("Version").Count==0){
+			Debug.Log("Updating Config.xml from build 'old' to build " + (xmlGame.GetElementsByTagName("Version")[0] as Xml.XmlElement).GetAttribute("build"));
 			// update to latest
 			cfgUpdate();
-		} else if(int.Parse(xmlResult.GetElementById("v").GetAttribute("build")) < int.Parse(xmlGame.GetElementById("v").GetAttribute("build"))) {
-			Debug.Log("Updating Config.xml from build " + xmlResult.GetElementById("v").GetAttribute("build") +
-			          " to build " + xmlGame.GetElementById("v").GetAttribute("build"));
+		} else if(int.Parse((xmlResult.GetElementsByTagName("Version")[0] as Xml.XmlElement).GetAttribute("build")) < int.Parse((xmlGame.GetElementsByTagName("Version")[0] as Xml.XmlElement).GetAttribute("build"))) {
+			Debug.Log("Updating Config.xml from build " + (xmlResult.GetElementsByTagName("Version")[0] as Xml.XmlElement).GetAttribute("build") +
+			          " to build " + (xmlGame.GetElementsByTagName("Version")[0] as Xml.XmlElement).GetAttribute("build"));
 			// update to latest
 			cfgUpdate();
 		}
-		
-		Debug.Log("d");
+
 		cfgLoadLevels();
 		cfgLoadColors();
 		cfgLoadOptions();
 		cfgLoadModels();
 
 		loaded = true;
-		Debug.Log("e");
 	}
 
 	void cfgLoadLevels()
@@ -175,7 +169,7 @@ public class Config : MonoBehaviour
 		}
 
 
-		/*/ load server settings
+		/* load server settings
 		Xml.XmlNodeList serverInfo = xmlResult.GetElementsByTagName ("ServerInfo");
 		foreach (Xml.XmlElement node in serverInfo)
 		{
@@ -186,11 +180,12 @@ public class Config : MonoBehaviour
 		}
 		*/
 		// no need to check these elements exist since cfgUpdate should do that
-		nvs.myInfo.name = xmlResult.GetElementById("sip").GetAttribute("playername");
+		Xml.XmlElement sevInfo = xmlResult.GetElementsByTagName("ServerInfo")[0] as Xml.XmlElement;
+		nvs.myInfo.name = sevInfo.GetAttribute("playername");
 		if (nvs.myInfo.name=="" || nvs.myInfo.name==null) nvs.myInfo.name = SystemInfo.deviceName;		// make sure it's not blank
-		nvs.serverName = xmlResult.GetElementById("sih").GetAttribute("hostname");
+		nvs.serverName = sevInfo.GetAttribute("hostname");
 		if (nvs.serverName=="" || nvs.serverName==null) nvs.serverName = nvs.myInfo.name + "'s Server";	// make sure it's not blank
-		string tmpNATmode = xmlResult.GetElementById("sin").GetAttribute("NATmode");
+		string tmpNATmode = sevInfo.GetAttribute("NATmode");
 		if (tmpNATmode=="" || tmpNATmode==null || !int.TryParse(tmpNATmode, out nvs.NATmode)) tmpNATmode = "-1";			// make sure it's not blank
 		nvs.NATmode = int.Parse(tmpNATmode);
 	}
@@ -302,9 +297,10 @@ public class Config : MonoBehaviour
 		}
 
 		// save the server settings
-		xmlResult.GetElementById("sip").SetAttribute("playername",nvs.myInfo.name);
-		xmlResult.GetElementById("sih").SetAttribute("hostname",nvs.serverName);
-		xmlResult.GetElementById("sin").SetAttribute("NATmode",nvs.NATmode.ToString());
+		Xml.XmlElement sevInfo = xmlResult.GetElementsByTagName("ServerInfo")[0] as Xml.XmlElement;
+		sevInfo.SetAttribute("playername",nvs.myInfo.name);
+		sevInfo.SetAttribute("hostname",nvs.serverName);
+		sevInfo.SetAttribute("NATmode",nvs.NATmode.ToString());
 		//putting a / after the * here breaks MonoDevelop's tab system - stupid piece of
 		/*xmlResult.GetElementById("sih").GetAttribute("
 		Xml.XmlNodeList serverInfo = xmlResult.GetElementsByTagName ("ServerInfo");
@@ -380,14 +376,18 @@ public class Config : MonoBehaviour
 		}
 
 		// copy playername, hostname and NATmode to xmlGame if they exist
-		if(xmlResult.GetElementById("sip")!=null && xmlResult.GetElementById("sip").GetAttribute("playername")!=null) {
-			xmlGame.GetElementById("sip").SetAttribute("playername",xmlResult.GetElementById("sip").GetAttribute("playername"));
-		}
-		if(xmlResult.GetElementById("sih")!=null && xmlResult.GetElementById("sih").GetAttribute("hostname")!=null) {
-			xmlGame.GetElementById("sih").SetAttribute("hostname",xmlResult.GetElementById("sih").GetAttribute("hostname"));
-		}
-		if(xmlResult.GetElementById("sin")!=null && xmlResult.GetElementById("sin").GetAttribute("NATmode")!=null) {
-			xmlGame.GetElementById("sin").SetAttribute("NATmode",xmlResult.GetElementById("sin").GetAttribute("NATmode"));
+		if(xmlResult.GetElementsByTagName("ServerInfo").Count!=0) {
+			Xml.XmlElement sevInfo = xmlResult.GetElementsByTagName("ServerInfo")[0] as Xml.XmlElement;
+			Xml.XmlElement sevInfoGame = xmlGame.GetElementsByTagName("ServerInfo")[0] as Xml.XmlElement;
+			if(sevInfo.GetAttribute("playername")!=null) {
+				sevInfoGame.SetAttribute("playername",sevInfo.GetAttribute("playername"));
+			}
+			if(sevInfo.GetAttribute("hostname")!=null) {
+				sevInfoGame.SetAttribute("hostname",sevInfo.GetAttribute("hostname"));
+			}
+			if(sevInfo.GetAttribute("NATmode")!=null) {
+				sevInfoGame.SetAttribute("NATmode",sevInfo.GetAttribute("NATmode"));
+			}
 		}
 
 		// set xmlResult as xmlGame
