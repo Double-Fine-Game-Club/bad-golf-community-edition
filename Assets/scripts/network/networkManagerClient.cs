@@ -143,7 +143,7 @@ public class networkManagerClient : MonoBehaviour {
 	
 	[RPC]
 	void StartingGame(string cartModel, string ballModel, string characterModel) {
-		(GetComponent("netLobby") as netLobby).enabled = false;
+		Component.Destroy(GetComponent("netLobby"));
 		
 		// lookup from level list will be added here
 		Application.LoadLevelAdditive("level_full");

@@ -4073,7 +4073,7 @@ MonoBehaviour:
   ballModels: []
   ballModelNames: []
   characterModels: []
-  characteryModelNames: []
+  characterModelNames: []
   levelNames: []
   myCam: {fileID: 0}
   lowestHeight: 50
