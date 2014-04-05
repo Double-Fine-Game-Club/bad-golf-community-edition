@@ -8,6 +8,9 @@ TagManager:
   - Cart
   - SecondaryCamera
   - LocalMultiplayerView
+  - NetObj
+  - LevelSpawn
+  - LevelBottom
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX

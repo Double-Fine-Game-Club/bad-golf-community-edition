@@ -5,22 +5,28 @@ using System.Collections.Generic;
 // general variables
 public class networkVariables : MonoBehaviour {
 	[HideInInspector]
-	public string[] buggyModels = new string[2] {"buggy_m", "hotrod_m"};		// buggy models
+	public string[] buggyModels;		// buggy models
 	[HideInInspector]
-	public string[] buggyModelNames = new string[2] {"Buggy", "Hotrod"};	// buggy models names
+	public string[] buggyModelNames;	// buggy models names
 	[HideInInspector]
-	public string[] ballModels = new string[1] {"ball"};	// ball models
+	public string[] ballModels;	// ball models
 	[HideInInspector]
-	public string[] ballModelNames = new string[1] {"Ball"};	// ball models names
+	public string[] ballModelNames;	// ball models names
 	[HideInInspector]
-	public string[] characterModels = new string[2] {"PatrickOverPatrick", "BradOverPatrick"};	// character models
+	public string[] characterModels;	// character models
 	[HideInInspector]
-	public string[] characterModelNames = new string[2] {"Patrick", "Brad"};	// character models names
+	public string[] characterModelNames;	// character models names
+	[HideInInspector]
+	public string[] levelNames;	// level names
 
 	// ADD VARIABLES HERE - after adding you will need to reset the object in the inspector and re-assign everything
+	[HideInInspector]
 	public Camera myCam;				// camera
-	public float lowestHeight;			// lowest height before respawn
+	[HideInInspector]
+	public float lowestHeight = 50;			// lowest height before respawn
+	[HideInInspector]
 	public bool playerHasWon = false;	// indicate if a player has won the current game
+	[HideInInspector]
 	public string winningPlayer;		// Winner of the last game played
 	// client only variables
 	// maybe put the pause things in here?
@@ -33,7 +39,7 @@ public class networkVariables : MonoBehaviour {
 	[HideInInspector]
 	public PlayerInfo myInfo = new PlayerInfo();	// stores info on the current player
 	[HideInInspector]
-	public string serverVersion = "DEBUG";			// server version - next one is Swisshelm
+	public string serverVersion = "DEBUG";			// server version
 	[HideInInspector]
 	public string serverName = "";					// server name
 	[HideInInspector]
@@ -73,20 +79,36 @@ public class PlayerInfo {
 public class ServerComment {
 	public int NATmode;
 	public string comment;
+	public string level;
+	public bool locked;
 	
 	public string toString() {
 		string tmp = "";
 		tmp = tmp + NATmode.ToString() + ";";
+		tmp = tmp + level + ";";
 		tmp = tmp + comment + ";";
+		if (locked) {
+			tmp = tmp + "1;";
+		} else {
+			tmp = tmp + "0;";
+		}
 		return tmp;
 	}
 	public ServerComment(string str) {
 		string[] tmp = str.Split(new string[]{";"},System.StringSplitOptions.None);
 		NATmode = int.Parse(tmp[0]);
-		comment = tmp[1];
+		level = tmp[1];
+		comment = tmp[2];
+		if (tmp[3]=="1") {
+			locked = true;
+		} else {
+			locked = false;
+		}
 	}
 	public ServerComment() {
 		NATmode = 0;
 		comment = "";
+		level = "";
+		locked = false;
 	}
 }

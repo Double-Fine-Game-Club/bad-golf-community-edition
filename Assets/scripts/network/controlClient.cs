@@ -38,7 +38,9 @@ public class controlClient : MonoBehaviour {
 						h = Input.GetAxis("Horizontal");
 						v = Input.GetAxis("Vertical");
 					#endif
-					networkView.RPC("KartMovement", RPCMode.All, h,v, myInfo.player);
+					//these should be RPCMode.Server since all simulation is done on the server
+					//and then will be sent to the clients - working on that next
+					networkView.RPC("KartMovement", RPCMode.Server, h,v, myInfo.player);
 				}
 				// HONK
 				if (Input.GetKeyDown(KeyCode.Q)) {
@@ -57,7 +59,9 @@ public class controlClient : MonoBehaviour {
 			timer += Time.deltaTime;
 			if (timer > 0.015) {
 				// send a no-keys-pressed message
-				networkView.RPC("KartMovement", RPCMode.All, 0f, 0f, myInfo.player);
+				//these should be RPCMode.Server since all simulation is done on the server
+				//and then will be sent to the clients - working on that next
+				networkView.RPC("KartMovement", RPCMode.Server, 0f, 0f, myInfo.player);
 			}
 		}
 	}
@@ -134,14 +138,15 @@ public class controlClient : MonoBehaviour {
 	// update what they are currenly doing
 	[RPC]
 	public void KartMovement(float h, float v, NetworkPlayer player) {
-		if(nvs){	//currently, a player may load the scene and move before start is finished
+		//all simulation is done on the server and then will be sent to the clients
+		/*if(nvs){	//currently, a player may load the scene and move before start is finished
 			foreach (PlayerInfo p in nvs.players) {
 				if (p.player==player) {
 					p.v = v;
 					p.h = h;
 				}
 			}
-		}
+		}*/
 	}
 	
 	// honks

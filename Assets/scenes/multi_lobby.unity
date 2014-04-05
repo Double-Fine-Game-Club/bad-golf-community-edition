@@ -138,24 +138,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1316b11755235c4296b41f6c3d29a88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myCam: {fileID: 2065442162}
-  lowestHeight: -10
-  buggyModels:
-  - buggy_m
-  - hotrod_m
-  buggyModelNames:
-  - Buggy
-  - Hotrod
-  ballModels:
-  - ball
-  ballModelNames:
-  - Ball
-  characterModels:
-  - lil_patrick
-  characteryModelNames:
-  - Patrick
-  serverVersion: sandvich3
+  buggyModels: []
+  buggyModelNames: []
+  ballModels: []
+  ballModelNames: []
+  characterModels: []
+  characterModelNames: []
+  levelNames: []
+  myCam: {fileID: 0}
+  lowestHeight: 50
+  playerHasWon: 0
+  winningPlayer: 
+  gameHasBegun: 0
+  serverVersion: DEBUG
   serverName: 
+  NATmode: -1
 --- !u!114 &349291804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,9 +164,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df379323a409b6b4e9e0e1602c61d3fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_myBallMarkerPrefab: {fileID: 100000, guid: ca9f549fa3440c34c87976f1c27e9e25, type: 2}
-  m_enemyBallMarkerPrefab: {fileID: 100000, guid: 892850cbce2bacc48bd581d303c956d1,
-    type: 2}
+  m_nvs: {fileID: 0}
+  m_myCamera: {fileID: 0}
+  m_initialized: 0
+  m_myBall: {fileID: 0}
+  m_myBallMarker: {fileID: 0}
 --- !u!1 &627864018
 GameObject:
   m_ObjectHideFlags: 0

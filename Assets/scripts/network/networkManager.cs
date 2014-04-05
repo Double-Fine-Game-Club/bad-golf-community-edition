@@ -45,23 +45,30 @@ public class networkManager : MonoBehaviour {
 		Network.natFacilitatorIP = "37.157.247.37";
 		Network.natFacilitatorPort = 50005;
 
-		nvs = GetComponent("networkVariables") as networkVariables;
+		nvs = GameObject.FindWithTag("NetObj").GetComponent("networkVariables") as networkVariables;
 		// get server version
 		serverVersion = nvs.serverVersion;
-
+		// get NATmode
+		NATmode = nvs.NATmode;
+		
+		// sudo make me a camera
+		nvs.myCam = new GameObject("theCamera").AddComponent("Camera") as Camera;
+		nvs.myCam.gameObject.AddComponent("AudioListener");
+		nvs.myCam.gameObject.SetActive(false);	// disable it until we have joined a game
+		
 		// get them servers
 		MasterServer.ClearHostList();
 		MasterServer.RequestHostList(serverVersion);
 
-		// set default player name
-		nvs.myInfo.name = SystemInfo.deviceName;
-		//nvs.myInfo.name = randomNames[Random.Range(0,randomNames.Length-1)];
-
-		// set default server name
-		nvs.serverName = nvs.myInfo.name + "'s Server";
-		
-		// test the current setup rather than poll for the result
-		connectionTestResult = Network.TestConnection(true);
+		// check if we don't have a valid NATmode
+		if (NATmode==-1) {
+			// test the current setup rather than poll for the result
+			connectionTestResult = Network.TestConnection(true);
+			doneTesting = false;
+		} else {
+			SetMessage();
+			doneTesting = true;
+		}
 	}
 
 	void Update(){
@@ -89,18 +96,24 @@ public class networkManager : MonoBehaviour {
 			// if we aren't connecting to a server
 			} else {
 				// why does this cause an error? It seems to not like being inside an if inside an if inside an if! :S
+				// it's now only an error when removing "Connecting to server..." 
 				if (GUILayout.Button ("Host a server"))
 				{
 					//disable menu level preview - "main" doesn't exist if debugin
 					if(GameObject.Find("main"))
 					{
 						GameControl gCtrl = GameObject.Find("main").GetComponent(typeof(GameControl)) as GameControl;
-						gCtrl.ed_levelPreviewScreen.SetActive(false);
+						//gCtrl.ed_levelPreviewScreen.SetActive(false);
+						gCtrl.hideAllScreens();
 					} else {
 						InputManager.Setup();
 					}
-					// add the server script to us
-					gameObject.AddComponent("networkManagerServer");
+					// add the server script to the NetObj
+					GameObject.FindWithTag("NetObj").AddComponent("networkManagerServer");
+					
+					// enable the camera
+					nvs.myCam.gameObject.SetActive(true);
+
 					// disable this script
 					this.enabled = false;
 				}
@@ -131,7 +144,7 @@ public class networkManager : MonoBehaviour {
 					// only show the server if it's possible to connect to it
 					if (hostParams.NATmode+nvs.NATmode<=2) {
 						GUILayout.BeginHorizontal();
-						if (element.passwordProtected) {
+						if (hostParams.locked) {	// don't use element.passwordProtected since it lies
 							GUILayout.Label("Locked");
 						} else {
 							GUILayout.Label("");
@@ -149,7 +162,7 @@ public class networkManager : MonoBehaviour {
 						GUILayout.Label(hostParams.comment);
 						GUILayout.Space(5);
 						GUILayout.FlexibleSpace();
-						if (GUILayout.Button("Connect"))
+						if (!hostParams.locked && GUILayout.Button("Connect"))
 						{
 							// Connect to HostData struct, internally the correct method is used (GUID when using NAT).
 							Network.Connect(element);
@@ -164,12 +177,14 @@ public class networkManager : MonoBehaviour {
 					GUILayout.Label("Failed to connect");
 			}
 		}
-		
+
+		/*
 		if(GUILayout.Button ("Back")){
 			//Go back to main menu
 			string nameOfLevel = "main";
 			Application.LoadLevel( nameOfLevel );
 		}
+		*/
 	}
 	
 	void OnConnectedToServer() {
@@ -177,12 +192,17 @@ public class networkManager : MonoBehaviour {
 		if(GameObject.Find("main"))
 		{
 			GameControl gCtrl = GameObject.Find("main").GetComponent(typeof(GameControl)) as GameControl;
-			gCtrl.ed_levelPreviewScreen.SetActive(false);
+			//gCtrl.ed_levelPreviewScreen.SetActive(false);
+			gCtrl.hideAllScreens();
 		} else {
 			InputManager.Setup();
 		}
-		// add the client script to us
-		gameObject.AddComponent("networkManagerClient");
+		// add the client script to the NetObj
+		GameObject.FindWithTag("NetObj").AddComponent("networkManagerClient");
+		
+		// enable the camera
+		nvs.myCam.gameObject.SetActive(true);
+
 		// disable this script
 		this.enabled = false;
 	}
@@ -265,7 +285,32 @@ public class networkManager : MonoBehaviour {
 		if (doneTesting) {
 			// if we're done then update nvs
 			nvs.NATmode = NATmode;
+			// get them servers
+			MasterServer.ClearHostList();
+			MasterServer.RequestHostList(serverVersion);
 		}
 	}
 
+	// changes testStatus to the relevant message
+	void SetMessage() {
+		switch (NATmode) {
+		case 0:	// everythings fine
+			testStatus = "";
+			break;
+			
+		case 1:	// cannot connect to or from sym
+			testStatus = "You may have issues hosting a server.\n"+
+				"Any servers you can't connect to have also been removed.";
+			break;
+			
+		case 2:	// sym cannot connect to anything using NAT-punch
+			testStatus = "You may have issues hosting a server.\n"+
+				"Any servers you can't connect to have also been removed.";
+			break;
+			
+		default:	// error
+			testStatus = "Corrupt Config.xml - try deleting it";
+			break;
+		}
+	}
 }

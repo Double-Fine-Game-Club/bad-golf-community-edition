@@ -18,9 +18,9 @@ public class netLobby : MonoBehaviour {
 		nvs = GetComponent("networkVariables") as networkVariables;
 
 		// set models
-		nvs.myInfo.cartModel = nvs.buggyModels[0];
-		nvs.myInfo.ballModel = nvs.ballModels[0];
-		nvs.myInfo.characterModel = nvs.characterModels[0];
+		nvs.myInfo.cartModel = nvs.buggyModels[IcartModel];
+		nvs.myInfo.ballModel = nvs.ballModels[IballModel];
+		nvs.myInfo.characterModel = nvs.characterModels[IballModel];
 		
 		// add chat
 		gameObject.AddComponent("netChat");
@@ -28,12 +28,21 @@ public class netLobby : MonoBehaviour {
 		//pause
 		gameObject.AddComponent ("netPause");
 
+		// add self to the list of people in this game
+		currentList = nvs.myInfo.name;
+
+		// copy the script on the previewCamera in main
+		Orbit cao = nvs.myCam.gameObject.AddComponent("Orbit") as Orbit;
+		cao.Point = new Vector3(28,12,147);
+		cao.Axis = new Vector3(0,1,0);
+		cao.Speed = 0.1f;
+		nvs.myCam.transform.position = new Vector3(26,64,86);
+		nvs.myCam.transform.rotation = Quaternion.Euler(32,Time.time*0.1f,0);	// the Time.time is for the rotation already
+
 		//get colors
 		colorKeys = new string[Config.colorsDictionary.Count ];
 		Config.colorsDictionary.Keys.CopyTo( colorKeys,0);
 		nvs.myInfo.color = colorKeys [0];
-
-		currentList += nvs.myInfo.name;
 	}
 	
 	// Update is called once per frame
@@ -43,14 +52,23 @@ public class netLobby : MonoBehaviour {
 		if (timer > 0.1 && changeNeeded) {
 			timer = 0;
 			changeNeeded = false;
-			if(Network.isClient)	//because server color wasn't being updated by clients
+			// the server needs to confirm this before it is sent to the clients
+			// currently there's nothing in place for the clients to get this info I know, but client<->client interaction is BAD
+			//if(Network.isClient)	//because server color wasn't being updated by clients
 				networkView.RPC("ChangeModels", RPCMode.Server, nvs.myInfo.cartModel, nvs.myInfo.ballModel, nvs.myInfo.characterModel, nvs.myInfo.color);
-			else
-				networkView.RPC ("UpdateModels", RPCMode.Others, nvs.myInfo.player, nvs.myInfo.cartModel, nvs.myInfo.ballModel, nvs.myInfo.characterModel, nvs.myInfo.color);
+			//else
+				//networkView.RPC ("UpdateModels", RPCMode.Others, nvs.myInfo.player, nvs.myInfo.cartModel, nvs.myInfo.ballModel, nvs.myInfo.characterModel, nvs.myInfo.color);
 		}
 		if (nvs.players.Count != numPlayers && (nvs.players[nvs.players.Count-1] as PlayerInfo).name != "Some guy") {
 			numPlayers = nvs.players.Count;	
 			rebuildPlayerList();
+		}
+	}
+
+	// remove the rotation camera
+	void OnDestroy() {
+		if (nvs.myCam.gameObject && nvs.myCam.gameObject.GetComponent<Orbit>()) {
+			Component.Destroy(nvs.myCam.gameObject.GetComponent<Orbit>());
 		}
 	}
 
@@ -64,7 +82,7 @@ public class netLobby : MonoBehaviour {
 			nvs.myInfo.cartModel = nvs.buggyModels[IcartModel];
 			changeNeeded = true;
 		}
-		if (GUI.Button(new Rect(Screen.width/4,80,Screen.width/2,20), nvs.ballModelNames[IballModel]))
+		if (GUI.Button(new Rect(Screen.width/4,70,Screen.width/2,20), nvs.ballModelNames[IballModel]))
 		{
 			// change to next model
 			IballModel += 1;
@@ -72,7 +90,7 @@ public class netLobby : MonoBehaviour {
 			nvs.myInfo.ballModel = nvs.ballModels[IballModel];
 			changeNeeded = true;
 		}
-		if (GUI.Button(new Rect(Screen.width/4,120,Screen.width/2,20), nvs.characterModelNames[IcharacterModel]))
+		if (GUI.Button(new Rect(Screen.width/4,100,Screen.width/2,20), nvs.characterModelNames[IcharacterModel]))
 		{
 			// change to next model
 			IcharacterModel += 1;
@@ -80,6 +98,16 @@ public class netLobby : MonoBehaviour {
 			nvs.myInfo.characterModel = nvs.characterModels[IcharacterModel];
 			changeNeeded = true;
 		}
+
+		if (GUI.Button(new Rect(Screen.width/4,130,Screen.width/2,20), "level_full"))
+		{
+			// change to next level
+			//IcharacterModel += 1;
+			//IcharacterModel %= nvs.characterModels.Length;
+			//nvs.myInfo.characterModel = nvs.characterModels[IcharacterModel];
+			//changeNeeded = true;
+		}
+
 		if (GUI.Button(new Rect(Screen.width/4,160,Screen.width/2,20), colorKeys[Icolor]))
 		{
 			// change to next model
@@ -87,16 +115,17 @@ public class netLobby : MonoBehaviour {
 			Icolor %= colorKeys.Length;
 			nvs.myInfo.color = colorKeys[Icolor];
 			changeNeeded = true;
+
 		}
 		if (Network.isServer) {
-			if (GUI.Button(new Rect(Screen.width/4,200,Screen.width/2,20), "Start!"))
+			if (GUI.Button(new Rect(Screen.width/4,190,Screen.width/2,20), "Start!"))
 			{
 				GetComponent("networkManagerServer").SendMessage("StartGame");
 				this.enabled = false;
 			}
 		}
 		
-		GUI.BeginGroup(new Rect(Screen.width/4,240,Screen.width/2,250));
+		GUI.BeginGroup(new Rect(Screen.width/4,220,Screen.width/2,250));
 		GUILayout.Label ("Players in Lobby:");
 		scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.MaxWidth(Screen.width/2), GUILayout.MaxHeight(200));
 		// show chat
