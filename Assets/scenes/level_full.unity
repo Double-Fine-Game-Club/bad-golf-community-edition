@@ -1819,6 +1819,7 @@ GameObject:
   - 4: {fileID: 438107478}
   - 114: {fileID: 438107479}
   - 114: {fileID: 438107480}
+  - 114: {fileID: 438107481}
   m_Layer: 0
   m_Name: level_full
   m_TagString: Untagged
@@ -1838,8 +1839,8 @@ Transform:
   m_Children:
   - {fileID: 2116444448}
   - {fileID: 2065120411}
-  - {fileID: 1684596698}
   - {fileID: 2042471945}
+  - {fileID: 1684596698}
   - {fileID: 1579541437}
   - {fileID: 1346775745}
   - {fileID: 494588120}
@@ -1888,6 +1889,27 @@ MonoBehaviour:
   muteMusic: 0
   muteSfx: 0
   audioPoolSize: 8
+--- !u!114 &438107481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 438107477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd7b0faabbea7944591c2552e2d41941, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fog: 1
+  fogColor: {r: .372080475, g: .687541842, b: .816176474, a: 1}
+  fogMode: 1
+  fogDensity: 0
+  linearFogStart: 29.1000004
+  linearFogEnd: 364.600006
+  ambientLight: {r: 1, g: 1, b: 1, a: 1}
+  skyboxMaterial: {fileID: 2100000, guid: f3f659c31edf38346992766afc9cd75a, type: 2}
+  haloStrength: .5
+  flareStrength: 1
 --- !u!1 &474499754
 GameObject:
   m_ObjectHideFlags: 0
