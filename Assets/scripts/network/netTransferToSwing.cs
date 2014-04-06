@@ -12,6 +12,8 @@ public class netTransferToSwing : MonoBehaviour {
 	networkVariables nvs;
 	PlayerInfo myInfo;
 
+	bool isInitialized=false;
+
 	void Start()
 	{
 		nvs = GetComponent ("networkVariables") as networkVariables;
@@ -21,17 +23,20 @@ public class netTransferToSwing : MonoBehaviour {
 
 		//Create swing Icon for player
 		swingIcon = Instantiate (Resources.Load ("swing_icon")) as GameObject;
-		swingIcon.transform.parent = nvs.myCam.transform;
-		swingIcon.transform.localPosition = new Vector3 (0f, -0.37f, 1.22f);	
-		swingIcon.SetActive (false);	//starts hidden
 
 		//Get glow effect on ball
 		ballGlow = ball.GetComponent ("Halo") as Behaviour;
 		ballGlow.enabled = false;
+
+		attemptInitialize ();	//for connecting swingIcon to the in level HUD
 	}	
 
 	void Update ()
 	{
+		if (!isInitialized) {
+			attemptInitialize();
+			return;
+		}
 
 		float distance = Vector3.Distance (cart.transform.position, ball.transform.position);
 		if (distance < 5) 
@@ -48,7 +53,6 @@ public class netTransferToSwing : MonoBehaviour {
 		}
 		if (!myInfo.playerIsPaused && inHittingRange) 
 		{
-			swingIcon.transform.rotation = nvs.myCam.transform.rotation;	//always facing camera
 			bool attemptGolfActionPressed = Input.GetKeyUp (KeyCode.E);
 			#if !UNITY_EDITOR && (UNITY_IPHONE || UNITY_ANDROID)
 				if (Input.touchCount > 0)
@@ -84,6 +88,17 @@ public class netTransferToSwing : MonoBehaviour {
 			swingIcon.SetActive (false);
 			this.enabled=false;
 		}
+	}
+
+	void attemptInitialize(){
+		//Attach icon to the HUD
+		GameObject hud = GameObject.FindGameObjectWithTag("PlayerHUD");
+		if(hud==null){return;}
+		swingIcon.transform.parent = hud.transform;
+		swingIcon.transform.localPosition = new Vector3 (0f, -3f, 1f);	
+		swingIcon.transform.localRotation = Quaternion.identity;
+		swingIcon.SetActive (false);	//starts hidden
+		isInitialized = true;
 	}
 
 	void OnDisable(){
