@@ -15,7 +15,7 @@ public class SaveScreenshot : MonoBehaviour
 				count ++;
 				fname = "screenshot_" + count.ToString("D5") + ".png";
 
-			} while (System.IO.File.Exists(fname));
+			} while (System.IO.File.Exists(Application.persistentDataPath + System.IO.Path.DirectorySeparatorChar + fname));
 
 			Application.CaptureScreenshot(Application.persistentDataPath + System.IO.Path.DirectorySeparatorChar + fname);
 		}
