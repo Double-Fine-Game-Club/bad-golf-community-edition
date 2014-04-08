@@ -6,45 +6,50 @@ using System.Collections;
 public class netTransferToSwing : MonoBehaviour {
 
 	public GameObject ball, cart;
-	// For updating the GUI Box.
+	private Behaviour ballGlow;
+	private GameObject swingIcon;
 	private bool inHittingRange = false;
-	public Rect guiBoxPosition = new Rect (100, 200, 100, 100);
-	public bool showGUI = false;
 	networkVariables nvs;
 	PlayerInfo myInfo;
-	
-	//private Color originalColor = Color.grey;
+
+	bool isInitialized=false;
 
 	void Start()
 	{
-		//originalColor = ball.renderer.material.GetColor("_ColorTint");
 		nvs = GetComponent ("networkVariables") as networkVariables;
 		myInfo = nvs.myInfo;
 		ball = nvs.myInfo.ballGameObject;
 		cart = nvs.myInfo.cartGameObject;
+
+		//Create swing Icon for player
+		swingIcon = Instantiate (Resources.Load ("swing_icon")) as GameObject;
+
+		//Get glow effect on ball
+		ballGlow = ball.GetComponent ("Halo") as Behaviour;
+		ballGlow.enabled = false;
+
+		attemptInitialize ();	//for connecting swingIcon to the in level HUD
 	}	
 
-	void OnEnable(){
-		showGUI = true;
-	}
-	
 	void Update ()
 	{
+		if (!isInitialized) {
+			attemptInitialize();
+			return;
+		}
 
 		float distance = Vector3.Distance (cart.transform.position, ball.transform.position);
 		if (distance < 5) 
 		{
 			inHittingRange = true;
-			//Material temp =	ball.renderer.sharedMaterial; 
-			//temp.SetColor("_ColorTint", Color.red);
-			//ball.renderer.sharedMaterial = temp;
+			ballGlow.enabled=true;
+			swingIcon.SetActive (true);
 		} 
 		else 
 		{
 			inHittingRange = false;
-			//Material temp =	ball.renderer.sharedMaterial; 
-			//temp.SetColor("_ColorTint", originalColor);
-			//ball.renderer.sharedMaterial = temp;
+			ballGlow.enabled=false;
+			swingIcon.SetActive (false);
 		}
 		if (!myInfo.playerIsPaused && inHittingRange) 
 		{
@@ -65,31 +70,43 @@ public class netTransferToSwing : MonoBehaviour {
 
 			if ( attemptGolfActionPressed )
 			{ 
-					//But character at the golf ball
-					gameObject.SendMessage("switchToBall");
-					showGUI=false;
-					this.enabled=false;
+				//But character at the golf ball
+				gameObject.SendMessage("switchToBall");
+				ballGlow.enabled=false;
+				swingIcon.SetActive (false);
+				this.enabled=false;
 			}
 		}
-	}
-	
-	// Makes the ugly GUI box that tells when you are close enough to the ball.
-	void OnGUI ()
-	{
-		if( showGUI)
-			GUI.Box (guiBoxPosition, "in range: " + inHittingRange);
 	}
 	
 	void onUserGamePadButton()
 	{
 		if (inHittingRange) 
 		{
-			if (inHittingRange) 
-			{
-				gameObject.SendMessage("switchToBall");
-				showGUI=false;
-				this.enabled=false;
-			}
+			gameObject.SendMessage("switchToBall");
+			ballGlow.enabled=false;
+			swingIcon.SetActive (false);
+			this.enabled=false;
 		}
+	}
+
+	void attemptInitialize(){
+		//Attach icon to the HUD
+		GameObject hud = GameObject.FindGameObjectWithTag("PlayerHUD");
+		if(hud==null){return;}
+		swingIcon.transform.parent = hud.transform;
+		swingIcon.transform.localPosition = new Vector3 (0f, -3f, 1f);	
+		swingIcon.transform.localRotation = Quaternion.identity;
+		swingIcon.SetActive (false);	//starts hidden
+		isInitialized = true;
+	}
+
+	void OnDisable(){
+		//ballGlow.enabled = false;
+		//swingIcon.SetActive (false);
+	}
+
+	void OnDestroy(){
+		Destroy (swingIcon);
 	}
 }

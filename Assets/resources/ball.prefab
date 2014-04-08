@@ -13,6 +13,7 @@ GameObject:
   - 23: {fileID: 2300000}
   - 148: {fileID: 14800000}
   - 54: {fileID: 5400000}
+  - 122: {fileID: 12200000}
   m_Layer: 0
   m_Name: ball
   m_TagString: Untagged
@@ -43,7 +44,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 0181ce375bf9f56428fc22e18129c006, type: 2}
+  - {fileID: 2100000, guid: 7dc9fac1e758393428404475e44cabae, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -58,7 +59,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300000, guid: bed6270ff51f9eb4facc94d0eb8c1c78, type: 3}
 --- !u!54 &5400000
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -74,6 +75,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!122 &12200000
+Halo:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 0
+  m_Color:
+    serializedVersion: 2
+    rgba: 4278251263
+  m_Size: .400000006
 --- !u!135 &13500000
 SphereCollider:
   m_ObjectHideFlags: 1
