@@ -68,8 +68,7 @@ public class PlayerInfo {
 	public int playerId;						// player identifier
 	public NetworkPlayer player;				// player
 	public NetworkPlayer server;				// server
-	public NetworkViewID cartViewIDTransform;	// NetworkViewID of the cart transform
-	public NetworkViewID cartViewIDRigidbody;	// NetworkViewID of the cart rigidbody
+	public NetworkViewID cartViewID;			// NetworkViewID of the cart
 	public GameObject cartGameObject;			// GameObject of the cart
 	public string cartModel;					// model of the cart
 	public NetworkViewID ballViewID;			// NetworkViewID of the ball

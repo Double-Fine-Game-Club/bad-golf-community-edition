@@ -600,7 +600,6 @@ GameObject:
   - 114: {fileID: 11400014}
   - 114: {fileID: 11400012}
   - 114: {fileID: 11400010}
-  - 148: {fileID: 14800000}
   - 114: {fileID: 11400008}
   m_Layer: 8
   m_Name: hotrod_m
@@ -1859,18 +1858,6 @@ WheelCollider:
     asymptoteValue: 200
     stiffnessFactor: .600000024
   m_Enabled: 1
---- !u!148 &14800000
-NetworkView:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100074}
-  m_Enabled: 1
-  m_StateSynchronization: 2
-  m_Observed: {fileID: 400074}
-  m_ViewID:
-    m_ID: 0
-    m_Type: 0
 --- !u!198 &19800000
 ParticleSystem:
   m_ObjectHideFlags: 1
