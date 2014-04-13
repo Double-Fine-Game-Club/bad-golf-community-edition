@@ -111,7 +111,6 @@ GameObject:
   - 114: {fileID: 11400006}
   - 114: {fileID: 11400004}
   - 114: {fileID: 11400002}
-  - 148: {fileID: 14800000}
   - 114: {fileID: 11400020}
   m_Layer: 0
   m_Name: buggy_m
@@ -1392,18 +1391,6 @@ WheelCollider:
     asymptoteValue: 200
     stiffnessFactor: .600000024
   m_Enabled: 1
---- !u!148 &14800000
-NetworkView:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100012}
-  m_Enabled: 1
-  m_StateSynchronization: 2
-  m_Observed: {fileID: 400012}
-  m_ViewID:
-    m_ID: 0
-    m_Type: 0
 --- !u!198 &19800000
 ParticleSystem:
   m_ObjectHideFlags: 1

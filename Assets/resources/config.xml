@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Config>
 	<!-- need to update this every time something changes - must be an increasing number -->
-	<Version build="5"/>
+	<Version build="6"/>
 	<Options>
 		<Option optionName="SoundVolume" value=".75"/>
 		<Option optionName="MusicVolume" value=".5"/>
@@ -39,12 +39,12 @@
 					"body"
 				not needed for ball since it's just a ball
 		-->
-		<Cart name="Buggy" location="buggy_m" type="body"/>
-		<Cart name="Hotrod" location="hotrod_m" type="body"/>
-		<Character name="Patrick" location="PatrickOverPatrick" type="body"/>
-		<Character name="Brad" location="BradOverPatrick" type="body"/>
+		<Cart name="Buggy" location="carts/buggy_m" type="body"/>
+		<Cart name="Hotrod" location="carts/hotrod_m" type="body"/>
+		<Character name="Patrick" location="char_parts/PatrickOverPatrick" type="body"/>
+		<Character name="Brad" location="char_parts/BradOverPatrick" type="body"/>
 		<Ball name="Ball" location="ball"/>
 	</Models>
-	<!-- random server info -->
-	<ServerInfo version="Swisshelm" hostname="" playername="" NATmode="-1"/>
+	<!-- random server info - only needs updating if an RPC is added/changed -->
+	<ServerInfo version="Alpaxa" hostname="" playername="" NATmode="-1"/>
 </Config>
