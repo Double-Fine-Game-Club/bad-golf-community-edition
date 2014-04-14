@@ -48,7 +48,7 @@ public class networkVariables : MonoBehaviour {
 	public int NATmode = -1;						// which NAT version we have for server comparison
 }
 
-// a class that contains all information on a player
+// a class that contains all information on a player - should this be a struct?
 public class PlayerInfo {
 	public NetworkPlayer player;				// player
 	public NetworkPlayer server;				// server

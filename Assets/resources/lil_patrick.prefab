@@ -54,7 +54,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 400006}
   - 111: {fileID: 11100000}
-  - 148: {fileID: 14800000}
   - 135: {fileID: 13500000}
   m_Layer: 0
   m_Name: lil_patrick
@@ -2145,18 +2144,6 @@ SkinnedMeshRenderer:
     m_Center: {x: -.286830664, y: .0833932459, z: .265397578}
     m_Extent: {x: 1.11148036, y: .743688822, z: .734513998}
   m_DirtyAABB: 0
---- !u!148 &14800000
-NetworkView:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100006}
-  m_Enabled: 1
-  m_StateSynchronization: 2
-  m_Observed: {fileID: 400006}
-  m_ViewID:
-    m_ID: 0
-    m_Type: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

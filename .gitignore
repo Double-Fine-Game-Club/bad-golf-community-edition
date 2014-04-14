@@ -20,3 +20,6 @@ build_Data/
 [Ee]hthumbs.db
 [Tt]humbs.db
 *~
+
+# That Unity thing
+UnityPlayer_Symbols.pdb

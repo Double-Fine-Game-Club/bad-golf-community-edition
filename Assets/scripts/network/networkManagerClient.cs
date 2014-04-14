@@ -136,14 +136,9 @@ public class networkManagerClient : MonoBehaviour {
 		// instantiate the prefab
 		GameObject clone = Instantiate(prefab, spawnLocation, Quaternion.identity) as GameObject;
 		
-		// add the interpolation script - need to write this
-		//clone.AddComponent(
-		// give it a NetView
-		NetworkView cnv = clone.AddComponent("NetworkView") as NetworkView;
-		// set viewID
-		cnv.observed = clone.transform;					// track the interpol script
-		cnv.viewID = viewID;
-		cnv.stateSynchronization = NetworkStateSynchronization.Unreliable;
+		// add the interpolation script
+		netInterpolation cni = clone.AddComponent("netInterpolation") as netInterpolation;
+		cni.Init(viewID);
 	}
 	
 	[RPC]
