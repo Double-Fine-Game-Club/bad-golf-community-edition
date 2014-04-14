@@ -96,25 +96,20 @@ public class networkManagerServer : MonoBehaviour {
 			// set buggy as characters parent
 			characterGameObject.transform.parent = cartGameObject.transform;
 			
-			// add the interpolation script - need to write this
-			//cartGameObject.AddComponent(
+			// add the interpolation script
+			netInterpolation cni = cartGameObject.AddComponent("netInterpolation") as netInterpolation;
 			// create and set viewIDs
 			NetworkViewID cartViewID = Network.AllocateViewID();
-			NetworkView cgt = cartGameObject.AddComponent("NetworkView") as NetworkView;
-			cgt.observed = cartGameObject.transform;					// track the interpol script
-			cgt.viewID = cartViewID;
-			cgt.stateSynchronization = NetworkStateSynchronization.Unreliable;
+			cni.Init(cartViewID);
 			
-			// add the interpolation script - need to write this
-			//ballGameObject.AddComponent(
+			// add the interpolation script
+			netInterpolation bni = ballGameObject.AddComponent("netInterpolation") as netInterpolation;
 			NetworkViewID ballViewID = Network.AllocateViewID();
-			NetworkView bgt = ballGameObject.AddComponent("NetworkView") as NetworkView;
-			bgt.observed = ballGameObject.transform;					// track the interpol script
-			bgt.viewID = ballViewID;
-			bgt.stateSynchronization = NetworkStateSynchronization.Unreliable;
+			bni.Init(ballViewID);
 
 			// does this need a script or can we just rely on the parents?
 			NetworkViewID characterViewID = Network.AllocateViewID();
+			characterGameObject.AddComponent("NetworkView");
 			characterGameObject.networkView.viewID = characterViewID;
 			
 			// edit their PlayerInfo

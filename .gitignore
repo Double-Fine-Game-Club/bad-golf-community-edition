@@ -33,5 +33,9 @@ test-results/
 [Ee]hthumbs.db
 [Tt]humbs.db
 *~
+
 [Dd]esktop.ini
 $RECYCLE.BIN/
+
+# That Unity thing
+UnityPlayer_Symbols.pdb

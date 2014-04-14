@@ -63,7 +63,7 @@ public class networkVariables : MonoBehaviour {
 	}
 }
 
-// a class that contains all information on a player
+// a class that contains all information on a player - should this be a struct?
 public class PlayerInfo {
 	public int playerId;						// player identifier
 	public NetworkPlayer player;				// player

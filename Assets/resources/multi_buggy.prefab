@@ -332,7 +332,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400038}
-  - 148: {fileID: 14800000}
   m_Layer: 0
   m_Name: multi_buggy
   m_TagString: Player
@@ -1077,6 +1076,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38748c7bed906cc4d94128dd0415374d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skidSmokeSystem: {fileID: 0}
   wheelModel: {fileID: 400026}
   skidTrailPrefab: {fileID: 400000, guid: 4b6aa99de5d21424eab6ae279f31475b, type: 2}
   loQualDist: 100
@@ -1121,6 +1121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38748c7bed906cc4d94128dd0415374d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skidSmokeSystem: {fileID: 0}
   wheelModel: {fileID: 400004}
   skidTrailPrefab: {fileID: 400000, guid: 4b6aa99de5d21424eab6ae279f31475b, type: 2}
   loQualDist: 100
@@ -1230,6 +1231,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96468c245ae8e0d4f8f1c7a7b8b0542e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isKeyboardControlled: 1
+  isLocalMulti: 0
 --- !u!114 &11400018
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1241,6 +1244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38748c7bed906cc4d94128dd0415374d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skidSmokeSystem: {fileID: 0}
   wheelModel: {fileID: 400032}
   skidTrailPrefab: {fileID: 400000, guid: 4b6aa99de5d21424eab6ae279f31475b, type: 2}
   loQualDist: 100
@@ -1275,6 +1279,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38748c7bed906cc4d94128dd0415374d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skidSmokeSystem: {fileID: 0}
   wheelModel: {fileID: 400022}
   skidTrailPrefab: {fileID: 400000, guid: 4b6aa99de5d21424eab6ae279f31475b, type: 2}
   loQualDist: 100
@@ -1426,18 +1431,6 @@ WheelCollider:
     asymptoteValue: 200
     stiffnessFactor: .600000024
   m_Enabled: 1
---- !u!148 &14800000
-NetworkView:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100038}
-  m_Enabled: 1
-  m_StateSynchronization: 0
-  m_Observed: {fileID: 400038}
-  m_ViewID:
-    m_ID: 0
-    m_Type: 0
 --- !u!198 &19800000
 ParticleSystem:
   m_ObjectHideFlags: 1
