@@ -26,6 +26,7 @@ public class netInterpolation : MonoBehaviour {
 		{1,1,0,0,0},
 		{1,0,0,0,0}
 	};
+	bool hasRigidBody;
 
 	// called to start it
 	public void Init(NetworkViewID cartViewID) {
@@ -37,10 +38,12 @@ public class netInterpolation : MonoBehaviour {
 
 		// fixed no of packets to interpolate from
 		packets = new packet[5];
+		// reset the vars
 		currentIntstamp = 0;
 		currentTimestamp = 0;
 		bezPosition = new Vector3[5];
 		bezRotation = new Quaternion[5];
+		hasRigidBody = (gameObject.rigidbody!=null);
 
 		/*debug
 		Vector3[] tmpvec = new Vector3[5] {
@@ -64,6 +67,7 @@ public class netInterpolation : MonoBehaviour {
 		Debug.Log(BezPositionInterpolate(1f));
 		Debug.Log("END");
 		*/
+		// need to debug rotation! - probably the lerp's too small
 	}
 
 	void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info) {
@@ -81,12 +85,12 @@ public class netInterpolation : MonoBehaviour {
 
 			// copy for streaming
 			pPosition = gameObject.transform.position;
-			//pRotation = gameObject.rigidbody.rotation;
+			pRotation = gameObject.rigidbody.rotation;
 			pIntstamp = currentIntstamp;		// this will tick over after about half a year, so don't leave it running too long
 
 			// set stream
 			stream.Serialize(ref pPosition);
-			//stream.Serialize(ref pRotation);
+			if(hasRigidBody) stream.Serialize(ref pRotation);
 			stream.Serialize(ref pIntstamp);
 
 		} else {
@@ -98,7 +102,7 @@ public class netInterpolation : MonoBehaviour {
 
 			// get stream
 			stream.Serialize(ref pPosition);
-			//stream.Serialize(ref pRotation);
+			if(hasRigidBody) stream.Serialize(ref pRotation);
 			stream.Serialize(ref pIntstamp);
 
 			// add the packet to the list
@@ -130,7 +134,8 @@ public class netInterpolation : MonoBehaviour {
 			}*/
 			// set us to the last one
 			currentIntstamp = packets[0].intstamp;
-			currentTimestamp = packets[0].timestamp;
+			// set time
+			currentTimestamp = Time.time;
 
 			// set up the Bezier curves
 			// first find out the starting packet
@@ -145,6 +150,7 @@ public class netInterpolation : MonoBehaviour {
 			for(int i=startPacket;i<5;i++) {
 				bezPosition[i-startPacket] = BinCoefs[startPacket,i-startPacket] * packets[i].position;
 				//bezRotation[i-startPacket] = BinCoefs[startPacket,i-startPacket] * packets[i].rotation;
+				if(hasRigidBody) bezRotation[i-startPacket] = packets[i].rotation;	// need to somehow lerp it here instead for performance
 			}
 			// set no of point
 			noOfPoints = 5-startPacket;
@@ -158,8 +164,9 @@ public class netInterpolation : MonoBehaviour {
 		if (Network.isClient) {
 			if (noOfPoints>1) {
 				float t = Time.time - currentTimestamp;
-				t = t*normalizer;	// normalize the timestep
+				t = t*normalizer;	// normalize the timestep - not the best idea...
 				gameObject.transform.position = BezPositionInterpolate(t);
+				if(hasRigidBody) gameObject.rigidbody.rotation = BezRotationInterpolate(t);
 			}
 		}
 	}
@@ -172,6 +179,15 @@ public class netInterpolation : MonoBehaviour {
 			//Debug.Log(QuickPower(t,i) * QuickPower(1-t,noOfPoints-i));
 		}
 		//if(viewID.ToString()=="AllocatedID: 1") Debug.Log(tmp);
+		return tmp;
+	}
+	// get the interpolated rotation
+	Quaternion BezRotationInterpolate(float t) {
+		Quaternion tmp = new Quaternion();
+		for(int i=0;i<noOfPoints;i++) {
+			// lerp not slerp as it's faster
+			tmp *= Quaternion.Lerp(Quaternion.identity, bezRotation[i], BinCoefs[5-noOfPoints,i] * QuickPower(t,i) * QuickPower(1-t,noOfPoints-1-i));
+		}
 		return tmp;
 	}
 	// faster than math.pow I think
