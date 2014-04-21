@@ -6,10 +6,6 @@ using System.Linq;
 
 public class LocalMultiplayerController : MonoBehaviour 
 {
-	public GameObject ed_singleView;
-	public GameObject ed_dualView;
-	public GameObject ed_quadView;
-
 	static public GameObject currentView;
 
 	private int winningPlayer = -1;
@@ -20,10 +16,10 @@ public class LocalMultiplayerController : MonoBehaviour
 		nvs = GameObject.FindWithTag("NetObj").GetComponent("networkVariables") as networkVariables;
 		winningPlayer = -1;
 
-		//deactivat all views
-		ed_singleView.SetActive(false);
-		ed_dualView.SetActive(false);
-		ed_quadView.SetActive(false);
+		currentView = new GameObject ("current_view");
+		currentView.transform.parent = GameObject.Find ("level_full").transform;
+		currentView.AddComponent<ControllerSupport> ();
+		currentView.tag = "LocalMultiplayerView";
 
 		//count up number of players 
 		int players = 0;
@@ -54,8 +50,6 @@ public class LocalMultiplayerController : MonoBehaviour
 		//do setup based on number of players & assign the correct devices to the correct prefab
 		if ( players == 1 )
 		{
-			currentView = ed_singleView;
-	
 
 			PlayerInfo me = new PlayerInfo();
 			nvs.players.Add(me);
@@ -89,8 +83,6 @@ public class LocalMultiplayerController : MonoBehaviour
 		}
 		else if ( players == 2)
 		{
-			currentView = ed_dualView;
-
 			nvs.players.Add (new PlayerInfo());
 			nvs.players.Add (new PlayerInfo());
 			createPlayers();
@@ -116,8 +108,6 @@ public class LocalMultiplayerController : MonoBehaviour
 		}
 		else if ( players > 2)
 		{
-			currentView = ed_quadView;
-
 			for(int i=0; i<players; i++)
 				nvs.players.Add (new PlayerInfo());
 			createPlayers();
