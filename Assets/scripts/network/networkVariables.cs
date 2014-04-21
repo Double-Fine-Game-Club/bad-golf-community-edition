@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 // general variables
 public class networkVariables : MonoBehaviour {
+	GameMode gameMode = GameMode.Local;		//The type of game being created
+
 	[HideInInspector]
 	public string[] buggyModels;		// buggy models
 	[HideInInspector]
@@ -66,6 +68,9 @@ public class PlayerInfo {
 	public string name;							// name
 	public string color;						// player color
 	public int score = 0;						// player score
+
+	public GameObject cameraObject;		//The camera following this player; not UI cam
+	public GameObject uiContainer;		//The UI elements (HUD) for this player
 	
 	// do these need to be net-sunk?
 	public bool playerIsBusy   = false;			// player is engaged in an uninteruptable action
@@ -111,4 +116,9 @@ public class ServerComment {
 		level = "";
 		locked = false;
 	}
+}
+
+enum GameMode{
+	Local,
+	Online
 }

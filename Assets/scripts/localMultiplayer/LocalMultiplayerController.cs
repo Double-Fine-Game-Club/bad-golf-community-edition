@@ -66,6 +66,9 @@ public class LocalMultiplayerController : MonoBehaviour
 			currentView = ed_singleView;
 			currentUI = ed_singleUI;
 
+
+			PlayerInfo me = new PlayerInfo();
+			nvs.players.Add(me);
 			//Instantiate player objects and connect them to scene
 			createPlayer();
 
@@ -226,17 +229,25 @@ public class LocalMultiplayerController : MonoBehaviour
 	}
 
 	void createPlayer(){
-		GameObject playerContainer = currentView.transform.FindChild("player").gameObject;
-		GameObject playerCamera = playerContainer.transform.FindChild("player_camera").gameObject;
+		GameObject playerContainer = new GameObject("player");
+		playerContainer.transform.parent = currentView.transform;
+		playerContainer.AddComponent<LocalBallMarker> ();
+		GameObject playerCamera = new GameObject ("player_camera");
+		playerCamera.transform.parent = playerContainer.transform;
+		playerCamera.AddComponent<Camera> ();
+
 		//Create cart for player
 		GameObject cartObject = Instantiate(Resources.Load("buggy_m"), new Vector3(0,10,0), Quaternion.identity) as GameObject;
+		cartObject.name = "buggy";
 		cartObject.transform.parent = playerContainer.transform;
 		//Create ball for player
 		GameObject ballObject = Instantiate(Resources.Load("ball"), new Vector3(0,11,0), Quaternion.identity) as GameObject;
+		ballObject.name = "hit_mode_ball";
 		ballObject.transform.parent = playerContainer.transform;
 		//Create character for player
 		GameObject characterObject = Instantiate(Resources.Load("PatrickOverPatrick"), new Vector3(0,10,0), Quaternion.identity) as GameObject;
 		characterObject.transform.parent = cartObject.transform;
+		characterObject.AddComponent<AudioListener> ();
 		//Create camera for hit_ball; remove later
 		GameObject hitBallCam = new GameObject("hit_ball_camera");
 		hitBallCam.SetActive(false);
@@ -288,8 +299,9 @@ public class LocalMultiplayerController : MonoBehaviour
 		cs.playerBodyList[0] = characterObject.transform.FindChild("body").GetComponent<SkinnedMeshRenderer>();
 		cs.playerToControllerIndex = new int[1];
 		cs.playerToControllerIndex[0] = -1;
-		
-		(playerCamera.GetComponent<FollowPlayerScript>() as FollowPlayerScript).target = cartObject.transform;
+
+		FollowPlayerScript fps = (playerCamera.AddComponent<FollowPlayerScript> () as FollowPlayerScript);
+		fps.target = cartObject.transform;
 	}
 
 
