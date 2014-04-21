@@ -178,6 +178,7 @@ public class LocalMultiplayerController : MonoBehaviour
 			}		
 		}
 		//done coloring
+		GameObject.Find (nvs.levelName).AddComponent<netPlayerRespawn> ();
 	}
 
 	void declareWinner (GameObject player)
@@ -231,18 +232,20 @@ public class LocalMultiplayerController : MonoBehaviour
 			player.cameraObject = playerCamera;
 
 			//Create cart for player
-			GameObject cartObject = Instantiate(Resources.Load("buggy_m"), new Vector3(0,10,0), Quaternion.identity) as GameObject;
+			GameObject cartObject = Instantiate(Resources.Load("buggy_m"), new Vector3(0,-100,0), Quaternion.identity) as GameObject;
 			cartObject.name = "buggy";
 			cartObject.transform.parent = playerContainer.transform;
 			player.cartGameObject = cartObject;
 			//Create ball for player
-			GameObject ballObject = Instantiate(Resources.Load("ball"), new Vector3(0,11,0), Quaternion.identity) as GameObject;
+			GameObject ballObject = Instantiate(Resources.Load("ball"), new Vector3(0,-100,0), Quaternion.identity) as GameObject;
 			ballObject.name = "hit_mode_ball";
 			ballObject.transform.parent = playerContainer.transform;
 			player.ballGameObject = ballObject;
 			//Create character for player
-			GameObject characterObject = Instantiate(Resources.Load("PatrickOverPatrick"), new Vector3(0,10,0), Quaternion.identity) as GameObject;
+			GameObject characterObject = Instantiate(Resources.Load("PatrickOverPatrick")) as GameObject;
 			characterObject.transform.parent = cartObject.transform;
+			characterObject.transform.localPosition = Vector3.zero;
+			characterObject.transform.localRotation = Quaternion.identity;
 			player.characterGameObject = characterObject;
 			if(i<1)	//Only one audiolistener can exist
 				characterObject.AddComponent<AudioListener> ();
@@ -253,7 +256,6 @@ public class LocalMultiplayerController : MonoBehaviour
 			hitBallCam.transform.parent = ballObject.transform;
 
 			//Add scripts to cart
-			(cartObject.AddComponent<PlayerRespawn>() as PlayerRespawn).respawnThreshold = -10;
 			(cartObject.transform.GetComponent<CarUserControl>() as CarUserControl).enabled = true;
 			Destroy(cartObject.transform.GetComponent<NetworkView>());
 			
@@ -285,9 +287,7 @@ public class LocalMultiplayerController : MonoBehaviour
 			stb.scripts.Add(pm);
 			stb.cameraObject = hitBallCam;
 			
-			PlayerRespawn prb = ballObject.AddComponent<PlayerRespawn>() as PlayerRespawn;
-			prb.respawnThreshold = -10;
-			
+
 			//controller support
 			cs.playerObjectList[i] = cartObject;
 			cs.playerBodyList[i] = characterObject.transform.FindChild("body").GetComponent<SkinnedMeshRenderer>();

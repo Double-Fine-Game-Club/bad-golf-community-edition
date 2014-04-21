@@ -14,7 +14,7 @@ public class netPlayerRespawn : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		// get variables we need
-		nvs = GetComponent("networkVariables") as networkVariables;
+		nvs = GameObject.FindWithTag("NetObj").GetComponent("networkVariables") as networkVariables;
 	}
 
 	// these references don't exist until the level has loaded
@@ -43,7 +43,8 @@ public class netPlayerRespawn : MonoBehaviour {
 		// check for keypress
 		if (Input.GetKeyDown(KeyCode.R) && gotReferences) {
 			// move them down a lot to trigger a reset
-			nvs.myInfo.cartGameObject.transform.position = new Vector3(0,respawnThreshold - 1,0);
+			if(nvs.myInfo!=null)	//TODO: add player identifier support (offline support)
+				nvs.myInfo.cartGameObject.transform.position = new Vector3(0,respawnThreshold - 1,0);
 		}
 	}
 	
@@ -51,7 +52,7 @@ public class netPlayerRespawn : MonoBehaviour {
 	void FixedUpdate () {
 		if (gotReferences) {
 			//if we're a server
-			if (Network.isServer) {
+			if (nvs.gameMode==GameMode.Local || Network.isServer) {
 				// go through all the players buggys
 				foreach (PlayerInfo p in nvs.players) {
 					//Respawn if y coordinate falls below threshold
