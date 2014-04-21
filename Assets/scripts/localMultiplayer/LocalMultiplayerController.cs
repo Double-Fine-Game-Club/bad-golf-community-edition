@@ -31,6 +31,17 @@ public class LocalMultiplayerController : MonoBehaviour
 
 		players += LocalMultiplayerLobbyController.controllerDeviceIndexToPlayerIndexMap.Count;
 
+		//This should be moved to after character selection is complete
+		for(int i=0; i<players; i++){
+			PlayerInfo newPlayer = new PlayerInfo();
+			newPlayer.cartModel = "buggy_m";
+			newPlayer.ballModel = "ball";
+			newPlayer.characterModel = "PatrickOverPatrick";
+			newPlayer.name = "player" + (i+1).ToString();
+			nvs.players.Add (newPlayer);	
+		}
+		createPlayers();
+
 		//convert the device map to something usable for this case
 		int[] playerToControllerIndex = Enumerable.Repeat(-1, 4).ToArray();
 		if ( LobbyControllerSupport.inputDeviceList != null )
@@ -50,12 +61,6 @@ public class LocalMultiplayerController : MonoBehaviour
 		//do setup based on number of players & assign the correct devices to the correct prefab
 		if ( players == 1 )
 		{
-
-			PlayerInfo me = new PlayerInfo();
-			nvs.players.Add(me);
-			//Instantiate player objects and connect them to scene
-			createPlayers();
-
 
 			if ( LocalMultiplayerLobbyController.keyboardIndex != -1)
 			{
@@ -83,10 +88,6 @@ public class LocalMultiplayerController : MonoBehaviour
 		}
 		else if ( players == 2)
 		{
-			nvs.players.Add (new PlayerInfo());
-			nvs.players.Add (new PlayerInfo());
-			createPlayers();
-
 			foreach( int val in playerToControllerIndex )
 			{
 				if ( val != -1)	
@@ -108,9 +109,6 @@ public class LocalMultiplayerController : MonoBehaviour
 		}
 		else if ( players > 2)
 		{
-			for(int i=0; i<players; i++)
-				nvs.players.Add (new PlayerInfo());
-			createPlayers();
 
 			foreach( int val in playerToControllerIndex )
 			{
@@ -224,7 +222,7 @@ public class LocalMultiplayerController : MonoBehaviour
 		for(int i=0; i<numPlayers; ++i){
 			PlayerInfo player = nvs.players[i] as PlayerInfo;
 
-			GameObject playerContainer = new GameObject("player");
+			GameObject playerContainer = new GameObject(player.name);
 			playerContainer.transform.parent = currentView.transform;
 			playerContainer.AddComponent<LocalBallMarker> ();
 			GameObject playerCamera = playerCams[i];
@@ -232,17 +230,18 @@ public class LocalMultiplayerController : MonoBehaviour
 			player.cameraObject = playerCamera;
 
 			//Create cart for player
-			GameObject cartObject = Instantiate(Resources.Load("buggy_m"), new Vector3(0,-100,0), Quaternion.identity) as GameObject;
+			GameObject cartObject = Instantiate(Resources.Load(player.cartModel), new Vector3(0,-100,0), Quaternion.identity) as GameObject;
 			cartObject.name = "buggy";
 			cartObject.transform.parent = playerContainer.transform;
 			player.cartGameObject = cartObject;
 			//Create ball for player
-			GameObject ballObject = Instantiate(Resources.Load("ball"), new Vector3(0,-100,0), Quaternion.identity) as GameObject;
+			GameObject ballObject = Instantiate(Resources.Load(player.ballModel), new Vector3(0,-100,0), Quaternion.identity) as GameObject;
 			ballObject.name = "hit_mode_ball";
 			ballObject.transform.parent = playerContainer.transform;
 			player.ballGameObject = ballObject;
 			//Create character for player
-			GameObject characterObject = Instantiate(Resources.Load("PatrickOverPatrick")) as GameObject;
+			GameObject characterObject = Instantiate(Resources.Load(player.characterModel)) as GameObject;
+			characterObject.name = "big_patrick";
 			characterObject.transform.parent = cartObject.transform;
 			characterObject.transform.localPosition = Vector3.zero;
 			characterObject.transform.localRotation = Quaternion.identity;
@@ -298,6 +297,8 @@ public class LocalMultiplayerController : MonoBehaviour
 
 		}
 		(GameObject.Find ("winningPole").gameObject.GetComponent<netWinCollider> () as netWinCollider).initialize();
+		nvs.myInfo = nvs.players [0] as PlayerInfo;	//just so some of the network scripts work
+		nvs.gameObject.AddComponent<netPause> ();
 	}
 
 
