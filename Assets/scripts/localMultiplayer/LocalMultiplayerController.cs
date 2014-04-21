@@ -10,12 +10,7 @@ public class LocalMultiplayerController : MonoBehaviour
 	public GameObject ed_dualView;
 	public GameObject ed_quadView;
 
-	public GameObject ed_singleUI;
-	public GameObject ed_dualUI;
-	public GameObject ed_quadUI;
-
 	static public GameObject currentView;
-	static public GameObject currentUI;
 
 	private int winningPlayer = -1;
 	private networkVariables nvs;
@@ -29,10 +24,6 @@ public class LocalMultiplayerController : MonoBehaviour
 		ed_singleView.SetActive(false);
 		ed_dualView.SetActive(false);
 		ed_quadView.SetActive(false);
-		
-		ed_singleUI.SetActive(false);
-		ed_dualUI.SetActive(false);
-		ed_quadUI.SetActive(false);
 
 		//count up number of players 
 		int players = 0;
@@ -64,8 +55,7 @@ public class LocalMultiplayerController : MonoBehaviour
 		if ( players == 1 )
 		{
 			currentView = ed_singleView;
-			currentUI = ed_singleUI;
-
+	
 
 			PlayerInfo me = new PlayerInfo();
 			nvs.players.Add(me);
@@ -78,7 +68,6 @@ public class LocalMultiplayerController : MonoBehaviour
 				//Player is using keyboard
 				currentView.GetComponent<ControllerSupport>().playerToControllerIndex[0] = -1;
 				currentView.SetActive(true);
-				currentUI.SetActive(true);
 				currentView.GetComponent<ControllerSupport>().ready = true;
 			}
 			else
@@ -96,13 +85,11 @@ public class LocalMultiplayerController : MonoBehaviour
 				currentView.GetComponent<ControllerSupport>().ready = true;
 				currentView.GetComponent<ControllerSupport>().playerToControllerIndex[0] = targetDevice; 
 				currentView.SetActive(true);
-				currentUI.SetActive(true);
 			}	
 		}
 		else if ( players == 2)
 		{
 			currentView = ed_dualView;
-			currentUI = ed_dualUI;
 
 			nvs.players.Add (new PlayerInfo());
 			nvs.players.Add (new PlayerInfo());
@@ -125,13 +112,15 @@ public class LocalMultiplayerController : MonoBehaviour
 
 			currentView.GetComponent<ControllerSupport>().ready = true;
 			currentView.SetActive(true);
-			currentUI.SetActive(true);
-			
+
 		}
 		else if ( players > 2)
 		{
 			currentView = ed_quadView;
-			currentUI = ed_quadUI;
+
+			for(int i=0; i<players; i++)
+				nvs.players.Add (new PlayerInfo());
+			createPlayers();
 
 			foreach( int val in playerToControllerIndex )
 			{
@@ -165,7 +154,6 @@ public class LocalMultiplayerController : MonoBehaviour
 
 			currentView.GetComponent<ControllerSupport>().ready = true;
 			currentView.SetActive(true);
-			currentUI.SetActive(true);
 		}
 
 		//done setting gamepads above, now setup keyboard correctly, and tell certain components that care what they are controlled by 
@@ -241,23 +229,17 @@ public class LocalMultiplayerController : MonoBehaviour
 		cs.playerBodyList = new Renderer[numPlayers];
 		cs.playerToControllerIndex = new int[numPlayers];
 
-		//For hiding UI elements for other players
-		int layerMask = 1 << LayerMask.NameToLayer("localmulti_player1")
-						 | 1 << LayerMask.NameToLayer("localmulti_player2")	
-						 | 1 << LayerMask.NameToLayer("localmulti_player3")
-						 | 1 << LayerMask.NameToLayer("localmulti_player4");
+		GameObject[] playerCams = CameraManager.createSplitScreenCameras (numPlayers);
+		GameObject[] ballCams   = CameraManager.createSplitScreenCameras (numPlayers);
+		
 		for(int i=0; i<numPlayers; ++i){
 			PlayerInfo player = nvs.players[i] as PlayerInfo;
-			int myCullingMask = int.MaxValue ^ layerMask | 1 << LayerMask.NameToLayer(("localmulti_player" + (i+1).ToString()));
 
 			GameObject playerContainer = new GameObject("player");
 			playerContainer.transform.parent = currentView.transform;
 			playerContainer.AddComponent<LocalBallMarker> ();
-			GameObject playerCamera = new GameObject ("player_camera");
+			GameObject playerCamera = playerCams[i];
 			playerCamera.transform.parent = playerContainer.transform;
-			Camera pCam = playerCamera.AddComponent<Camera> () as Camera;
-			pCam.cullingMask = myCullingMask;
-
 
 			//Create cart for player
 			GameObject cartObject = Instantiate(Resources.Load("buggy_m"), new Vector3(0,10,0), Quaternion.identity) as GameObject;
@@ -273,11 +255,10 @@ public class LocalMultiplayerController : MonoBehaviour
 			if(i<1)	//Only one audiolistener can exist
 				characterObject.AddComponent<AudioListener> ();
 			//Create camera for hit_ball; remove later
-			GameObject hitBallCam = new GameObject("hit_ball_camera");
+			GameObject hitBallCam = ballCams[i];
+			hitBallCam.name = "hit_ball_camera";
 			hitBallCam.SetActive(false);
 			hitBallCam.transform.parent = ballObject.transform;
-			Camera ballCam = hitBallCam.AddComponent<Camera>() as Camera;
-			ballCam.cullingMask = myCullingMask;
 
 			//Add scripts to cart
 			(cartObject.AddComponent<PlayerRespawn>() as PlayerRespawn).respawnThreshold = -10;
