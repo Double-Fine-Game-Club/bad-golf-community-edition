@@ -212,8 +212,6 @@ public class LocalMultiplayerController : MonoBehaviour
 
 	void createPlayers(){
 		int numPlayers = nvs.players.Count;
-		LocalMultiWinCollider lmwc = (GameObject.Find ("winningPole").gameObject.GetComponent<LocalMultiWinCollider> () as LocalMultiWinCollider);
-		lmwc.ed_targetBalls = new GameObject[numPlayers];
 		ControllerSupport cs = currentView.GetComponent<ControllerSupport>() as ControllerSupport;
 		cs.playerObjectList = new GameObject[numPlayers];
 		cs.playerBodyList = new Renderer[numPlayers];
@@ -230,18 +228,22 @@ public class LocalMultiplayerController : MonoBehaviour
 			playerContainer.AddComponent<LocalBallMarker> ();
 			GameObject playerCamera = playerCams[i];
 			playerCamera.transform.parent = playerContainer.transform;
+			player.cameraObject = playerCamera;
 
 			//Create cart for player
 			GameObject cartObject = Instantiate(Resources.Load("buggy_m"), new Vector3(0,10,0), Quaternion.identity) as GameObject;
 			cartObject.name = "buggy";
 			cartObject.transform.parent = playerContainer.transform;
+			player.cartGameObject = cartObject;
 			//Create ball for player
 			GameObject ballObject = Instantiate(Resources.Load("ball"), new Vector3(0,11,0), Quaternion.identity) as GameObject;
 			ballObject.name = "hit_mode_ball";
 			ballObject.transform.parent = playerContainer.transform;
+			player.ballGameObject = ballObject;
 			//Create character for player
 			GameObject characterObject = Instantiate(Resources.Load("PatrickOverPatrick"), new Vector3(0,10,0), Quaternion.identity) as GameObject;
 			characterObject.transform.parent = cartObject.transform;
+			player.characterGameObject = characterObject;
 			if(i<1)	//Only one audiolistener can exist
 				characterObject.AddComponent<AudioListener> ();
 			//Create camera for hit_ball; remove later
@@ -294,9 +296,8 @@ public class LocalMultiplayerController : MonoBehaviour
 			FollowPlayerScript fps = (playerCamera.AddComponent<FollowPlayerScript> () as FollowPlayerScript);
 			fps.target = cartObject.transform;
 
-
-			lmwc.ed_targetBalls[i] = ballObject;
 		}
+		(GameObject.Find ("winningPole").gameObject.GetComponent<netWinCollider> () as netWinCollider).initialize();
 	}
 
 

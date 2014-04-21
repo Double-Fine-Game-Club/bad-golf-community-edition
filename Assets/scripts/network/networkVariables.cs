@@ -4,7 +4,8 @@ using System.Collections.Generic;
 
 // general variables
 public class networkVariables : MonoBehaviour {
-	GameMode gameMode = GameMode.Local;		//The type of game being created
+	public GameMode gameMode;		//The type of game being created
+	public string levelName;
 
 	[HideInInspector]
 	public string[] buggyModels;		// buggy models
@@ -118,7 +119,7 @@ public class ServerComment {
 	}
 }
 
-enum GameMode{
+public enum GameMode{
 	Local,
 	Online
 }
