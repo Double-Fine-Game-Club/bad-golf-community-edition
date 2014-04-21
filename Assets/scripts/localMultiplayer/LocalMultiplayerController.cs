@@ -70,7 +70,7 @@ public class LocalMultiplayerController : MonoBehaviour
 			PlayerInfo me = new PlayerInfo();
 			nvs.players.Add(me);
 			//Instantiate player objects and connect them to scene
-			createPlayer();
+			createPlayers();
 
 
 			if ( LocalMultiplayerLobbyController.keyboardIndex != -1)
@@ -103,6 +103,10 @@ public class LocalMultiplayerController : MonoBehaviour
 		{
 			currentView = ed_dualView;
 			currentUI = ed_dualUI;
+
+			nvs.players.Add (new PlayerInfo());
+			nvs.players.Add (new PlayerInfo());
+			createPlayers();
 
 			foreach( int val in playerToControllerIndex )
 			{
@@ -228,80 +232,100 @@ public class LocalMultiplayerController : MonoBehaviour
 	
 	}
 
-	void createPlayer(){
-		GameObject playerContainer = new GameObject("player");
-		playerContainer.transform.parent = currentView.transform;
-		playerContainer.AddComponent<LocalBallMarker> ();
-		GameObject playerCamera = new GameObject ("player_camera");
-		playerCamera.transform.parent = playerContainer.transform;
-		playerCamera.AddComponent<Camera> ();
-
-		//Create cart for player
-		GameObject cartObject = Instantiate(Resources.Load("buggy_m"), new Vector3(0,10,0), Quaternion.identity) as GameObject;
-		cartObject.name = "buggy";
-		cartObject.transform.parent = playerContainer.transform;
-		//Create ball for player
-		GameObject ballObject = Instantiate(Resources.Load("ball"), new Vector3(0,11,0), Quaternion.identity) as GameObject;
-		ballObject.name = "hit_mode_ball";
-		ballObject.transform.parent = playerContainer.transform;
-		//Create character for player
-		GameObject characterObject = Instantiate(Resources.Load("PatrickOverPatrick"), new Vector3(0,10,0), Quaternion.identity) as GameObject;
-		characterObject.transform.parent = cartObject.transform;
-		characterObject.AddComponent<AudioListener> ();
-		//Create camera for hit_ball; remove later
-		GameObject hitBallCam = new GameObject("hit_ball_camera");
-		hitBallCam.SetActive(false);
-		hitBallCam.transform.parent = ballObject.transform;
-		Camera ballCam = hitBallCam.AddComponent<Camera>() as Camera;
-		hitBallCam.AddComponent<AudioListener>();
-		
-		
-		//Add scripts to cart
-		(cartObject.AddComponent<PlayerRespawn>() as PlayerRespawn).respawnThreshold = -10;
-		(cartObject.transform.GetComponent<CarUserControl>() as CarUserControl).enabled = true;
-		Destroy(cartObject.transform.GetComponent<NetworkView>());
-		
-		TransferToSwing ts = cartObject.AddComponent<TransferToSwing>() as TransferToSwing;
-		ts.ball = ballObject;
-		
-		ScriptToggler st = cartObject.AddComponent<ScriptToggler>() as ScriptToggler;
-		st.scripts = new List<MonoBehaviour>();
-		st.scripts.Add(cartObject.GetComponent<CarController>());
-		st.scripts.Add(cartObject.GetComponent<CarUserControl>());
-		st.scripts.Add(cartObject.GetComponent<TransferToSwing>());
-		st.cameraObject = playerCamera;
-		
-		//Add scripts to ball
-		InControlSwingMode ics = ballObject.AddComponent<InControlSwingMode>() as InControlSwingMode;
-		ics.cameraObject = hitBallCam;
-		ics.cart = cartObject;
-		ics.enabled = false;
-		
-		PowerMeter pm = ballObject.AddComponent<PowerMeter>() as PowerMeter;
-		pm.m_objectToCircle = ballObject;
-		pm.m_markerPrefab = Instantiate(Resources.Load("powerMeterPrefab")) as GameObject;
-		pm.m_swingScript = ics;
-		pm.enabled = false;
-		
-		ScriptToggler stb = ballObject.AddComponent<ScriptToggler>() as ScriptToggler;
-		stb.scripts = new List<MonoBehaviour>();
-		stb.scripts.Add(ics);
-		stb.scripts.Add(pm);
-		stb.cameraObject = hitBallCam;
-		
-		PlayerRespawn prb = ballObject.AddComponent<PlayerRespawn>() as PlayerRespawn;
-		prb.respawnThreshold = -10;
-		
+	void createPlayers(){
+		int numPlayers = nvs.players.Count;
+		LocalMultiWinCollider lmwc = (GameObject.Find ("winningPole").gameObject.GetComponent<LocalMultiWinCollider> () as LocalMultiWinCollider);
+		lmwc.ed_targetBalls = new GameObject[numPlayers];
 		ControllerSupport cs = currentView.GetComponent<ControllerSupport>() as ControllerSupport;
-		cs.playerObjectList = new GameObject[1];
-		cs.playerObjectList[0] = cartObject;
-		cs.playerBodyList = new Renderer[1];
-		cs.playerBodyList[0] = characterObject.transform.FindChild("body").GetComponent<SkinnedMeshRenderer>();
-		cs.playerToControllerIndex = new int[1];
-		cs.playerToControllerIndex[0] = -1;
+		cs.playerObjectList = new GameObject[numPlayers];
+		cs.playerBodyList = new Renderer[numPlayers];
+		cs.playerToControllerIndex = new int[numPlayers];
 
-		FollowPlayerScript fps = (playerCamera.AddComponent<FollowPlayerScript> () as FollowPlayerScript);
-		fps.target = cartObject.transform;
+		//For hiding UI elements for other players
+		int layerMask = 1 << LayerMask.NameToLayer("localmulti_player1")
+						 | 1 << LayerMask.NameToLayer("localmulti_player2")	
+						 | 1 << LayerMask.NameToLayer("localmulti_player3")
+						 | 1 << LayerMask.NameToLayer("localmulti_player4");
+		for(int i=0; i<numPlayers; ++i){
+			PlayerInfo player = nvs.players[i] as PlayerInfo;
+			int myCullingMask = int.MaxValue ^ layerMask | 1 << LayerMask.NameToLayer(("localmulti_player" + (i+1).ToString()));
+
+			GameObject playerContainer = new GameObject("player");
+			playerContainer.transform.parent = currentView.transform;
+			playerContainer.AddComponent<LocalBallMarker> ();
+			GameObject playerCamera = new GameObject ("player_camera");
+			playerCamera.transform.parent = playerContainer.transform;
+			Camera pCam = playerCamera.AddComponent<Camera> () as Camera;
+			pCam.cullingMask = myCullingMask;
+
+
+			//Create cart for player
+			GameObject cartObject = Instantiate(Resources.Load("buggy_m"), new Vector3(0,10,0), Quaternion.identity) as GameObject;
+			cartObject.name = "buggy";
+			cartObject.transform.parent = playerContainer.transform;
+			//Create ball for player
+			GameObject ballObject = Instantiate(Resources.Load("ball"), new Vector3(0,11,0), Quaternion.identity) as GameObject;
+			ballObject.name = "hit_mode_ball";
+			ballObject.transform.parent = playerContainer.transform;
+			//Create character for player
+			GameObject characterObject = Instantiate(Resources.Load("PatrickOverPatrick"), new Vector3(0,10,0), Quaternion.identity) as GameObject;
+			characterObject.transform.parent = cartObject.transform;
+			if(i<1)	//Only one audiolistener can exist
+				characterObject.AddComponent<AudioListener> ();
+			//Create camera for hit_ball; remove later
+			GameObject hitBallCam = new GameObject("hit_ball_camera");
+			hitBallCam.SetActive(false);
+			hitBallCam.transform.parent = ballObject.transform;
+			Camera ballCam = hitBallCam.AddComponent<Camera>() as Camera;
+			ballCam.cullingMask = myCullingMask;
+
+			//Add scripts to cart
+			(cartObject.AddComponent<PlayerRespawn>() as PlayerRespawn).respawnThreshold = -10;
+			(cartObject.transform.GetComponent<CarUserControl>() as CarUserControl).enabled = true;
+			Destroy(cartObject.transform.GetComponent<NetworkView>());
+			
+			TransferToSwing ts = cartObject.AddComponent<TransferToSwing>() as TransferToSwing;
+			ts.ball = ballObject;
+			
+			ScriptToggler st = cartObject.AddComponent<ScriptToggler>() as ScriptToggler;
+			st.scripts = new List<MonoBehaviour>();
+			st.scripts.Add(cartObject.GetComponent<CarController>());
+			st.scripts.Add(cartObject.GetComponent<CarUserControl>());
+			st.scripts.Add(cartObject.GetComponent<TransferToSwing>());
+			st.cameraObject = playerCamera;
+			
+			//Add scripts to ball
+			InControlSwingMode ics = ballObject.AddComponent<InControlSwingMode>() as InControlSwingMode;
+			ics.cameraObject = hitBallCam;
+			ics.cart = cartObject;
+			ics.enabled = false;
+			
+			PowerMeter pm = ballObject.AddComponent<PowerMeter>() as PowerMeter;
+			pm.m_objectToCircle = ballObject;
+			pm.m_markerPrefab = Instantiate(Resources.Load("powerMeterPrefab")) as GameObject;
+			pm.m_swingScript = ics;
+			pm.enabled = false;
+			
+			ScriptToggler stb = ballObject.AddComponent<ScriptToggler>() as ScriptToggler;
+			stb.scripts = new List<MonoBehaviour>();
+			stb.scripts.Add(ics);
+			stb.scripts.Add(pm);
+			stb.cameraObject = hitBallCam;
+			
+			PlayerRespawn prb = ballObject.AddComponent<PlayerRespawn>() as PlayerRespawn;
+			prb.respawnThreshold = -10;
+			
+			//controller support
+			cs.playerObjectList[i] = cartObject;
+			cs.playerBodyList[i] = characterObject.transform.FindChild("body").GetComponent<SkinnedMeshRenderer>();
+			cs.playerToControllerIndex[i] = -1;	//dummy value
+
+			FollowPlayerScript fps = (playerCamera.AddComponent<FollowPlayerScript> () as FollowPlayerScript);
+			fps.target = cartObject.transform;
+
+
+			lmwc.ed_targetBalls[i] = ballObject;
+		}
 	}
 
 
