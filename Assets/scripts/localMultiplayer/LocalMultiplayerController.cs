@@ -18,9 +18,11 @@ public class LocalMultiplayerController : MonoBehaviour
 	static public GameObject currentUI;
 
 	private int winningPlayer = -1;
+	private networkVariables nvs;
 
 	void OnEnable () 
 	{
+		nvs = GameObject.FindWithTag("NetObj").GetComponent("networkVariables") as networkVariables;
 		winningPlayer = -1;
 
 		//deactivat all views
@@ -64,8 +66,13 @@ public class LocalMultiplayerController : MonoBehaviour
 			currentView = ed_singleView;
 			currentUI = ed_singleUI;
 
+			//Instantiate player objects and connect them to scene
+			createPlayer();
+
+
 			if ( LocalMultiplayerLobbyController.keyboardIndex != -1)
 			{
+				//Player is using keyboard
 				currentView.GetComponent<ControllerSupport>().playerToControllerIndex[0] = -1;
 				currentView.SetActive(true);
 				currentUI.SetActive(true);
@@ -73,6 +80,7 @@ public class LocalMultiplayerController : MonoBehaviour
 			}
 			else
 			{
+				//Player is using gamepad
 				int targetDevice = -1;
 				foreach( int val in playerToControllerIndex )
 				{
@@ -211,12 +219,80 @@ public class LocalMultiplayerController : MonoBehaviour
 			GUI.Label( new Rect( Screen.width/2, Screen.height/2, 200, 200), "Player " + winningPlayer + " is the Winner !",myStyle);
 		}
 	}
-	
+
 	void Update () 
 	{
 	
 	}
-	
+
+	void createPlayer(){
+		GameObject playerContainer = currentView.transform.FindChild("player").gameObject;
+		GameObject playerCamera = playerContainer.transform.FindChild("player_camera").gameObject;
+		//Create cart for player
+		GameObject cartObject = Instantiate(Resources.Load("buggy_m"), new Vector3(0,10,0), Quaternion.identity) as GameObject;
+		cartObject.transform.parent = playerContainer.transform;
+		//Create ball for player
+		GameObject ballObject = Instantiate(Resources.Load("ball"), new Vector3(0,11,0), Quaternion.identity) as GameObject;
+		ballObject.transform.parent = playerContainer.transform;
+		//Create character for player
+		GameObject characterObject = Instantiate(Resources.Load("PatrickOverPatrick"), new Vector3(0,10,0), Quaternion.identity) as GameObject;
+		characterObject.transform.parent = cartObject.transform;
+		//Create camera for hit_ball; remove later
+		GameObject hitBallCam = new GameObject("hit_ball_camera");
+		hitBallCam.SetActive(false);
+		hitBallCam.transform.parent = ballObject.transform;
+		Camera ballCam = hitBallCam.AddComponent<Camera>() as Camera;
+		hitBallCam.AddComponent<AudioListener>();
+		
+		
+		//Add scripts to cart
+		(cartObject.AddComponent<PlayerRespawn>() as PlayerRespawn).respawnThreshold = -10;
+		(cartObject.transform.GetComponent<CarUserControl>() as CarUserControl).enabled = true;
+		Destroy(cartObject.transform.GetComponent<NetworkView>());
+		
+		TransferToSwing ts = cartObject.AddComponent<TransferToSwing>() as TransferToSwing;
+		ts.ball = ballObject;
+		
+		ScriptToggler st = cartObject.AddComponent<ScriptToggler>() as ScriptToggler;
+		st.scripts = new List<MonoBehaviour>();
+		st.scripts.Add(cartObject.GetComponent<CarController>());
+		st.scripts.Add(cartObject.GetComponent<CarUserControl>());
+		st.scripts.Add(cartObject.GetComponent<TransferToSwing>());
+		st.cameraObject = playerCamera;
+		
+		//Add scripts to ball
+		InControlSwingMode ics = ballObject.AddComponent<InControlSwingMode>() as InControlSwingMode;
+		ics.cameraObject = hitBallCam;
+		ics.cart = cartObject;
+		ics.enabled = false;
+		
+		PowerMeter pm = ballObject.AddComponent<PowerMeter>() as PowerMeter;
+		pm.m_objectToCircle = ballObject;
+		pm.m_markerPrefab = Instantiate(Resources.Load("powerMeterPrefab")) as GameObject;
+		pm.m_swingScript = ics;
+		pm.enabled = false;
+		
+		ScriptToggler stb = ballObject.AddComponent<ScriptToggler>() as ScriptToggler;
+		stb.scripts = new List<MonoBehaviour>();
+		stb.scripts.Add(ics);
+		stb.scripts.Add(pm);
+		stb.cameraObject = hitBallCam;
+		
+		PlayerRespawn prb = ballObject.AddComponent<PlayerRespawn>() as PlayerRespawn;
+		prb.respawnThreshold = -10;
+		
+		ControllerSupport cs = currentView.GetComponent<ControllerSupport>() as ControllerSupport;
+		cs.playerObjectList = new GameObject[1];
+		cs.playerObjectList[0] = cartObject;
+		cs.playerBodyList = new Renderer[1];
+		cs.playerBodyList[0] = characterObject.transform.FindChild("body").GetComponent<SkinnedMeshRenderer>();
+		cs.playerToControllerIndex = new int[1];
+		cs.playerToControllerIndex[0] = -1;
+		
+		(playerCamera.GetComponent<FollowPlayerScript>() as FollowPlayerScript).target = cartObject.transform;
+	}
+
+
 	//LocalMultiplayerLobbyController.controllerDeviceIndexToPlayerIndexMap.Values.CopyTo( playerToControllerIndex, 0) ;	
 	//Array.Sort<int>( playerToControllerIndex, new Comparison<int>( (a,b) => a.CompareTo(b) ));
 }
