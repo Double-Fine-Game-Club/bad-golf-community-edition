@@ -125,21 +125,6 @@ public class LocalMultiplayerController : MonoBehaviour
 				}		
 			}	
 
-			if ( players == 3) //deactivate one of the screens
-			{
-				int unused = -1;
-				for (int i = 0; i < currentView.GetComponent<ControllerSupport>().playerToControllerIndex.Length; i++) 
-				{
-					if( currentView.GetComponent<ControllerSupport>().playerToControllerIndex[i] == -1 &&  LocalMultiplayerLobbyController.keyboardIndex != i)
-					{
-						unused = i;
-					}
-				}
-				
-				currentView.GetComponent<ControllerSupport>().playerObjectList[unused].GetComponent<CarAudio>().followCamera.farClipPlane = 2;
-				currentView.GetComponent<ControllerSupport>().playerObjectList[unused].SetActive( false);
-			}
-
 			currentView.GetComponent<ControllerSupport>().ready = true;
 			currentView.SetActive(true);
 		}

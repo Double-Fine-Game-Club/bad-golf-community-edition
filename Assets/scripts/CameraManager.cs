@@ -28,19 +28,19 @@ public class CameraManager : MonoBehaviour {
 				if(i==0){	//top screen
 					cam.rect = new Rect(0f,0f,1f,.5f);
 				}else if(i==1){	//bottom screen
-					cam.rect = new Rect(0f,.5f,1f,.5f);
+					cam.rect = new Rect(0f,0.5f,1f,.5f);
 				}
 				break;
 			case 3:
 			case 4:
 				if(i==0){		//top-left
-					cam.rect = new Rect(0f,0f,.5f,.5f);
+					cam.rect = new Rect(0f,0.5f,.5f,.5f);
 				}else if(i==1){	//top-right
-					cam.rect = new Rect(.5f,0f,.5f,.5f);
+					cam.rect = new Rect(.5f,0.5f,.5f,.5f);
 				}else if(i==2){	//bottom-left
-					cam.rect = new Rect(0f,.5f,.5f,.5f);
+					cam.rect = new Rect(0f,0f,.5f,.5f);
 				}else if(i==3){	//bottom-right
-					cam.rect = new Rect(.5f,.5f,.5f,.5f);
+					cam.rect = new Rect(.5f,0f,.5f,.5f);
 				}
 				break;
 			default:	//something went wrong
