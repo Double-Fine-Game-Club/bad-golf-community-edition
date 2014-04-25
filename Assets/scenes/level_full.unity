@@ -1820,6 +1820,7 @@ GameObject:
   - 114: {fileID: 438107479}
   - 114: {fileID: 438107480}
   - 114: {fileID: 438107481}
+  - 114: {fileID: 438107482}
   m_Layer: 0
   m_Name: level_full
   m_TagString: Untagged
@@ -1911,6 +1912,17 @@ MonoBehaviour:
   skyboxMaterial: {fileID: 2100000, guid: f3f659c31edf38346992766afc9cd75a, type: 2}
   haloStrength: .5
   flareStrength: 1
+--- !u!114 &438107482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 438107477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc08bfcf765fe3a42af73148e23043b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &474499754
 GameObject:
   m_ObjectHideFlags: 0

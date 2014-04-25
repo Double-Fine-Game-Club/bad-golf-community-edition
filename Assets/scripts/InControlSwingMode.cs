@@ -180,7 +180,7 @@ public class InControlSwingMode : SwingBehaviour
 		return shotPower;
 	}
 
-	#if UNITY_ANDROID || UNITY_IPHONE
+	//#if UNITY_ANDROID || UNITY_IPHONE
 	public void directionUpdate( Vector2 direction)
 	{
 		if (enabled)
@@ -226,6 +226,6 @@ public class InControlSwingMode : SwingBehaviour
 			shotPower = 0;	
 		}
 	}
-	#endif
+	//#endif
 }
 

@@ -24,15 +24,26 @@ public class netWinCollider : MonoBehaviour {
 
 	void OnCollisionEnter( Collision coll)
 	{
-		if(Network.isClient){return;}	//server decides when it counts
-
-		foreach( GameObject ball in ballPlayerMap.Keys)
-		{
-			if ( coll.gameObject == ball)
+		if(nvs.gameMode==GameMode.Local){
+			foreach( GameObject ball in ballPlayerMap.Keys)
 			{
-				messageTarget.networkView.RPC ( "DeclareWinner", RPCMode.All, ballPlayerMap[ball] );
-				break;
-			}		
+				if ( coll.gameObject == ball)
+				{
+					messageTarget.SendMessage ( "declareWinner", ball.transform.parent.gameObject );
+					break;
+				}		
+			}
+		}else if(nvs.gameMode==GameMode.Online){
+			if(Network.isClient){return;}	//server decides when it counts
+
+			foreach( GameObject ball in ballPlayerMap.Keys)
+			{
+				if ( coll.gameObject == ball)
+				{
+					messageTarget.networkView.RPC ( "DeclareWinner", RPCMode.All, ballPlayerMap[ball] );
+					break;
+				}		
+			}
 		}
 	}
 

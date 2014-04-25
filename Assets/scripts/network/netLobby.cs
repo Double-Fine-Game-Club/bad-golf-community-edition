@@ -16,6 +16,7 @@ public class netLobby : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		nvs = GetComponent("networkVariables") as networkVariables;
+		nvs.gameMode = GameMode.Online;
 
 		// set models
 		nvs.myInfo.cartModel = nvs.buggyModels[IcartModel];

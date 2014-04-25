@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Config>
 	<!-- need to update this every time something changes - must be an increasing number -->
-	<Version build="5"/>
+	<Version build="6"/>
 	<Options>
 		<Option optionName="SoundVolume" value=".75"/>
 		<Option optionName="MusicVolume" value=".5"/>
@@ -9,11 +9,7 @@
 		<Option optionName="MusicIsOn" value="true"/>
 	</Options>
 	<Levels LevelsPath="Assets/scenes/">
-		<Map>level_full_local_multi</Map>
-		<Map>level_01_local_multi</Map>
 		<Map>level_full</Map>
-		<Map>level_01</Map>
-		<Map>multi_lobby</Map>
 	</Levels>
 	<PlayerColors>
 		<Color colorName="red" one="243,172,151" two="255,122,82" three="140,12,18" four="228,60,42" />

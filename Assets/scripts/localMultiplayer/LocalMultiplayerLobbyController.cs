@@ -22,9 +22,11 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 	static public int keyboardIndex = -1;
 
 	public GameObject[] controllerHighlights;
+	public networkVariables nvs;
 
 	void Start()
 	{
+		nvs = GameObject.FindWithTag("NetObj").GetComponent("networkVariables") as networkVariables;
 		colorPerPlayer = new int[] { 0,1,2,3 };
 		playerMats = new Material[ ed_playerRenderer.Length ];
 	
@@ -177,6 +179,7 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 
 	public void onStartClicked( string nameOfLevel )
 	{
+		nvs.gameMode = GameMode.Local;
 		int players = 0;
 		foreach ( SwitchableTexture switchable in ed_controlSelectors)
 		{
@@ -186,6 +189,8 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 			
 		if (players > 0 )
 		{
+			//TODO: instantiate characters here
+			nvs.levelName = nameOfLevel;
 			startMessageTarget.SendMessage ( "onStartClicked", nameOfLevel);
 		}
 	}

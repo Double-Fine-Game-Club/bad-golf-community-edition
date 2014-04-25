@@ -24,7 +24,6 @@ public class PauseMenu : MonoBehaviour {
 		if ( LocalMultiplayerController.currentView != null )
 		{
 			LocalMultiplayerController.currentView.SetActive (false);
-			LocalMultiplayerController.currentUI.SetActive (false);
 		}
 		ed_pauseScreen.SetActive (false);
 	}
@@ -41,7 +40,6 @@ public class PauseMenu : MonoBehaviour {
 		if ( LocalMultiplayerController.currentView != null )
 		{
 			LocalMultiplayerController.currentView.SetActive (true);
-			LocalMultiplayerController.currentUI.SetActive (true);
 		}
 		Time.timeScale = 1;
 		isPaused = false;

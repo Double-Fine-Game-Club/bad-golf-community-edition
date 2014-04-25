@@ -6,31 +6,20 @@ using System.Linq;
 
 public class LocalMultiplayerController : MonoBehaviour 
 {
-	public GameObject ed_singleView;
-	public GameObject ed_dualView;
-	public GameObject ed_quadView;
-
-	public GameObject ed_singleUI;
-	public GameObject ed_dualUI;
-	public GameObject ed_quadUI;
-
 	static public GameObject currentView;
-	static public GameObject currentUI;
 
 	private int winningPlayer = -1;
+	private networkVariables nvs;
 
 	void OnEnable () 
 	{
+		nvs = GameObject.FindWithTag("NetObj").GetComponent("networkVariables") as networkVariables;
 		winningPlayer = -1;
 
-		//deactivat all views
-		ed_singleView.SetActive(false);
-		ed_dualView.SetActive(false);
-		ed_quadView.SetActive(false);
-		
-		ed_singleUI.SetActive(false);
-		ed_dualUI.SetActive(false);
-		ed_quadUI.SetActive(false);
+		currentView = new GameObject ("current_view");
+		currentView.transform.parent = GameObject.Find ("level_full").transform;
+		currentView.AddComponent<ControllerSupport> ();
+		currentView.tag = "LocalMultiplayerView";
 
 		//count up number of players 
 		int players = 0;
@@ -41,6 +30,17 @@ public class LocalMultiplayerController : MonoBehaviour
 		}
 
 		players += LocalMultiplayerLobbyController.controllerDeviceIndexToPlayerIndexMap.Count;
+
+		//This should be moved to after character selection is complete
+		for(int i=0; i<players; i++){
+			PlayerInfo newPlayer = new PlayerInfo();
+			newPlayer.cartModel = "buggy_m";
+			newPlayer.ballModel = "ball";
+			newPlayer.characterModel = "PatrickOverPatrick";
+			newPlayer.name = "player" + (i+1).ToString();
+			nvs.players.Add (newPlayer);	
+		}
+		createPlayers();
 
 		//convert the device map to something usable for this case
 		int[] playerToControllerIndex = Enumerable.Repeat(-1, 4).ToArray();
@@ -61,18 +61,17 @@ public class LocalMultiplayerController : MonoBehaviour
 		//do setup based on number of players & assign the correct devices to the correct prefab
 		if ( players == 1 )
 		{
-			currentView = ed_singleView;
-			currentUI = ed_singleUI;
 
 			if ( LocalMultiplayerLobbyController.keyboardIndex != -1)
 			{
+				//Player is using keyboard
 				currentView.GetComponent<ControllerSupport>().playerToControllerIndex[0] = -1;
 				currentView.SetActive(true);
-				currentUI.SetActive(true);
 				currentView.GetComponent<ControllerSupport>().ready = true;
 			}
 			else
 			{
+				//Player is using gamepad
 				int targetDevice = -1;
 				foreach( int val in playerToControllerIndex )
 				{
@@ -85,14 +84,10 @@ public class LocalMultiplayerController : MonoBehaviour
 				currentView.GetComponent<ControllerSupport>().ready = true;
 				currentView.GetComponent<ControllerSupport>().playerToControllerIndex[0] = targetDevice; 
 				currentView.SetActive(true);
-				currentUI.SetActive(true);
 			}	
 		}
 		else if ( players == 2)
 		{
-			currentView = ed_dualView;
-			currentUI = ed_dualUI;
-
 			foreach( int val in playerToControllerIndex )
 			{
 				if ( val != -1)	
@@ -110,13 +105,10 @@ public class LocalMultiplayerController : MonoBehaviour
 
 			currentView.GetComponent<ControllerSupport>().ready = true;
 			currentView.SetActive(true);
-			currentUI.SetActive(true);
-			
+
 		}
 		else if ( players > 2)
 		{
-			currentView = ed_quadView;
-			currentUI = ed_quadUI;
 
 			foreach( int val in playerToControllerIndex )
 			{
@@ -133,24 +125,8 @@ public class LocalMultiplayerController : MonoBehaviour
 				}		
 			}	
 
-			if ( players == 3) //deactivate one of the screens
-			{
-				int unused = -1;
-				for (int i = 0; i < currentView.GetComponent<ControllerSupport>().playerToControllerIndex.Length; i++) 
-				{
-					if( currentView.GetComponent<ControllerSupport>().playerToControllerIndex[i] == -1 &&  LocalMultiplayerLobbyController.keyboardIndex != i)
-					{
-						unused = i;
-					}
-				}
-				
-				currentView.GetComponent<ControllerSupport>().playerObjectList[unused].GetComponent<CarAudio>().followCamera.farClipPlane = 2;
-				currentView.GetComponent<ControllerSupport>().playerObjectList[unused].SetActive( false);
-			}
-
 			currentView.GetComponent<ControllerSupport>().ready = true;
 			currentView.SetActive(true);
-			currentUI.SetActive(true);
 		}
 
 		//done setting gamepads above, now setup keyboard correctly, and tell certain components that care what they are controlled by 
@@ -185,6 +161,7 @@ public class LocalMultiplayerController : MonoBehaviour
 			}		
 		}
 		//done coloring
+		GameObject.Find (nvs.levelName).AddComponent<netPlayerRespawn> ();
 	}
 
 	void declareWinner (GameObject player)
@@ -211,12 +188,105 @@ public class LocalMultiplayerController : MonoBehaviour
 			GUI.Label( new Rect( Screen.width/2, Screen.height/2, 200, 200), "Player " + winningPlayer + " is the Winner !",myStyle);
 		}
 	}
-	
+
 	void Update () 
 	{
 	
 	}
-	
+
+	void createPlayers(){
+		int numPlayers = nvs.players.Count;
+		ControllerSupport cs = currentView.GetComponent<ControllerSupport>() as ControllerSupport;
+		cs.playerObjectList = new GameObject[numPlayers];
+		cs.playerBodyList = new Renderer[numPlayers];
+		cs.playerToControllerIndex = new int[numPlayers];
+
+		GameObject[] playerCams = CameraManager.createSplitScreenCameras (numPlayers);
+		GameObject[] ballCams   = CameraManager.createSplitScreenCameras (numPlayers);
+		
+		for(int i=0; i<numPlayers; ++i){
+			PlayerInfo player = nvs.players[i] as PlayerInfo;
+
+			GameObject playerContainer = new GameObject(player.name);
+			playerContainer.transform.parent = currentView.transform;
+			playerContainer.AddComponent<LocalBallMarker> ();
+			GameObject playerCamera = playerCams[i];
+			playerCamera.transform.parent = playerContainer.transform;
+			player.cameraObject = playerCamera;
+
+			//Create cart for player
+			GameObject cartObject = Instantiate(Resources.Load(player.cartModel), new Vector3(0,-100,0), Quaternion.identity) as GameObject;
+			cartObject.name = "buggy";
+			cartObject.transform.parent = playerContainer.transform;
+			player.cartGameObject = cartObject;
+			//Create ball for player
+			GameObject ballObject = Instantiate(Resources.Load(player.ballModel), new Vector3(0,-100,0), Quaternion.identity) as GameObject;
+			ballObject.name = "hit_mode_ball";
+			ballObject.transform.parent = playerContainer.transform;
+			player.ballGameObject = ballObject;
+			//Create character for player
+			GameObject characterObject = Instantiate(Resources.Load(player.characterModel)) as GameObject;
+			characterObject.name = "big_patrick";
+			characterObject.transform.parent = cartObject.transform;
+			characterObject.transform.localPosition = Vector3.zero;
+			characterObject.transform.localRotation = Quaternion.identity;
+			player.characterGameObject = characterObject;
+			if(i<1)	//Only one audiolistener can exist
+				characterObject.AddComponent<AudioListener> ();
+			//Create camera for hit_ball; remove later
+			GameObject hitBallCam = ballCams[i];
+			hitBallCam.name = "hit_ball_camera";
+			hitBallCam.SetActive(false);
+			hitBallCam.transform.parent = ballObject.transform;
+
+			//Add scripts to cart
+			(cartObject.transform.GetComponent<CarUserControl>() as CarUserControl).enabled = true;
+			Destroy(cartObject.transform.GetComponent<NetworkView>());
+			
+			TransferToSwing ts = cartObject.AddComponent<TransferToSwing>() as TransferToSwing;
+			ts.ball = ballObject;
+			
+			ScriptToggler st = cartObject.AddComponent<ScriptToggler>() as ScriptToggler;
+			st.scripts = new List<MonoBehaviour>();
+			st.scripts.Add(cartObject.GetComponent<CarController>());
+			st.scripts.Add(cartObject.GetComponent<CarUserControl>());
+			st.scripts.Add(cartObject.GetComponent<TransferToSwing>());
+			st.cameraObject = playerCamera;
+			
+			//Add scripts to ball
+			InControlSwingMode ics = ballObject.AddComponent<InControlSwingMode>() as InControlSwingMode;
+			ics.cameraObject = hitBallCam;
+			ics.cart = cartObject;
+			ics.enabled = false;
+			
+			PowerMeter pm = ballObject.AddComponent<PowerMeter>() as PowerMeter;
+			pm.m_objectToCircle = ballObject;
+			pm.m_markerPrefab = Instantiate(Resources.Load("powerMeterPrefab")) as GameObject;
+			pm.m_swingScript = ics;
+			pm.enabled = false;
+			
+			ScriptToggler stb = ballObject.AddComponent<ScriptToggler>() as ScriptToggler;
+			stb.scripts = new List<MonoBehaviour>();
+			stb.scripts.Add(ics);
+			stb.scripts.Add(pm);
+			stb.cameraObject = hitBallCam;
+			
+
+			//controller support
+			cs.playerObjectList[i] = cartObject;
+			cs.playerBodyList[i] = characterObject.transform.FindChild("body").GetComponent<SkinnedMeshRenderer>();
+			cs.playerToControllerIndex[i] = -1;	//dummy value
+
+			FollowPlayerScript fps = (playerCamera.AddComponent<FollowPlayerScript> () as FollowPlayerScript);
+			fps.target = cartObject.transform;
+
+		}
+		(GameObject.Find ("winningPole").gameObject.GetComponent<netWinCollider> () as netWinCollider).initialize();
+		nvs.myInfo = nvs.players [0] as PlayerInfo;	//just so some of the network scripts work
+		nvs.gameObject.AddComponent<netPause> ();
+	}
+
+
 	//LocalMultiplayerLobbyController.controllerDeviceIndexToPlayerIndexMap.Values.CopyTo( playerToControllerIndex, 0) ;	
 	//Array.Sort<int>( playerToControllerIndex, new Comparison<int>( (a,b) => a.CompareTo(b) ));
 }
