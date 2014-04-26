@@ -533,6 +533,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isKeyboardControlled: 1
+  isLocalMulti: 0
 --- !u!54 &60782536
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2740,6 +2741,7 @@ MonoBehaviour:
   - {fileID: 1438790274}
   - {fileID: 1622325551}
   playerToControllerIndex: ffffffffffffffffffffffffffffffff
+  playerBodyList: []
   ready: 0
 --- !u!1 &471530379
 GameObject:
@@ -8930,6 +8932,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isKeyboardControlled: 1
+  isLocalMulti: 0
 --- !u!54 &869834494
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -9568,6 +9571,7 @@ MonoBehaviour:
   playerObjectList:
   - {fileID: 60782529}
   playerToControllerIndex: ffffffff
+  playerBodyList: []
   ready: 0
 --- !u!1 &964757390
 GameObject:
@@ -10281,6 +10285,7 @@ MonoBehaviour:
   - {fileID: 869834487}
   - {fileID: 1580062820}
   playerToControllerIndex: ffffffffffffffff
+  playerBodyList: []
   ready: 0
 --- !u!1 &1040842579
 GameObject:
@@ -10622,12 +10627,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b98e34cfe9954c45b247bc70fe00731, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ed_singleView: {fileID: 961363685}
-  ed_dualView: {fileID: 1035947509}
-  ed_quadView: {fileID: 433862329}
-  ed_singleUI: {fileID: 1013179489}
-  ed_dualUI: {fileID: 140120733}
-  ed_quadUI: {fileID: 339770309}
 --- !u!114 &1078787397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14141,6 +14140,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isKeyboardControlled: 1
+  isLocalMulti: 0
 --- !u!54 &1438790281
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -15124,6 +15124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isKeyboardControlled: 1
+  isLocalMulti: 0
 --- !u!114 &1573955598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15365,6 +15366,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isKeyboardControlled: 1
+  isLocalMulti: 0
 --- !u!114 &1580062826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15724,6 +15726,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isKeyboardControlled: 1
+  isLocalMulti: 0
 --- !u!54 &1622325558
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -16015,6 +16018,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isKeyboardControlled: 1
+  isLocalMulti: 0
 --- !u!114 &1631366764
 MonoBehaviour:
   m_ObjectHideFlags: 0
