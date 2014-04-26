@@ -29,9 +29,9 @@ public class SoundManager : MonoBehaviour
 	private AudioSource musicAudioSourceB;
 	private AudioSource currentMusicAudioSource;
 	private AudioSource[] sfxAudioSourceArray;
-	public float musicVolume = 1f;
+	[Range(0, 1)] public float musicVolume = 1f;
 	public float fadeTime = 2;
-	public float sfxVolume = 1f;
+	[Range(0, 1)] public float sfxVolume = 1f;
 	public bool muteAllSound = false;
 	public bool muteMusic = false;
 	public bool muteSfx = false;
