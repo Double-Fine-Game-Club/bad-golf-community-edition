@@ -4,10 +4,6 @@ using System.Collections.Generic;
 
 public class RecolorPlayer : MonoBehaviour {
 
-	void Awake() {
-		Debug.Log("CLICK ME", this.gameObject);
-	}
-
 	public static void recolorPlayerBody(Renderer bodyRenderer, string color){
 		Dictionary<string, string[]> colors = Config.colorsDictionary;
 		if(colors == null){ Debug.Log("Color dictionary not found"); return;}
