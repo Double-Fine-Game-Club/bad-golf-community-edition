@@ -828,7 +828,7 @@ public class SoundManager : MonoBehaviour
 
 			source.minDistance = minDistance;
 			source.maxDistance = maxDistance;
-			source.PlayOneShot(source.clip, volumeScale);
+			source.PlayOneShot(source.clip, sfxVolume*volumeScale);
 		}
 	#endif
 	}	
