@@ -1887,8 +1887,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 1950088530}
   m_AABB:
-    m_Center: {x: -1.03470755, y: .081445992, z: .482025325}
-    m_Extent: {x: .538659573, y: .58425796, z: .692289174}
+    m_Center: {x: -1.03470755, y: 0, z: .33210057}
+    m_Extent: {x: .538659573, y: .402949274, z: .542364419}
   m_DirtyAABB: 0
 --- !u!1 &121255578
 GameObject:
@@ -1981,7 +1981,7 @@ GameObject:
   - 33: {fileID: 126328505}
   - 23: {fileID: 126328504}
   m_Layer: 0
-  m_Name: fatmandu_course1_tweaks
+  m_Name: course01_tweaks_fatmandu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4944,8 +4944,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 1538595813}
   m_AABB:
-    m_Center: {x: -.286830664, y: .0833932459, z: .265397578}
-    m_Extent: {x: 1.11148036, y: .743688822, z: .734513998}
+    m_Center: {x: -.286830664, y: .00520801544, z: .186562955}
+    m_Extent: {x: 1.11148036, y: .665503621, z: .655679405}
   m_DirtyAABB: 0
 --- !u!1 &391300233
 GameObject:
@@ -5990,8 +5990,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 1334239296}
   m_AABB:
-    m_Center: {x: -1.03470755, y: .081445992, z: .482025325}
-    m_Extent: {x: .538659573, y: .58425796, z: .692289174}
+    m_Center: {x: -1.03470755, y: 0, z: .33210057}
+    m_Extent: {x: .538659573, y: .402949274, z: .542364419}
   m_DirtyAABB: 0
 --- !u!1 &458907431
 GameObject:
@@ -7560,8 +7560,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 1334239296}
   m_AABB:
-    m_Center: {x: -.286830664, y: .0833932459, z: .265397578}
-    m_Extent: {x: 1.11148036, y: .743688822, z: .734513998}
+    m_Center: {x: -.286830664, y: .00520801544, z: .186562955}
+    m_Extent: {x: 1.11148036, y: .665503621, z: .655679405}
   m_DirtyAABB: 0
 --- !u!1 &622114536
 GameObject:
@@ -8222,8 +8222,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 1950088530}
   m_AABB:
-    m_Center: {x: -.564154387, y: .034154892, z: .198355377}
-    m_Extent: {x: .155980915, y: .203625843, z: .213184237}
+    m_Center: {x: -.615079999, y: 0, z: .211368382}
+    m_Extent: {x: .0863977373, y: .146635801, z: .132103562}
   m_DirtyAABB: 0
 --- !u!1 &675817786
 GameObject:
@@ -8891,7 +8891,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 724307313}
   m_Layer: 11
-  m_Name: lil_patrick
+  m_Name: patrick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9347,8 +9347,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 1334239296}
   m_AABB:
-    m_Center: {x: -.564154387, y: .034154892, z: .198355377}
-    m_Extent: {x: .155980915, y: .203625843, z: .213184237}
+    m_Center: {x: -.615079999, y: 0, z: .211368382}
+    m_Extent: {x: .0863977373, y: .146635801, z: .132103562}
   m_DirtyAABB: 0
 --- !u!1 &770664515
 GameObject:
@@ -11736,8 +11736,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 1424774429}
   m_AABB:
-    m_Center: {x: -.286830664, y: .0833932459, z: .265397578}
-    m_Extent: {x: 1.11148036, y: .743688822, z: .734513998}
+    m_Center: {x: -.286830664, y: .00520801544, z: .186562955}
+    m_Extent: {x: 1.11148036, y: .665503621, z: .655679405}
   m_DirtyAABB: 0
 --- !u!1 &943373104
 GameObject:
@@ -11933,8 +11933,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 1538595813}
   m_AABB:
-    m_Center: {x: -1.03470755, y: .081445992, z: .482025325}
-    m_Extent: {x: .538659573, y: .58425796, z: .692289174}
+    m_Center: {x: -1.03470755, y: 0, z: .33210057}
+    m_Extent: {x: .538659573, y: .402949274, z: .542364419}
   m_DirtyAABB: 0
 --- !u!1 &963126329
 GameObject:
@@ -12890,8 +12890,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 1950088530}
   m_AABB:
-    m_Center: {x: -.286830664, y: .0833932459, z: .265397578}
-    m_Extent: {x: 1.11148036, y: .743688822, z: .734513998}
+    m_Center: {x: -.286830664, y: .00520801544, z: .186562955}
+    m_Extent: {x: 1.11148036, y: .665503621, z: .655679405}
   m_DirtyAABB: 0
 --- !u!1 &1068026920
 GameObject:
@@ -15266,8 +15266,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 1424774429}
   m_AABB:
-    m_Center: {x: -.564154387, y: .034154892, z: .198355377}
-    m_Extent: {x: .155980915, y: .203625843, z: .213184237}
+    m_Center: {x: -.615079999, y: 0, z: .211368382}
+    m_Extent: {x: .0863977373, y: .146635801, z: .132103562}
   m_DirtyAABB: 0
 --- !u!1 &1296458892
 GameObject:
@@ -18073,7 +18073,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1462622923}
   m_Layer: 11
-  m_Name: lil_patrick
+  m_Name: patrick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19598,7 +19598,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1608159580}
   m_Layer: 11
-  m_Name: lil_patrick
+  m_Name: patrick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22327,8 +22327,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 1424774429}
   m_AABB:
-    m_Center: {x: -1.03470755, y: .081445992, z: .482025325}
-    m_Extent: {x: .538659573, y: .58425796, z: .692289174}
+    m_Center: {x: -1.03470755, y: 0, z: .33210057}
+    m_Extent: {x: .538659573, y: .402949274, z: .542364419}
   m_DirtyAABB: 0
 --- !u!1 &1840686625
 GameObject:
@@ -24116,7 +24116,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1971332146}
   m_Layer: 11
-  m_Name: lil_patrick
+  m_Name: patrick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24531,8 +24531,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 1538595813}
   m_AABB:
-    m_Center: {x: -.564154387, y: .034154892, z: .198355377}
-    m_Extent: {x: .155980915, y: .203625843, z: .213184237}
+    m_Center: {x: -.615079999, y: 0, z: .211368382}
+    m_Extent: {x: .0863977373, y: .146635801, z: .132103562}
   m_DirtyAABB: 0
 --- !u!1 &2006119216
 GameObject:
