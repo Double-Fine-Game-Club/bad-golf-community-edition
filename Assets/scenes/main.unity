@@ -4068,6 +4068,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1316b11755235c4296b41f6c3d29a88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameMode: 0
+  levelName: 
   buggyModels: []
   buggyModelNames: []
   ballModels: []
@@ -19927,6 +19929,7 @@ MonoBehaviour:
   - {fileID: 1680329679}
   - {fileID: 1939528714}
   - {fileID: 86851513}
+  nvs: {fileID: 0}
 --- !u!1 &1637461995
 GameObject:
   m_ObjectHideFlags: 0
