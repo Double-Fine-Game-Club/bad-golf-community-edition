@@ -165,17 +165,39 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 		}
 	}
 
+	//Change the color of the given player
+	//example val  =  "2_r" 
+	//'2' for player 2, 'r' for right arrow
 	public void onColor ( string val )
 	{
-		//example val  =  "2_r" 
-		//'2' for player 2, 'r' for right arrow
 		string[] split = val.Split( new char[]{'_'});		
 					
 		int playerIndex =  int.Parse(split[0]);
-		int colorDirection = (split[1] == "r")? 1:-1;
+		int direction = (split[1] == "r")? 1:-1;
 
-		colorPerPlayer[playerIndex] =  (colorPerPlayer[playerIndex] + colorKeys.Length + colorDirection) % colorKeys.Length; 
+		colorPerPlayer[playerIndex] =  (colorPerPlayer[playerIndex] + colorKeys.Length + direction) % colorKeys.Length; 
 		setColorOn( playerIndex);
+	}
+
+	//Change the character model of the given player
+	//example val  =  "2_r" 
+	//'2' for player 2, 'r' for right arrow
+	public void onCharacter ( string val )
+	{
+		string[] split = val.Split( new char[]{'_'});			
+		int playerIndex =  int.Parse(split[0]);
+		int direction = (split[1] == "r")? 1:-1;
+	}
+
+	//Change the cart model of the given player
+	//example val  =  "2_r" 
+	//'2' for player 2, 'r' for right arrow
+	public void onCart ( string val )
+	{
+		string[] split = val.Split( new char[]{'_'});		
+		int playerIndex =  int.Parse(split[0]);
+		int direction = (split[1] == "r")? 1:-1;
+		
 	}
 
 	public void onStartClicked( string nameOfLevel )
