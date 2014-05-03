@@ -168,12 +168,13 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 	public void onColor ( string val )
 	{
 		//example val  =  "2_r" 
+		//'2' for player 2, 'r' for right arrow
 		string[] split = val.Split( new char[]{'_'});		
 					
 		int playerIndex =  int.Parse(split[0]);
-		//int colorDirection = (split[1] == "r")? 1:-1;
+		int colorDirection = (split[1] == "r")? 1:-1;
 
-		colorPerPlayer[playerIndex] =  (colorPerPlayer[playerIndex] + 1) % colorKeys.Length; 
+		colorPerPlayer[playerIndex] =  (colorPerPlayer[playerIndex] + colorKeys.Length + colorDirection) % colorKeys.Length; 
 		setColorOn( playerIndex);
 	}
 
