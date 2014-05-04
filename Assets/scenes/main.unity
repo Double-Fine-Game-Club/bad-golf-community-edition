@@ -1337,10 +1337,18 @@ MonoBehaviour:
   - {fileID: 1079026580}
   - {fileID: 1362492044}
   - {fileID: 1795866139}
+  - {fileID: 2114938237}
+  - {fileID: 1321912488}
+  - {fileID: 1968604118}
   - {fileID: 1235536309}
   - {fileID: 891184198}
+  - {fileID: 261028988}
   - {fileID: 1673062129}
   actionMessage:
+  - forceMessageSend
+  - forceMessageSend
+  - forceMessageSend
+  - forceMessageSend
   - forceMessageSend
   - forceMessageSend
   - forceMessageSend
@@ -1354,7 +1362,15 @@ MonoBehaviour:
   - forceHover
   - forceHover
   - forceHover
+  - forceHover
+  - forceHover
+  - forceHover
+  - forceHover
   hoverRemoveMessage:
+  - removeForcedHover
+  - removeForcedHover
+  - removeForcedHover
+  - removeForcedHover
   - removeForcedHover
   - removeForcedHover
   - removeForcedHover
@@ -21628,10 +21644,18 @@ MonoBehaviour:
   - {fileID: 899746015}
   - {fileID: 1490980684}
   - {fileID: 1082915386}
+  - {fileID: 1522134082}
+  - {fileID: 180892520}
+  - {fileID: 30406965}
   - {fileID: 1235536309}
   - {fileID: 891184198}
+  - {fileID: 261028988}
   - {fileID: 1924973600}
   actionMessage:
+  - forceMessageSend
+  - forceMessageSend
+  - forceMessageSend
+  - forceMessageSend
   - forceMessageSend
   - forceMessageSend
   - forceMessageSend
@@ -21645,7 +21669,15 @@ MonoBehaviour:
   - forceHover
   - forceHover
   - forceHover
+  - forceHover
+  - forceHover
+  - forceHover
+  - forceHover
   hoverRemoveMessage:
+  - removeForcedHover
+  - removeForcedHover
+  - removeForcedHover
+  - removeForcedHover
   - removeForcedHover
   - removeForcedHover
   - removeForcedHover
@@ -25131,10 +25163,18 @@ MonoBehaviour:
   - {fileID: 190136688}
   - {fileID: 1572863293}
   - {fileID: 675178185}
+  - {fileID: 723433286}
+  - {fileID: 2048742103}
+  - {fileID: 1321527266}
   - {fileID: 1235536309}
   - {fileID: 891184198}
+  - {fileID: 261028988}
   - {fileID: 1083279668}
   actionMessage:
+  - forceMessageSend
+  - forceMessageSend
+  - forceMessageSend
+  - forceMessageSend
   - forceMessageSend
   - forceMessageSend
   - forceMessageSend
@@ -25148,7 +25188,15 @@ MonoBehaviour:
   - forceHover
   - forceHover
   - forceHover
+  - forceHover
+  - forceHover
+  - forceHover
+  - forceHover
   hoverRemoveMessage:
+  - removeForcedHover
+  - removeForcedHover
+  - removeForcedHover
+  - removeForcedHover
   - removeForcedHover
   - removeForcedHover
   - removeForcedHover
@@ -27808,10 +27856,18 @@ MonoBehaviour:
   - {fileID: 194299957}
   - {fileID: 27095764}
   - {fileID: 567502386}
+  - {fileID: 2109713125}
+  - {fileID: 729890567}
+  - {fileID: 1710956008}
   - {fileID: 1235536309}
   - {fileID: 891184198}
+  - {fileID: 261028988}
   - {fileID: 1937007126}
   actionMessage:
+  - forceMessageSend
+  - forceMessageSend
+  - forceMessageSend
+  - forceMessageSend
   - forceMessageSend
   - forceMessageSend
   - forceMessageSend
@@ -27825,7 +27881,15 @@ MonoBehaviour:
   - forceHover
   - forceHover
   - forceHover
+  - forceHover
+  - forceHover
+  - forceHover
+  - forceHover
   hoverRemoveMessage:
+  - removeForcedHover
+  - removeForcedHover
+  - removeForcedHover
+  - removeForcedHover
   - removeForcedHover
   - removeForcedHover
   - removeForcedHover

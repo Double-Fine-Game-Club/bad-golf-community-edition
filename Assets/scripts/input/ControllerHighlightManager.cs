@@ -21,22 +21,47 @@ public class ControllerHighlightManager : MonoBehaviour
 
 	void doRight ( )
 	{
-		sendActionMessage();
+
+		if (currentIndex < 3) {
+			//on Right
+			changeIndex(3);	//move left
+		}else if(currentIndex<6){
+			//On Left
+			changeIndex (-3);	//move right
+		}else{
+			//Do nothing
+		}
 	}
 
 	void doLeft ( )
 	{
-		sendActionMessage();
+		if (currentIndex < 3) {
+			//on Right
+			changeIndex(3);	//move left
+		}else if(currentIndex<6){
+			//On Left
+			changeIndex (-3);	//move right
+		}else{
+			//Do nothing
+		}
 	}
 
 	void doDown ( )
 	{
-		changeIndex( 1);
+		if(currentIndex==2){
+			//On arrow_low_r
+			changeIndex (4);	//move to level
+		}else
+			changeIndex( 1);
 	}
 
 	void doUp ( )
 	{
-		changeIndex(-1);
+		if(currentIndex==3 || currentIndex==6){
+			//On level or arrow_top_l
+			changeIndex (-4);	//move to arrow_low_r or player_controls
+		}else
+			changeIndex( -1);
 	}
 
 	void doButtonPress ( )

@@ -59,7 +59,6 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 	private void setColorOn( int index)
 	{
 		string color = colorKeys [colorPerPlayer [index]];
-		string[] playerColors =	Config.colorsDictionary[ color ];
 
 		PlayerInfo p = nvs.getPlayer (index);
 		if(p!=null) p.color = color;
@@ -337,6 +336,15 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 				controllerDeviceIndexToPlayerIndexMap[targetDevice] = openIndex;
 				ed_controlSelectors[openIndex].setIndex(1);
 				controllerHighlights[openIndex].SetActive(true);
+
+				PlayerInfo newP = new PlayerInfo ();
+				newP.playerId = openIndex;
+				newP.color = colorKeys [colorPerPlayer [openIndex]];
+				newP.cartModel = nvs.buggyModels[0];
+				newP.characterModel = nvs.characterModels [0];
+				newP.ballModel = nvs.ballModels [0];
+				newP.name = "player" + (openIndex+1).ToString();
+				nvs.players.Add (newP);
 			}	
 			else
 			{
