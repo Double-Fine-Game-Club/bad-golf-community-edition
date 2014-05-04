@@ -218,9 +218,9 @@ public class LocalMultiplayerController : MonoBehaviour
 			player.ballGameObject = ballObject;
 			//Create character for player
 			GameObject characterObject = Instantiate(Resources.Load(player.characterModel)) as GameObject;
-			characterObject.name = "big_patrick";
+			characterObject.name = "player_character";
 			characterObject.transform.parent = cartObject.transform;
-			characterObject.transform.localPosition = Vector3.zero;
+			characterObject.transform.localPosition = Vector3.zero + new Vector3(0,0.3f,0);
 			characterObject.transform.localRotation = Quaternion.identity;
 			player.characterGameObject = characterObject;
 			if(i<1)	//Only one audiolistener can exist
