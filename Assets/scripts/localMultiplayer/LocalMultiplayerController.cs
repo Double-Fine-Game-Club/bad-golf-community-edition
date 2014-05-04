@@ -142,14 +142,6 @@ public class LocalMultiplayerController : MonoBehaviour
 				}
 				else
 					playerIndex = LocalMultiplayerLobbyController.controllerDeviceIndexToPlayerIndexMap[controllerIndex]; 
-				
-				//replace all the materials in the object cause we have many materials for the body at the moment
-				Material[] matList = bodyList[i].sharedMaterials;
-				for (int c = 0; c < matList.Length; c++) 
-				{
-					matList[c] = LocalMultiplayerLobbyController.playerMats[playerIndex]; 
-				}
-				bodyList[i].sharedMaterials = matList;
 			}		
 		}
 		//done coloring
@@ -223,6 +215,8 @@ public class LocalMultiplayerController : MonoBehaviour
 			characterObject.transform.localPosition = Vector3.zero + new Vector3(0,0.3f,0);
 			characterObject.transform.localRotation = Quaternion.identity;
 			player.characterGameObject = characterObject;
+			//Apply color
+			RecolorPlayer.recolorPlayerBody( characterObject.transform.FindChild("body").GetComponent<Renderer>() as Renderer, player.color );
 			if(i<1)	//Only one audiolistener can exist
 				characterObject.AddComponent<AudioListener> ();
 			//Create camera for hit_ball; remove later

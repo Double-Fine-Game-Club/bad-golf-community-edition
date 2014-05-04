@@ -64,27 +64,7 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 		PlayerInfo p = nvs.getPlayer (index);
 		if(p!=null) p.color = color;
 
-		
-		Material mat = ed_playerRenderer[index].material;
-		
-		string[] split = playerColors[0].Split( new char[]{','}); 
-		//Debug.Log ( split[0]+","+split[1]+","+split[2] );
-		mat.SetColor("_Color01", new Color( float.Parse(split[0])/255, float.Parse(split[1])/255, float.Parse(split[2])/255));
-		
-		split = playerColors[1].Split( new char[]{','}); 
-		//Debug.Log ( split[0]+","+split[1]+","+split[2] );
-		mat.SetColor("_Color02", new Color( float.Parse(split[0])/255, float.Parse(split[1])/255, float.Parse(split[2])/255));
-		
-		split = playerColors[2].Split( new char[]{','}); 
-		//Debug.Log ( split[0]+","+split[1]+","+split[2] );
-		mat.SetColor("_Color03", new Color( float.Parse(split[0])/255, float.Parse(split[1])/255, float.Parse(split[2])/255));
-		
-		split = playerColors[3].Split( new char[]{','}); 
-		//Debug.Log ( split[0]+","+split[1]+","+split[2] );
-		mat.SetColor("_Color04", new Color( float.Parse(split[0])/255, float.Parse(split[1])/255, float.Parse(split[2])/255));
-		
-		ed_playerRenderer[index].material = mat;
-		playerMats[index] = mat;
+		RecolorPlayer.recolorPlayerBody (ed_playerRenderer [index], color);
 	}
 
 	private void setCharacterOn( int index )
