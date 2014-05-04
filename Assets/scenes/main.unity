@@ -646,7 +646,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   messageTarget: {fileID: 1636658972}
-  messageName: onColor
+  messageName: onCharacter
   clickAudio: {fileID: 8300000, guid: d2fee02bd0ce9e94d907f5452654eb91, type: 3}
   messageValue: 0_l
 --- !u!212 &27095770
@@ -2119,7 +2119,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 159859629}
   m_Layer: 11
-  m_Name: PatrickOverPatrick
+  m_Name: player_character
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2891,7 +2891,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   messageTarget: {fileID: 1636658972}
-  messageName: onColor
+  messageName: onCart
   clickAudio: {fileID: 8300000, guid: d2fee02bd0ce9e94d907f5452654eb91, type: 3}
   messageValue: 0_l
 --- !u!1 &196688679
@@ -5140,7 +5140,7 @@ GameObject:
   - 4: {fileID: 436714256}
   - 95: {fileID: 436714257}
   m_Layer: 11
-  m_Name: cart3_yup
+  m_Name: player_cart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8317,7 +8317,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   messageTarget: {fileID: 1636658972}
-  messageName: onColor
+  messageName: onCharacter
   clickAudio: {fileID: 8300000, guid: d2fee02bd0ce9e94d907f5452654eb91, type: 3}
   messageValue: 0_l
 --- !u!212 &729890573
@@ -9458,7 +9458,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 827349757}
   m_Layer: 11
-  m_Name: PatrickOverPatrick
+  m_Name: player_character
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11063,6 +11063,10 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: .819289327
       objectReference: {fileID: 0}
+    - target: {fileID: 100180, guid: fff52d3cebcaacf4287347ac5cd53a30, type: 2}
+      propertyPath: m_Name
+      value: player_character
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11100000, guid: fff52d3cebcaacf4287347ac5cd53a30, type: 2}
     - {fileID: 14800000, guid: fff52d3cebcaacf4287347ac5cd53a30, type: 2}
@@ -11348,7 +11352,7 @@ GameObject:
   - 4: {fileID: 957984109}
   - 95: {fileID: 957984110}
   m_Layer: 11
-  m_Name: cart3_yup
+  m_Name: player_cart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12216,6 +12220,10 @@ Prefab:
     - target: {fileID: 400180, guid: fff52d3cebcaacf4287347ac5cd53a30, type: 2}
       propertyPath: m_LocalScale.z
       value: .81928885
+      objectReference: {fileID: 0}
+    - target: {fileID: 100180, guid: fff52d3cebcaacf4287347ac5cd53a30, type: 2}
+      propertyPath: m_Name
+      value: player_character
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11100000, guid: fff52d3cebcaacf4287347ac5cd53a30, type: 2}
@@ -16403,7 +16411,7 @@ GameObject:
   - 4: {fileID: 1310494516}
   - 95: {fileID: 1310494517}
   m_Layer: 0
-  m_Name: cart3_yup
+  m_Name: player_cart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18042,7 +18050,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1439742634}
   m_Layer: 11
-  m_Name: PatrickOverPatrick
+  m_Name: player_character
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20141,7 +20149,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1616869903}
   m_Layer: 11
-  m_Name: PatrickOverPatrick
+  m_Name: player_character
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20407,13 +20415,15 @@ MonoBehaviour:
   - {fileID: 2116270801}
   colorKeys: []
   colorPerPlayer: 
+  characterPerPlayer: 
+  cartPerPlayer: 
   startMessageTarget: {fileID: 977792247}
   controllerHighlights:
   - {fileID: 2131435663}
   - {fileID: 1680329679}
   - {fileID: 1939528714}
   - {fileID: 86851513}
-  nvs: {fileID: 0}
+  nvs: {fileID: 304601844}
 --- !u!1 &1637461995
 GameObject:
   m_ObjectHideFlags: 0
@@ -21056,6 +21066,10 @@ Prefab:
     - target: {fileID: 400180, guid: fff52d3cebcaacf4287347ac5cd53a30, type: 2}
       propertyPath: m_LocalScale.z
       value: .81928885
+      objectReference: {fileID: 0}
+    - target: {fileID: 100180, guid: fff52d3cebcaacf4287347ac5cd53a30, type: 2}
+      propertyPath: m_Name
+      value: player_character
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11100000, guid: fff52d3cebcaacf4287347ac5cd53a30, type: 2}
@@ -22420,7 +22434,7 @@ GameObject:
   - 4: {fileID: 1760775489}
   - 95: {fileID: 1760775490}
   m_Layer: 11
-  m_Name: cart3_yup
+  m_Name: player_cart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25565,6 +25579,10 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: .832280993
       objectReference: {fileID: 0}
+    - target: {fileID: 100180, guid: fff52d3cebcaacf4287347ac5cd53a30, type: 2}
+      propertyPath: m_Name
+      value: player_character
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11100000, guid: fff52d3cebcaacf4287347ac5cd53a30, type: 2}
     - {fileID: 14800000, guid: fff52d3cebcaacf4287347ac5cd53a30, type: 2}
@@ -27209,7 +27227,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   messageTarget: {fileID: 1636658972}
-  messageName: onColor
+  messageName: onCart
   clickAudio: {fileID: 8300000, guid: d2fee02bd0ce9e94d907f5452654eb91, type: 3}
   messageValue: 0_l
 --- !u!1 &2114938237

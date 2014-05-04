@@ -32,14 +32,6 @@ public class LocalMultiplayerController : MonoBehaviour
 		players += LocalMultiplayerLobbyController.controllerDeviceIndexToPlayerIndexMap.Count;
 
 		//This should be moved to after character selection is complete
-		for(int i=0; i<players; i++){
-			PlayerInfo newPlayer = new PlayerInfo();
-			newPlayer.cartModel = "buggy_m";
-			newPlayer.ballModel = "ball";
-			newPlayer.characterModel = "PatrickOverPatrick";
-			newPlayer.name = "player" + (i+1).ToString();
-			nvs.players.Add (newPlayer);	
-		}
 		createPlayers();
 
 		//convert the device map to something usable for this case

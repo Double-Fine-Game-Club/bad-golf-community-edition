@@ -15,6 +15,8 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 
 	public string[] colorKeys;
 	public int[] colorPerPlayer;
+	public int[] characterPerPlayer;
+	public int[] cartPerPlayer;
 
 	public GameObject startMessageTarget;
 
@@ -26,8 +28,11 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 
 	void Start()
 	{
-		nvs = GameObject.FindWithTag("NetObj").GetComponent("networkVariables") as networkVariables;
+
 		colorPerPlayer = new int[] { 0,1,2,3 };
+		cartPerPlayer  = new int[] {0,0,0,0};
+		characterPerPlayer = new int[] {0,0,0,0};
+
 		playerMats = new Material[ ed_playerRenderer.Length ];
 	
 		colorKeys = new string[Config.colorsDictionary.Count ];
@@ -53,7 +58,12 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 
 	private void setColorOn( int index)
 	{
-		string[] playerColors =	Config.colorsDictionary[ colorKeys[colorPerPlayer[index] ]];
+		string color = colorKeys [colorPerPlayer [index]];
+		string[] playerColors =	Config.colorsDictionary[ color ];
+
+		PlayerInfo p = nvs.getPlayer (index);
+		if(p!=null) p.color = color;
+
 		
 		Material mat = ed_playerRenderer[index].material;
 		
@@ -75,6 +85,56 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 		
 		ed_playerRenderer[index].material = mat;
 		playerMats[index] = mat;
+	}
+
+	private void setCharacterOn( int index )
+	{
+		PlayerInfo p = nvs.getPlayer (index);
+		p.characterModel = nvs.characterModels[characterPerPlayer [index] ];
+
+		//Switch player character
+		GameObject oldCharacter = ed_playerRenderer[index].transform.parent.gameObject;
+		GameObject newCharacter = Instantiate (Resources.Load( p.characterModel )) as GameObject;
+		Destroy (newCharacter.GetComponent<Animation> ());	//Use a standing pose
+		newCharacter.transform.parent = oldCharacter.transform.parent;
+		newCharacter.transform.position = oldCharacter.transform.position;
+		newCharacter.transform.rotation = oldCharacter.transform.rotation;
+		newCharacter.transform.localScale = oldCharacter.transform.localScale;
+		newCharacter.name = "player_character";
+		ed_playerRenderer [index] = newCharacter.transform.FindChild ("body").GetComponent<Renderer> () as Renderer;
+		Destroy(oldCharacter);
+
+		//Apply color
+		setColorOn(index);
+	}
+
+	private void setCartOn( int index )
+	{
+		PlayerInfo p = nvs.getPlayer (index);
+		p.cartModel = nvs.buggyModels [cartPerPlayer [index]];
+
+		//Switch cart
+		GameObject oldCart = ed_playerViewCameras [index].transform.parent.FindChild ("player_cart").gameObject;
+		GameObject newCart = Instantiate (Resources.Load (p.cartModel)) as GameObject;
+
+		//Don't want the full cart, only the model
+		GameObject cartParent = newCart;
+		if(p.cartModel=="hotrod_m")
+		{
+			newCart = cartParent.transform.FindChild("hotrod").gameObject;
+
+		}else if(p.cartModel=="buggy_m")
+		{
+			newCart = cartParent.transform.FindChild("cart3_yup").gameObject;
+		}
+
+		newCart.transform.parent = oldCart.transform.parent;
+		newCart.transform.position = oldCart.transform.position;
+		newCart.transform.rotation = oldCart.transform.rotation;
+
+		newCart.name = "player_cart";
+		Destroy (cartParent);
+		Destroy (oldCart);
 	}
 
 	public void onControl( SwitchableTexture callingSwitch )
@@ -107,6 +167,11 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 					}
 				}
 			}
+
+			//remove player from active players
+			PlayerInfo p = nvs.getPlayer(playerIndex);
+			nvs.players.Remove(p);
+
 		}
 		else if ( type == 1 ) //joystick
 		{
@@ -171,12 +236,10 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 	public void onColor ( string val )
 	{
 		string[] split = val.Split( new char[]{'_'});		
-					
 		int playerIndex =  int.Parse(split[0]);
 		int direction = (split[1] == "r")? 1:-1;
-
 		colorPerPlayer[playerIndex] =  (colorPerPlayer[playerIndex] + colorKeys.Length + direction) % colorKeys.Length; 
-		setColorOn( playerIndex);
+		setColorOn (playerIndex);
 	}
 
 	//Change the character model of the given player
@@ -187,6 +250,9 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 		string[] split = val.Split( new char[]{'_'});			
 		int playerIndex =  int.Parse(split[0]);
 		int direction = (split[1] == "r")? 1:-1;
+
+		characterPerPlayer [playerIndex] = (characterPerPlayer [playerIndex] + nvs.characterModels.Length + direction) % nvs.characterModels.Length;
+		setCharacterOn (playerIndex);
 	}
 
 	//Change the cart model of the given player
@@ -197,7 +263,9 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 		string[] split = val.Split( new char[]{'_'});		
 		int playerIndex =  int.Parse(split[0]);
 		int direction = (split[1] == "r")? 1:-1;
-		
+
+		cartPerPlayer [playerIndex] = (cartPerPlayer [playerIndex] + nvs.buggyModels.Length + direction) % nvs.buggyModels.Length;
+		setCartOn (playerIndex);
 	}
 
 	public void onStartClicked( string nameOfLevel )
@@ -222,6 +290,15 @@ public class LocalMultiplayerLobbyController : MonoBehaviour
 	{
 		int index = int.Parse(val);
 		ed_controlSelectors[index].setIndex(2);
+
+		PlayerInfo newP = new PlayerInfo ();
+		newP.playerId = index;
+		newP.color = colorKeys [colorPerPlayer [index]];
+		newP.cartModel = nvs.buggyModels[0];
+		newP.characterModel = nvs.characterModels [0];
+		newP.ballModel = nvs.ballModels [0];
+		newP.name = "player" + (index+1).ToString();
+		nvs.players.Add (newP);
 	}
 
 	public void onControlDirection ( int targetDevice)
