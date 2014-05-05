@@ -49,13 +49,28 @@ public class CarAudio : MonoBehaviour {
     CarController carController;                                                        // Reference to car we are controlling
 
 	SoundManager sm;
+	AudioListener al;
+	networkVariables nvs;
 
 	void Awake(){
 		sm = SoundManager.Get();
 	}
 
+	void Destroy(){
+		//Remove audioSources from al
+		Destroy (highAccel);
+		Destroy (skidSource);
+		if (engineSoundStyle == EngineAudioOptions.FourChannel) {
+			Destroy (lowAccel);
+			Destroy (lowDecel);
+			Destroy (highDecel);
+		}
+	}
+
 	void Start(){
 		if(sm==null) this.Awake();
+		al = FindObjectOfType<AudioListener> ();
+		nvs = GameObject.FindWithTag("NetObj").GetComponent("networkVariables") as networkVariables;
 
 		// get the carcontroller ( this will not be null as we have require component)
 		carController = GetComponent<CarController>();
@@ -67,17 +82,25 @@ public class CarAudio : MonoBehaviour {
 			highDecel = addAudioSource(highDecelClip);
 		}
 		skidSource = addAudioSource(skidClip);
+		
+
 	}
 
 	AudioSource addAudioSource(AudioClip clip){
-		AudioSource source = gameObject.AddComponent<AudioSource> ();
+		AudioSource source = null;
+		if(nvs.gameMode==GameMode.Online){
+			//The sound moves around with the object it is attached to
+			source = gameObject.AddComponent<AudioSource> ();
+		}else{	//GameMode.Local
+			//The sound can be heard anywhere
+			source = al.gameObject.AddComponent<AudioSource> ();
+		}
 		source.clip = clip;
 		return source;
 	}
 
 	void StartSound () {
 
-        
         // setup the simple audio source
 		SetUpEngineAudioSource(highAccel);
 
@@ -101,9 +124,14 @@ public class CarAudio : MonoBehaviour {
 	void StopSound()
 	{
         //Stop all audio sources on this object:
-		foreach (var source in GetComponents<AudioSource>()) {
-			source.Stop();
+		highAccel.Stop ();
+		if (engineSoundStyle == EngineAudioOptions.FourChannel)
+		{
+			lowAccel.Stop();
+			lowDecel.Stop();
+			highDecel.Stop();
 		}
+		skidSource.Stop ();
 
 		startedSound = false;
 	}
