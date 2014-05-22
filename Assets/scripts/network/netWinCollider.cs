@@ -6,6 +6,7 @@ public class netWinCollider : MonoBehaviour {
 
 	//This is something that should exist elsewhere
 	public Dictionary<GameObject, NetworkPlayer> ballPlayerMap = new Dictionary<GameObject, NetworkPlayer>();
+	//messageTarget is either networkManagerServer or LocalMultiplayerController
 	public GameObject messageTarget;
 	networkVariables nvs;
 
@@ -13,8 +14,9 @@ public class netWinCollider : MonoBehaviour {
 	{
 		// get a reference to NetworkObject
 		messageTarget = GameObject.FindWithTag("NetObj");
-
 		nvs = messageTarget.GetComponent ("networkVariables") as networkVariables; 
+		if(nvs.gameMode==GameMode.Local)
+			messageTarget= GameObject.Find(nvs.levelName).gameObject;
 		
 		foreach(PlayerInfo player in nvs.players)
 		{
