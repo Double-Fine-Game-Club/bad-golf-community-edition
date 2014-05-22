@@ -155,7 +155,7 @@ public class controlClient : MonoBehaviour {
 		// find the player
 		foreach (PlayerInfo p in nvs.players) {
 			if (p.player==player) {
-				SoundManager.Get().playSfx3d(p.cartGameObject, "Car Horn 1", 5, 500, 1);
+				SoundManager.Get().playSfx3d(p.cartGameObject, "horn1", 5, 500, 1);
 			}
 		}
 	}

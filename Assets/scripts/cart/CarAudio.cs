@@ -48,24 +48,72 @@ public class CarAudio : MonoBehaviour {
 	bool startedSound;                                                                  // flag for knowing if we have started sounds
     CarController carController;                                                        // Reference to car we are controlling
 
-	void StartSound () {
+	SoundManager sm;
+	AudioListener al;
+	networkVariables nvs;
 
-        // get the carcontroller ( this will not be null as we have require component)
+	void Awake(){
+		sm = SoundManager.Get();
+	}
+
+	void Destroy(){
+		//Remove audioSources from al
+		Destroy (highAccel);
+		Destroy (skidSource);
+		if (engineSoundStyle == EngineAudioOptions.FourChannel) {
+			Destroy (lowAccel);
+			Destroy (lowDecel);
+			Destroy (highDecel);
+		}
+	}
+
+	void Start(){
+		if(sm==null) this.Awake();
+		al = FindObjectOfType<AudioListener> ();
+		nvs = GameObject.FindWithTag("NetObj").GetComponent("networkVariables") as networkVariables;
+
+		// get the carcontroller ( this will not be null as we have require component)
 		carController = GetComponent<CarController>();
 
+		highAccel = addAudioSource(highAccelClip);
+		if (engineSoundStyle == EngineAudioOptions.FourChannel) {
+			lowAccel = addAudioSource(lowAccelClip);
+			lowDecel = addAudioSource(lowDecelClip);
+			highDecel = addAudioSource(highDecelClip);
+		}
+		skidSource = addAudioSource(skidClip);
+		
+
+	}
+
+	AudioSource addAudioSource(AudioClip clip){
+		AudioSource source = null;
+		if(nvs.gameMode==GameMode.Online){
+			//The sound moves around with the object it is attached to
+			source = gameObject.AddComponent<AudioSource> ();
+		}else{	//GameMode.Local
+			//The sound can be heard anywhere
+			source = al.gameObject.AddComponent<AudioSource> ();
+		}
+		source.clip = clip;
+		return source;
+	}
+
+	void StartSound () {
+
         // setup the simple audio source
-		highAccel = SetUpEngineAudioSource(highAccelClip);
+		SetUpEngineAudioSource(highAccel);
 
         // if we have four channel audio setup the four audio sources
 		if (engineSoundStyle == EngineAudioOptions.FourChannel)
 		{
-			lowAccel = SetUpEngineAudioSource(lowAccelClip);
-			lowDecel = SetUpEngineAudioSource(lowDecelClip);
-			highDecel = SetUpEngineAudioSource(highDecelClip);
+			SetUpEngineAudioSource(lowAccel);
+			SetUpEngineAudioSource(lowDecel);
+			SetUpEngineAudioSource(highDecel);
 		}
 
         // setup the skid sound source
-		skidSource = SetUpEngineAudioSource(skidClip);
+		SetUpEngineAudioSource(skidSource);
 		
         // flag that we have started the sounds playing
 		startedSound = true;
@@ -75,33 +123,40 @@ public class CarAudio : MonoBehaviour {
 
 	void StopSound()
 	{
-        //Destroy all audio sources on this object:
-		foreach (var source in GetComponents<AudioSource>()) {
-			Destroy (source);
+        //Stop all audio sources on this object:
+		highAccel.Stop ();
+		if (engineSoundStyle == EngineAudioOptions.FourChannel)
+		{
+			lowAccel.Stop();
+			lowDecel.Stop();
+			highDecel.Stop();
 		}
+		skidSource.Stop ();
 
 		startedSound = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		bool isMuted = sm.muteSfx || sm.muteAllSound;
 
         // get the distance to main camera
 		float camDist = (followCamera.transform.position-transform.position).sqrMagnitude;
 
         // stop sound if the object is beyond the maximum roll off distance
-		if (startedSound && camDist > maxRolloffDistance*maxRolloffDistance)
+		if (startedSound && (camDist > maxRolloffDistance*maxRolloffDistance || isMuted))
 		{
 			StopSound ();
 		}
 
         // start the sound if not playing and it is nearer than the maximum distance
-		if (!startedSound && camDist < maxRolloffDistance*maxRolloffDistance)
+		if (!startedSound && camDist < maxRolloffDistance*maxRolloffDistance && !isMuted)
 		{
 			StartSound();
 		}
 
 		if (startedSound) {
+			float masterVolume = sm.sfxVolume;
 
             // The pitch is interpolated between the min and max values, according to the car's revs.
 			float pitch = ULerp (lowPitchMin,lowPitchMax,carController.RevsFactor);
@@ -114,7 +169,7 @@ public class CarAudio : MonoBehaviour {
 				// for 1 channel engine sound, it's oh so simple:
                 highAccel.pitch = pitch*pitchMultiplier*highPitchMultiplier;
 				highAccel.dopplerLevel = useDoppler ? dopplerLevel : 0;
-				highAccel.volume = 1;
+				highAccel.volume = 1 * masterVolume;
 			} else {
 
                 // for 4 channel engine sound, it's a little more complex:
@@ -140,10 +195,10 @@ public class CarAudio : MonoBehaviour {
 				decFade = 1-((1-decFade)*(1-decFade));
 
                 // adjust the source volumes based on the fade values
-				lowAccel.volume = lowFade*accFade;
-				lowDecel.volume = lowFade*decFade;
-				highAccel.volume = highFade*accFade;
-				highDecel.volume = highFade*decFade;
+				lowAccel.volume = lowFade*accFade * masterVolume;
+				lowDecel.volume = lowFade*decFade * masterVolume;
+				highAccel.volume = highFade*accFade * masterVolume;
+				highDecel.volume = highFade*decFade * masterVolume;
 				
                 // adjust the doppler levels
 				highAccel.dopplerLevel = useDoppler ? dopplerLevel : 0;
@@ -153,7 +208,7 @@ public class CarAudio : MonoBehaviour {
 			}
 
             // adjust the skid source based on the cars current skidding state
-			skidSource.volume = Mathf.Clamp01(carController.AvgSkid * 3 - 1);
+			skidSource.volume = Mathf.Clamp01(carController.AvgSkid * 3 - 1) * masterVolume;
 			skidSource.pitch = Mathf.Lerp (0.8f, 1.3f, carController.SpeedFactor);
 			skidSource.dopplerLevel = useDoppler ? dopplerLevel : 0;
 		}
@@ -161,21 +216,19 @@ public class CarAudio : MonoBehaviour {
 
 	
     // sets up and adds new audio source to the game object
-	AudioSource SetUpEngineAudioSource(AudioClip clip)
+	void SetUpEngineAudioSource(AudioSource source)
 	{
-        // create the new audio source component on the game object and set up its properties
-		AudioSource source = gameObject.AddComponent<AudioSource>();
-		source.clip = clip;
+        // reset the audio source component properties
 		source.volume = 0;
 		source.loop = true;
 
         // start the clip from a random point
-		source.time = Random.Range(0f, clip.length);
+		source.time = Random.Range(0f, source.clip.length);
 		source.Play();
 		source.minDistance = 5;
 		source.maxDistance = maxRolloffDistance;
 		source.dopplerLevel = 0;
-		return source;
+		return;
 	}
 
 	// unclamped versions of Lerp and Inverse Lerp, to allow value to exceed the from-to range
