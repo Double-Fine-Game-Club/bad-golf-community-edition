@@ -49,10 +49,23 @@ public class networkVariables : MonoBehaviour {
 	public ArrayList players = new ArrayList();		// list of players
 	[HideInInspector]
 	public int NATmode = -1;						// which NAT version we have for server comparison
+
+	// helpers
+	public PlayerInfo getPlayer( int playerId ){
+		for(int i=0; i<players.Count; i++)
+		{
+			PlayerInfo p = (PlayerInfo)players[i];
+			if(p.playerId==playerId){
+				return p;
+			}
+		}
+		return null;
+	}
 }
 
 // a class that contains all information on a player
 public class PlayerInfo {
+	public int playerId;						// player identifier
 	public NetworkPlayer player;				// player
 	public NetworkPlayer server;				// server
 	public NetworkViewID cartViewIDTransform;	// NetworkViewID of the cart transform

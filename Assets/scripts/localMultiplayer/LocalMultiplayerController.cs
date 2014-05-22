@@ -32,14 +32,6 @@ public class LocalMultiplayerController : MonoBehaviour
 		players += LocalMultiplayerLobbyController.controllerDeviceIndexToPlayerIndexMap.Count;
 
 		//This should be moved to after character selection is complete
-		for(int i=0; i<players; i++){
-			PlayerInfo newPlayer = new PlayerInfo();
-			newPlayer.cartModel = "buggy_m";
-			newPlayer.ballModel = "ball";
-			newPlayer.characterModel = "PatrickOverPatrick";
-			newPlayer.name = "player" + (i+1).ToString();
-			nvs.players.Add (newPlayer);	
-		}
 		createPlayers();
 
 		//convert the device map to something usable for this case
@@ -131,35 +123,7 @@ public class LocalMultiplayerController : MonoBehaviour
 
 		//done setting gamepads above, now setup keyboard correctly, and tell certain components that care what they are controlled by 
 		currentView.GetComponent<ControllerSupport>().checkKeyboard();
-
-		//set colors picked from before, only if we went through the lobby
-		if ( LobbyControllerSupport.wasInitialized )
-		{
-			//characters in order of index matching screenview (camera) NOT player  
-			Renderer[] bodyList = currentView.GetComponent<ControllerSupport>().playerBodyList;
-			
-			//for every golfer, find its matching device, then get the player index for that device, apply that color  
-			for (int i = 0; i < bodyList.Length; i++) 
-			{
-				int controllerIndex = currentView.GetComponent<ControllerSupport>().playerToControllerIndex[i];	 
-				
-				int playerIndex;
-				if ( controllerIndex == -1) //this might be a keyboard
-				{
-					playerIndex = LocalMultiplayerLobbyController.keyboardIndex;
-				}
-				else
-					playerIndex = LocalMultiplayerLobbyController.controllerDeviceIndexToPlayerIndexMap[controllerIndex]; 
-				
-				//replace all the materials in the object cause we have many materials for the body at the moment
-				Material[] matList = bodyList[i].sharedMaterials;
-				for (int c = 0; c < matList.Length; c++) 
-				{
-					matList[c] = LocalMultiplayerLobbyController.playerMats[playerIndex]; 
-				}
-				bodyList[i].sharedMaterials = matList;
-			}		
-		}
+		
 		//done coloring
 		GameObject.Find (nvs.levelName).AddComponent<netPlayerRespawn> ();
 	}
@@ -226,11 +190,13 @@ public class LocalMultiplayerController : MonoBehaviour
 			player.ballGameObject = ballObject;
 			//Create character for player
 			GameObject characterObject = Instantiate(Resources.Load(player.characterModel)) as GameObject;
-			characterObject.name = "big_patrick";
+			characterObject.name = "player_character";
 			characterObject.transform.parent = cartObject.transform;
-			characterObject.transform.localPosition = Vector3.zero;
+			characterObject.transform.localPosition = Vector3.zero + new Vector3(0,0.3f,0);
 			characterObject.transform.localRotation = Quaternion.identity;
 			player.characterGameObject = characterObject;
+			//Apply color
+			RecolorPlayer.recolorPlayerBody( characterObject.transform.FindChild("body").GetComponent<Renderer>() as Renderer, player.color );
 			if(i<1)	//Only one audiolistener can exist
 				characterObject.AddComponent<AudioListener> ();
 			//Create camera for hit_ball; remove later
