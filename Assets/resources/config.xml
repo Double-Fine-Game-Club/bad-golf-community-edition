@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Config>
 	<!-- need to update this every time something changes - must be an increasing number -->
-	<Version build="6"/>
+	<Version build="7"/>
 	<Options>
 		<Option optionName="SoundVolume" value=".75"/>
 		<Option optionName="MusicVolume" value=".5"/>
