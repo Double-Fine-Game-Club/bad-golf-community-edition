@@ -20,6 +20,7 @@ public class networkManagerClient : MonoBehaviour {
 		// add us to the player list
 		nvs.players.Add(myInfo);
 
+		// tell the server our name
 		networkView.RPC("MyName", RPCMode.Server, nvs.myInfo.name);	
 		
 		// go into the lobby
@@ -130,15 +131,14 @@ public class networkManagerClient : MonoBehaviour {
 	
 	// spawns a prefab
 	[RPC]
-	void SpawnPrefab(NetworkViewID viewID, Vector3 spawnLocation, Vector3 velocity, string prefabName) {
+	void SpawnPrefab(NetworkViewID viewID, Vector3 spawnLocation, string prefabName) {
 		Object prefab = Resources.Load(prefabName);
 		// instantiate the prefab
 		GameObject clone = Instantiate(prefab, spawnLocation, Quaternion.identity) as GameObject;
-		// set viewID
-		clone.networkView.viewID = viewID;
 		
-		// set velocity if we can - why was this commented?
-		if (clone.rigidbody) clone.rigidbody.velocity = velocity;
+		// add the interpolation script
+		netInterpolation cni = clone.AddComponent("netInterpolation") as netInterpolation;
+		cni.Init(viewID);
 	}
 	
 	[RPC]
@@ -148,7 +148,7 @@ public class networkManagerClient : MonoBehaviour {
 		// lookup from level list will be added here
 		Application.LoadLevelAdditive("level_full");
 
-		// set out stuff
+		// set our stuff
 		nvs.myInfo.cartModel = cartModel;
 		nvs.myInfo.ballModel = ballModel;
 		nvs.myInfo.characterModel = characterModel;
@@ -162,31 +162,25 @@ public class networkManagerClient : MonoBehaviour {
 	void ThisOnesYours(NetworkViewID cartViewID, NetworkViewID ballViewID, NetworkViewID characterViewID) {
 		networkVariables nvs = GetComponent("networkVariables") as networkVariables;
 		foreach(PlayerInfo p in nvs.players) {
-			if (p.cartViewIDTransform==cartViewID) {
+			if (p.cartViewID==cartViewID) {
 				p.name = nvs.myInfo.name;
 				nvs.myInfo = p;
 				myInfo = nvs.myInfo;
 			}
 		}
 		// get server
-		myInfo.server = myInfo.cartViewIDTransform.owner;
+		myInfo.server = myInfo.cartViewID.owner;
 		// call the functions that need them
 		AddScripts();
 	}
 	
 	// tells the player that this set of viewIDs are a player
 	[RPC]
-	void SpawnPlayer(NetworkViewID cartViewIDTransform, NetworkViewID cartViewIDRigidbody, NetworkViewID ballViewID, NetworkViewID characterViewID, int mode, NetworkPlayer player) {
+	void SpawnPlayer(NetworkViewID cartViewID, NetworkViewID ballViewID, NetworkViewID characterViewID, int mode, NetworkPlayer player) {
 		foreach(PlayerInfo newGuy in nvs.players) {
 			if(newGuy.player==player){
-				newGuy.cartViewIDTransform = cartViewIDTransform;
-				newGuy.cartGameObject = NetworkView.Find(cartViewIDTransform).gameObject;
-				newGuy.cartViewIDRigidbody = cartViewIDRigidbody;
-				// add another NetworkView for the rigidbody
-				NetworkView cgr = newGuy.cartGameObject.AddComponent("NetworkView") as NetworkView;		// add rigidbody tracking
-				cgr.observed = newGuy.cartGameObject.rigidbody;
-				cgr.viewID = cartViewIDRigidbody;
-				cgr.stateSynchronization = NetworkStateSynchronization.Unreliable;
+				newGuy.cartViewID = cartViewID;
+				newGuy.cartGameObject = NetworkView.Find(cartViewID).gameObject;
 				newGuy.characterViewID = characterViewID;
 				newGuy.characterGameObject = NetworkView.Find(characterViewID).gameObject;
 				newGuy.ballViewID = ballViewID;
