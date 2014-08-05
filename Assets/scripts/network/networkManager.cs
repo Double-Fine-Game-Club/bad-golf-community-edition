@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using InControl;	// remove me later
 
 public class networkManager : MonoBehaviour {
-	const float kConnectionTimeout = 10f;	//quit trying to connect after this much time has passed
+	// TODO: OnFailedToConnect
+	const float kConnectionTimeout = 5f;	//quit trying to connect after this much time has passed
 	float timeoutTime = 0f;					//time spent trying to connect to server
 	bool connectingToServer = false;		//is trying to connect to a server
 	bool showFailMessage = false;			//Indicate a connection attempt has failed
@@ -12,6 +13,7 @@ public class networkManager : MonoBehaviour {
 	networkVariables nvs;
 	// random names
 	//string[] randomNames = new string[3] {"Leslie", "Test", "REPLACE ME"};
+	string directConnectIP = "";
 	string testStatus = "Please wait while we test your internet connection...";		//net connection test message
 	bool doneTesting = false;															//are we done testing
 	bool probingPublicIP = false;														//if we're doing something internally
@@ -29,18 +31,14 @@ public class networkManager : MonoBehaviour {
 	// 2 = sym - very bad
 	// -1 = error if doneTesting==true
 	int NATmode = -1;
-	
-	/****************************************************
-	 * 
-	 * DO EDIT THIS SCRIPT
-	 * 
-	 ****************************************************/
-	
+
+
 	// Use this for initialization
 	void Start () {
 		// change to custom master server
 		MasterServer.ipAddress = "37.157.247.37";
 		MasterServer.port = 23466;
+
 		// NAT punchthrough (finally)
 		Network.natFacilitatorIP = "37.157.247.37";
 		Network.natFacilitatorPort = 50005;
@@ -81,8 +79,12 @@ public class networkManager : MonoBehaviour {
 				showFailMessage=true;
 			}
 		}
+		if(timeoutTime>=kConnectionTimeout + 5){
+			showFailMessage=false;
+		}
 	}
-	
+
+	// TODO: use something else instead of OnGUI
 	void OnGUI() {
 		// check connection type and screen printout
 		if (testStatus!="") GUILayout.Label(testStatus);
@@ -117,6 +119,7 @@ public class networkManager : MonoBehaviour {
 					// disable this script
 					this.enabled = false;
 				}
+
 				if (GUILayout.Button ("Refresh server list"))
 				{
 					// get them servers
@@ -124,6 +127,31 @@ public class networkManager : MonoBehaviour {
 					MasterServer.RequestHostList(serverVersion);
 				}
 
+				GUILayout.BeginHorizontal();
+				GUILayout.Label("IP:");
+				directConnectIP = GUILayout.TextField(directConnectIP, 21);
+				if (GUILayout.Button("Direct connect") && directConnectIP!="")
+				{
+					string remoteIP;
+					int remotePort = 11177;
+					if(directConnectIP.Contains(":"))
+					{
+						remoteIP = directConnectIP.Split(':')[0];
+						string rip2 = directConnectIP.Split(':')[1];
+						try {
+							remotePort = int.Parse(rip2);
+						} catch {
+							remotePort = 11177;
+						}
+					} else {
+						remoteIP = directConnectIP;
+					}
+					Network.Connect(remoteIP,remotePort);
+					connectingToServer = true;
+					timeoutTime = 0;
+					showFailMessage = false;
+				}
+				GUILayout.EndHorizontal();
 
 
 				// HACKY - REPLACE ME!
