@@ -3,7 +3,6 @@ using System.Collections;
 
 //probably only works as intended with orthogonal camera
 
-[ExecuteInEditMode]
 public class UIAnchorToScreen : MonoBehaviour 
 {
 	private int screenWidth = 0;
@@ -23,6 +22,11 @@ public class UIAnchorToScreen : MonoBehaviour
 #if UNITY_EDITOR
 	public bool setPercentsFromCurrentTransforms = false;
 #endif
+	
+	void Start () 
+	{
+		onScreenResize();
+	}
 
 	void Update () 
 	{
