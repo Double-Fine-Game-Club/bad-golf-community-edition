@@ -35,14 +35,6 @@ public class networkManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		// change to custom master server
-		MasterServer.ipAddress = "37.157.247.37";
-		MasterServer.port = 23466;
-
-		// NAT punchthrough (finally)
-		Network.natFacilitatorIP = "37.157.247.37";
-		Network.natFacilitatorPort = 50005;
-
 		nvs = GameObject.FindWithTag("NetObj").GetComponent("networkVariables") as networkVariables;
 		// get server version
 		serverVersion = nvs.serverVersion;
