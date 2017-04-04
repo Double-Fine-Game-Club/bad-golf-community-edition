@@ -24,16 +24,16 @@ public class netLobby : MonoBehaviour {
 		nvs.myInfo.characterModel = nvs.characterModels[IballModel];
 		
 		// add chat
-		gameObject.AddComponent("netChat");
+		gameObject.AddComponent<netChat>();
 		
 		//pause
-		gameObject.AddComponent ("netPause");
+		gameObject.AddComponent <netPause>();
 
 		// add self to the list of people in this game
 		currentList = nvs.myInfo.name;
 
 		// copy the script on the previewCamera in main
-		Orbit cao = nvs.myCam.gameObject.AddComponent("Orbit") as Orbit;
+		Orbit cao = nvs.myCam.gameObject.AddComponent<Orbit>() as Orbit;
 		cao.Point = new Vector3(28,12,147);
 		cao.Axis = new Vector3(0,1,0);
 		cao.Speed = 0.1f;
@@ -56,7 +56,7 @@ public class netLobby : MonoBehaviour {
 			// the server needs to confirm this before it is sent to the clients
 			// currently there's nothing in place for the clients to get this info I know, but client<->client interaction is BAD
 			//if(Network.isClient)	//because server color wasn't being updated by clients
-				networkView.RPC("ChangeModels", RPCMode.Server, nvs.myInfo.cartModel, nvs.myInfo.ballModel, nvs.myInfo.characterModel, nvs.myInfo.color);
+				GetComponent<NetworkView>().RPC("ChangeModels", RPCMode.Server, nvs.myInfo.cartModel, nvs.myInfo.ballModel, nvs.myInfo.characterModel, nvs.myInfo.color);
 			//else
 				//networkView.RPC ("UpdateModels", RPCMode.Others, nvs.myInfo.player, nvs.myInfo.cartModel, nvs.myInfo.ballModel, nvs.myInfo.characterModel, nvs.myInfo.color);
 		}

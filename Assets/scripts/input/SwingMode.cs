@@ -28,18 +28,18 @@ public class SwingMode : SwingBehaviour
 				// Input hardcoded for now
 				if (Input.GetKey (KeyCode.D)) {
 						gameObject.transform.Rotate (0f, 1f, 0f);
-						rigidbody.freezeRotation = true;
+						GetComponent<Rigidbody>().freezeRotation = true;
 				}
 				if (Input.GetKey (KeyCode.A)) {
 						gameObject.transform.Rotate (0f, -1f, 0f);
-						rigidbody.freezeRotation = true;
+						GetComponent<Rigidbody>().freezeRotation = true;
 				}
 		
 				// Crappy camera script taken from the original movement.cs. Makes rotation around the ball possible.
 				Vector3 newPos = transform.position + transform.localRotation * cameraPos;
-				float lerper = Mathf.Min ((camera.transform.position - newPos).sqrMagnitude / 100, 1);
-				camera.transform.position = (1 - lerper) * camera.transform.position + lerper * newPos;
-				camera.transform.rotation = Quaternion.Lerp (camera.transform.rotation, Quaternion.LookRotation (transform.position - camera.transform.position), lerper);
+				float lerper = Mathf.Min ((GetComponent<Camera>().transform.position - newPos).sqrMagnitude / 100, 1);
+				GetComponent<Camera>().transform.position = (1 - lerper) * GetComponent<Camera>().transform.position + lerper * newPos;
+				GetComponent<Camera>().transform.rotation = Quaternion.Lerp (GetComponent<Camera>().transform.rotation, Quaternion.LookRotation (transform.position - GetComponent<Camera>().transform.position), lerper);
 
 				// if we are in the air, we don't want player to hit again. Somewhat obsolete now that control returns to car when swung.
 				if (flying) {
@@ -64,7 +64,7 @@ public class SwingMode : SwingBehaviour
 								shotPower = 100;
 						}
 						arc.y = arc.y + shotPower / 200;
-						rigidbody.AddForce (transform.localRotation * arc * shotPower);
+						GetComponent<Rigidbody>().AddForce (transform.localRotation * arc * shotPower);
 						shotPower = 0;
 
 						// Turn on control scripts and camera on the cart.

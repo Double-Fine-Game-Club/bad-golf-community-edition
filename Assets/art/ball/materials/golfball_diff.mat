@@ -2,46 +2,32 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 3
+  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: golfball_diff
   m_Shader: {fileID: 4800000, guid: b8171fa36ec031544aca687db32f9812, type: 3}
-  m_ShaderKeywords: []
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
   m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
   m_SavedProperties:
-    serializedVersion: 2
+    serializedVersion: 3
     m_TexEnvs:
-      data:
-        first:
-          name: _MainTex
-        second:
-          m_Texture: {fileID: 2800000, guid: 68e7bd016514b42489533a85c6b0b08f, type: 3}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _BumpMap
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 68e7bd016514b42489533a85c6b0b08f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
-      data:
-        first:
-          name: _RimPower
-        second: 4.53571415
+    - _RimPower: 4.535714
     m_Colors:
-      data:
-        first:
-          name: _Color
-        second: {r: .573529422, g: .573529422, b: .573529422, a: 1}
-      data:
-        first:
-          name: _ColorTint
-        second: {r: .586937726, g: .628308058, b: .676470578, a: 1}
-      data:
-        first:
-          name: _RimColor
-        second: {r: .904411793, g: .639692485, b: .166252166, a: 1}
+    - _Color: {r: 0.5735294, g: 0.5735294, b: 0.5735294, a: 1}
+    - _ColorTint: {r: 0.5869377, g: 0.62830806, b: 0.6764706, a: 1}
+    - _RimColor: {r: 0.9044118, g: 0.6396925, b: 0.16625217, a: 1}

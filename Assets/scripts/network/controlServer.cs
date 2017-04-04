@@ -25,7 +25,7 @@ public class controlServer : MonoBehaviour {
 			if (Input.GetKeyDown(KeyCode.Q) && myInfo.currentMode==0) {
 				// need to wait for the audio guys to fix this
 				// if you think you've fixed this test in online aswell
-				networkView.RPC("IHonked", RPCMode.All, myInfo.player);
+				GetComponent<NetworkView>().RPC("IHonked", RPCMode.All, myInfo.player);
 			}
 				
 		}
@@ -82,11 +82,11 @@ public class controlServer : MonoBehaviour {
 	void switchToBall(){
 		// if in buggy
 		if (myInfo.currentMode==0) {
-			networkView.RPC ("PlayerSwap", RPCMode.Others, 1, myInfo.player);	//to ball
+			GetComponent<NetworkView>().RPC ("PlayerSwap", RPCMode.Others, 1, myInfo.player);	//to ball
 			myInfo.currentMode = 1;
 			//stop cart
-			myInfo.cartGameObject.rigidbody.velocity = Vector3.zero;
-			myInfo.cartGameObject.rigidbody.angularVelocity = Vector3.zero;
+			myInfo.cartGameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+			myInfo.cartGameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 			// set them at golf ball
 			myInfo.ballGameObject.transform.rotation = Quaternion.identity;
 
@@ -102,7 +102,7 @@ public class controlServer : MonoBehaviour {
 
 			localBallAnalog.transform.rotation = myInfo.ballGameObject.transform.rotation;
 			// lock golf ball
-			myInfo.ballGameObject.rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+			myInfo.ballGameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
 			//*/ move camera - HACKY
 			GameObject buggyCam = nvs.myCam.gameObject;
 			(buggyCam.GetComponent("FollowPlayerScript") as FollowPlayerScript).enabled = false;
@@ -115,19 +115,19 @@ public class controlServer : MonoBehaviour {
 			buggyCam.transform.localRotation = Quaternion.identity;
 
 			//change animation
-			myInfo.characterGameObject.animation.Play("golfIdle",PlayMode.StopAll);
+			myInfo.characterGameObject.GetComponent<Animation>().Play("golfIdle",PlayMode.StopAll);
 		}
 	}
 
 	void switchToCart(){
 		myInfo.currentMode = 0;
-		networkView.RPC ("PlayerSwap", RPCMode.Others, 0, myInfo.player);	//to cart
+		GetComponent<NetworkView>().RPC ("PlayerSwap", RPCMode.Others, 0, myInfo.player);	//to cart
 		// set them in buggy
 		myInfo.characterGameObject.transform.parent = myInfo.cartGameObject.transform;
 		myInfo.characterGameObject.transform.localPosition = new Vector3(0,0,0);
 		myInfo.characterGameObject.transform.rotation = myInfo.cartGameObject.transform.rotation;
 		// unlock golf ball
-		myInfo.ballGameObject.rigidbody.constraints = RigidbodyConstraints.None;
+		myInfo.ballGameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
 		//*/ move camera - HACKY
 		GameObject buggyCam = nvs.myCam.gameObject;
 		buggyCam.transform.parent = cameraParentTransform;	// put it back
@@ -135,7 +135,7 @@ public class controlServer : MonoBehaviour {
 		(buggyCam.GetComponent("FollowPlayerScript") as FollowPlayerScript).enabled = true;
 
 		//change animation
-		myInfo.characterGameObject.animation.Play("driveIdle",PlayMode.StopAll);
+		myInfo.characterGameObject.GetComponent<Animation>().Play("driveIdle",PlayMode.StopAll);
 
 		(GetComponent ("netTransferToSwing") as netTransferToSwing).enabled = true;
 	}
@@ -179,22 +179,22 @@ public class controlServer : MonoBehaviour {
 					p.characterGameObject.transform.localPosition = new Vector3(0,0,0);
 					p.characterGameObject.transform.rotation = p.cartGameObject.transform.rotation;
 					// unlock golf ball
-					p.ballGameObject.rigidbody.constraints = RigidbodyConstraints.None;
+					p.ballGameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
 					//change animation
-					p.characterGameObject.animation.Play("driveIdle",PlayMode.StopAll);
+					p.characterGameObject.GetComponent<Animation>().Play("driveIdle",PlayMode.StopAll);
 				} else if (p.currentMode==1) {	// if they're now at golf ball
 					//stop cart
-					p.cartGameObject.rigidbody.velocity = Vector3.zero;
-					p.cartGameObject.rigidbody.angularVelocity = Vector3.zero;
+					p.cartGameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+					p.cartGameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 					// set them at golf ball
 					p.characterGameObject.transform.parent = p.ballGameObject.transform;
 					p.ballGameObject.transform.rotation = Quaternion.LookRotation((pin.transform.position - p.ballGameObject.transform.position) - new Vector3(0, pin.transform.position.y - p.ballGameObject.transform.position.y,0));	
 					p.characterGameObject.transform.localPosition = new Vector3(1.7f,-.2f,0);
 					p.characterGameObject.transform.localRotation = Quaternion.identity * new Quaternion(0f, -Mathf.PI/2, 0f, 1f);
 					// lock golf ball
-					p.ballGameObject.rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+					p.ballGameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
 					//change animation
-					p.characterGameObject.animation.Play("golfIdle",PlayMode.StopAll);
+					p.characterGameObject.GetComponent<Animation>().Play("golfIdle",PlayMode.StopAll);
 				}
 
 				// reset keyboard buffer

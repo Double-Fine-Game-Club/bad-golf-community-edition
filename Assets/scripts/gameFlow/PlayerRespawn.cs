@@ -23,8 +23,8 @@ public class PlayerRespawn : MonoBehaviour {
 
 		//Respawn if y coordinate falls below threshold
 		if(transform.position.y < respawnThreshold){
-			rigidbody.velocity = Vector3.zero;
-			rigidbody.angularVelocity = Vector3.zero;
+			GetComponent<Rigidbody>().velocity = Vector3.zero;
+			GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 			transform.rotation = spawnRotation;
 			transform.position = spawnLocation;
 

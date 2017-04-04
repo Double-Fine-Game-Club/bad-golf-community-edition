@@ -37,10 +37,10 @@ public class movement : MonoBehaviour
 				}
 
 				if (forceFromFront.sqrMagnitude != 0) {
-						rigidbody.AddForceAtPosition (forceMultiplyer * forceFromFront.normalized, transform.position + transform.localRotation * Vector3.forward);
-						rigidbody.AddForceAtPosition (forceMultiplyer * forceFromFront.normalized, transform.position + transform.localRotation * Vector3.forward);
-						rigidbody.AddForceAtPosition (forceMultiplyer * forceFromBack.normalized, transform.position + transform.localRotation * Vector3.back);
-						rigidbody.AddForceAtPosition (forceMultiplyer * forceFromBack.normalized, transform.position + transform.localRotation * Vector3.back);
+						GetComponent<Rigidbody>().AddForceAtPosition (forceMultiplyer * forceFromFront.normalized, transform.position + transform.localRotation * Vector3.forward);
+						GetComponent<Rigidbody>().AddForceAtPosition (forceMultiplyer * forceFromFront.normalized, transform.position + transform.localRotation * Vector3.forward);
+						GetComponent<Rigidbody>().AddForceAtPosition (forceMultiplyer * forceFromBack.normalized, transform.position + transform.localRotation * Vector3.back);
+						GetComponent<Rigidbody>().AddForceAtPosition (forceMultiplyer * forceFromBack.normalized, transform.position + transform.localRotation * Vector3.back);
 				}
 		}
 }

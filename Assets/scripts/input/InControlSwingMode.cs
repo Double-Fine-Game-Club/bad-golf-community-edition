@@ -81,7 +81,7 @@ public class InControlSwingMode : SwingBehaviour
 
 			//rotate camera around ball using horizontal axis
 			gameObject.transform.Rotate (0f, Input.GetAxis ("Horizontal"), 0f);
-			rigidbody.freezeRotation = true;
+			GetComponent<Rigidbody>().freezeRotation = true;
 			
 			// Crappy camera script taken from the original movement.cs. Makes rotation around the ball possible.
 			Vector3 newPos = transform.position + transform.localRotation * cameraPos;
@@ -116,7 +116,7 @@ public class InControlSwingMode : SwingBehaviour
 				arc.y = 0;
 				arc.Normalize ();
 				arc.y = Mathf.Sin (shotAngle * Mathf.Deg2Rad);
-				rigidbody.AddForce (transform.localRotation * arc * shotPower * k_shotBoost);
+				GetComponent<Rigidbody>().AddForce (transform.localRotation * arc * shotPower * k_shotBoost);
 				shotPower = 0;	
 			}
 		}
@@ -160,7 +160,7 @@ public class InControlSwingMode : SwingBehaviour
 				arc.y = 0;
 				arc.Normalize ();
 				arc.y = Mathf.Sin (shotAngle * Mathf.Deg2Rad);
-				rigidbody.AddForce (transform.localRotation * arc * shotPower * k_shotBoost);
+				GetComponent<Rigidbody>().AddForce (transform.localRotation * arc * shotPower * k_shotBoost);
 				shotPower = 0;	
 			}
 		}	
@@ -222,7 +222,7 @@ public class InControlSwingMode : SwingBehaviour
 			arc.y = 0;
 			arc.Normalize ();
 			arc.y = Mathf.Sin (shotAngle * Mathf.Deg2Rad);
-			rigidbody.AddForce (transform.localRotation * arc * shotPower * k_shotBoost);
+			GetComponent<Rigidbody>().AddForce (transform.localRotation * arc * shotPower * k_shotBoost);
 			shotPower = 0;	
 		}
 	}

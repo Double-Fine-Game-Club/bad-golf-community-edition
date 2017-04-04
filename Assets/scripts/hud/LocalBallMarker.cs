@@ -61,7 +61,7 @@ public class LocalBallMarker : BallMarker
         if (m_myPlayerInfo.cartGameObject == null || m_myPlayerInfo.ballGameObject == null) return;
 
         //also make sure we can get the player camera
-        m_myCamera = this.transform.FindChild("player_camera").camera;
+        m_myCamera = this.transform.FindChild("player_camera").GetComponent<Camera>();
         if (m_myCamera == null) return;
 
         //get info from all players

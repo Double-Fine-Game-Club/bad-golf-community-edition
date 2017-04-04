@@ -171,10 +171,10 @@ public class FollowPlayerScript : MonoBehaviour {
 		if (camZoom) {
 			Ray[] frustumRays = new Ray[4];
 
-			frustumRays[0] = transform.camera.ScreenPointToRay(new Vector3(0, 0, 0));
-			frustumRays[1] = transform.camera.ScreenPointToRay(new Vector3(transform.camera.pixelWidth, 0, 0));
-			frustumRays[2] = transform.camera.ScreenPointToRay(new Vector3(0, transform.camera.pixelHeight, 0));
-			frustumRays[3] = transform.camera.ScreenPointToRay(new Vector3(transform.camera.pixelWidth, transform.camera.pixelHeight, 0));
+			frustumRays[0] = transform.GetComponent<Camera>().ScreenPointToRay(new Vector3(0, 0, 0));
+			frustumRays[1] = transform.GetComponent<Camera>().ScreenPointToRay(new Vector3(transform.GetComponent<Camera>().pixelWidth, 0, 0));
+			frustumRays[2] = transform.GetComponent<Camera>().ScreenPointToRay(new Vector3(0, transform.GetComponent<Camera>().pixelHeight, 0));
+			frustumRays[3] = transform.GetComponent<Camera>().ScreenPointToRay(new Vector3(transform.GetComponent<Camera>().pixelWidth, transform.GetComponent<Camera>().pixelHeight, 0));
 
 			transform.position = HandleCollisionZoom(transform.position, lookAtPt, minDistance, ref frustumRays);
 		}

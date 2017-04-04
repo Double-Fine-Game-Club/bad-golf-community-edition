@@ -39,7 +39,7 @@ public class netSwing : SwingBehaviour {
 		nvs = FindObjectOfType<networkVariables> ();
 		myInfo = nvs.myInfo;
 		cameraObject = nvs.myCam.gameObject;	//may not be set yet
-		meter = myInfo.characterGameObject.AddComponent ("PowerMeter") as PowerMeter;
+		meter = myInfo.characterGameObject.AddComponent <PowerMeter>() as PowerMeter;
 		meter.m_objectToCircle = myInfo.characterGameObject;
 		meter.m_markerPrefab = Instantiate (Resources.Load ("powerMeterPrefab")) as GameObject;	//	:(
 		meter.m_swingScript = this;
@@ -75,7 +75,7 @@ public class netSwing : SwingBehaviour {
 				if (shotPower > k_maxShotPower)
 					shotPower = k_maxShotPower;
 	
-				networkView.RPC("GolfSwing", RPCMode.All, shotPower, shotAngle, myInfo.player, myInfo.characterGameObject.transform.parent.rotation.eulerAngles.y);
+				GetComponent<NetworkView>().RPC("GolfSwing", RPCMode.All, shotPower, shotAngle, myInfo.player, myInfo.characterGameObject.transform.parent.rotation.eulerAngles.y);
 				shotPower = 0;	
 				meter.HideArc();
 				//meter.enabled=false; //parent is hidden no reason to hide child
@@ -130,7 +130,7 @@ public class netSwing : SwingBehaviour {
 
 		// Rotate ball with 'a' and 'd'.
 		rotationObject.transform.Rotate (0f, rotationInput, 0f);
-		myInfo.ballGameObject.rigidbody.freezeRotation = true;
+		myInfo.ballGameObject.GetComponent<Rigidbody>().freezeRotation = true;
 
 		// Crappy camera script taken from the original movement.cs. Makes rotation around the ball possible.
 		//Vector3 newPos = rotationObject.transform.position + rotationObject.transform.localRotation * cameraPos;
@@ -206,13 +206,13 @@ public class netSwing : SwingBehaviour {
 		player.ballGameObject.transform.rotation = ballRotation;
 		
 		//play out swing animation then switch to cart
-		StartCoroutine(hitGolfBall(player.characterGameObject.animation.GetClip("swing").length, player, power, angle));
+		StartCoroutine(hitGolfBall(player.characterGameObject.GetComponent<Animation>().GetClip("swing").length, player, power, angle));
 				
 	}
 
 	IEnumerator hitGolfBall(float time, PlayerInfo player, float power, float angle){
 		//play swing animation
-		player.characterGameObject.animation.Play("swing",PlayMode.StopAll);
+		player.characterGameObject.GetComponent<Animation>().Play("swing",PlayMode.StopAll);
 		yield return new WaitForSeconds(k_swingTimeToHitBall);
 
 		//detach character from ball so it doesn't move too
@@ -227,10 +227,10 @@ public class netSwing : SwingBehaviour {
 		arc.y = 0;
 		arc.Normalize ();
 		arc.y = Mathf.Sin (angle * Mathf.Deg2Rad);
-		player.ballGameObject.rigidbody.constraints = RigidbodyConstraints.None;
+		player.ballGameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
 		if(Network.isServer){
 			//Only server does this. To prevent rubber banding of ball
-			player.ballGameObject.rigidbody.AddForce (player.ballGameObject.transform.localRotation * arc * power * k_shotBoost);
+			player.ballGameObject.GetComponent<Rigidbody>().AddForce (player.ballGameObject.transform.localRotation * arc * power * k_shotBoost);
 		}
 		yield return new WaitForSeconds(time-k_swingTimeToHitBall);
 

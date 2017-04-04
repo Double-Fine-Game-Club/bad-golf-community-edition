@@ -42,7 +42,7 @@ public class netWinCollider : MonoBehaviour {
 			{
 				if ( coll.gameObject == ball)
 				{
-					messageTarget.networkView.RPC ( "DeclareWinner", RPCMode.All, ballPlayerMap[ball] );
+					messageTarget.GetComponent<NetworkView>().RPC ( "DeclareWinner", RPCMode.All, ballPlayerMap[ball] );
 					break;
 				}		
 			}

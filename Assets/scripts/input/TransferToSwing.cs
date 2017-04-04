@@ -18,7 +18,7 @@ public class TransferToSwing : MonoBehaviour
 	
 	void Start()
 	{
-		originalColor = ball.renderer.material.GetColor("_ColorTint");
+		originalColor = ball.GetComponent<Renderer>().material.GetColor("_ColorTint");
 
 		carUserControl = GetComponent<CarUserControl>();
 	}	
@@ -30,23 +30,23 @@ public class TransferToSwing : MonoBehaviour
 		if (distance < 5) 
 		{
 			inHittingRange = true;
-			Material temp =	ball.renderer.sharedMaterial; 
+			Material temp =	ball.GetComponent<Renderer>().sharedMaterial; 
 			temp.SetColor("_ColorTint", Color.red);
-			ball.renderer.sharedMaterial = temp;
+			ball.GetComponent<Renderer>().sharedMaterial = temp;
 		} 
 		else 
 		{
 			inHittingRange = false;
-			Material temp =	ball.renderer.sharedMaterial; 
+			Material temp =	ball.GetComponent<Renderer>().sharedMaterial; 
 			temp.SetColor("_ColorTint", originalColor);
-			ball.renderer.sharedMaterial = temp;
+			ball.GetComponent<Renderer>().sharedMaterial = temp;
 		}
 		if (Input.GetKey (KeyCode.E) && carUserControl.isKeyboardControlled) 
 		{
 			if (inHittingRange) 
 			{
 				// Stop the cart's forward motion (still might roll away though)
-				gameObject.rigidbody.velocity = Vector3.zero;
+				gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
 				ball.SendMessage ("turnOnScripts");
 				this.gameObject.SendMessage("turnOffScripts");
 			}
@@ -66,7 +66,7 @@ public class TransferToSwing : MonoBehaviour
 		{
 			ball.SendMessage( "onUserGamePadButton", Vector2.zero);
 			// Stop the cart's forward motion (still might roll away though)
-			gameObject.rigidbody.velocity = Vector3.zero;
+			gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
 			ball.SendMessage ("turnOnScripts");
 			this.gameObject.SendMessage("turnOffScripts");
 		}

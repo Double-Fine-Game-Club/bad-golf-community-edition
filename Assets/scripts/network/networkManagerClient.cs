@@ -20,10 +20,10 @@ public class networkManagerClient : MonoBehaviour {
 		// add us to the player list
 		nvs.players.Add(myInfo);
 
-		networkView.RPC("MyName", RPCMode.Server, nvs.myInfo.name);	
+		GetComponent<NetworkView>().RPC("MyName", RPCMode.Server, nvs.myInfo.name);	
 		
 		// go into the lobby
-		gameObject.AddComponent("netLobby");
+		gameObject.AddComponent<netLobby>();
 	}
 	
 	// CLIENT SIDE SCRIPTS GO HERE
@@ -33,36 +33,36 @@ public class networkManagerClient : MonoBehaviour {
 		// All scripts are called after we have a reference to the buggy and a NetworkViewID.
 
 		// updates network-sunk fiziks
-		gameObject.AddComponent("controlClient");
+		gameObject.AddComponent<controlClient>();
 
 		//hit ball
-		gameObject.AddComponent ("netSwing");
+		gameObject.AddComponent <netSwing>();
 
 		//ball range finder
-		gameObject.AddComponent ("netTransferToSwing");
+		gameObject.AddComponent <netTransferToSwing>();
 		
 		//ball marker
-		BallMarker bms = gameObject.AddComponent ("BallMarker") as BallMarker;
+		BallMarker bms = gameObject.AddComponent <BallMarker>() as BallMarker;
 		bms.m_nvs = nvs;
 		bms.m_myCamera = nvs.myCam;	// can be set in the script instead
 		
 		//show names over player's cart
-		gameObject.AddComponent ("PlayerNames");
+		gameObject.AddComponent <PlayerNames>();
 
 		// set the camera in the audio script on the buggy - PUT THIS IN A SCRIPT SOMEONE
 		CarAudio mca = myInfo.cartGameObject.GetComponent("CarAudio") as CarAudio;
 		mca.followCamera = nvs.myCam;	// replace tmpCam with our one - this messes up sound atm
-		(nvs.myCam.gameObject.AddComponent("FollowPlayerScript") as FollowPlayerScript).target = myInfo.cartGameObject.transform;	// add smooth follow script
+		(nvs.myCam.gameObject.AddComponent<FollowPlayerScript>() as FollowPlayerScript).target = myInfo.cartGameObject.transform;	// add smooth follow script
 		
 		// finally disable the preview scene
 		(GameObject.Find("main").GetComponent(typeof(GameControl)) as GameControl).ed_levelPreviewScreen.SetActive(false);
 		
 		 //show chat bubble over players when they chat
 
-		gameObject.AddComponent("ChatBubble");
+		gameObject.AddComponent<ChatBubble>();
 		
 		//cart reset
-		gameObject.AddComponent ("netPlayerRespawn");
+		gameObject.AddComponent <netPlayerRespawn>();
 		
 		// show that we connected
 		connected = true;
@@ -135,10 +135,10 @@ public class networkManagerClient : MonoBehaviour {
 		// instantiate the prefab
 		GameObject clone = Instantiate(prefab, spawnLocation, Quaternion.identity) as GameObject;
 		// set viewID
-		clone.networkView.viewID = viewID;
+		clone.GetComponent<NetworkView>().viewID = viewID;
 		
 		// set velocity if we can - why was this commented?
-		if (clone.rigidbody) clone.rigidbody.velocity = velocity;
+		if (clone.GetComponent<Rigidbody>()) clone.GetComponent<Rigidbody>().velocity = velocity;
 	}
 	
 	[RPC]
@@ -183,8 +183,8 @@ public class networkManagerClient : MonoBehaviour {
 				newGuy.cartGameObject = NetworkView.Find(cartViewIDTransform).gameObject;
 				newGuy.cartViewIDRigidbody = cartViewIDRigidbody;
 				// add another NetworkView for the rigidbody
-				NetworkView cgr = newGuy.cartGameObject.AddComponent("NetworkView") as NetworkView;		// add rigidbody tracking
-				cgr.observed = newGuy.cartGameObject.rigidbody;
+				NetworkView cgr = newGuy.cartGameObject.AddComponent<NetworkView>() as NetworkView;		// add rigidbody tracking
+				cgr.observed = newGuy.cartGameObject.GetComponent<Rigidbody>();
 				cgr.viewID = cartViewIDRigidbody;
 				cgr.stateSynchronization = NetworkStateSynchronization.Unreliable;
 				newGuy.characterViewID = characterViewID;
@@ -283,7 +283,7 @@ public class networkManagerClient : MonoBehaviour {
 		connected = true;
 
 		// add crappy controls
-		nvs.myCam.gameObject.AddComponent("SpectatorView");
+		nvs.myCam.gameObject.AddComponent<SpectatorView>();
 		// remove us as we aren't playing
 		nvs.players.Remove(myInfo);
 	}

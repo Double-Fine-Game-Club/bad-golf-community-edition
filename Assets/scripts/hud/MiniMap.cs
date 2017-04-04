@@ -66,8 +66,8 @@ public class MiniMap : MonoBehaviour {
 
 	// Obtains the screenspace bounds of the minimap camera
 	void UpdateCameraBounds() {
-		camMin = mapCamera.WorldToScreenPoint( level.collider.bounds.min );
-		camMax = mapCamera.WorldToScreenPoint( level.collider.bounds.max );
+		camMin = mapCamera.WorldToScreenPoint( level.GetComponent<Collider>().bounds.min );
+		camMax = mapCamera.WorldToScreenPoint( level.GetComponent<Collider>().bounds.max );
 	}
 
 	float UpdateIconSize() {
@@ -100,7 +100,7 @@ public class MiniMap : MonoBehaviour {
 
 		foreach( PlayerInfo opponent in nvs.players ) {
 			if( opponent != nvs.myInfo ) {
-				Vector2 c = NormalizedPosition( opponent.cartGameObject.transform.position, level.collider.bounds.min, level.collider.bounds.max, camMin, camMax );
+				Vector2 c = NormalizedPosition( opponent.cartGameObject.transform.position, level.GetComponent<Collider>().bounds.min, level.GetComponent<Collider>().bounds.max, camMin, camMax );
 				opponentRects.Add( new Rect(c.x-halfSize,c.y-halfSize,size,size) );
 			}
 		}
@@ -119,10 +119,10 @@ public class MiniMap : MonoBehaviour {
 		//ballPos.center   = new Vector2( camBall.x, Screen.height - camBall.y );
 		//flagPos.center   = new Vector2( camFlag.x, Screen.height - camFlag.y - flagPos.height * 0.5f );
 
-		playerRect.center = NormalizedPosition( player.position, level.collider.bounds.min, level.collider.bounds.max, camMin, camMax );
+		playerRect.center = NormalizedPosition( player.position, level.GetComponent<Collider>().bounds.min, level.GetComponent<Collider>().bounds.max, camMin, camMax );
 		playerDirRect.center = playerRect.center;
-		ballRect.center = NormalizedPosition( ball.position, level.collider.bounds.min, level.collider.bounds.max, camMin, camMax );
-		flagRect.center = NormalizedPosition( flag.position, level.collider.bounds.min, level.collider.bounds.max, camMin, camMax );
+		ballRect.center = NormalizedPosition( ball.position, level.GetComponent<Collider>().bounds.min, level.GetComponent<Collider>().bounds.max, camMin, camMax );
+		flagRect.center = NormalizedPosition( flag.position, level.GetComponent<Collider>().bounds.min, level.GetComponent<Collider>().bounds.max, camMin, camMax );
 
 		flagRect.center = new Vector2( flagRect.center.x, flagRect.center.y - flagRect.height * 0.5f);
 

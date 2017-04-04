@@ -128,7 +128,7 @@ public class BallMarker : NetworkedHUDElement {
         if (objRenderer == null) return;
         Color objColor = objRenderer.material.GetColor("_Color");
 
-        if (Mathf.Abs(associatedBall.rigidbody.velocity.y) > k_groundedSensitivity) {
+        if (Mathf.Abs(associatedBall.GetComponent<Rigidbody>().velocity.y) > k_groundedSensitivity) {
             objColor.a = 0.0f;
             objRenderer.material.SetColor("_Color", objColor);
         } else {

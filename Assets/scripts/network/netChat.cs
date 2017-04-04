@@ -29,7 +29,7 @@ public class netChat : MonoBehaviour {
 			chatVisible = false;
 			if (chatBuffer!="") {
 				// this line sends the message
-				networkView.RPC("SendChatMessage", RPCMode.All, myName + ": " + chatBuffer, myInfo.ballViewID);
+				GetComponent<NetworkView>().RPC("SendChatMessage", RPCMode.All, myName + ": " + chatBuffer, myInfo.ballViewID);
 				chatBuffer = "";
 			}
 		}

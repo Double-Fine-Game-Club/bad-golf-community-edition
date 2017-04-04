@@ -53,7 +53,7 @@ public class PowerMeter : MonoBehaviour
                 chunk.transform.position = pos;
                 chunk.transform.LookAt(m_objectToCircle.transform.position);
                 Color markerColor = Color.Lerp(Color.green, Color.red, (float)i / 180.0f);
-                chunk.renderer.material.SetColor("_Color", markerColor);
+                chunk.GetComponent<Renderer>().material.SetColor("_Color", markerColor);
 
                 m_arcChunks.Add(chunk);
                 chunk.transform.parent = this.gameObject.transform;

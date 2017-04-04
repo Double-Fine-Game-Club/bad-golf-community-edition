@@ -37,7 +37,7 @@ public class MainMenu : MonoBehaviour {
 		leftMargin = leftPanelWidth + screenMargin * 2;
 
 		if(musicToggle) {
-			audio.Play();
+			GetComponent<AudioSource>().Play();
 		}
 	}
 	
@@ -165,7 +165,7 @@ public class MainMenu : MonoBehaviour {
 
 	void OnMouseOver() {
 		if(soundToggle) {
-			audio.PlayOneShot(SoundMouseOver);
+			GetComponent<AudioSource>().PlayOneShot(SoundMouseOver);
 		}
 	}
 	
@@ -174,17 +174,17 @@ public class MainMenu : MonoBehaviour {
 
 	private void PlayMousePress() {
 		if(soundToggle) {
-			audio.PlayOneShot(SoundMousePress);
+			GetComponent<AudioSource>().PlayOneShot(SoundMousePress);
 		}
 	}
 
 	private void CheckMusicSound() {
 		if(musicToggle==false) {
-			audio.Stop();
+			GetComponent<AudioSource>().Stop();
 		} else {
-			audio.volume = musicVolume;
-			if(!audio.isPlaying) {
-				audio.Play();
+			GetComponent<AudioSource>().volume = musicVolume;
+			if(!GetComponent<AudioSource>().isPlaying) {
+				GetComponent<AudioSource>().Play();
 			}
 		}
 

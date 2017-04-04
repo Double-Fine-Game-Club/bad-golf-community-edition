@@ -57,8 +57,8 @@ public class netPlayerRespawn : MonoBehaviour {
 				foreach (PlayerInfo p in nvs.players) {
 					//Respawn if y coordinate falls below threshold
 					if(p.cartGameObject.transform.position.y < respawnThreshold){
-						p.cartGameObject.rigidbody.velocity = Vector3.zero;
-						p.cartGameObject.rigidbody.angularVelocity = Vector3.zero;
+						p.cartGameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+						p.cartGameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 						p.cartGameObject.transform.rotation = Quaternion.identity;
 						Vector3 sLoc = spawnLocation;
 						sLoc += new Vector3(spawnScale.x*Random.Range(-1f,1f),0,spawnScale.z*Random.Range(-1f,1f));
@@ -67,8 +67,8 @@ public class netPlayerRespawn : MonoBehaviour {
 					}
 					// also check the ball location
 					if(p.ballGameObject.transform.position.y < respawnThreshold){
-						p.ballGameObject.rigidbody.velocity = Vector3.zero;
-						p.ballGameObject.rigidbody.angularVelocity = Vector3.zero;
+						p.ballGameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+						p.ballGameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 						p.ballGameObject.transform.rotation = Quaternion.identity;
 						Vector3 sLoc = spawnLocation;
 						sLoc += new Vector3(spawnScale.x*Random.Range(-1f,1f),0,spawnScale.z*Random.Range(-1f,1f));

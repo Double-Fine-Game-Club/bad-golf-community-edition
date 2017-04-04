@@ -34,26 +34,26 @@ public class SimpleExample : MonoBehaviour
 		// Set target object material color based on which action is pressed.
 		if (inputDevice.Action1)
 		{
-			target.renderer.material.color = Color.green;
+			target.GetComponent<Renderer>().material.color = Color.green;
 		}
 		else 
 		if (inputDevice.Action2)
 		{
-			target.renderer.material.color = Color.red;
+			target.GetComponent<Renderer>().material.color = Color.red;
 		}
 		else 
 		if (inputDevice.Action3)
 		{
-			target.renderer.material.color = Color.blue;
+			target.GetComponent<Renderer>().material.color = Color.blue;
 		}
 		else 
 		if (inputDevice.Action4)
 		{
-			target.renderer.material.color = Color.yellow;
+			target.GetComponent<Renderer>().material.color = Color.yellow;
 		}
 		else
 		{
-			target.renderer.material.color = Color.white;
+			target.GetComponent<Renderer>().material.color = Color.white;
 		}
 
 		// Rotate target object with both sticks and d-pad.

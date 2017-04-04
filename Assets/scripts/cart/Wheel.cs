@@ -60,7 +60,7 @@ public class Wheel : MonoBehaviour
     {
 		car = transform.parent.GetComponent<CarController>();
 		followCamera = transform.parent.GetComponent<CarAudio> ().followCamera;
-		wheelCollider = collider as WheelCollider;
+		wheelCollider = GetComponent<Collider>() as WheelCollider;
 
 		if (wheelModel != null)
 		{

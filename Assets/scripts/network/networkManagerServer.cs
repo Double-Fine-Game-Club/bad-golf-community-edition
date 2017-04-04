@@ -39,7 +39,7 @@ public class networkManagerServer : MonoBehaviour {
 		gameHasBegun = nvs.gameHasBegun;
 		
 		// go into the lobby
-		gameObject.AddComponent("netLobby");
+		gameObject.AddComponent<netLobby>();
 	}
 	
 	// ANY SERVER SIDE SCRIPTS GO HERE
@@ -49,32 +49,32 @@ public class networkManagerServer : MonoBehaviour {
 		// All scripts are called after we have a reference to the buggy and a NetworkViewID.
 
 		// receives all players inputs and handles fiziks
-		gameObject.AddComponent("controlServer");
+		gameObject.AddComponent<controlServer>();
 
 		//ball range finder
-		gameObject.AddComponent ("netTransferToSwing");
+		gameObject.AddComponent <netTransferToSwing>();
 
 		//hitball
-		gameObject.AddComponent ("netSwing");
+		gameObject.AddComponent <netSwing>();
 		
 		//cart reset
-		gameObject.AddComponent ("netPlayerRespawn");
+		gameObject.AddComponent <netPlayerRespawn>();
 
 		//show names over player's cart
-		gameObject.AddComponent ("PlayerNames");
+		gameObject.AddComponent <PlayerNames>();
 
         //show chat bubble over players when they chat
-		gameObject.AddComponent("ChatBubble");
+		gameObject.AddComponent<ChatBubble>();
 		
 		//ball marker
-		BallMarker bms = gameObject.AddComponent ("BallMarker") as BallMarker;
+		BallMarker bms = gameObject.AddComponent <BallMarker>() as BallMarker;
 		bms.m_nvs = nvs;
 		bms.m_myCamera = nvs.myCam;	// can be set in the script instead
 		
 		// set the camera in the audio script on the buggy - PUT THIS IN A SCRIPT SOMEONE
 		CarAudio mca = myInfo.cartGameObject.GetComponent("CarAudio") as CarAudio;
 		mca.followCamera = nvs.myCam;	// replace tmpCam with our one - this messes up sound atm
-		(nvs.myCam.gameObject.AddComponent("FollowPlayerScript") as FollowPlayerScript).target = myInfo.cartGameObject.transform;	// add player follow script
+		(nvs.myCam.gameObject.AddComponent<FollowPlayerScript>() as FollowPlayerScript).target = myInfo.cartGameObject.transform;	// add player follow script
 
 		// finally disable the preview scene
 		(GameObject.Find("main").GetComponent(typeof(GameControl)) as GameControl).ed_levelPreviewScreen.SetActive(false);
@@ -104,14 +104,14 @@ public class networkManagerServer : MonoBehaviour {
 			cgt.viewID = cartViewIDTransform;
 			cgt.stateSynchronization = NetworkStateSynchronization.Unreliable;
 			NetworkViewID cartViewIDRigidbody = Network.AllocateViewID();					// track the rigidbody of the cart
-			NetworkView cgr = cartGameObject.AddComponent("NetworkView") as NetworkView;
-			cgr.observed = cartGameObject.rigidbody;
+			NetworkView cgr = cartGameObject.AddComponent<NetworkView>() as NetworkView;
+			cgr.observed = cartGameObject.GetComponent<Rigidbody>();
 			cgr.viewID = cartViewIDRigidbody;
 			cgr.stateSynchronization = NetworkStateSynchronization.Unreliable;
 			NetworkViewID ballViewID = Network.AllocateViewID();
-			ballGameObject.networkView.viewID = ballViewID;
+			ballGameObject.GetComponent<NetworkView>().viewID = ballViewID;
 			NetworkViewID characterViewID = Network.AllocateViewID();
-			characterGameObject.networkView.viewID = characterViewID;
+			characterGameObject.GetComponent<NetworkView>().viewID = characterViewID;
 			
 			// edit their PlayerInfo
 			newGuy.cartGameObject = cartGameObject;
@@ -130,16 +130,16 @@ public class networkManagerServer : MonoBehaviour {
 			RecolorPlayer.recolorPlayerBody (bodyRenderer, newGuy.color);
 
 			// tell everyone else about it
-			networkView.RPC("SpawnPrefab", RPCMode.Others, cartViewIDTransform, spawnLocation, velocity, newGuy.cartModel);
-			networkView.RPC("SpawnPrefab", RPCMode.Others, ballViewID, spawnLocation, velocity, newGuy.ballModel);
-			networkView.RPC("SpawnPrefab", RPCMode.Others, characterViewID, spawnLocation, velocity, newGuy.characterModel);
+			GetComponent<NetworkView>().RPC("SpawnPrefab", RPCMode.Others, cartViewIDTransform, spawnLocation, velocity, newGuy.cartModel);
+			GetComponent<NetworkView>().RPC("SpawnPrefab", RPCMode.Others, ballViewID, spawnLocation, velocity, newGuy.ballModel);
+			GetComponent<NetworkView>().RPC("SpawnPrefab", RPCMode.Others, characterViewID, spawnLocation, velocity, newGuy.characterModel);
 			
 			// tell all players this is a player and not some random objects
-			networkView.RPC("SpawnPlayer", RPCMode.Others, cartViewIDTransform, cartViewIDRigidbody, ballViewID, characterViewID, 0, newGuy.player);
+			GetComponent<NetworkView>().RPC("SpawnPlayer", RPCMode.Others, cartViewIDTransform, cartViewIDRigidbody, ballViewID, characterViewID, 0, newGuy.player);
 
 			if (newGuy.player!=myInfo.player) {
 				// tell the player it's theirs
-				networkView.RPC("ThisOnesYours", newGuy.player, cartViewIDTransform, ballViewID, characterViewID);
+				GetComponent<NetworkView>().RPC("ThisOnesYours", newGuy.player, cartViewIDTransform, ballViewID, characterViewID);
 			}
 		}
 
@@ -147,7 +147,7 @@ public class networkManagerServer : MonoBehaviour {
 	
 	// fired when a player joins (if you couldn't tell)
 	void OnPlayerConnected(NetworkPlayer player) {
-		networkView.RPC("PrintText", player, "Welcome to the test server");
+		GetComponent<NetworkView>().RPC("PrintText", player, "Welcome to the test server");
 		PrintText("Someone joined");
 		
 		// add them to the list
@@ -174,22 +174,22 @@ public class networkManagerServer : MonoBehaviour {
 			*/
 			// if we've started then give the new guy the prefabs to watch
 			if (gameHasBegun) {
-				networkView.RPC("SpawnPrefab", player, p.cartViewIDTransform, p.cartGameObject.transform.position, p.cartGameObject.rigidbody.velocity, p.cartModel);
-				networkView.RPC("SpawnPrefab", player, p.ballViewID, p.ballGameObject.transform.position, p.ballGameObject.rigidbody.velocity, p.ballModel);
-				networkView.RPC("SpawnPrefab", player, p.characterViewID, p.characterGameObject.transform.position, new Vector3(0,0,0), p.characterModel);
+				GetComponent<NetworkView>().RPC("SpawnPrefab", player, p.cartViewIDTransform, p.cartGameObject.transform.position, p.cartGameObject.GetComponent<Rigidbody>().velocity, p.cartModel);
+				GetComponent<NetworkView>().RPC("SpawnPrefab", player, p.ballViewID, p.ballGameObject.transform.position, p.ballGameObject.GetComponent<Rigidbody>().velocity, p.ballModel);
+				GetComponent<NetworkView>().RPC("SpawnPrefab", player, p.characterViewID, p.characterGameObject.transform.position, new Vector3(0,0,0), p.characterModel);
 			}
 
 			// tell the new player about the iterated player
-			networkView.RPC("AddPlayer", player, p.cartModel, p.ballModel, p.characterModel, p.player, p.name, p.color);
+			GetComponent<NetworkView>().RPC("AddPlayer", player, p.cartModel, p.ballModel, p.characterModel, p.player, p.name, p.color);
 
 			// tell the iterated player about the new player, unless the iterated player is the server or we have started
 			if (p.player!=myInfo.player && !gameHasBegun) {
-				networkView.RPC("AddPlayer", p.player, newGuy.cartModel, newGuy.ballModel, newGuy.characterModel, newGuy.player, newGuy.name, newGuy.color);
+				GetComponent<NetworkView>().RPC("AddPlayer", p.player, newGuy.cartModel, newGuy.ballModel, newGuy.characterModel, newGuy.player, newGuy.name, newGuy.color);
 			}
 
 			// also tell them to spawn this one as a player if they're spectating
 			if (gameHasBegun) {
-				networkView.RPC("SpawnPlayer", player, p.cartViewIDTransform, p.cartViewIDRigidbody, p.ballViewID, p.characterViewID, p.currentMode, p.player);
+				GetComponent<NetworkView>().RPC("SpawnPlayer", player, p.cartViewIDTransform, p.cartViewIDRigidbody, p.ballViewID, p.characterViewID, p.currentMode, p.player);
 			}
 		}
 		
@@ -201,7 +201,7 @@ public class networkManagerServer : MonoBehaviour {
 
 	void OnPlayerDisconnected(NetworkPlayer player) {
 		// tell all players to remove them
-		networkView.RPC("RemovePlayer", RPCMode.All, player);
+		GetComponent<NetworkView>().RPC("RemovePlayer", RPCMode.All, player);
 		
 		// remove all their stuff
 		Network.RemoveRPCs(player);
@@ -217,9 +217,9 @@ public class networkManagerServer : MonoBehaviour {
 					Destroy(p.ballGameObject);
 					Destroy(p.characterGameObject);
 					// tell everyone else to aswell - move this onto the server
-					networkView.RPC("RemoveViewID", RPCMode.All, p.characterViewID);
-					networkView.RPC("RemoveViewID", RPCMode.All, p.cartViewIDTransform);
-					networkView.RPC("RemoveViewID", RPCMode.All, p.ballViewID);
+					GetComponent<NetworkView>().RPC("RemoveViewID", RPCMode.All, p.characterViewID);
+					GetComponent<NetworkView>().RPC("RemoveViewID", RPCMode.All, p.cartViewIDTransform);
+					GetComponent<NetworkView>().RPC("RemoveViewID", RPCMode.All, p.ballViewID);
 
 				} else if (p.currentMode==2) {// if they haven't got anything yet
 				}
@@ -299,7 +299,7 @@ public class networkManagerServer : MonoBehaviour {
 		foreach (PlayerInfo p in nvs.players)
 		{
 			if (p.player!=myInfo.player) {
-				networkView.RPC("StartingGame", p.player, p.cartModel, p.ballModel, p.characterModel);
+				GetComponent<NetworkView>().RPC("StartingGame", p.player, p.cartModel, p.ballModel, p.characterModel);
 			}
 		}
 
@@ -343,7 +343,7 @@ public class networkManagerServer : MonoBehaviour {
 				p.characterModel = characterModel;
 				p.color = color;
 				// tell the other clients that it changed
-				networkView.RPC ("UpdateModels", RPCMode.Others, p.player, cartModel, ballModel, characterModel, color);
+				GetComponent<NetworkView>().RPC ("UpdateModels", RPCMode.Others, p.player, cartModel, ballModel, characterModel, color);
 			}
 		}
 	}
@@ -353,13 +353,13 @@ public class networkManagerServer : MonoBehaviour {
 		foreach(PlayerInfo p in nvs.players) {
 			if (p.player==info.sender) {
 				p.name = name;
-				networkView.RPC ("UpdateName", RPCMode.Others, p.player, name);
+				GetComponent<NetworkView>().RPC ("UpdateName", RPCMode.Others, p.player, name);
 			}
 		}
 
 		// tell them they're spectating if we've begun
 		if (gameHasBegun) {
-			networkView.RPC("YoureSpectating", info.sender);
+			GetComponent<NetworkView>().RPC("YoureSpectating", info.sender);
 		}
 	}
 	

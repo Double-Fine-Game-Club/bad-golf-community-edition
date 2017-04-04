@@ -42,8 +42,8 @@ public class networkManager : MonoBehaviour {
 		NATmode = nvs.NATmode;
 		
 		// sudo make me a camera
-		nvs.myCam = new GameObject("theCamera").AddComponent("Camera") as Camera;
-		nvs.myCam.gameObject.AddComponent("AudioListener");
+		nvs.myCam = new GameObject("theCamera").AddComponent<Camera>() as Camera;
+		nvs.myCam.gameObject.AddComponent<AudioListener>();
 		nvs.myCam.gameObject.SetActive(false);	// disable it until we have joined a game
 		
 		// get them servers
@@ -103,7 +103,7 @@ public class networkManager : MonoBehaviour {
 						InputManager.Setup();
 					}
 					// add the server script to the NetObj
-					GameObject.FindWithTag("NetObj").AddComponent("networkManagerServer");
+					GameObject.FindWithTag("NetObj").AddComponent<networkManagerServer>();
 					
 					// enable the camera
 					nvs.myCam.gameObject.SetActive(true);
@@ -218,7 +218,7 @@ public class networkManager : MonoBehaviour {
 			InputManager.Setup();
 		}
 		// add the client script to the NetObj
-		GameObject.FindWithTag("NetObj").AddComponent("networkManagerClient");
+		GameObject.FindWithTag("NetObj").AddComponent<networkManagerClient>();
 		
 		// enable the camera
 		nvs.myCam.gameObject.SetActive(true);
